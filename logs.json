@@ -1,0 +1,9 @@
+[
+  {
+    "week": 1,
+    "date": "2025-10-26",
+    "title": "EE labs + first PCB draft",
+    "summary": "Wrapped up op-amp lab, simulated filter response in LTspice, and sketched first PCB in KiCad. Debugged a noisy ADC read on the MCU—ended up being a grounding issue.",
+    "tags": ["EE", "KiCad", "LTspice", "MCU"]
+  }
+]

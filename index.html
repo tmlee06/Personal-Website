@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>tlee</title>
+    <link rel="icon" type="image/png" href="./Assets/logos/tlee.png">
+    <link rel="shortcut icon" type="image/png" href="./Assets/logos/tlee.png">
+    <link rel="apple-touch-icon" href="./Assets/logos/tlee.png">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=Shippori+Mincho:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div id="entrance-overlay"></div>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+            <div class="sidebar-name">
+                <h1><span class="typed-name" aria-label="Tristan Lee"></span></h1>
+                <h4><span class="greeting" aria-label="Hello there!"></span></h4>
+                <p class="pronunciation">California, U.S.A.</p>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="#home" class="nav-link active">Home</a>
+                <a href="#about" class="nav-link">About</a>
+                <a href="#current-projects" class="nav-link">Current Projects</a>
+                <a href="#projects" class="nav-link">Projects</a>
+                <a href="#logs" class="nav-link">Logs</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </nav>
+
+            <div class="sidebar-section">
+                <div class="section-title-small">Current Projects</div>
+                <div class="project-links">
+                    <a href="#current-projects" class="project-link">Astroyltics</a>
+                    <a href="#current-projects" class="project-link">EMG Neural Prosthetics</a>
+                    <a href="#current-projects" class="project-link">Triton Solar Car</a>
+                </div>
+            </div>
+
+           
+
+            <div class="sidebar-section">
+                <div class="section-title-small"></div>
+                <div class="social-links">
+                    <a href="mailto:trl015@ucsd.edu" class="social-link"><i class="fas fa-envelope" aria-hidden="true"></i></a>
+                    <a href="https://github.com/tmlee06" target="_blank" class="social-link"><i class="fab fa-github" aria-hidden="true"></i></a>
+                    <a href="https://www.linkedin.com/in/tlee06/" target="_blank" class="social-link"><i class="fab fa-linkedin" aria-hidden="true"></i></a>
+                    <a href="https://www.instagram.com/tlee.06/" target="_blank" class="social-link"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+                    <a href="https://www.youtube.com/@tlee06" target="_blank" class="social-link"><i class="fab fa-youtube" aria-hidden="true"></i></a>
+                </div>
+            </div>
+        </aside>
+    <div class="page-layout">
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Home Section -->
+            <section id="home" class="content-section" data-bg="#f7fbff" data-foreground="light">
+                <header class="content-header">
+                    <div class="timestamp" id="timestamp"></div>
+                </header>
+                <div class="bio-section">
+                    <div>
+                        <p class="bio-text">
+                            Tristan Lee is an Electrical Engineering student specailizing in Signal and Image Processing at UC San Diego. He is currently working on Astrolytics with IEEE, EMG Neural Prosthetics with Triton Neurotech, and building the battery for the Triton Solar Car.
+                        </p>
+                        <div class="bio-logs-container">
+                            <div class="section-title-small" style="text-align: left; margin-top: 1.5rem; margin-bottom: 0.75rem;">WEEKLY LOGS</div>
+                            <div id="bio-logs-list" class="bio-logs-grid"></div>
+                        </div>
+                    </div>
+                    <div class="bio-image-container">
+                        <div class="profile-image-wrapper">
+                            <img src="./Assets/profile-pic.png" alt="Tristan Lee profile picture" id="profile-image" />
+                            <div class="profile-social-links">
+                                <a href="mailto:trl015@ucsd.edu" class="profile-social-link"><i class="fas fa-envelope"></i></a>
+                                <a href="https://github.com/tmlee06" target="_blank" class="profile-social-link"><i class="fab fa-github"></i></a>
+                                <a href="https://www.linkedin.com/in/tlee06/" target="_blank" class="profile-social-link"><i class="fab fa-linkedin"></i></a>
+                                <a href="https://www.instagram.com/tlee.06/" target="_blank" class="profile-social-link"><i class="fab fa-instagram"></i></a>
+                                <a href="https://www.youtube.com/@tlee06" target="_blank" class="profile-social-link"><i class="fab fa-youtube"></i></a>
+                            </div>
+                        </div>
+                        <div class="cv-buttons">
+                            <a href="./Assets/Tristan Lee - CV.pdf" target="_blank" class="cv-button cv-button-view">View PDF</a>
+                            <a href="./Assets/Tristan Lee - CV.pdf" download class="cv-button">Download CV</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Profile Picture Modal -->
+                <div id="profile-modal" class="profile-modal">
+                    <div class="profile-modal-content">
+                        <span class="profile-modal-close">&times;</span>
+                        <img src="./Assets/profile-pic.png" alt="Tristan Lee profile picture" />
+                    </div>
+                </div>
+            </section>
+
+            <!-- About Section -->
+            <section id="about" class="content-section experience-section" data-bg="#ede3d8" data-foreground="light">
+                <div class="experience-container">
+                    <div class="experience-section-header">
+                        <h2 class="experience-title">CURRENT</h2>
+                    </div>
+                    <div class="experience-item">
+                        <div class="experience-header">
+                            <div class="experience-header-left">
+                                <h3 class="experience-role">Student in <strong> the Department of Electrical Computer Engineering at the University of California, San Diego</strong></h3>
+                                <p class="experience-description"> Taking courses in Object-Oriented Programming in C++, Engineering Computation in C, and Analog Circuit Design. Working on 3 projects: <a href="#astroyltics" class="project-link-inline">Astroyltics</a>, <a href="#emg-neural-prosthetics" class="project-link-inline">EMG Neural Prosthetics</a>, and <a href="#triton-solar-car" class="project-link-inline">Triton Solar Car</a>.</p>
+                            </div>
+                            <div class="experience-header-right">
+                                <a href="https://ece.ucsd.edu/" target="_blank" rel="noopener noreferrer" class="experience-logo-link">
+                                    <div class="experience-logo">
+                                        <img src="./Assets/logos/ucsd.png" alt="UC San Diego logo" onerror="this.style.display='none'">
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="experience-item">
+                        <div class="experience-header">
+                            <div class="experience-header-left">
+                                <h3 class="experience-role">Junior at <strong>UC San Diego</strong> pursuing a B.S. in Electrical Engineering with specialization in Signal and Image Processing (2025-2027).</h3>
+                            </div>
+                            <div class="experience-header-right">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="experience-section-header">
+                        <h2 class="experience-title">EXPERIENCE</h2>
+                    </div>
+                    <div class="experience-item">
+                        <div class="experience-header">
+                            <div class="experience-header-left">
+                                <h3 class="experience-role">Engineering Intern</h3>
+                                <p class="experience-company">NASA California Space Grant Consortium</p>
+                                <ul class="experience-bullets">
+                                    <li>Engineered embedded C++ firmware for an ESP32-based algae detection robot, integrating turbidity, pH, and temperature sensors to generate over 1,000 reliable data readings for environmental monitoring.</li>
+                                    <li>Designed Python workflows to automate calibration, process sensor data in real time, and generate visualizations that improved testing efficiency and reliability.</li>
+                                    <li>Created technical documentation for sensor calibration and firmware deployment process.</li>
+                                </ul>
+                            </div>
+                            <div class="experience-header-right">
+                                <span class="experience-date">June 2025 - August 2025<br>San Diego, California</span>
+                                <a href="https://casgc.ucsd.edu/" target="_blank" rel="noopener noreferrer" class="experience-logo-link">
+                                    <div class="experience-logo">
+                                        <img src="./Assets/logos/nasa.png" alt="California Space Grant Consortium logo" onerror="this.style.display='none'">
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                
+                    
+                    <div class="experience-section-header">
+                        <h2 class="experience-title">EDUCATION</h2>
+                    </div>
+                    <div class="experience-item">
+                        <div class="experience-header">
+                            <div class="experience-header-left">
+                                <h3 class="experience-role"><strong>University of California, San Diego</strong></h3>
+                                <p class="experience-company">B.S. Electrical Engineering</p>
+                                <p class="experience-description">Signal and Image Processing</p>
+                                <p class="experience-activities"><strong>Activities and Societies:</strong> UCSD Ice Hockey, UCSD Surf Club, IEEE, Triton Neurotech, Triton Solar Car</p>
+                                <p class="experience-activities"><strong>Relevant Coursework:</strong> </p>
+                                <ul class="experience-bullets">
+
+                                <li> ECE 15: Engineering Computation: Introduction to Programming in C </li>
+                                <li> ECE 17: Object-Oriented Programming: Design and Development with C++  </li>
+                                <li> ECE 35: Introduction to Analog Circuit Design </li>
+                            </ul>
+                            </div>
+                            <div class="experience-header-right">
+                                <span class="experience-date">September 2025 - June 2028<br>La Jolla, California</span>
+                                <a href="https://ece.ucsd.edu/" target="_blank" rel="noopener noreferrer" class="experience-logo-link">
+                                    <div class="experience-logo">
+                                        <img src="./Assets/logos/ucsd.png" alt="UC San Diego logo" onerror="this.style.display='none'">
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="experience-item">
+                        <div class="experience-header">
+                            <div class="experience-header-left">
+                                <h3 class="experience-role"><strong>Evergreen Valley College</strong></h3>
+                                <p class="experience-company">Focus in Engineering with coursework in Mathematics, Computer Science, and Physics</p>
+                                <p class="experience-activities"><strong>Activities and Societies:</strong> President - Engineering Club, Vice-President - Computer Science Club, and Math Club</p>
+                                <p class="experience-activities"><strong>Relevant Coursework:</strong> </p>
+                                <ul class="experience-bullets">
+
+                                <li> COMSC 028: Foundations of Data Science </li>
+                                <li> COMSC 041: Programming Concepts and Methodology I </li>
+                                <li> COMSC 075: Computer Science I: Introduction to Program Structures </li>
+                                <li> Computer Science II: Introduction to Data Structure </li>
+                            </ul>
+                            </div>
+                            <div class="experience-header-right">
+                                <span class="experience-date">August 2023 - January 2026<br>San Jose, California</span>
+                                <a href="https://evc.edu/engineering" target="_blank" rel="noopener noreferrer" class="experience-logo-link">
+                                    <div class="experience-logo">
+                                        <img src="./Assets/logos/evc.png" alt="Evergreen Valley College logo" onerror="this.style.display='none'">
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Current Projects Section -->
+            <section id="current-projects" class="content-section" data-bg="#e8f4f8" data-foreground="dark">
+                <div class="work-section">
+                    <div class="section-title-small">CURRENT PROJECTS</div>
+                    <div class="current-projects-grid">
+                        <div id="astroyltics" class="work-card current-project-card">
+                            <div class="work-image current-project-logo">
+                                <img src="./Assets/logos/astroyltics.png" alt="Astroyltics logo" onerror="this.style.display='none'">
+                            </div>
+                            <div class="work-info current-project-info">
+                                <h3 class="work-title current-project-title">Astrolytics <span class="wip-badge">WIP</span></h3>
+                                <div class="work-subtitle">IEEE</div>
+                                <div class="project-desc current-project-description">Building a sub-$100 sky-tracker: a pan-tilt camera + microcontroller that streams live sky video and uses lightweight computer vision to detect, label, and auto-track satellites and other bright objects in real time.</div>
+                            </div>
+                        </div>
+                        <a href="https://sites.google.com/ucsd.edu/triton-neurotech/projects/emg-neural-prosthetics?authuser=0" target="_blank" rel="noopener noreferrer" class="work-card-link">
+                            <div id="emg-neural-prosthetics" class="work-card current-project-card">
+                                <div class="work-image current-project-logo">
+                                    <img src="./Assets/logos/triton-neurotech.png" alt="Triton NeuroTech logo" onerror="this.style.display='none'">
+                                </div>
+                                <div class="work-info current-project-info">
+                                    <h3 class="work-title current-project-title">EMG Neural Prosthetics</h3>
+                                    <div class="work-subtitle">Triton NeuroTech</div>
+                                    <div class="project-desc current-project-description">Designing the embedded stack for an EMG controlled prosthetic dual-core MCU architecture, low-latency motor control, and robust wireless telemetry, optimized for smooth motion and low power.</div>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="https://tritonsolarcar.org/" target="_blank" rel="noopener noreferrer" class="work-card-link">
+                            <div id="triton-solar-car" class="work-card current-project-card">
+                                <div class="work-image current-project-logo">
+                                    <img src="./Assets/logos/triton-solar-car.png" alt="Triton Solar Car logo" onerror="this.style.display='none'">
+                                </div>
+                                <div class="work-info current-project-info">
+                                    <h3 class="work-title current-project-title">Triton Solar Car</h3>
+                                    <div class="work-subtitle">Battery Team</div>
+                                    <div class="project-desc current-project-description">Developing the traction pack: cell modeling and selection, pack architecture, BMS integration, and safety/thermal testing to power the next generation solar race car driver.</div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Projects Section -->
+            <section id="projects" class="content-section" data-bg="#fff1e0" data-foreground="dark">
+                <div class="work-section">
+                    <div class="section-title-small">PROJECTS</div>
+                    <div id="projects-grid" class="work-grid"></div>
+                </div>
+            </section>
+
+            <!-- Logs Section -->
+            <section id="logs" class="content-section" data-bg="#f7fbff" data-foreground="dark">
+                <div class="work-section">
+                    <div class="section-title-small">WEEKLY LOGS</div>
+                    <p class="logs-subtitle">Just some of my thoughts</p>
+                    <div id="logs-list" class="logs-grid"></div>
+                </div>
+            </section>
+
+            <!-- Contact Section -->
+            <section id="contact" class="content-section contact-section" data-bg="#ffff" data-foreground="dark">
+                <div class="work-section">
+                    <div class="section-title-small" style="text-align: center;">GET IN TOUCH</div>
+                    <div class="contact-content">
+                        <p class="bio-text">
+                            Open to collaborations, internships, and interesting problems. 
+                            Let's build something together.
+                        </p>
+                        <div class="social-links-grid">
+                            <a href="mailto:trl015@ucsd.edu" class="social-icon-link">
+                                <i class="fas fa-envelope"></i>
+                            </a>
+                            <a href="https://github.com/tmlee06" target="_blank" class="social-icon-link">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            <a href="https://www.linkedin.com/in/tlee06/" target="_blank" class="social-icon-link">
+                                <i class="fab fa-linkedin"></i>
+                            </a>
+                            <a href="https://www.instagram.com/tlee.06/" target="_blank" class="social-icon-link">
+                                <i class="fab fa-instagram"></i>
+                            </a>
+                               <a href="https://www.youtube.com/@tlee06" target="_blank" class="social-icon-link">
+                                <i class="fab fa-youtube"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
