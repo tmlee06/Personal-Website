@@ -3,51 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tristan Lee - Portfolio</title>
+    <title>tlee — Logs</title>
+    <link rel="icon" type="image/png" href="./Assets/logos/tlee.png">
+    <link rel="shortcut icon" type="image/png" href="./Assets/logos/tlee.png">
+    <link rel="apple-touch-icon" href="./Assets/logos/tlee.png">
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=Shippori+Mincho:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Ensure standalone page gets the same background transition base */
+        html, body { background-color: var(--page-bg, #ffffff); }
+    </style>
+    <div id="entrance-overlay"></div>
+    
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-logo">
-                <a href="index.html">Tristan Lee</a>
-            </div>
-            <div class="nav-menu" id="nav-menu">
-                <a href="index.html" class="nav-link">Home</a>
-                <a href="about.html" class="nav-link">About</a>
-                <a href="experience.html" class="nav-link">Experience</a>
-                <a href="skills.html" class="nav-link">Skills</a>
-                <a href="projects.html" class="nav-link">Projects</a>
-                <a href="logs.html" class="nav-link">Logs</a>
-                <a href="contact.html" class="nav-link">Contact</a>
-            </div>
-            <div class="hamburger" id="hamburger">
-                <span class="bar"></span>
-                <span class="bar"></span>
-                <span class="bar"></span>
-            </div>
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-name">
+            <h1><span class="typed-name" aria-label="Tristan Lee"></span></h1>
+            <h4><span class="greeting" aria-label="Hello there!"></span></h4>
+            <p class="pronunciation">California, U.S.A.</p>
         </div>
-    </nav>
 
-    <div id="page-root">
-    <section class="logs">
-        <div class="container">
-            <h2 class="section-title">Weekly Logs</h2>
-            <p class="logs-subtitle">Build notes, labs, wins, and lessons.</p>
-            <div id="logs-list" class="logs-grid"></div>
+        <nav class="sidebar-nav">
+            <a href="index.html#home" class="nav-link">Home</a>
+            <a href="index.html#about" class="nav-link">About</a>
+            <a href="index.html#current-projects" class="nav-link">Current Projects</a>
+            <a href="index.html#projects" class="nav-link">Projects</a>
+            <a href="#logs" class="nav-link active">Logs</a>
+            <a href="index.html#contact" class="nav-link">Contact</a>
+        </nav>
+
+        <div class="sidebar-section">
+            <div class="section-title-small">Current Projects</div>
+            <div class="project-links">
+                <a href="index.html#current-projects" class="project-link">Astroyltics</a>
+                <a href="index.html#current-projects" class="project-link">EMG Neural Prosthetics</a>
+                <a href="index.html#current-projects" class="project-link">Triton Solar Car</a>
+            </div>
         </div>
-    </section>
+
+        <div class="sidebar-section">
+            <div class="section-title-small"></div>
+            <div class="social-links">
+                <a href="mailto:trl015@ucsd.edu" class="social-link"><i class="fas fa-envelope" aria-hidden="true"></i></a>
+                <a href="https://github.com/tmlee06" target="_blank" class="social-link"><i class="fab fa-github" aria-hidden="true"></i></a>
+                <a href="https://www.linkedin.com/in/tlee06/" target="_blank" class="social-link"><i class="fab fa-linkedin" aria-hidden="true"></i></a>
+                <a href="https://www.instagram.com/tlee.06/" target="_blank" class="social-link"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+                <a href="https://www.youtube.com/@tlee06" target="_blank" class="social-link"><i class="fab fa-youtube" aria-hidden="true"></i></a>
+            </div>
+        </div>
+    </aside>
+
+    <div class="page-layout">
+        <main class="main-content">
+            <!-- Logs Section -->
+            <section id="logs" class="content-section" data-bg="#f7fbff" data-foreground="dark">
+                <div class="work-section">
+                    <div class="section-title-small">WEEKLY LOGS</div>
+                    <p class="logs-subtitle">Build notes, labs, wins, and lessons.</p>
+                    <div id="logs-list" class="logs-grid"></div>
+                </div>
+            </section>
+        </main>
     </div>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2024 Tristan Lee. All rights reserved.</p>
-        </div>
-    </footer>
 
     <script src="script.js"></script>
 </body>
