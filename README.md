@@ -1,4 +1,4 @@
-# Tristan Lee - Portfolio Website
+# Tristan Lee - Personal Website
 
 A modern, responsive portfolio website built with vanilla HTML, CSS, and JavaScript. This portfolio showcases your professional experience, skills, and projects in a clean, elegant design.
 
