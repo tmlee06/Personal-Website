@@ -1,6 +1,6 @@
 ---
 week: 1
-date: 2025-11-05
+date: 2025-11-06
 title: Fall Season - Week 1
 tags: [Life, UCSD, Engineering, Hockey]
 ---
