@@ -137,27 +137,169 @@ function updateActiveLink() {
 window.addEventListener('scroll', updateActiveLink);
 updateActiveLink();
 
-// Load Weekly Logs
+// Parse YAML frontmatter from markdown file
+function parseFrontmatter(markdownText) {
+    const frontmatterRegex = /^---\s*\n([\s\S]*?)\n---\s*\n([\s\S]*)$/;
+    const match = markdownText.match(frontmatterRegex);
+    
+    if (!match) {
+        return { metadata: {}, content: markdownText };
+    }
+    
+    const [, frontmatter, content] = match;
+    const metadata = {};
+    
+    // Simple YAML parser for key: value pairs
+    frontmatter.split('\n').forEach(line => {
+        const colonIndex = line.indexOf(':');
+        if (colonIndex === -1) return;
+        
+        const key = line.substring(0, colonIndex).trim();
+        let value = line.substring(colonIndex + 1).trim();
+        
+        // Handle array values like tags: [tag1, tag2]
+        if (value.startsWith('[') && value.endsWith(']')) {
+            value = value.slice(1, -1).split(',').map(v => v.trim().replace(/^["']|["']$/g, ''));
+        }
+        // Remove quotes if present
+        else if ((value.startsWith('"') && value.endsWith('"')) || 
+                 (value.startsWith("'") && value.endsWith("'"))) {
+            value = value.slice(1, -1);
+        }
+        
+        metadata[key] = value;
+    });
+    
+    return { metadata, content: content.trim() };
+}
+
+// Load Weekly Logs from Markdown files
 async function loadWeeklyLogs() {
     const container = document.getElementById('logs-list');
     if (!container) return;
+    
     try {
-        const res = await fetch('logs.json', { cache: 'no-store' });
-        if (!res.ok) throw new Error('Failed to load logs');
-        const logs = await res.json();
+        // First, get the index of log files
+        const indexRes = await fetch('logs-index.json', { cache: 'no-store' });
+        if (!indexRes.ok) {
+            // Fallback to old logs.json if index doesn't exist
+            const res = await fetch('logs.json', { cache: 'no-store' });
+            if (!res.ok) throw new Error('Failed to load logs');
+            const logs = await res.json();
+            renderLogs(container, logs);
+            return;
+        }
+        
+        const logFiles = await indexRes.json();
+        if (!Array.isArray(logFiles) || logFiles.length === 0) {
+            container.innerHTML = '<p style="text-align:left;color:#999;font-size:0.9rem;">No logs yet. Create markdown files in the <code style="background:#f5f5f5;padding:0.15rem 0.4rem;font-size:0.85rem;">logs/</code> directory.</p>';
+            return;
+        }
+        
+        // Load all markdown files
+        const logPromises = logFiles.map(async (filename) => {
+            try {
+                const res = await fetch(`logs/${filename}`, { cache: 'no-store' });
+                if (!res.ok) return null;
+                const markdown = await res.text();
+                const { metadata, content } = parseFrontmatter(markdown);
+                
+                // Convert markdown to HTML
+                const htmlContent = typeof marked !== 'undefined' 
+                    ? marked.parse(content) 
+                    : content.replace(/\n\n/g, '</p><p>').replace(/\n/g, '<br>');
+                
+                return {
+                    week: metadata.week || null,
+                    date: metadata.date || '',
+                    title: metadata.title || 'Untitled log',
+                    summary: htmlContent,
+                    tags: Array.isArray(metadata.tags) ? metadata.tags : (metadata.tags ? [metadata.tags] : []),
+                    url: metadata.url || null
+                };
+            } catch (err) {
+                console.error(`Failed to load ${filename}:`, err);
+                return null;
+            }
+        });
+        
+        const logs = (await Promise.all(logPromises))
+            .filter(log => log !== null)
+            .sort((a, b) => {
+                // Sort by week (descending) or date (descending)
+                if (a.week && b.week) return b.week - a.week;
+                if (a.date && b.date) return new Date(b.date) - new Date(a.date);
+                return 0;
+            });
+        
+        if (logs.length === 0) {
+            container.innerHTML = '<p style="text-align:left;color:#999;font-size:0.9rem;">No logs found.</p>';
+            return;
+        }
+        
         renderLogs(container, logs);
     } catch (err) {
-        container.innerHTML = '<p style="text-align:left;color:#999;font-size:0.9rem;">No logs yet. Add entries to <code style="background:#f5f5f5;padding:0.15rem 0.4rem;font-size:0.85rem;">logs.json</code>.</p>';
+        console.error('Error loading logs:', err);
+        container.innerHTML = '<p style="text-align:left;color:#999;font-size:0.9rem;">Failed to load logs. Check console for details.</p>';
     }
 }
 
 async function loadBioWeeklyLogs() {
     const container = document.getElementById('bio-logs-list');
     if (!container) return;
+    
     try {
-        const res = await fetch('logs.json', { cache: 'no-store' });
-        if (!res.ok) throw new Error('Failed to load logs');
-        const logs = await res.json();
+        // Use the same loading logic as loadWeeklyLogs
+        const indexRes = await fetch('logs-index.json', { cache: 'no-store' });
+        if (!indexRes.ok) {
+            // Fallback to old logs.json
+            const res = await fetch('logs.json', { cache: 'no-store' });
+            if (!res.ok) throw new Error('Failed to load logs');
+            const logs = await res.json();
+            renderBioLogs(container, logs);
+            return;
+        }
+        
+        const logFiles = await indexRes.json();
+        if (!Array.isArray(logFiles) || logFiles.length === 0) {
+            container.innerHTML = '<p style="text-align:left;color:#999;font-size:0.9rem;">No logs yet.</p>';
+            return;
+        }
+        
+        // Load all markdown files
+        const logPromises = logFiles.map(async (filename) => {
+            try {
+                const res = await fetch(`logs/${filename}`, { cache: 'no-store' });
+                if (!res.ok) return null;
+                const markdown = await res.text();
+                const { metadata, content } = parseFrontmatter(markdown);
+                
+                // For bio, just get plain text summary (first paragraph or first 200 chars)
+                const plainText = content.replace(/\n\n+/g, ' ').replace(/\n/g, ' ').trim();
+                const summary = plainText.length > 200 ? plainText.substring(0, 200) + '...' : plainText;
+                
+                return {
+                    week: metadata.week || null,
+                    date: metadata.date || '',
+                    title: metadata.title || 'Untitled log',
+                    summary: summary,
+                    tags: Array.isArray(metadata.tags) ? metadata.tags : (metadata.tags ? [metadata.tags] : []),
+                    url: metadata.url || null
+                };
+            } catch (err) {
+                console.error(`Failed to load ${filename}:`, err);
+                return null;
+            }
+        });
+        
+        const logs = (await Promise.all(logPromises))
+            .filter(log => log !== null)
+            .sort((a, b) => {
+                if (a.week && b.week) return b.week - a.week;
+                if (a.date && b.date) return new Date(b.date) - new Date(a.date);
+                return 0;
+            });
+        
         renderBioLogs(container, logs);
     } catch (err) {
         container.innerHTML = '<p style="text-align:left;color:#999;font-size:0.9rem;">No logs yet.</p>';
@@ -186,9 +328,9 @@ function renderLogs(container, logs) {
         title.className = 'log-title';
         title.textContent = log.title || 'Untitled log';
 
-        const body = document.createElement('p');
+        const body = document.createElement('div');
         body.className = 'log-body';
-        body.textContent = log.summary || '';
+        body.innerHTML = log.summary || '';
 
         card.appendChild(meta);
         card.appendChild(title);
@@ -298,6 +440,64 @@ function escapeHtml(str) {
 window.addEventListener('load', () => {
     // Set initial black background via CSS variable (JS updates --page-bg)
     document.documentElement.style.setProperty('--page-bg', '#000');
+    
+    // Hamburger menu toggle (mobile)
+    const hamburgerMenu = document.getElementById('hamburger-menu');
+    const sidebar = document.getElementById('sidebar');
+    const sidebarOverlay = document.getElementById('sidebar-overlay');
+    
+    if (hamburgerMenu && sidebar) {
+        const toggleMenu = () => {
+            const isActive = sidebar.classList.contains('active');
+            sidebar.classList.toggle('active');
+            hamburgerMenu.classList.toggle('active');
+            if (sidebarOverlay) {
+                sidebarOverlay.classList.toggle('active');
+            }
+            // Prevent body scroll when menu is open
+            document.body.style.overflow = isActive ? '' : 'hidden';
+        };
+        
+        hamburgerMenu.addEventListener('click', toggleMenu);
+        
+        // Close menu when clicking overlay
+        if (sidebarOverlay) {
+            sidebarOverlay.addEventListener('click', toggleMenu);
+        }
+        
+        // Close menu when clicking a nav link (mobile only)
+        const navLinks = sidebar.querySelectorAll('.nav-link');
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                if (window.innerWidth <= 900) {
+                    toggleMenu();
+                }
+            });
+        });
+        
+        // Close menu on ESC key
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && sidebar.classList.contains('active')) {
+                toggleMenu();
+            }
+        });
+        
+        // Close menu when window is resized to desktop size
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                if (window.innerWidth > 900 && sidebar.classList.contains('active')) {
+                    sidebar.classList.remove('active');
+                    hamburgerMenu.classList.remove('active');
+                    if (sidebarOverlay) {
+                        sidebarOverlay.classList.remove('active');
+                    }
+                    document.body.style.overflow = '';
+                }
+            }, 100);
+        });
+    }
     
     const typedName = document.querySelector('.typed-name');
     const typedGreeting = document.querySelector('.greeting');

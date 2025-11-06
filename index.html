@@ -10,11 +10,20 @@
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=Shippori+Mincho:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
     <div id="entrance-overlay"></div>
+    <!-- Sidebar Overlay (mobile only) -->
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+    <!-- Hamburger Menu Button (mobile only) -->
+    <button class="hamburger-menu" id="hamburger-menu" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
     <!-- Sidebar -->
-    <aside class="sidebar">
+    <aside class="sidebar" id="sidebar">
             <div class="sidebar-name">
                 <h1><span class="typed-name" aria-label="Tristan Lee"></span></h1>
                 <h4><span class="greeting" aria-label="Hello there!"></span></h4>
@@ -56,7 +65,7 @@
         <!-- Main Content -->
         <main class="main-content">
             <!-- Home Section -->
-            <section id="home" class="content-section" data-bg="#f7fbff" data-foreground="light">
+            <section id="home" class="content-section" data-bg="#ffffff" data-foreground="light">
                 <header class="content-header">
                     <div class="timestamp" id="timestamp"></div>
                 </header>
@@ -98,7 +107,7 @@
             </section>
 
             <!-- About Section -->
-            <section id="about" class="content-section experience-section" data-bg="#ede3d8" data-foreground="light">
+            <section id="about" class="content-section experience-section" data-bg="#ffffff" data-foreground="light">
                 <div class="experience-container">
                     <div class="experience-section-header">
                         <h2 class="experience-title">CURRENT</h2>
@@ -143,7 +152,7 @@
                                 </ul>
                             </div>
                             <div class="experience-header-right">
-                                <span class="experience-date">June 2025 - August 2025<br>San Diego, California</span>
+                                <span class="experience-date">June 2025 - August 2025<br>San Jose, California</span>
                                 <a href="https://casgc.ucsd.edu/" target="_blank" rel="noopener noreferrer" class="experience-logo-link">
                                     <div class="experience-logo">
                                         <img src="./Assets/logos/nasa.png" alt="California Space Grant Consortium logo" onerror="this.style.display='none'">
@@ -209,9 +218,9 @@
                     </div>
                 </div>
             </section>
-
+<!--e8f4f8-->
             <!-- Current Projects Section -->
-            <section id="current-projects" class="content-section" data-bg="#e8f4f8" data-foreground="dark">
+            <section id="current-projects" class="content-section" data-bg="#ffffff" data-foreground="dark">
                 <div class="work-section">
                     <div class="section-title-small">CURRENT PROJECTS</div>
                     <div class="current-projects-grid">
@@ -254,7 +263,7 @@
             </section>
 
             <!-- Projects Section -->
-            <section id="projects" class="content-section" data-bg="#fff1e0" data-foreground="dark">
+            <section id="projects" class="content-section" data-bg="#ffffff" data-foreground="dark">
                 <div class="work-section">
                     <div class="section-title-small">PROJECTS</div>
                     <div id="projects-grid" class="work-grid"></div>
@@ -262,7 +271,7 @@
             </section>
 
             <!-- Logs Section -->
-            <section id="logs" class="content-section" data-bg="#f7fbff" data-foreground="dark">
+            <section id="logs" class="content-section" data-bg="#ffffff" data-foreground="dark">
                 <div class="work-section">
                     <div class="section-title-small">WEEKLY LOGS</div>
                     <p class="logs-subtitle">Just some of my thoughts</p>

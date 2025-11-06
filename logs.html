@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="styles.css">
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=Shippori+Mincho:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <style>
         /* Ensure standalone page gets the same background transition base */
         html, body { background-color: var(--page-bg, #ffffff); }
@@ -18,8 +19,16 @@
     
 </head>
 <body>
+    <!-- Sidebar Overlay (mobile only) -->
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+    <!-- Hamburger Menu Button (mobile only) -->
+    <button class="hamburger-menu" id="hamburger-menu" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
     <!-- Sidebar -->
-    <aside class="sidebar">
+    <aside class="sidebar" id="sidebar">
         <div class="sidebar-name">
             <h1><span class="typed-name" aria-label="Tristan Lee"></span></h1>
             <h4><span class="greeting" aria-label="Hello there!"></span></h4>
