@@ -28,9 +28,9 @@ This is a wrap on the Fall logs and on me for a while, I will be deactivating th
 
 Happy Thanksgiving and Happy Holidays!
 
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; margin-bottom: 24px;">
   <iframe
-    src="https://www.youtube.com/embed/wgVOgGLtPtc?si=OExwcZZgrjQRn03V&amp;start=551"
+    src="https://www.youtube.com/embed/vgVoqGLtPtc?start=551"
     style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
     frameborder="0"
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -38,9 +38,9 @@ Happy Thanksgiving and Happy Holidays!
   </iframe>
 </div>
 
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; margin-bottom: 24px;">
   <iframe
-    src="https://www.youtube.com/embed/LstIgtkEe50?si=SB6YiP4ppYGr2ZbY&amp;start=24"
+    src="https://www.youtube.com/embed/Lst9tkE5oZs?start=24"
     style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
     frameborder="0"
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -48,15 +48,16 @@ Happy Thanksgiving and Happy Holidays!
   </iframe>
 </div>
 
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;">
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; margin-bottom: 24px;">
   <iframe
-    src="https://www.youtube.com/embed/0EhbvQSx6Dk?si=EN4JcN3sTOGaX1Yv&amp;start=51"
+    src="https://www.youtube.com/embed/0EhbvQSx6Dk?start=51"
     style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
     frameborder="0"
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
     allowfullscreen>
   </iframe>
 </div>
+
 
 
 
