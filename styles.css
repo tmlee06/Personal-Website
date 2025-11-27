@@ -661,6 +661,19 @@ html {
     font-size: 3rem;
     color: #fff;
 }
+/* GitHub project logos inside cards */
+.work-image .project-logo {
+    width: 70%;
+    height: 70%;
+    object-fit: contain;
+    display: block;
+}
+
+/* Optional, if some logos are dark and you want a lighter tile */
+.work-card.project-card .work-image {
+    background: #050505;
+}
+
 
 .work-info {
     padding: 1.5rem;

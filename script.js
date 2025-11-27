@@ -786,65 +786,144 @@ window.addEventListener('load', () => {
 
     })();
 });
+// For now. no custom logos. always fall back to icons
+function getProjectLogo(repo) {
+  // When you have real logo files later, uncomment and edit this map.
+  /*
+  const name = (repo.name || '').toLowerCase();
+  const map = {
+    'blackjack': 'img/projects/blackjack.svg',
+    'personal-website': 'img/projects/personal-website.svg'
+    // add more mappings here
+  };
+  return map[name] || null;
+  */
+  return null;
+}
+
+// Fallback icons by language or name
+function getIconClassForRepo(repo) {
+  const lang = repo.language || '';
+  const name = (repo.name || '').toLowerCase();
+
+  switch (lang) {
+    case 'JavaScript':
+      return 'fab fa-js-square';
+    case 'TypeScript':
+      return 'fab fa-js';
+    case 'Python':
+      return 'fab fa-python';
+    case 'Jupyter Notebook':
+      // "Notebook" style icon for Jupyter projects
+      return 'fas fa-book-open';
+    case 'HTML':
+      return 'fab fa-html5';
+    case 'CSS':
+      return 'fab fa-css3-alt';
+    case 'C++':
+      return 'fas fa-code-branch';
+    case 'C':
+      return 'fas fa-microchip';
+    case 'Java':
+      return 'fab fa-java';
+    default:
+      break;
+  }
+
+  if (name.includes('blackjack')) {
+    return 'fas fa-dice';
+  }
+
+  return 'fas fa-code';
+}
+
 
 // Load GitHub repositories and render into Projects grid
 async function loadGitHubProjects(username) {
-    const grid = document.getElementById('projects-grid');
-    if (!grid) return;
-    try {
-        const res = await fetch(`https://api.github.com/users/${encodeURIComponent(username)}/repos?per_page=100&sort=updated`);
-        if (!res.ok) throw new Error('Failed to fetch repos');
-        const repos = await res.json();
+  const grid = document.getElementById('projects-grid');
+  if (!grid) return;
 
-        const filtered = (Array.isArray(repos) ? repos : [])
-            .filter(r => !r.fork)
-            .sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at))
-            .slice(0, 9);
+  try {
+    const res = await fetch(
+      `https://api.github.com/users/${encodeURIComponent(username)}/repos?per_page=100&sort=updated`
+    );
+    if (!res.ok) throw new Error('Failed to fetch repos');
 
-        const frag = document.createDocumentFragment();
-        filtered.forEach(repo => {
-            const card = document.createElement('div');
-            card.className = 'work-card project-card';
+    const repos = await res.json();
 
-            const icon = document.createElement('div');
-            icon.className = 'work-image';
-            icon.innerHTML = '<i class="fas fa-code"></i>';
+    const filtered = (Array.isArray(repos) ? repos : [])
+      .filter(r => !r.fork)
+      .sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at))
+      .slice(0, 9);
 
-            const info = document.createElement('div');
-            info.className = 'work-info';
+    const frag = document.createDocumentFragment();
 
-            const title = document.createElement('a');
-            title.href = repo.html_url;
-            title.target = '_blank';
-            title.rel = 'noopener noreferrer';
-            title.className = 'work-title project-title-link';
-            title.textContent = repo.name || 'repo';
+    filtered.forEach(repo => {
+      const card = document.createElement('div');
+      card.className = 'work-card project-card';
 
-            const subtitle = document.createElement('div');
-            subtitle.className = 'work-subtitle';
-            const lang = repo.language ? `${repo.language}` : '';
-            const stars = typeof repo.stargazers_count === 'number' ? `★ ${repo.stargazers_count}` : '';
-            subtitle.textContent = [lang, stars].filter(Boolean).join(' · ');
+      // Icon or logo area
+      const icon = document.createElement('div');
+      icon.className = 'work-image';
 
-            const desc = document.createElement('div');
-            desc.className = 'project-desc';
-            desc.textContent = repo.description || '';
+      const logoSrc = getProjectLogo(repo);
+      if (logoSrc) {
+        const img = document.createElement('img');
+        img.src = logoSrc;
+        img.alt = `${repo.name} logo`;
+        img.className = 'project-logo';
+        icon.appendChild(img);
+      } else {
+        const iconClass = getIconClassForRepo(repo);
+        icon.innerHTML = `<i class="${iconClass}"></i>`;
+      }
 
-            info.appendChild(title);
-            info.appendChild(subtitle);
-            if (desc.textContent) info.appendChild(desc);
+      const info = document.createElement('div');
+      info.className = 'work-info';
 
-            card.appendChild(icon);
-            card.appendChild(info);
-            frag.appendChild(card);
-        });
+      const title = document.createElement('a');
+      title.href = repo.html_url;
+      title.target = '_blank';
+      title.rel = 'noopener noreferrer';
+      title.className = 'work-title project-title-link';
+      title.textContent = repo.name || 'repo';
 
-        grid.innerHTML = '';
-        grid.appendChild(frag);
-    } catch (e) {
-        grid.innerHTML = '<p style="color:#666; text-align:left;">Unable to load projects from GitHub right now.</p>';
-    }
+      const subtitle = document.createElement('div');
+      subtitle.className = 'work-subtitle';
+      const lang = repo.language ? `${repo.language}` : '';
+      const stars =
+        typeof repo.stargazers_count === 'number'
+          ? `★ ${repo.stargazers_count}`
+          : '';
+      subtitle.textContent = [lang, stars].filter(Boolean).join(' · ');
+
+      const desc = document.createElement('div');
+      desc.className = 'project-desc';
+      desc.textContent = repo.description || '';
+
+      info.appendChild(title);
+      info.appendChild(subtitle);
+      if (desc.textContent) info.appendChild(desc);
+
+      card.appendChild(icon);
+      card.appendChild(info);
+      frag.appendChild(card);
+    });
+
+    grid.innerHTML = '';
+    grid.appendChild(frag);
+  } catch (e) {
+    grid.innerHTML =
+      '<p style="color:#666; text-align:left;">Unable to load projects from GitHub right now.</p>';
+  }
 }
+
+// Call this once after the DOM is ready
+document.addEventListener('DOMContentLoaded', () => {
+  loadGitHubProjects('tmlee06');
+});
+
+
 
 // Console welcome message
 console.log(`
