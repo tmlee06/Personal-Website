@@ -1,6 +1,27 @@
 [
-  "week-1.md",
-  "week-2.md",
-  "week-3.md"
+  {
+    "title": "Fall 2025",
+    "logs": [
+      {
+        "filename": "Week 1",
+        "path": "logs/Fall-2025/week-1.md"
+      },
+      {
+        "filename": "Week 2",
+        "path": "logs/Fall-2025/week-2.md"
+      },
+      {"filename": "Week 3",
+        "path": "logs/Fall-2025/week-3.md"
+      }
+    ]
+  },
+  {
+    "title": "Winter 2026",
+    "logs": [
+      {
+        "filename": "Week 1",
+        "path": "logs/Winter-2026/test.md"
+      }
+    ]
+  }
 ]
-

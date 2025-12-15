@@ -1357,3 +1357,55 @@ body {
         padding: 1.5rem 1rem;
     }
 }
+
+/*
+ * LOGS PAGE STYLING (for grouped logs)
+ * =====================================
+ */
+
+/* Ensure logs-list is a grid container if it's not already, and that its contents are laid out correctly */
+.logs-list {
+    display: grid; 
+    /* The next line ensures 2 columns on desktop, matching your existing structure */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    padding-top: 20px;
+    width: 100%;
+}
+
+.logs-section-header {
+    /* Title for the quarter/folder, e.g., "Fall 2025" */
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-top: 3rem;
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.5rem;
+    width: 100%;
+    
+    /* This is the key property: makes the title span all columns in the grid */
+    grid-column: 1 / -1; 
+    
+    /* Visual separator */
+    border-bottom: 2px solid rgba(0, 0, 0, 0.1); 
+    color: var(--text-color, #282828);
+}
+
+/* Specific styling for the last log card in a row to ensure it doesn't leave a gap */
+.logs-list .log-card:nth-last-child(2) {
+    /* If you have 2 columns, this targets the second to last item to ensure it sits nicely */
+    align-self: flex-start;
+}
+
+
+/* Responsive adjustment for mobile to keep the header full width */
+@media (max-width: 600px) {
+    .logs-section-header {
+        font-size: 1.25rem;
+        margin-top: 2rem;
+    }
+    .logs-list {
+        gap: 20px;
+        padding-top: 10px;
+    }
+}

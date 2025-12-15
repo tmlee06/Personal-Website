@@ -173,147 +173,141 @@ function parseFrontmatter(markdownText) {
     return { metadata, content: content.trim() };
 }
 
-// Load Weekly Logs from Markdown files
-async function loadWeeklyLogs() {
-    const container = document.getElementById('logs-list');
-    if (!container) return;
-    
+/**
+ * Loads and processes all logs from logs-index.json.
+ * It is now resilient to both the old (flat array of file names) and the new (nested) structure.
+ *
+ * @returns {Promise<Array<{sectionTitle: string, logs: Array<Object>}>>} Array of section objects.
+ */
+async function loadLogsData() {
     try {
-        // First, get the index of log files
         const indexRes = await fetch('logs-index.json', { cache: 'no-store' });
         if (!indexRes.ok) {
-            // Fallback to old logs.json if index doesn't exist
-            const res = await fetch('logs.json', { cache: 'no-store' });
-            if (!res.ok) throw new Error('Failed to load logs');
-            const logs = await res.json();
-            renderLogs(container, logs);
-            return;
+            console.error('Failed to load logs-index.json');
+            return null;
         }
         
-        const logFiles = await indexRes.json();
-        if (!Array.isArray(logFiles) || logFiles.length === 0) {
-            container.innerHTML = '<p style="text-align:left;color:#999;font-size:0.9rem;">No logs yet. Create markdown files in the <code style="background:#f5f5f5;padding:0.15rem 0.4rem;font-size:0.85rem;">logs/</code> directory.</p>';
-            return;
+        const indexData = await indexRes.json();
+
+        let sectionsData = [];
+        
+        // CHECK 1: If it's the OLD, FLAT array structure (e.g., ["file1.md", "file2.md"])
+        if (Array.isArray(indexData) && typeof indexData[0] === 'string') {
+            // Convert flat array into the expected nested structure for processing
+            const flatLogs = indexData.map(filename => ({
+                filename: filename.replace('.md', ''),
+                path: filename // Assumes all logs are in the root directory for now
+            }));
+            sectionsData = [{ title: 'All Logs', logs: flatLogs }];
+
+        // CHECK 2: If it's the NEW, NESTED array structure
+        } else if (Array.isArray(indexData) && typeof indexData[0] === 'object' && indexData[0].logs) {
+            sectionsData = indexData;
+        } else {
+            console.error('logs-index.json format not recognized.');
+            return null;
         }
         
-        // Load all markdown files
-        const logPromises = logFiles.map(async (filename) => {
-            try {
-                const res = await fetch(`logs/${filename}`, { cache: 'no-store' });
-                if (!res.ok) return null;
-                const markdown = await res.text();
-                const { metadata, content } = parseFrontmatter(markdown);
-                
-                // Convert markdown to HTML
-                const htmlContent = typeof marked !== 'undefined' 
-                    ? marked.parse(content) 
-                    : content.replace(/\n\n/g, '</p><p>').replace(/\n/g, '<br>');
-                
-                return {
-                    week: metadata.week || null,
-                    date: metadata.date || '',
-                    title: metadata.title || 'Untitled log',
-                    summary: htmlContent,
-                    tags: Array.isArray(metadata.tags) ? metadata.tags : (metadata.tags ? [metadata.tags] : []),
-                    url: metadata.url || null
-                };
-            } catch (err) {
-                console.error(`Failed to load ${filename}:`, err);
-                return null;
-            }
-        });
+        if (sectionsData.length === 0) {
+            return [];
+        }
         
-        const logs = (await Promise.all(logPromises))
-            .filter(log => log !== null)
-            .sort((a, b) => {
-                // Sort by week (descending) or date (descending)
-                if (a.week && b.week) return b.week - a.week;
-                if (a.date && b.date) return new Date(b.date) - new Date(a.date);
+        // The rest of the logic remains the same: process the now-standardized sectionsData
+        const processedSections = await Promise.all(sectionsData.map(async (section) => {
+            if (!Array.isArray(section.logs)) return { sectionTitle: section.title, logs: [] };
+
+            const logPromises = section.logs.map(async (logEntry) => {
+                const path = logEntry.path; 
+                
+                try {
+                    const res = await fetch(path, { cache: 'no-store' });
+                    // CRITICAL: Robust error handling - skip if file is missing (404)
+                    if (!res.ok) {
+                       console.error(`Log file not found or failed to load: ${path}`, res.status);
+                       return null; 
+                    }
+                    const markdown = await res.text();
+                    const { metadata, content } = parseFrontmatter(markdown);
+                    
+                    return {
+                        sectionTitle: section.title, 
+                        title: metadata.title || logEntry.filename, 
+                        date: metadata.date || '',
+                        week: metadata.week || null,
+                        content: content,
+                        tags: Array.isArray(metadata.tags) ? metadata.tags : (metadata.tags ? [metadata.tags] : []),
+                        url: metadata.url || null
+                    };
+                } catch (err) {
+                    console.error(`Failed to load log from path ${path}:`, err);
+                    return null;
+                }
+            });
+            
+            const logs = (await Promise.all(logPromises)).filter(log => log !== null);
+
+            // Sort logs within the section
+            logs.sort((a, b) => {
+                if (a.week && b.week) return a.week - b.week;
+                if (a.date && b.date) return new Date(a.date) - new Date(b.date);
                 return 0;
             });
-        
-        if (logs.length === 0) {
-            container.innerHTML = '<p style="text-align:left;color:#999;font-size:0.9rem;">No logs found.</p>';
-            return;
-        }
-        
-        renderLogs(container, logs);
+            
+            return { sectionTitle: section.title, logs: logs };
+        }));
+
+        // Filter out sections with no logs
+        return processedSections.filter(section => section.logs.length > 0);
+
     } catch (err) {
-        console.error('Error loading logs:', err);
-        container.innerHTML = '<p style="text-align:left;color:#999;font-size:0.9rem;">Failed to load logs. Check console for details.</p>';
+        console.error('Error loading logs data:', err);
+        return null;
     }
 }
 
-async function loadBioWeeklyLogs() {
-    const container = document.getElementById('bio-logs-list');
+
+// Modified to accept a boolean flag to render ALL logs vs. just bio logs
+async function loadWeeklyLogs(forBio = false) {
+    const container = document.getElementById(forBio ? 'bio-logs-list' : 'logs-list');
     if (!container) return;
     
-    try {
-        // Use the same loading logic as loadWeeklyLogs
-        const indexRes = await fetch('logs-index.json', { cache: 'no-store' });
-        if (!indexRes.ok) {
-            // Fallback to old logs.json
-            const res = await fetch('logs.json', { cache: 'no-store' });
-            if (!res.ok) throw new Error('Failed to load logs');
-            const logs = await res.json();
-            renderBioLogs(container, logs);
-            return;
-        }
-        
-        const logFiles = await indexRes.json();
-        if (!Array.isArray(logFiles) || logFiles.length === 0) {
-            container.innerHTML = '<p style="text-align:left;color:#999;font-size:0.9rem;">No logs yet.</p>';
-            return;
-        }
-        
-        // Load all markdown files
-        const logPromises = logFiles.map(async (filename) => {
-            try {
-                const res = await fetch(`logs/${filename}`, { cache: 'no-store' });
-                if (!res.ok) return null;
-                const markdown = await res.text();
-                const { metadata, content } = parseFrontmatter(markdown);
-                
-                // For bio, just get plain text summary (first paragraph or first 200 chars)
-                const plainText = content.replace(/\n\n+/g, ' ').replace(/\n/g, ' ').trim();
-                const summary = plainText.length > 200 ? plainText.substring(0, 200) + '...' : plainText;
-                
-                return {
-                    week: metadata.week || null,
-                    date: metadata.date || '',
-                    title: metadata.title || 'Untitled log',
-                    summary: summary,
-                    tags: Array.isArray(metadata.tags) ? metadata.tags : (metadata.tags ? [metadata.tags] : []),
-                    url: metadata.url || null
-                };
-            } catch (err) {
-                console.error(`Failed to load ${filename}:`, err);
-                return null;
-            }
-        });
-        
-        const logs = (await Promise.all(logPromises))
-            .filter(log => log !== null)
-            .sort((a, b) => {
-                if (a.week && b.week) return b.week - a.week;
-                if (a.date && b.date) return new Date(b.date) - new Date(a.date);
-                return 0;
-            });
-        
-        renderBioLogs(container, logs);
-    } catch (err) {
-        container.innerHTML = '<p style="text-align:left;color:#999;font-size:0.9rem;">No logs yet.</p>';
-    }
-}
-
-function renderLogs(container, logs) {
-    if (!Array.isArray(logs) || logs.length === 0) {
-        container.innerHTML = '<p style="text-align:left;color:#999;font-size:0.9rem;">No logs yet.</p>';
+    const sections = await loadLogsData();
+    if (!sections || sections.length === 0) {
+        container.innerHTML = `<p style="text-align:left;color:#999;font-size:0.9rem;">${forBio ? 'No logs yet.' : 'No logs found. Check console for details.'}</p>`;
         return;
     }
 
+    if (forBio) {
+        // Render only the most recent logs for the bio section
+        renderBioLogs(container, sections);
+    } else {
+        // Render all logs, grouped by section title, for the dedicated logs page
+        renderLogs(container, sections);
+    }
+}
+
+
+// Renders the full log list, without grouping headers, sorted by date/week.
+function renderLogs(container, sections) {
     const fragment = document.createDocumentFragment();
-    logs.forEach(log => {
+    
+    // 1. Flatten all logs into a single array
+    let allLogs = [];
+    sections.forEach(section => {
+        allLogs = allLogs.concat(section.logs);
+    });
+
+    // 2. Sort the combined list (newest first, or by week if no date)
+    allLogs.sort((a, b) => {
+        // Prefer date for sorting, if available (newest first)
+        if (a.date && b.date) return new Date(b.date) - new Date(a.date);
+        // Fallback to week number (highest week number first)
+        if (a.week && b.week) return b.week - a.week; 
+        return 0;
+    });
+
+    // 3. Render all log cards sequentially
+    allLogs.forEach(log => {
         const card = document.createElement('article');
         card.className = 'log-card';
 
@@ -330,7 +324,13 @@ function renderLogs(container, logs) {
 
         const body = document.createElement('div');
         body.className = 'log-body';
-        body.innerHTML = log.summary || '';
+        
+        // Convert markdown content to HTML for full logs page
+        const htmlContent = typeof marked !== 'undefined' 
+            ? marked.parse(log.content) 
+            : log.content.replace(/\n\n/g, '</p><p>').replace(/\n/g, '<br>');
+
+        body.innerHTML = htmlContent;
 
         card.appendChild(meta);
         card.appendChild(title);
@@ -363,15 +363,33 @@ function renderLogs(container, logs) {
     container.appendChild(fragment);
 }
 
-function renderBioLogs(container, logs) {
-    if (!Array.isArray(logs) || logs.length === 0) {
-        container.innerHTML = '<p style="text-align:left;color:#999;font-size:0.9rem;">No logs yet.</p>';
-        return;
-    }
 
+// Renders the most recent logs for the bio section
+function renderBioLogs(container, sections) {
     const fragment = document.createDocumentFragment();
-    // Show only the most recent 3-4 logs in bio section
-    const recentLogs = logs.slice(0, 4);
+    
+    // Flatten and sort all logs to get the most recent ones across all sections
+    let allLogs = [];
+    sections.forEach(section => {
+        // For bio logs, process the content for a short summary
+        const processedLogs = section.logs.map(log => {
+            // For bio, just get plain text summary (first paragraph or first 200 chars)
+            const plainText = log.content.replace(/\n\n+/g, ' ').replace(/\n/g, ' ').trim();
+            log.summary = plainText.length > 200 ? plainText.substring(0, 200) + '...' : plainText;
+            return log;
+        });
+        allLogs = allLogs.concat(processedLogs);
+    });
+
+    // Re-sort the combined list to ensure the top 4 are the most recent overall
+    allLogs.sort((a, b) => {
+        if (a.date && b.date) return new Date(b.date) - new Date(a.date);
+        if (a.week && b.week) return b.week - a.week; // Fallback to week number (desc)
+        return 0;
+    });
+
+    // Show only the most recent 4 logs in bio section
+    const recentLogs = allLogs.slice(0, 4);
     
     recentLogs.forEach(log => {
         const card = document.createElement('article');
@@ -411,14 +429,8 @@ function renderBioLogs(container, logs) {
         // Make log clickable - redirect to full log post
         card.style.cursor = 'pointer';
         card.addEventListener('click', () => {
-            // If log has a URL, use it; otherwise create one based on week or date
-            if (log.url) {
-                window.location.href = log.url;
-            } else if (log.week) {
-                window.location.href = `logs.html?week=${log.week}`;
-            } else {
-                window.location.href = `logs.html`;
-            }
+            // Since there is no single log file path, redirect to the logs page
+            window.location.href = `index.html#logs`;
         });
 
         fragment.appendChild(card);
@@ -438,8 +450,8 @@ function escapeHtml(str) {
 }
 
 window.addEventListener('load', () => {
-    // Set initial black background via CSS variable (JS updates --page-bg)
-    document.documentElement.style.setProperty('--page-bg', '#000');
+   // Set initial background to a light color (like your default #f7fbff) in case JS fails
+document.documentElement.style.setProperty('--page-bg', '#f7fbff');
     
     // Hamburger menu toggle (mobile)
     const hamburgerMenu = document.getElementById('hamburger-menu');
@@ -530,8 +542,8 @@ window.addEventListener('load', () => {
     }
 
     // Load logs
-    loadWeeklyLogs();
-    loadBioWeeklyLogs();
+    loadWeeklyLogs(false);
+    loadWeeklyLogs(true);
 
     // Load GitHub projects
     loadGitHubProjects('tmlee06');
