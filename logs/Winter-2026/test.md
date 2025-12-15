@@ -7,7 +7,6 @@ tags: [Life, UCSD, Engineering, Hockey]
 
 This is my log entry content, describing the initial setup.
 
-[... your other log content ...]
 
 Here is the embedded video showing the first test run:
 
@@ -17,4 +16,3 @@ Here is the embedded video showing the first test run:
   <script async src="//www.instagram.com/embed.js"></script>
 </blockquote>
 
-[... continue with the rest of your log entry ...]
