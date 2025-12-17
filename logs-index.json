@@ -4,14 +4,14 @@
     "logs": [
       {
         "filename": "Week 1",
-        "path": "logs/fall-2025/week-1.md"
+        "path": "logs/Fall-2025/week-1.md"
       },
       {
         "filename": "Week 2",
-        "path": "logs/fall-2025/week-2.md"
+        "path": "logs/Fall-2025/week-2.md"
       },
       {"filename": "Week 3",
-        "path": "logs/fall-2025/week-3.md"
+        "path": "logs/Fall-2025/week-3.md"
       }
     ]
   },
@@ -20,7 +20,7 @@
     "logs": [
       {
         "filename": "Week 1",
-        "path": "logs/winter-2026/test.md"
+        "path": "logs/Winter-2026/test.md"
       }
     ]
   }
