@@ -1157,10 +1157,6 @@ body {
     font-weight: 500;
 }
 
-.project-link-inline:hover {
-    /*text-decoration-color: rgba(40, 40, 43, 0.8);
-    color: #1a1a1a;*/
-}
 
 .experience-activities {
     font-size: 0.9rem;
@@ -1230,7 +1226,7 @@ body {
 
 /* 5. Title Brightening (Matches your Sidebar behavior) */
 .current-project-title {
-    color: #fffeff /* Starts dimmed */
+    color: #fffeff; /* Starts dimmed */
     transition: color 0.3s ease !important;
     font-size: 1.1rem !important;
 }
