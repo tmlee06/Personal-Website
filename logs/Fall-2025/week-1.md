@@ -1,10 +1,3 @@
----
-week: 1
-date: 2025-11-06
-title: Fall Season - Week 1
-tags: [Life, UCSD, Engineering, Hockey]
----
-
 Hello! Welcome to my website!
 
 For those who do not know me, I'm Tristan Lee, a third-year/first-year transfer Electrical Engineering student at the University of California, San Diego (Don't worry I am confused by it too 😂).
@@ -38,4 +31,3 @@ Ever since I created my first portfolio website for my business class during my 
 As always, check up on your friends, D3, called me the other day, and that made my day, which also in a bit inspired me to bring back the logs and make this website. Just a short quick message or call is all you need to make someone's day. A little goes a long way!
 
 See you all soon!
-

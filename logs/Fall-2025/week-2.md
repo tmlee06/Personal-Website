@@ -1,9 +1,3 @@
----
-week: 2
-date: 2025-11-17
-title: Fall Season - Week 2
-tags: [Life, UCSD, Engineering, Hockey]
----
 Hi everyone!
 
 I hope you all had a great day off on Veteran's Day last week! Salute to the all the troops and everyone who served!
@@ -38,7 +32,7 @@ Besides working on the battery team for Triton Solar Car, I am also on the team 
 
 This weekend, I played USC and UCLA. 7-4 L to USC, I had a 0 +/- with 4 penalty minutes (got to get on the stat sheet somehow). I had two minutes for fighting, defending my line-mate, and two minutes for hooking, which was a terrible call. I lifted the player's stick in front of the net to avoid a goal, and they called me on it. The game was very frustrating, a lot of back and forth goals on critical shifts, which is unacceptable. 8-2 L to UCLA, the Bruins absolutely whooped us, but fun game though. I got to play against my boy and catch up with some old teammates. For the most part, I say I had solid games this weekend, but I am not producing, which is killing me. I hate that both school and hockey are not going well for me, I need to figure out a way to overcome these hurdles.
 
-I got a new development in my life; I officially wear glasses now. My prescription is nothing too crazy, I just have astigmatism in my left eye and near-sighted in right. Reading that sentence back, my prescription does sound pretty intense, but I do not think much of it. Hopefully instead of making me look smart, I actually become smart with glasses. I just came across a crazy revelation; I get prescription Meta AU glasses to wear for my exams, the proctors cannot take away my sight 😂. My eyesight was 20/20 when I did the eye-test at the DMV a few years back, but I guess looking at a screen every day and a few brutal hits to the head can deteriorate your vision.
+I got a new development in my life; I officially wear glasses now. My prescription is nothing too crazy, I just have astigmatism in my left eye and near-sighted in right. Reading that sentence back, my prescription does sound pretty intense, but I do not think much of it. Hopefully instead of making me look smart, I actually become smart with glasses. I just came across a crazy revelation; I get prescription Meta AI glasses to wear for my exams, the proctors cannot take away my sight 😂. My eyesight was 20/20 when I did the eye-test at the DMV a few years back, but I guess looking at a screen every day and a few brutal hits to the head can deteriorate your vision.
 
 This is a lengthy log, so I am going to start wrap it up. I am currently in Week 8 now, just got back from UCLA, and found out I scored 1/12 on the midterm 😂. There's only 3 more weeks of this quarter left, I still have 2 more midterms, which are next week, then finals are up. I am not going home for Thanksgiving, so I can be all in on passing these courses. This weekend and last week were very busy with high and lows, but overall very enjoyable. Do not forget to smell the roses! I have to remind myself that I am in the middle of what I used to pray for, and just enjoy the moment! 
 

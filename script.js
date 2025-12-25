@@ -266,187 +266,178 @@ async function loadLogsData() {
 }
 
 
-// Modified to accept a boolean flag to render ALL logs vs. just bio logs
-async function loadWeeklyLogs(forBio = false) {
-    const container = document.getElementById(forBio ? 'bio-logs-list' : 'logs-list');
-    if (!container) return;
-    
-    const sections = await loadLogsData();
-    if (!sections || sections.length === 0) {
-        container.innerHTML = `<p style="text-align:left;color:#999;font-size:0.9rem;">${forBio ? 'No logs yet.' : 'No logs found. Check console for details.'}</p>`;
-        return;
-    }
+// --- LOG LOADING & DATA PROCESSING ---
 
-    if (forBio) {
-        // Render only the most recent logs for the bio section
-        renderBioLogs(container, sections);
-    } else {
-        // Render all logs, grouped by section title, for the dedicated logs page
-        renderLogs(container, sections);
-    }
+async function loadWeeklyLogs() {
+    const logsContainer = document.getElementById('logs-list');
+    const bioContainer = document.getElementById('bio-logs-list');
+
+    try {
+        const response = await fetch('logs-index.json');
+        const sections = await response.json();
+
+        // LIFO Sort
+        sections.reverse();
+        sections.forEach(s => s.logs && s.logs.reverse());
+
+        if (logsContainer) renderLogs(logsContainer, sections);
+        if (bioContainer) renderBioLogs(bioContainer, sections);
+
+        // DIRECT LINK LOGIC: If URL has a hash (from bio click), open it immediately
+        const currentHash = window.location.hash;
+        if (currentHash.startsWith('#log-')) {
+            const filePath = currentHash.replace('#log-', '');
+            // Find the log object in our data
+            const allLogs = sections.flatMap(s => s.logs);
+            const targetLog = allLogs.find(l => l.path === filePath);
+            if (targetLog) openFullscreenLog(targetLog);
+        }
+    } catch (e) { console.error(e); }
 }
 
+// --- MAIN LOGS PAGE RENDERER ---
 
-// Renders the full log list, without grouping headers, sorted by date/week.
 function renderLogs(container, sections) {
-    const fragment = document.createDocumentFragment();
-    
-    // 1. Flatten all logs into a single array
-    let allLogs = [];
-    sections.forEach(section => {
-        allLogs = allLogs.concat(section.logs);
-    });
+    container.innerHTML = ''; 
 
-    // 2. Sort the combined list (newest first, or by week if no date)
-    allLogs.sort((a, b) => {
-        // Prefer date for sorting, if available (newest first)
-        if (a.date && b.date) return new Date(b.date) - new Date(a.date);
-        // Fallback to week number (highest week number first)
-        if (a.week && b.week) return b.week - a.week; 
-        return 0;
-    });
+    sections.forEach((section) => {
+        const seasonFolder = document.createElement('details');
+        seasonFolder.className = 'season-folder';
 
-    // 3. Render all log cards sequentially
-    allLogs.forEach(log => {
-        const card = document.createElement('article');
-        card.className = 'log-card';
-
-        const meta = document.createElement('div');
-        meta.className = 'log-meta';
-        meta.innerHTML = `
-            <span>${escapeHtml(log.date || '')}</span>
-            ${log.week ? `<span>• Week ${escapeHtml(String(log.week))}</span>` : ''}
+        const seasonSummary = document.createElement('summary');
+        seasonSummary.className = 'season-header';
+        seasonSummary.innerHTML = `
+            <div class="folder-title">
+                <i class="fas fa-folder"></i>
+                <span>${section.title}</span>
+            </div>
+            <span class="custom-arrow"><i class="fas fa-chevron-right"></i></span>
         `;
 
-        const title = document.createElement('h3');
-        title.className = 'log-title';
-        title.textContent = log.title || 'Untitled log';
+        // Exclusive Logic: Close other folders when one opens
+        seasonSummary.addEventListener('click', () => {
+            if (!seasonFolder.hasAttribute('open')) {
+                document.querySelectorAll('.season-folder').forEach(other => {
+                    if (other !== seasonFolder) other.removeAttribute('open');
+                });
+            }
+        });
 
-        const body = document.createElement('div');
-        body.className = 'log-body';
-        
-        // Convert markdown content to HTML for full logs page
-        const htmlContent = typeof marked !== 'undefined' 
-            ? marked.parse(log.content) 
-            : log.content.replace(/\n\n/g, '</p><p>').replace(/\n/g, '<br>');
+        const logsList = document.createElement('div');
+        logsList.className = 'logs-preview-list';
 
-        body.innerHTML = htmlContent;
+        // LIFO order for the logs
+        section.logs.forEach((log) => {
+            const logRow = document.createElement('div');
+            logRow.className = 'log-file-row';
+            logRow.innerHTML = `
+                <span class="file-name">${log.filename}</span>
+                <span class="file-date">${log.date || ''}</span>
+            `;
+            logRow.onclick = () => openFullscreenLog(log);
+            logsList.appendChild(logRow);
+        });
 
-        card.appendChild(meta);
-        card.appendChild(title);
-        card.appendChild(body);
-
-        if (Array.isArray(log.tags) && log.tags.length) {
-            const tags = document.createElement('div');
-            tags.className = 'log-tags';
-            log.tags.forEach(t => {
-                const tag = document.createElement('span');
-                tag.className = 'log-tag';
-                tag.textContent = t;
-                tags.appendChild(tag);
-            });
-            card.appendChild(tags);
-        }
-
-        // Make log clickable if URL exists
-        if (log.url) {
-            card.style.cursor = 'pointer';
-            card.addEventListener('click', () => {
-                window.location.href = log.url;
-            });
-        }
-
-        fragment.appendChild(card);
+        seasonFolder.appendChild(seasonSummary);
+        seasonFolder.appendChild(logsList);
+        container.appendChild(seasonFolder);
     });
-
-    container.innerHTML = '';
-    container.appendChild(fragment);
 }
 
+// --- BIO SECTION RENDERER (Simplified to prevent crashing) ---
 
-// Renders the most recent logs for the bio section
+/**
+ * Renders the Bio section with the clean, minimalist grid
+ */
 function renderBioLogs(container, sections) {
-    const fragment = document.createDocumentFragment();
-    
-    // Flatten and sort all logs to get the most recent ones across all sections
     let allLogs = [];
-    sections.forEach(section => {
-        // For bio logs, process the content for a short summary
-        const processedLogs = section.logs.map(log => {
-            // For bio, just get plain text summary (first paragraph or first 200 chars)
-            const plainText = log.content.replace(/\n\n+/g, ' ').replace(/\n/g, ' ').trim();
-            log.summary = plainText.length > 200 ? plainText.substring(0, 200) + '...' : plainText;
-            return log;
-        });
-        allLogs = allLogs.concat(processedLogs);
-    });
-
-    // Re-sort the combined list to ensure the top 4 are the most recent overall
-    allLogs.sort((a, b) => {
-        if (a.date && b.date) return new Date(b.date) - new Date(a.date);
-        if (a.week && b.week) return b.week - a.week; // Fallback to week number (desc)
-        return 0;
-    });
-
-    // Show only the most recent 4 logs in bio section
-    const recentLogs = allLogs.slice(0, 4);
     
-    recentLogs.forEach(log => {
-        const card = document.createElement('article');
-        card.className = 'bio-log-card';
-
-        const meta = document.createElement('div');
-        meta.className = 'bio-log-meta';
-        meta.innerHTML = `
-            <span>${escapeHtml(log.date || '')}</span>
-            ${log.week ? `<span>• Week ${escapeHtml(String(log.week))}</span>` : ''}
-        `;
-
-        const title = document.createElement('h3');
-        title.className = 'bio-log-title';
-        title.textContent = log.title || 'Untitled log';
-
-        const body = document.createElement('p');
-        body.className = 'bio-log-body';
-        body.textContent = log.summary || '';
-
-        card.appendChild(meta);
-        card.appendChild(title);
-        card.appendChild(body);
-
-        if (Array.isArray(log.tags) && log.tags.length) {
-            const tags = document.createElement('div');
-            tags.className = 'bio-log-tags';
-            log.tags.forEach(t => {
-                const tag = document.createElement('span');
-                tag.className = 'bio-log-tag';
-                tag.textContent = t;
-                tags.appendChild(tag);
+    // Process sections to flatten the log list
+    sections.forEach(section => {
+        section.logs.forEach(log => {
+            allLogs.push({ 
+                ...log, 
+                seasonTitle: section.title || "Recent" // Fallback if title is missing
             });
-            card.appendChild(tags);
-        }
-
-        // Make log clickable - redirect to full log post
-        card.style.cursor = 'pointer';
-        card.addEventListener('click', () => {
-            // Since there is no single log file path, redirect to the logs page
-            window.location.href = `index.html#logs`;
         });
-
-        fragment.appendChild(card);
     });
+
+    // Sort by date (LIFO)
+    allLogs.sort((a, b) => new Date(b.date) - new Date(a.date));
 
     container.innerHTML = '';
-    container.appendChild(fragment);
+    
+    // Render top 4
+    allLogs.slice(0, 4).forEach(log => {
+        const card = document.createElement('div');
+        card.className = 'bio-log-card'; 
+        
+        // Ensure strings are valid to avoid "undefined"
+        const displaySeason = (log.seasonTitle).toUpperCase();
+        const displayDate = log.date ? `• ${log.date}` : "";
+
+        card.innerHTML = `
+            <span class="meta">${displaySeason} ${displayDate}</span>
+            <h3>${log.filename || "Untitled Log"}</h3>
+        `;
+        
+        // Open the log directly on click
+        card.onclick = () => openFullscreenLog(log);
+        container.appendChild(card);
+    });
 }
+
+/**
+ * Opens log in a persistent view with a pinned back button
+ */
+async function openFullscreenLog(log) {
+    const reader = document.createElement('div');
+    reader.className = 'fullscreen-reader';
+    
+    try {
+        const res = await fetch(log.path);
+        const text = await res.text();
+        const content = typeof marked !== 'undefined' ? marked.parse(text) : text;
+        
+        reader.innerHTML = `
+            <div class="pinned-nav">
+                <button class="back-link" id="close-viewer">
+                    <i class="fas fa-arrow-left"></i> BACK TO LOGS
+                </button>
+            </div>
+            <div class="reader-content">
+                <header class="reader-header">
+                    <span class="reader-meta">${log.date || ''}</span>
+                    <h1>${log.filename}</h1>
+                </header>
+                <div class="reader-body">${content}</div>
+                <button class="scroll-top" id="scroll-top-btn">TOP</button>
+            </div>
+        `;
+        
+        document.body.appendChild(reader);
+        document.body.style.overflow = 'hidden';
+
+        // Close logic
+        document.getElementById('close-viewer').onclick = () => {
+            reader.remove();
+            document.body.style.overflow = '';
+        };
+
+        // Optional Scroll to top
+        document.getElementById('scroll-top-btn').onclick = () => {
+            reader.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+        
+    } catch (err) { console.error("Error opening log:", err); }
+}
+
+document.addEventListener('DOMContentLoaded', loadWeeklyLogs);
 
 function escapeHtml(str) {
-    return String(str)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#039;');
+    return String(str).replace(/[&<>"']/g, m => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#039;'
+    })[m]);
 }
 
 window.addEventListener('load', () => {
@@ -850,17 +841,13 @@ function getIconClassForRepo(repo) {
 }
 
 
-// Load GitHub repositories and render into Projects grid
 async function loadGitHubProjects(username) {
   const grid = document.getElementById('projects-grid');
   if (!grid) return;
 
   try {
-    const res = await fetch(
-      `https://api.github.com/users/${encodeURIComponent(username)}/repos?per_page=100&sort=updated`
-    );
-    if (!res.ok) throw new Error('Failed to fetch repos');
-
+    const res = await fetch(`https://api.github.com/users/${encodeURIComponent(username)}/repos?per_page=100&sort=updated`);
+    if (!res.ok) throw new Error('Failed to fetch');
     const repos = await res.json();
 
     const filtered = (Array.isArray(repos) ? repos : [])
@@ -871,50 +858,33 @@ async function loadGitHubProjects(username) {
     const frag = document.createDocumentFragment();
 
     filtered.forEach(repo => {
-      const card = document.createElement('div');
+      // Create the card as an anchor (The whole box is now clickable)
+      const card = document.createElement('a');
+      card.href = repo.html_url;
+      card.target = '_blank';
+      card.rel = 'noopener noreferrer';
       card.className = 'work-card project-card';
 
-      // Icon or logo area
+      // Create Icon Container
       const icon = document.createElement('div');
-      icon.className = 'work-image';
+      icon.className = 'work-icon';
+      const iconClass = typeof getIconClassForRepo === 'function' ? getIconClassForRepo(repo) : 'fas fa-code';
+      icon.innerHTML = `<i class="${iconClass}"></i>`;
 
-      const logoSrc = getProjectLogo(repo);
-      if (logoSrc) {
-        const img = document.createElement('img');
-        img.src = logoSrc;
-        img.alt = `${repo.name} logo`;
-        img.className = 'project-logo';
-        icon.appendChild(img);
-      } else {
-        const iconClass = getIconClassForRepo(repo);
-        icon.innerHTML = `<i class="${iconClass}"></i>`;
-      }
-
+      // Create Info Container
       const info = document.createElement('div');
       info.className = 'work-info';
 
-      const title = document.createElement('a');
-      title.href = repo.html_url;
-      title.target = '_blank';
-      title.rel = 'noopener noreferrer';
-      title.className = 'work-title project-title-link';
-      title.textContent = repo.name || 'repo';
-
-      const subtitle = document.createElement('div');
-      subtitle.className = 'work-subtitle';
-      const lang = repo.language ? `${repo.language}` : '';
-      const stars =
-        typeof repo.stargazers_count === 'number'
-          ? `★ ${repo.stargazers_count}`
-          : '';
-      subtitle.textContent = [lang, stars].filter(Boolean).join(' · ');
+      // Title (Using div here because the parent 'card' is already an <a>)
+      const title = document.createElement('div');
+      title.className = 'work-title';
+      title.textContent = repo.name;
 
       const desc = document.createElement('div');
       desc.className = 'project-desc';
       desc.textContent = repo.description || '';
 
       info.appendChild(title);
-      info.appendChild(subtitle);
       if (desc.textContent) info.appendChild(desc);
 
       card.appendChild(icon);
@@ -925,16 +895,10 @@ async function loadGitHubProjects(username) {
     grid.innerHTML = '';
     grid.appendChild(frag);
   } catch (e) {
-    grid.innerHTML =
-      '<p style="color:#666; text-align:left;">Unable to load projects from GitHub right now.</p>';
+    console.error("GitHub Load Error:", e);
+    grid.innerHTML = '<p style="opacity:0.5; font-size:0.8rem; text-align:center; grid-column: 1/-1;">Unable to load projects.</p>';
   }
 }
-
-// Call this once after the DOM is ready
-document.addEventListener('DOMContentLoaded', () => {
-  loadGitHubProjects('tmlee06');
-});
-
 
 
 // Console welcome message

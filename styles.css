@@ -29,13 +29,6 @@
 
 /* La Jolla / UCSD palette variables (lighter, laid-back coastal vibes) */
 :root {
-    --lj-ocean-1: #f7fbff; /* ultra light sky */
-    --lj-ocean-2: #eef8ff; /* very light ocean */
-    --lj-ocean-3: #cfeff9; /* light mid ocean */
-    --lj-sand:    #fbf6ec; /* lighter warm sand */
-    --ucsd-gold:  #fff1e0; /* softer gold */
-    
-
     --bg-fade-duration: 1200ms; /* overlay crossfade duration - smoother transition */
     --page-bg: #000; /* current page background color (updated from JS) */
     --sidebar-width: 200px; /* reduced from 240px */
@@ -80,20 +73,22 @@ body.light-foreground .sidebar,
 body.light-foreground .sidebar a,
 body.light-foreground .project-link,
 body.light-foreground .social-link {
-    color: #282828;
+    color: #ffffff;
     border-color: rgba(40,40,43 0.1);
 }
 
 body.light-foreground .project-link:hover,
 body.light-foreground .social-link:hover {
-    color: rgba(40, 40, 43, 0.8);
+    opacity: 1;
+    transform: translateY(-2px);
+
 }
 
 /* Sidebar */
 .sidebar {
     padding: 2rem 1.5rem;
     background: transparent;
-    color: #28282B;
+    color: #ffffff;
     border-right: 1px solid rgba(255, 255, 255, 0.1);
     position: fixed !important;
     top: 0 !important;
@@ -129,6 +124,7 @@ body.light-foreground .social-link:hover {
     opacity: 0.7;
     margin-bottom: 0.25rem;
     font-weight: 400;
+    color: #fffefe;
 }
 
 .greeting {
@@ -137,6 +133,7 @@ body.light-foreground .social-link:hover {
     opacity: 0.7;
     margin-bottom: 2.5rem;
     font-weight: 400;
+    color: #fffefe;
 }
 
 .sidebar-nav {
@@ -150,7 +147,7 @@ body.light-foreground .social-link:hover {
 .sidebar-nav .nav-link {
     display: block;
     padding: 0.5rem 0;
-    font-size: 0.6rem;
+    font-size: 0.75rem;
     color: inherit;
     opacity: 0.7;
     text-decoration: none;
@@ -160,9 +157,13 @@ body.light-foreground .social-link:hover {
 .sidebar-nav .nav-link:hover,
 .sidebar-nav .nav-link.active {
     opacity: 1;
+    transform: translateY(-2px);
+    
 }
 
+
 .sidebar-section {
+    padding: 2rem 1.5rem;
     margin-bottom: 2rem;
 }
 
@@ -171,7 +172,7 @@ body.light-foreground .social-link:hover {
     font-weight: 600;
     letter-spacing: 0.05em;
     opacity: 0.7;
-    color: inherit;
+    color: #fffeff;
     margin-bottom: 0.75rem;
     text-align: center;
 }
@@ -187,7 +188,7 @@ body.light-foreground .social-link:hover {
 
 .project-link,
 .social-link {
-    color: #666;
+    color: #ffffff;
     text-decoration: none;
     font-size: 0.9rem;
     transition: color 0.15s ease;
@@ -209,6 +210,7 @@ body.light-foreground .social-link:hover {
 .typed-name {
     position: relative;
     white-space: nowrap;
+    color: #fffefe;
 }
 .typed-name::after {
     content: '|';
@@ -257,7 +259,7 @@ html {
 }
 
 .social-icon-link {
-    color: inherit;
+    color: #fffefe;
     text-decoration: none;
     font-size: 1.75rem;
     opacity: 0.8;
@@ -306,10 +308,6 @@ html {
     color: inherit;
 }
 
-.social-link:hover i,
-.project-link:hover i {
-    color: var(--lj-ocean-1);
-}
 
 /* Hide visual scrollbar for the sidebar but keep it scrollable (one visible scrollbar on the page) */
 .sidebar::-webkit-scrollbar { display: none; }
@@ -340,7 +338,7 @@ html {
 
 .timestamp {
     font-size: 0.85rem;
-    color: #999;
+    color: #ffffff;
     font-weight: 400;
 }
 
@@ -471,97 +469,55 @@ html {
 }
 
 /* Bio Logs Styling */
-.bio-logs-container {
-    margin-top: 1.5rem;
-    max-width: 500px;
-}
-
-.bio-logs-grid {
+#bio-logs-list {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 0.75rem;
-    margin-top: 0.75rem;
-}
-
-@media (max-width: 900px) {
-    .bio-logs-grid {
-        grid-template-columns: 1fr;
-    }
+    grid-template-columns: 1fr 1fr;
+    gap: 50px 30px; /* Vertical and horizontal gap */
+    margin-top: 40px;
 }
 
 .bio-log-card {
-    background: #fff;
-    border: 1px solid #e5e5e5;
-    border-radius: 0;
-    padding: 1rem;
-    transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+    border-bottom: 1px solid #fffeff; /* Sharp white line */
+    padding-bottom: 15px;
     cursor: pointer;
+    transition: opacity 0.2s ease;
 }
 
-.bio-log-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    border-color: #d0d0d0;
+.bio-log-card:hover { opacity: 1;
+    transform: translateY(-2px);  }
+
+.bio-log-card .meta {
+    font-size: 0.7rem;
+    color: #fffeff;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    display: block;
+    margin-bottom: 5px;
 }
 
-.bio-log-meta {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    font-size: 0.75rem;
-    color: #999;
-    margin-bottom: 0.4rem;
-}
-
-.bio-log-title {
-    font-size: 0.95rem;
-    font-weight: 500;
-    color: #1a1a1a;
-    margin-bottom: 0.3rem;
-}
-
-.bio-log-body {
-    color: #666;
-    line-height: 1.5;
-    font-size: 0.85rem;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-}
-
-.bio-log-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-    margin-top: 0.5rem;
-}
-
-.bio-log-tag {
-    background: #f5f5f5;
-    color: #666;
-    padding: 0.2rem 0.5rem;
-    border-radius: 0;
-    font-size: 0.75rem;
-    font-weight: 400;
+.bio-log-card h3 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #fffeff;
+    margin: 0;
 }
 
 .bio-text {
     font-size: 1.05rem;
     line-height: 1.75;
-    color: #28282B;
+    color: #fffefe;
     font-weight: 400;
     margin-bottom: 0.5rem;
 }
 
 .experience-description {
     font-size: 0.95rem;
-    color: #444;
+    color: #fffefe;
     line-height: 1.65;
     margin-top: 0.5rem;
 }
 
-.cv-buttons {
+.resume-buttons {
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
@@ -569,11 +525,11 @@ html {
     width: 100%;
 }
 
-.cv-button {
+.resume-button {
     display: inline-block;
     padding: 0.6rem 1.5rem;
     font-size: 0.9rem;
-    color: #28282B;
+    color: #fffefe;
     text-decoration: none;
     font-weight: 400;
     letter-spacing: 0.02em;
@@ -585,30 +541,31 @@ html {
     border-radius: 9999px;
 }
 
-.cv-button:hover {
+.resume-button:hover {
     background: rgba(40, 40, 43, 0.05);
     border-color: rgba(40, 40, 43, 0.5);
-    transform: translateY(-1px);
+    opacity: 1;
+    transform: translateY(-2px);
 }
 
-.cv-button-view {
-    border-color: #28282B;
-    color: #28282B;
+.resume-button-view {
+    border-color: #fffcfb;
+    color: #fffefe;
 }
 
-.cv-button-view:hover {
+.resume-button-view:hover {
     background: rgba(40, 40, 43, 0.05);
-    border-color: #28282B;
+    border-color: #fffefe;
 }
 
-.cv-button:not(.cv-button-view) {
-    border-color: #28282B;
-    color: #28282B;
+.resume-button:not(.resume-button-view) {
+    border-color: #fffcfb;
+    color: #fffefe;
 }
 
-.cv-button:not(.cv-button-view):hover {
+.resume-button:not(.resume-button-view):hover {
     background: rgba(40, 40, 43, 0.05);
-    border-color: #28282B;
+    border-color: #fffefe;
 }
 
 
@@ -632,15 +589,15 @@ html {
 /* Projects grid card tweaks */
 .project-card .project-title-link { text-decoration: none; }
 .project-desc {
-    color: #666;
+    color: #fffeff;
     font-size: 0.9rem;
     margin-top: 0.35rem;
     line-height: 1.6;
 }
 
 .work-card {
-    background: #fff;
-    border: 1px solid #e5e5e5;
+    background: #2e2d2c;
+    border: 1px solid #2e2d2c;
     border-radius: 0;
     overflow: hidden;
     transition: transform 0.15s ease, box-shadow 0.15s ease;
@@ -662,7 +619,7 @@ html {
     color: #fff;
 }
 /* GitHub project logos inside cards */
-.work-image .project-logo {
+.project-logo {
     width: 70%;
     height: 70%;
     object-fit: contain;
@@ -670,7 +627,7 @@ html {
 }
 
 /* Optional, if some logos are dark and you want a lighter tile */
-.work-card.project-card .work-image {
+.project-card {
     background: #050505;
 }
 
@@ -683,13 +640,13 @@ html {
 .work-title {
     font-size: 1.1rem;
     font-weight: 500;
-    color: #1a1a1a;
+    color: #fffeff;
     margin-bottom: 0.25rem;
 }
 
 .work-subtitle {
     font-size: 0.9rem;
-    color: #666;
+    color: #fffefe;
     margin-bottom: 1rem;
     font-weight: 400;
 }
@@ -705,7 +662,7 @@ html {
 
 /* Logs Section */
 .logs-subtitle {
-    color: #666;
+    color: #fffefe;
     font-size: 0.95rem;
     margin-top: 0.5rem;
     margin-bottom: 2rem;
@@ -789,7 +746,7 @@ html {
     text-align: center;
 }
 
-.cv-download-button {
+.resume-download-button {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
@@ -804,24 +761,25 @@ html {
     opacity: 0.8;
 }
 
-.cv-download-button:hover {
+.resume-download-button:hover {
     opacity: 1;
     transform: translateY(-2px);
     background: rgba(0, 0, 0, 0.05);
+    
 }
 
-.cv-download-button i {
+.resume-download-button i {
     font-size: 0.9rem;
 }
 
-.cv-download-link {
+.resume-download-link {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
     justify-content: center;
 }
 
-.cv-download-link i {
+.resume-download-link i {
     font-size: 0.9rem;
 }
 
@@ -954,6 +912,8 @@ html {
     .sidebar-section {
         display: block;
         margin-bottom: 2rem;
+        color: #fffefe;
+
     }
 
     .main-content {
@@ -1073,7 +1033,7 @@ body {
 /* About Section - Resume Style */
 .experience-section {
     background: transparent;
-    color: #28282B;
+    color: #fffeff;
     padding: 4rem 4rem;
 }
 
@@ -1095,7 +1055,7 @@ body {
     font-size: 1.5rem;
     font-weight: 700;
     letter-spacing: 0.05em;
-    color: #28282B;
+    color: #fffeff;
     margin-bottom: 0;
 }
 
@@ -1163,7 +1123,7 @@ body {
 .experience-role {
     font-size: 1.1rem;
     font-weight: 600;
-    color: #28282B;
+    color: #fffeff;
     margin-bottom: 0.25rem;
     line-height: 1.4;
 }
@@ -1174,14 +1134,14 @@ body {
 
 .experience-company {
     font-size: 0.95rem;
-    color: #555;
+    color: #fffefe;
     margin-bottom: 0.5rem;
 }
 
 
 .experience-date {
     font-size: 0.85rem;
-    color: #666;
+    color: #fffefe;
     white-space: normal;
     flex-shrink: 0;
     text-align: right;
@@ -1189,29 +1149,29 @@ body {
 }
 
 .project-link-inline {
-    color: #28282B;
+    color: #fffeff;
     text-decoration: underline;
-    text-decoration-color: rgba(40, 40, 43, 0.4);
+    text-decoration-color: #fffeff;
     text-underline-offset: 3px;
     transition: all 0.2s ease;
     font-weight: 500;
 }
 
 .project-link-inline:hover {
-    text-decoration-color: rgba(40, 40, 43, 0.8);
-    color: #1a1a1a;
+    /*text-decoration-color: rgba(40, 40, 43, 0.8);
+    color: #1a1a1a;*/
 }
 
 .experience-activities {
     font-size: 0.9rem;
-    color: #555;
+    color: #fffeff;
     line-height: 1.6;
     margin-top: 0.5rem;
 }
 
 .experience-activities strong {
     font-weight: 600;
-    color: #444;
+    color: #fffefe;
 }
 
 .experience-bullets {
@@ -1222,7 +1182,7 @@ body {
 
 .experience-bullets li {
     font-size: 0.95rem;
-    color: #444;
+    color: #fffeff;
     line-height: 1.6;
     margin-bottom: 0.4rem;
     padding-left: 1.2rem;
@@ -1233,72 +1193,75 @@ body {
     content: '•';
     position: absolute;
     left: 0;
-    color: #666;
+    color: #fffeff;
 }
 
-/* Current Projects Section */
+/* --- MAIN CONTENT: CURRENT PROJECTS GLOW & COMPACT --- */
+
+/* 1. Grid Layout: Adjusts based on screen size */
 .current-projects-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    margin-top: 2rem;
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)) !important;
+    gap: 1.5rem !important;
+    margin-top: 1.5rem !important;
 }
 
-.current-projects-grid .work-card {
-    display: flex;
-    flex-direction: column;
-}
-
+/* 2. The Card Link Wrapper */
 .work-card-link {
-    text-decoration: none;
-    color: inherit;
-    display: block;
+    text-decoration: none !important;
+    display: block !important;
 }
 
-.work-card-link:hover .work-card {
-    transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-}
-
+/* 3. The Card Style (Dimmed State) */
 .current-project-card {
-    scroll-margin-top: 100px;
+    background: rgba(255, 255, 255, 0.03) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    padding: 1.25rem !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    height: 100% !important;
 }
 
-.current-project-card:target {
-    border-color: rgba(40, 40, 43, 0.3);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+/* 4. Hover State: Lift and Glow Effect */
+.work-card-link:hover .current-project-card {
+    background: rgba(255, 255, 255, 0.08) !important;
+    border-color: rgba(255, 255, 255, 0.3) !important;
+    transform: translateY(-5px);
 }
 
-.work-image.current-project-logo {
-    background: #182B49 !important;
-    height: 200px;
-    padding: 2rem;
-}
-
-.work-image.current-project-logo img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    max-width: 100%;
-    max-height: 100%;
-}
-
+/* 5. Title Brightening (Matches your Sidebar behavior) */
 .current-project-title {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    flex-wrap: wrap;
+    color: #fffeff /* Starts dimmed */
+    transition: color 0.3s ease !important;
+    font-size: 1.1rem !important;
 }
 
-.wip-badge {
-    font-size: 0.75rem;
-    font-weight: 600;
-    color: #fff;
-    background: #666;
-    padding: 0.15rem 0.5rem;
-    border-radius: 3px;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+.work-card-link:hover .current-project-title {
+    color: #ffffff !important; /* Glows white on hover */
+}
+
+/* 6. Logo Container */
+.current-project-logo {
+    background: #182B49 !important; /* UCSD Navy */
+    height: 160px !important;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem !important;
+    margin-bottom: 1rem !important;
+    border-radius: 4px;
+}
+
+.current-project-logo img {
+    max-width: 100% !important;
+    max-height: 100% !important;
+    object-fit: contain !important;
+}
+
+/* 7. Description text */
+.current-project-description {
+    font-size: 0.85rem !important;
+    color: #fffeff;
+    line-height: 1.5 !important;
 }
 
 /* Responsive adjustments for experience section */
@@ -1337,8 +1300,8 @@ body {
         width: 80px;
         height: 80px;
     }
-    
-    .work-image.current-project-logo {
+
+    .current-project-logo {
         height: 160px;
         padding: 1.5rem;
     }
@@ -1408,4 +1371,275 @@ body {
         gap: 20px;
         padding-top: 10px;
     }
+}
+
+/* --- CLEAN FOLDER UI --- */
+.season-folder {
+    border: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    background: transparent;
+    transition: all 0.3s ease;
+}
+
+/* Remove default browser arrow/marker */
+.season-header::-webkit-details-marker,
+.season-header::marker {
+    display: none;
+    content: "";
+}
+
+.season-header {
+    padding: 24px 10px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    outline: none;
+    font-family: 'IBM Plex Sans', sans-serif;
+}
+
+.folder-title {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.folder-title i {
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 0.9rem;
+}
+
+.folder-title span {
+    color: #ffffff;
+    font-weight: 500;
+    font-size: 1.1rem;
+    letter-spacing: -0.01em;
+}
+
+/* Custom Minimalist Arrow */
+.custom-arrow {
+    font-size: 0.7rem;
+    color: rgba(255, 255, 255, 0.3);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.season-folder[open] .custom-arrow {
+    transform: rotate(90deg);
+}
+
+/* --- LOG FILE ROWS --- */
+.logs-preview-list {
+    padding: 0 10px 24px 42px; /* Indents files under the folder text */
+}
+
+.log-file-row {
+    padding: 12px 0;
+    cursor: pointer;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.log-file-row:hover .file-name {
+    color: #ffffff;
+}
+
+.file-name {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.95rem;
+    font-weight: 400;
+    transition: color 0.2s;
+}
+
+.file-date {
+    color: rgba(255, 255, 255, 0.3);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+/* --- THE OVERLAY --- */
+.fullscreen-reader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #2e2d2c; /* Match your dark background */
+    z-index: 99999; /* Ensure it sits above your sidebar and header */
+    overflow-y: auto;
+    font-family: 'IBM Plex Sans', sans-serif;
+}
+
+/* --- THE CONTENT CONTAINER --- */
+.reader-container {
+    max-width: 800px; /* Standard reading width */
+    margin: 0 auto;
+    padding: 60px 40px;
+    text-align: left !important;
+}
+
+
+
+/* --- PINNED NAVIGATION --- */
+.pinned-nav {
+    position: fixed;
+    top: 40px;
+    left: 40px;
+    z-index: 10000;
+}
+
+.back-link {
+    background: #000;
+    color: #fff;
+    border: 1px solid #333;
+    padding: 10px 18px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.back-link:hover {
+    background: #fff;
+    color: #000;
+}
+
+/* Scroll Top Button inside Reader */
+.scroll-top {
+    margin-top: 100px;
+    background: transparent;
+    color: #555;
+    border: none;
+    font-size: 0.7rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.scroll-top:hover { color: #fff; }
+
+
+/* --- THE READER VIEW --- */
+.fullscreen-reader {
+    position: fixed;
+    inset: 0;
+    background: #111;
+    z-index: 99999;
+    overflow-y: auto;
+    color: #fff;
+}
+
+.reader-content {
+    max-width: 700px; /* Optimal reading width */
+    margin: 120px auto; /* More top margin to clear the fixed button */
+    padding: 0 40px;
+}
+
+.reader-body {
+    font-family: 'IBM Plex Sans', sans-serif;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.8);
+    text-align: left !important;
+}
+
+.reader-body p { margin-bottom: 1.5rem; text-align: left !important;}
+
+/* --- LOG TYPOGRAPHY --- */
+.reader-header h1 {
+    font-size: 2.8rem;
+    color: #fff;
+    margin: 10px 0 30px 0;
+    line-height: 1.1;
+}
+
+.reader-meta {
+    color: #fffeff; /* Use your blue accent color */
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+}
+
+.reader-body {
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1.8;
+    font-size: 1.1rem;
+}
+
+.reader-body p {
+    margin-bottom: 1.5rem;
+    text-align: left !important;
+}
+
+/* --- CONSOLIDATED PRODUCTION FIXES --- */
+
+/* SIDEBAR: CURRENT PROJECTS */
+.sidebar-section {
+    padding: 1rem 1.5rem !important; /* Tightens the section container */
+}
+
+.sidebar-section .section-title-small {
+    margin-bottom: 6px !important; /* Reduces gap under the title */
+}
+
+.sidebar-section .project-link {
+    display: block !important;
+    padding: 2px 0 !important;      /* Minimal vertical gap */
+    margin: 0 !important;
+    color: rgba(255, 255, 255, 0.4) !important; /* Matches 'About' link dimness */
+    transition: color 0.2s ease, transform 0.2s ease !important;
+    font-size: 0.85rem !important;
+    text-align: center;
+    text-decoration: none;
+}
+
+.sidebar-section .project-link:hover {
+    color: #ffffff !important;      /* Full bright white on hover */
+    transform: translateY(-2px);    /* Subtle lift effect */
+}
+
+/* MAIN CONTENT: GITHUB PROJECT CARDS */
+/* We target #projects-grid to ensure we only affect the GitHub area */
+#projects-grid .project-card {
+    padding: 12px ;
+    background: rgba(255, 255, 255, 0.03) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    display: flex !important;
+    flex-direction: row !important; /* Keeps icon and text side-by-side */
+    align-items: center !important;
+    gap: 12px !important;
+    min-height: auto !important;
+    text-decoration: none;
+}
+
+#projects-grid .project-card:hover {
+    background: rgba(255, 255, 255, 0.07) !important;
+    border-color: rgba(255, 255, 255, 0.3) !important;
+}
+
+#projects-grid .project-card .work-title {
+    font-size: 0.9rem !important;
+    margin: 0 !important;
+    color: #fff !important;
+}
+
+#projects-grid .project-card .project-desc {
+    font-size: 0.75rem ;
+    line-height: 1.3;
+    color: #fffeff;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; 
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+#projects-grid .project-card .work-icon {
+    width: 32px;
+    height: 32px;
+    font-size: 0.9rem;
+    flex-shrink: 0;
 }

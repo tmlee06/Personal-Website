@@ -1,10 +1,3 @@
----
-week: 3
-date: 2025-11-25
-title: Fall Season - Week 3
-tags: [Life, UCSD, Engineering, Hockey]
----
-
 Happy Thanksgiving week everyone!
 
 We or at least I am at the final stretch of the year. After my finals, I am clocking out until 2026. Here's what happened this week starting from (11/17/2025):
