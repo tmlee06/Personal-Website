@@ -23,7 +23,7 @@ This long weekend of NFL Divisional Playoffs is an instant classic. Niners lost 
 
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; margin-bottom: 24px;">
   <iframe
-    src= "https://www.youtube.com/embed/q2CTK6uZI3I?si=i3o4037fWXZHCeOd&amp;start=14"
+    src= "https://www.youtube.com/embed/q2CTK6uZI3I?si=zR91ncQ0ePfnkt--&amp;start=14"
     style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
     frameborder="0"
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
