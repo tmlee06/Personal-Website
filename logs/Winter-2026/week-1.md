@@ -58,9 +58,7 @@ Aside from hockey, I managed to get into another club; Triton Trading Group. I w
 
 One thing I did learn this week or weekend besides reading syllabus was soldering. In my solar car club (trying to build a solar car), we had to connect the batteries to the wires in order to test our battery management system was working properly, so we needed to solder the connections to the wires. That sentence is probably a word-salad, but if I am being honest, I don't even know what exactly or why we needed to solder. My lead just taught me some fundamentals and told me to do it, and I did. 
 
-That's pretty much all the update I have for this week and break. I improved the layout and design of the website, let me know how you all like it. Also, feel free to play some [blackjack][1].
-
-[1]:https://tmlee06.github.io/BlackJack/
+That's pretty much all the update I have for this week and break. I improved the layout and design of the website, let me know how you all like it. Also, feel free to play some <a href="https://tmlee06.github.io/BlackJack/" style="color: #fffefe; font-weight: bold; text-decoration: underline;">blackjack</a>.
 
 Things are looking hopeful, and I am very excited about this year. Hoping I can stay discipline and not break promises to myself this time. I figured new year, new me is too ambitious. I am doing that new day, new me. "One step at a time, one punch at a time, one round at a time." I am probably going to re-watch Creed today, stuff gets me going. 
 
