@@ -472,8 +472,8 @@ html {
 #bio-logs-list {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 50px 30px; /* Vertical and horizontal gap */
-    margin-top: 40px;
+    gap: 40px 20px; /* Vertical and horizontal gap */
+    margin-top: 20px;
 }
 
 .bio-log-card {
