@@ -840,7 +840,6 @@ function getIconClassForRepo(repo) {
   return 'fas fa-code';
 }
 
-
 async function loadGitHubProjects(username) {
   const grid = document.getElementById('projects-grid');
   if (!grid) return;
@@ -866,10 +865,16 @@ async function loadGitHubProjects(username) {
       card.className = 'work-card project-card';
 
       // Create Icon Container
-      const icon = document.createElement('div');
-      icon.className = 'work-icon';
-      const iconClass = typeof getIconClassForRepo === 'function' ? getIconClassForRepo(repo) : 'fas fa-code';
-      icon.innerHTML = `<i class="${iconClass}"></i>`;
+        const icon = document.createElement('div');
+        icon.className = 'work-icon';
+
+        if (repo.language === 'Jupyter Notebook') {
+        // Using a Simple Icons CDN link for the official Jupyter Logo
+        icon.innerHTML = `<img src="https://cdn.simpleicons.org/jupyter/F37626" style="width:20px; height:20px; display:block;" alt="Jupyter">`;
+        } else {
+            const iconClass = typeof getIconClassForRepo === 'function' ? getIconClassForRepo(repo) : 'fas fa-code';
+            icon.innerHTML = `<i class="${iconClass}"></i>`;
+        }
 
       // Create Info Container
       const info = document.createElement('div');

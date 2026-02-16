@@ -409,7 +409,7 @@ html {
     background: #fff;
 }
 
-/* Profile Picture Modal */
+/*Profile Picture Modal */
 .profile-modal {
     display: none;
     position: fixed;
@@ -468,6 +468,7 @@ html {
     }
 }
 
+
 /* Bio Logs Styling */
 #bio-logs-list {
     display: grid;
@@ -517,7 +518,7 @@ html {
     margin-top: 0.5rem;
 }
 
-.resume-buttons {
+/*.resume-buttons {
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
@@ -539,6 +540,11 @@ html {
     text-align: center;
     width: 100%;
     border-radius: 9999px;
+    inset: 0;
+    backdrop-filter: blur(3px);
+    filter: url(#glass-distortion);
+    overflow: hidden;
+    isolation: isolate; /* Optional: adds a subtle frosted glass distortion effect
 }
 
 .resume-button:hover {
@@ -567,7 +573,56 @@ html {
     background: rgba(40, 40, 43, 0.05);
     border-color: #fffefe;
 }
+*/
+.resume-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 1rem;
+    width: 100%;
+}
 
+.resume-button {
+    display: inline-block;
+    padding: 0.6rem 1.5rem;
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.8) !important; /* Slightly dimmed text */
+    text-decoration: none;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+    text-align: center;
+    width: 100%;
+    border-radius: 9999px;
+    
+    /* Liquid Glass Core */
+    background: rgba(255, 255, 255, 0.03) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    backdrop-filter: blur(12px) saturate(180%) !important;
+    -webkit-backdrop-filter: blur(12px) saturate(180%);
+    
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+}
+
+.resume-button:hover {
+    background: rgba(255, 255, 255, 0.1) !important;
+    border-color: rgba(255, 255, 255, 0.4) !important;
+    color: #ffffff !important; /* Brightens text on hover */
+    transform: translateY(-3px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Specific button variants - keeping them consistent with the glass theme */
+.resume-button-view, 
+.resume-button:not(.resume-button-view) {
+    border-color: rgba(255, 255, 255, 0.15);
+}
+
+.resume-button-view:hover, 
+.resume-button:not(.resume-button-view):hover {
+    border-color: #ffffff;
+    background: rgba(255, 255, 255, 0.12);
+}
 
 .work-section {
     margin-top: 0;
