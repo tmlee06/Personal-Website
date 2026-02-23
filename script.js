@@ -401,6 +401,8 @@ async function openFullscreenLog(log, updateHash = true) {
     try {
         const res = await fetch(log.path);
         const text = await res.text();
+        
+        // Safety: ensure marked is loaded before trying to use it
         const content = typeof marked !== 'undefined' ? marked.parse(text) : text;
         
         reader.innerHTML = `
@@ -422,25 +424,35 @@ async function openFullscreenLog(log, updateHash = true) {
         document.body.appendChild(reader);
         document.body.style.overflow = 'hidden';
 
-        const closeViewer = () => {
-            reader.remove();
-            document.body.style.overflow = '';
-            
-            // Clear hash
-            history.pushState("", document.title, window.location.pathname + window.location.search);
+        // FIX: Scroll to Top button
+        // We use 'reader.scrollTo' because 'window.scrollTo' won't work 
+        // while the reader's overflow is covering the screen.
+        document.getElementById('scroll-top-btn').onclick = () => {
+            reader.scrollTo({ top: 0, behavior: 'smooth' });
+        };
 
-            // SMART SCROLL: Only scroll to logs if the user isn't already near the top
-            // If the user is more than 300px down, scroll them to the logs list
-            if (window.scrollY > 300) {
-                const logsSection = document.getElementById('logs');
-                if (logsSection) {
-                    logsSection.scrollIntoView({ behavior: 'smooth' });
+        // FIX: Back to Logs button
+        document.getElementById('close-viewer').onclick = () => {
+            // If the user arrived here via a direct link, the "background" might be empty.
+            // We check if the logs list actually has content inside it.
+            const logsList = document.getElementById('logs-list');
+            const hasContent = logsList && logsList.innerHTML.trim() !== "";
+
+            if (!hasContent) {
+                // If the background is empty, force a reload to the main logs page
+                window.location.href = 'logs.html';
+            } else {
+                // Normal close logic
+                reader.remove();
+                document.body.style.overflow = '';
+                history.pushState("", document.title, window.location.pathname + window.location.search);
+                
+                // Only scroll if they are on the logs page specifically
+                if (window.location.pathname.includes('logs.html')) {
+                    document.getElementById('logs')?.scrollIntoView({ behavior: 'smooth' });
                 }
             }
         };
-
-        document.getElementById('close-viewer').onclick = closeViewer;
-        document.getElementById('scroll-top-btn').onclick = () => reader.scrollTo({ top: 0, behavior: 'smooth' });
         
     } catch (err) { 
         console.error("Error opening log:", err); 
