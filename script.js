@@ -327,8 +327,7 @@ async function loadWeeklyLogs() {
             const targetLog = allLogs.find(l => l.path === filePath);
 
             if (targetLog) {
-                setTimeout(() => openFullscreenLog(targetLog, false), 50);
-            }
+            setTimeout(() => openFullscreenLog(targetLog, false, false), 100);            }
         }
     } catch (e) {
         console.error("Failed to load logs:", e);
@@ -374,7 +373,7 @@ function renderLogs(container, sections) {
                 <span class="file-name">${log.filename}</span>
                 <span class="file-date">${log.date || ''}</span>
             `;
-            logRow.onclick = () => openFullscreenLog(log);
+            logRow.onclick = () => openFullscreenLog(log, true, false);
             logsList.appendChild(logRow);
         });
 
@@ -422,7 +421,7 @@ function renderBioLogs(container, sections) {
         `;
         
         // Open the log directly on click
-        card.onclick = () => openFullscreenLog(log);
+        card.onclick = () => openFullscreenLog(log, true, false);
         container.appendChild(card);
     });
 }
@@ -430,18 +429,18 @@ function renderBioLogs(container, sections) {
 /**
  * Opens log in a persistent view with a pinned back button
  */
-async function openFullscreenLog(log, updateHash = true) {
+async function openFullscreenLog(log, updateHash = true, scrollOnClose = false) {
     if (!log || !log.path) return;
-
-    // Always remove any existing overlay first
-    const existing = document.querySelector('.fullscreen-reader');
-    if (existing) {
-        existing.remove();
-        document.body.style.overflow = '';
-    }
 
     if (updateHash) {
         window.location.hash = `log-${log.path}`;
+    }
+
+    // If a reader is already open, replace it
+    const existingReader = document.querySelector('.fullscreen-reader');
+    if (existingReader) {
+        existingReader.remove();
+        document.body.style.overflow = '';
     }
 
     const reader = document.createElement('div');
@@ -450,38 +449,40 @@ async function openFullscreenLog(log, updateHash = true) {
     try {
         const res = await fetch(log.path);
         const text = await res.text();
-        const content = (typeof marked !== 'undefined') ? marked.parse(text) : text;
+        const content = typeof marked !== 'undefined' ? marked.parse(text) : text;
 
-        // No duplicate IDs. Use classes and scope queries to this overlay
         reader.innerHTML = `
             <div class="pinned-nav">
-                <button class="back-link close-viewer">
+                <button class="back-link" id="close-viewer">
                     <i class="fas fa-arrow-left"></i> BACK TO LOGS
                 </button>
             </div>
             <div class="reader-content">
                 <header class="reader-header">
                     <span class="reader-meta">${log.date || ''}</span>
-                    <h1>${log.filename || ''}</h1>
+                    <h1>${log.filename}</h1>
                 </header>
                 <div class="reader-body">${content}</div>
-                <button class="scroll-top scroll-top-btn">TOP</button>
+                <button class="scroll-top" id="scroll-top-btn">TOP</button>
             </div>
         `;
 
         document.body.appendChild(reader);
         document.body.style.overflow = 'hidden';
 
-        const topBtn = reader.querySelector('.scroll-top-btn');
-        if (topBtn) {
-            topBtn.addEventListener('click', () => {
-                reader.scrollTo({ top: 0, behavior: 'smooth' });
-            });
+        // Initialize embeds (Instagram, etc.)
+        hydrateEmbeds(reader);
+
+        // Scroll to top within the reader
+        const scrollTopBtn = reader.querySelector('#scroll-top-btn');
+        if (scrollTopBtn) {
+            scrollTopBtn.onclick = () => reader.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        const closeBtn = reader.querySelector('.close-viewer');
+        // Close button
+        const closeBtn = reader.querySelector('#close-viewer');
         if (closeBtn) {
-            closeBtn.addEventListener('click', () => {
+            closeBtn.onclick = () => {
                 const logsList = document.getElementById('logs-list');
                 const isBackgroundEmpty = !logsList || logsList.children.length === 0;
 
@@ -492,16 +493,15 @@ async function openFullscreenLog(log, updateHash = true) {
 
                 reader.remove();
                 document.body.style.overflow = '';
-                history.pushState('', document.title, window.location.pathname + window.location.search);
+                history.pushState("", document.title, window.location.pathname + window.location.search);
 
-                const logsSection = document.getElementById('logs');
-                if (logsSection) logsSection.scrollIntoView({ behavior: 'smooth' });
-            });
+                // Only scroll to logs if you asked for it
+                if (scrollOnClose) {
+                    const logsSection = document.getElementById('logs');
+                    if (logsSection) logsSection.scrollIntoView({ behavior: 'smooth' });
+                }
+            };
         }
-
-        // Make Instagram embeds render after injection
-        processInstagramEmbeds(reader);
-
     } catch (err) {
         console.error("Error opening log:", err);
     }
