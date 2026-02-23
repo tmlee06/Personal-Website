@@ -390,13 +390,20 @@ function renderBioLogs(container, sections) {
 /**
  * Opens log in a persistent view with a pinned back button
  */
-async function openFullscreenLog(log) {
+async function openFullscreenLog(log, updateHash = true) {
+    // 1. Update the URL hash so the specific log is shareable
+    if (updateHash) {
+        window.location.hash = `log-${log.path}`;
+    }
+
     const reader = document.createElement('div');
     reader.className = 'fullscreen-reader';
     
     try {
         const res = await fetch(log.path);
         const text = await res.text();
+        
+        // Use marked to parse the markdown content
         const content = typeof marked !== 'undefined' ? marked.parse(text) : text;
         
         reader.innerHTML = `
@@ -418,20 +425,26 @@ async function openFullscreenLog(log) {
         document.body.appendChild(reader);
         document.body.style.overflow = 'hidden';
 
-        // Close logic
-        document.getElementById('close-viewer').onclick = () => {
+        // 2. Handle closing the viewer and cleaning up the URL
+        const closeViewer = () => {
             reader.remove();
             document.body.style.overflow = '';
+            
+            // This removes the #log-... part from the URL without reloading the page
+            history.pushState("", document.title, window.location.pathname + window.location.search);
         };
 
-        // Optional Scroll to top
+        // Attach events
+        document.getElementById('close-viewer').onclick = closeViewer;
+        
         document.getElementById('scroll-top-btn').onclick = () => {
             reader.scrollTo({ top: 0, behavior: 'smooth' });
         };
         
-    } catch (err) { console.error("Error opening log:", err); }
+    } catch (err) {
+        console.error("Error opening log:", err);
+    }
 }
-
 document.addEventListener('DOMContentLoaded', loadWeeklyLogs);
 
 function escapeHtml(str) {
@@ -905,6 +918,14 @@ async function loadGitHubProjects(username) {
   }
 }
 
+window.addEventListener('hashchange', () => {
+    const reader = document.querySelector('.fullscreen-reader');
+    // If the user hits 'Back' and the hash is gone, close the reader
+    if (!window.location.hash.includes('log-') && reader) {
+        reader.remove();
+        document.body.style.overflow = '';
+    }
+});
 
 // Console welcome message
 console.log(`
