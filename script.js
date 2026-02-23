@@ -391,7 +391,6 @@ function renderBioLogs(container, sections) {
  * Opens log in a persistent view with a pinned back button
  */
 async function openFullscreenLog(log, updateHash = true) {
-    // 1. Update the URL hash so the specific log is shareable
     if (updateHash) {
         window.location.hash = `log-${log.path}`;
     }
@@ -402,8 +401,6 @@ async function openFullscreenLog(log, updateHash = true) {
     try {
         const res = await fetch(log.path);
         const text = await res.text();
-        
-        // Use marked to parse the markdown content
         const content = typeof marked !== 'undefined' ? marked.parse(text) : text;
         
         reader.innerHTML = `
@@ -425,24 +422,28 @@ async function openFullscreenLog(log, updateHash = true) {
         document.body.appendChild(reader);
         document.body.style.overflow = 'hidden';
 
-        // 2. Handle closing the viewer and cleaning up the URL
         const closeViewer = () => {
             reader.remove();
             document.body.style.overflow = '';
             
-            // This removes the #log-... part from the URL without reloading the page
+            // Clear hash
             history.pushState("", document.title, window.location.pathname + window.location.search);
+
+            // SMART SCROLL: Only scroll to logs if the user isn't already near the top
+            // If the user is more than 300px down, scroll them to the logs list
+            if (window.scrollY > 300) {
+                const logsSection = document.getElementById('logs');
+                if (logsSection) {
+                    logsSection.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
         };
 
-        // Attach events
         document.getElementById('close-viewer').onclick = closeViewer;
+        document.getElementById('scroll-top-btn').onclick = () => reader.scrollTo({ top: 0, behavior: 'smooth' });
         
-        document.getElementById('scroll-top-btn').onclick = () => {
-            reader.scrollTo({ top: 0, behavior: 'smooth' });
-        };
-        
-    } catch (err) {
-        console.error("Error opening log:", err);
+    } catch (err) { 
+        console.error("Error opening log:", err); 
     }
 }
 document.addEventListener('DOMContentLoaded', loadWeeklyLogs);
