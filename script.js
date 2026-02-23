@@ -934,7 +934,7 @@ async function loadGitHubProjects(username) {
 
 window.addEventListener('hashchange', () => {
     const reader = document.querySelector('.fullscreen-reader');
-    // If the user hits 'Back' and the hash is gone, close the reader
+    // If user hits 'Back' and hash is gone, close the reader
     if (!window.location.hash.includes('log-') && reader) {
         reader.remove();
         document.body.style.overflow = '';
