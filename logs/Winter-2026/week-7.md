@@ -34,7 +34,7 @@ Also, I have started the dorm move out process. After last weekend's LA bender, 
 I want to study a bit more before my quiz, so I think I will end the log here, but before I do that, I wanted to share this video:
 <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; margin-bottom: 24px;">
   <iframe
-    src= "https://youtu.be/kr1RK6T-HZY?si=poTvkMJSpTcAM0E_" 
+    src= "https://www.youtube.com/embed/kr1RK6T-HZY?si=o52R32oMuk-s2XN0" 
     style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
     frameborder="0"
     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
