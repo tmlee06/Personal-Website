@@ -264,36 +264,70 @@ async function loadLogsData() {
         return null;
     }
 }
+// Prevent double-init (your file was calling loadWeeklyLogs multiple times)
+let __weeklyLogsLoaded = false;
 
+// Instagram embeds injected via innerHTML need this to actually render
+function processInstagramEmbeds(rootEl) {
+    if (!rootEl) return;
+
+    const hasInsta = rootEl.querySelector('.instagram-media');
+    if (!hasInsta) return;
+
+    const run = () => {
+        if (window.instgrm && window.instgrm.Embeds && typeof window.instgrm.Embeds.process === 'function') {
+            window.instgrm.Embeds.process();
+        }
+    };
+
+    // If embed lib already exists, just process
+    if (window.instgrm && window.instgrm.Embeds) {
+        run();
+        return;
+    }
+
+    // Load embed.js once, then process
+    if (!document.querySelector('script[data-instgrm-embed]')) {
+        const s = document.createElement('script');
+        s.async = true;
+        s.src = 'https://www.instagram.com/embed.js';
+        s.setAttribute('data-instgrm-embed', '1');
+        s.onload = run;
+        document.body.appendChild(s);
+    } else {
+        setTimeout(run, 300);
+    }
+}
 
 // --- LOG LOADING & DATA PROCESSING ---
 
 async function loadWeeklyLogs() {
+    if (__weeklyLogsLoaded) return;
+    __weeklyLogsLoaded = true;
+
     const logsContainer = document.getElementById('logs-list');
     const bioContainer = document.getElementById('bio-logs-list');
 
     try {
         const response = await fetch('logs-index.json');
         const sections = await response.json();
-        
-        // 1. RENDER EVERYTHING FIRST
+
+        // Render sections (latest first)
         const reversedSections = [...sections].reverse();
-        // Make sure to reverse the logs inside sections if needed
         reversedSections.forEach(s => s.logs && s.logs.reverse());
 
         if (logsContainer) renderLogs(logsContainer, reversedSections);
         if (bioContainer) renderBioLogs(bioContainer, reversedSections);
 
-        // 2. ONLY NOW CHECK THE HASH (Deep Linking)
-        const currentHash = window.location.hash;
+        // Deep link support: logs.html#log-<path>
+        const currentHash = window.location.hash || '';
         if (currentHash.startsWith('#log-')) {
             const filePath = currentHash.replace('#log-', '');
-            const allLogs = sections.flatMap(s => s.logs);
+            const allLogs = sections.flatMap(s => s.logs || []);
             const targetLog = allLogs.find(l => l.path === filePath);
-            
+
             if (targetLog) {
-                // Use a slight timeout to ensure the DOM has finished painting
-                setTimeout(() => openFullscreenLog(targetLog, false), 100);
+                setTimeout(() => openFullscreenLog(targetLog, false), 50);
             }
         }
     } catch (e) {
@@ -397,69 +431,81 @@ function renderBioLogs(container, sections) {
  * Opens log in a persistent view with a pinned back button
  */
 async function openFullscreenLog(log, updateHash = true) {
+    if (!log || !log.path) return;
+
+    // Always remove any existing overlay first
+    const existing = document.querySelector('.fullscreen-reader');
+    if (existing) {
+        existing.remove();
+        document.body.style.overflow = '';
+    }
+
     if (updateHash) {
         window.location.hash = `log-${log.path}`;
     }
 
     const reader = document.createElement('div');
     reader.className = 'fullscreen-reader';
-    
+
     try {
         const res = await fetch(log.path);
         const text = await res.text();
-        const content = typeof marked !== 'undefined' ? marked.parse(text) : text;
-        
+        const content = (typeof marked !== 'undefined') ? marked.parse(text) : text;
+
+        // No duplicate IDs. Use classes and scope queries to this overlay
         reader.innerHTML = `
             <div class="pinned-nav">
-                <button class="back-link" id="close-viewer">
+                <button class="back-link close-viewer">
                     <i class="fas fa-arrow-left"></i> BACK TO LOGS
                 </button>
             </div>
             <div class="reader-content">
                 <header class="reader-header">
                     <span class="reader-meta">${log.date || ''}</span>
-                    <h1>${log.filename}</h1>
+                    <h1>${log.filename || ''}</h1>
                 </header>
                 <div class="reader-body">${content}</div>
-                <button class="scroll-top" id="scroll-top-btn">TOP</button>
+                <button class="scroll-top scroll-top-btn">TOP</button>
             </div>
         `;
-        
+
         document.body.appendChild(reader);
         document.body.style.overflow = 'hidden';
 
-        // FIX: Scroll to Top
-        // Because the reader is fullscreen, we scroll the 'reader' element, not 'window'
-        document.getElementById('scroll-top-btn').onclick = () => {
-            reader.scrollTo({ top: 0, behavior: 'smooth' });
-        };
+        const topBtn = reader.querySelector('.scroll-top-btn');
+        if (topBtn) {
+            topBtn.addEventListener('click', () => {
+                reader.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        }
 
-        // FIX: Back Button
-        document.getElementById('close-viewer').onclick = () => {
-            // Check if the background logs list actually exists
-            const logsList = document.getElementById('logs-list');
-            const isBackgroundEmpty = !logsList || logsList.children.length === 0;
+        const closeBtn = reader.querySelector('.close-viewer');
+        if (closeBtn) {
+            closeBtn.addEventListener('click', () => {
+                const logsList = document.getElementById('logs-list');
+                const isBackgroundEmpty = !logsList || logsList.children.length === 0;
 
-            if (isBackgroundEmpty) {
-                // If background didn't load (direct link fail), hard redirect
-                window.location.href = 'logs.html';
-            } else {
-                // Normal close
+                if (isBackgroundEmpty) {
+                    window.location.href = 'logs.html';
+                    return;
+                }
+
                 reader.remove();
                 document.body.style.overflow = '';
-                history.pushState("", document.title, window.location.pathname + window.location.search);
-                
-                // Optional: Scroll to the logs section so they see the list
+                history.pushState('', document.title, window.location.pathname + window.location.search);
+
                 const logsSection = document.getElementById('logs');
                 if (logsSection) logsSection.scrollIntoView({ behavior: 'smooth' });
-            }
-        };
-        
-    } catch (err) { 
-        console.error("Error opening log:", err); 
+            });
+        }
+
+        // Make Instagram embeds render after injection
+        processInstagramEmbeds(reader);
+
+    } catch (err) {
+        console.error("Error opening log:", err);
     }
 }
-document.addEventListener('DOMContentLoaded', loadWeeklyLogs);
 
 function escapeHtml(str) {
     return String(str).replace(/[&<>"']/g, m => ({
@@ -559,9 +605,8 @@ document.documentElement.style.setProperty('--page-bg', '#f7fbff');
         setInterval(updateTime, 60000); // Update every minute
     }
 
-    // Load logs
-    loadWeeklyLogs(false);
-    loadWeeklyLogs(true);
+     // Load logs
+    loadWeeklyLogs();
 
     // Load GitHub projects
     loadGitHubProjects('tmlee06');
