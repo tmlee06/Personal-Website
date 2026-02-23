@@ -275,24 +275,30 @@ async function loadWeeklyLogs() {
     try {
         const response = await fetch('logs-index.json');
         const sections = await response.json();
+        
+        // 1. RENDER EVERYTHING FIRST
+        const reversedSections = [...sections].reverse();
+        // Make sure to reverse the logs inside sections if needed
+        reversedSections.forEach(s => s.logs && s.logs.reverse());
 
-        // LIFO Sort
-        sections.reverse();
-        sections.forEach(s => s.logs && s.logs.reverse());
+        if (logsContainer) renderLogs(logsContainer, reversedSections);
+        if (bioContainer) renderBioLogs(bioContainer, reversedSections);
 
-        if (logsContainer) renderLogs(logsContainer, sections);
-        if (bioContainer) renderBioLogs(bioContainer, sections);
-
-        // DIRECT LINK LOGIC: If URL has a hash (from bio click), open it immediately
+        // 2. ONLY NOW CHECK THE HASH (Deep Linking)
         const currentHash = window.location.hash;
         if (currentHash.startsWith('#log-')) {
             const filePath = currentHash.replace('#log-', '');
-            // Find the log object in our data
             const allLogs = sections.flatMap(s => s.logs);
             const targetLog = allLogs.find(l => l.path === filePath);
-            if (targetLog) openFullscreenLog(targetLog);
+            
+            if (targetLog) {
+                // Use a slight timeout to ensure the DOM has finished painting
+                setTimeout(() => openFullscreenLog(targetLog, false), 100);
+            }
         }
-    } catch (e) { console.error(e); }
+    } catch (e) {
+        console.error("Failed to load logs:", e);
+    }
 }
 
 // --- MAIN LOGS PAGE RENDERER ---
@@ -401,8 +407,6 @@ async function openFullscreenLog(log, updateHash = true) {
     try {
         const res = await fetch(log.path);
         const text = await res.text();
-        
-        // Safety: ensure marked is loaded before trying to use it
         const content = typeof marked !== 'undefined' ? marked.parse(text) : text;
         
         reader.innerHTML = `
@@ -424,33 +428,30 @@ async function openFullscreenLog(log, updateHash = true) {
         document.body.appendChild(reader);
         document.body.style.overflow = 'hidden';
 
-        // FIX: Scroll to Top button
-        // We use 'reader.scrollTo' because 'window.scrollTo' won't work 
-        // while the reader's overflow is covering the screen.
+        // FIX: Scroll to Top
+        // Because the reader is fullscreen, we scroll the 'reader' element, not 'window'
         document.getElementById('scroll-top-btn').onclick = () => {
             reader.scrollTo({ top: 0, behavior: 'smooth' });
         };
 
-        // FIX: Back to Logs button
+        // FIX: Back Button
         document.getElementById('close-viewer').onclick = () => {
-            // If the user arrived here via a direct link, the "background" might be empty.
-            // We check if the logs list actually has content inside it.
+            // Check if the background logs list actually exists
             const logsList = document.getElementById('logs-list');
-            const hasContent = logsList && logsList.innerHTML.trim() !== "";
+            const isBackgroundEmpty = !logsList || logsList.children.length === 0;
 
-            if (!hasContent) {
-                // If the background is empty, force a reload to the main logs page
+            if (isBackgroundEmpty) {
+                // If background didn't load (direct link fail), hard redirect
                 window.location.href = 'logs.html';
             } else {
-                // Normal close logic
+                // Normal close
                 reader.remove();
                 document.body.style.overflow = '';
                 history.pushState("", document.title, window.location.pathname + window.location.search);
                 
-                // Only scroll if they are on the logs page specifically
-                if (window.location.pathname.includes('logs.html')) {
-                    document.getElementById('logs')?.scrollIntoView({ behavior: 'smooth' });
-                }
+                // Optional: Scroll to the logs section so they see the list
+                const logsSection = document.getElementById('logs');
+                if (logsSection) logsSection.scrollIntoView({ behavior: 'smooth' });
             }
         };
         
