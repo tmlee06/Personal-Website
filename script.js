@@ -425,6 +425,9 @@ function renderBioLogs(container, sections) {
         container.appendChild(card);
     });
 }
+function hydrateEmbeds(rootEl) {
+  processInstagramEmbeds(rootEl);
+}
 
 /**
  * Opens log in a persistent view with a pinned back button
