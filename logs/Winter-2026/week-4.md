@@ -11,9 +11,12 @@ On Wednesday, I had my CAPS call and drop-in advising appointment with my colleg
 Thursday was such a long day, spent the whole day at office hours after my one and only 9:30 AM class now 😂. My cortisol peaked that day. For starters, it took me over 40 minutes to get my contacts on. After that, I was on edge the whole day. I was so annoyed, I unintentionally took some of it out on the new office-hour attendees. They were looking at and asking questions if the problem was deep, even the TAs told me to take a break, but I channeled my inner <a href="https://villains.fandom.com/wiki/Terence_Fletcher" style="color: #fffefe; font-weight: bold; text-decoration: underline;">Terence Fletcher</a>, and stayed until I got the questions right. In my strongest opinion, the only way to go about succeeding in this class is just brute-force repetition. Although, I utterly despise this class, I am forcing myself to trick my brain into loving to solve these problems. I hate losing more than I like winning, so the work just has to be done. 
 
 Aside from academics, illness, and injury, I have been eating good. If there is a college master-chef competition, I am winning. Look at this meal right here:
-<div align ="center">
-  <img src="https://lh3.googleusercontent.com/pw/AP1GczM8NTYSmt6wX8ZjZnixb8BVhrW-akonKuNOl4jfUYHBKoQDVn7Bcnukv9z7sOvMT63ZJpNiXYDUouOI1pY04yz6zWvbwv4b3otMr344k_iFURxMjLrKtay-ij29GqCnPETDhDfdNHKoDI_5W1-l0uqRhg=w1670-h1504-s-no-gm?authuser=0" alt="Salmon Rice Plate" width="500"/>
-  <br>
+<div style="display: flex; justify-content: center; width: 100%; padding: 10px 0;">
+  <img 
+    src="https://lh3.googleusercontent.com/pw/AP1GczM8NTYSmt6wX8ZjZnixb8BVhrW-akonKuNOl4jfUYHBKoQDVn7Bcnukv9z7sOvMT63ZJpNiXYDUouOI1pY04yz6zWvbwv4b3otMr344k_iFURxMjLrKtay-ij29GqCnPETDhDfdNHKoDI_5W1-l0uqRhg=w1670-h1504-s-no-gm?authuser=0" 
+    alt="Salmon Rice Plate" 
+    style="width: 100%; max-width: 500px; height: auto; border-radius: 8px;"
+  />
 </div>
 
 Nobody can tell me that is not heat. Shout out Chef Air and Chef Mic, and Costco, they are the only reasons I am eating good in college. I use my suite mate's air fryer, it is not a PFA-free one, so if <a href="https://www.instagram.com/santacruzmedicinals/?hl=en" style="color: #fffefe; font-weight: bold; text-decoration: underline;">Santa Cruz</a> crashed my res-hall, he would not approve. When I move into my 12-month apartment for next school year, best believe I will be getting a PFA-free air-fryer and stainless steel pans.

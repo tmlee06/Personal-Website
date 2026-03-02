@@ -2,11 +2,14 @@ Happy G-Washy Day!
 
 Although, I am cheering for Team Canada during the Olympics, I got to thank Mr. George for crossing the Delaware on Christmas. This is probably one of the coldest paintings of all time:
 
-<div align ="center">
-  <img src="https://d7hftxdivxxvm.cloudfront.net/?quality=80&resize_to=width&src=https%3A%2F%2Fartsy-media-uploads.s3.amazonaws.com%2FxON1IH2QfYVqNETrgRoW6g%252FWashington_Crossing_the_Delaware_by_Emanuel_Leutze%252C_MMA-NYC%252C_1851.jpg&width=1820" alt="G-Washy Crossing the Delly" width="500"/>
-  <br>
+<div style="display: flex; justify-content: center; width: 100%; padding: 10px 0;">
+  <img 
+    src="https://d7hftxdivxxvm.cloudfront.net/?quality=80&resize_to=width&src=https%3A%2F%2Fartsy-media-uploads.s3.amazonaws.com%2FxON1IH2QfYVqNETrgRoW6g%252FWashington_Crossing_the_Delaware_by_Emanuel_Leutze%252C_MMA-NYC%252C_1851.jpg&width=1820" 
+    alt="G-Washy Crossing the Delly" 
+    style="width: 100%; max-width: 500px; height: auto; border-radius: 8px;"
+  />
 </div>
-
+<br>
 This painting had fifth grade me riled up and ready to run through a brick wall.
 
 After a 12 years hiatus, NHLers are back in the Olympics, and it has not disappointed. It was expected that Canada and the U.S. were going to be the top two teams coming out of preliminary group play, so no surprise there. The only surprise to me is how McDavid and Matthews have moved up a gear during these games. McDavid is playing Tom Wilson's role so well, Jon Cooper kicked Wilson off his line. 9 points in 3 games is a crazy stat-line, but then you remember it is McDavid. McDavid, MacKinnon, and Celebrini on a line is not fair; who is stopping that? Celebrini is unreal, but I still think if you swap him out for Bedard, Bedard would have the same impact. Such a shame Bedard did not attend the World's Chhampionship last year, otherwise he would have made the team. In what world are you taking Jarvis over Bedard? I do not know, but still let's go Canada! Matthews is doing more for Team USA than he does for the Leafs. I love Tone, but bring this back to the Leafs man, do it for the mandem in the 6ix, the city deserves it.
