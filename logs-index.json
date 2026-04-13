@@ -59,5 +59,14 @@
         "path": "logs/Winter-2026/week-10.md"
       }
     ]
+  },
+  {
+    "title": "Reflections",
+    "logs": [
+      {
+        "filename": "UCSD 2025-26 (Junior Year 1)",
+        "path": "logs/Reflections/junior1.md"
+      }
+    ]
   }
 ]
