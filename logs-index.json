@@ -60,12 +60,21 @@
       }
     ]
   },
-  {
+   {
     "title": "Reflections",
     "logs": [
       {
         "filename": "UCSD 2025-26 (Junior Year 1)",
         "path": "logs/Reflections/junior1.md"
+      }
+    ]
+  },
+   {
+    "title": "京都大学２０２６年",
+    "logs": [
+      {
+        "filename": "Week 1 - ２０２６年０４月２０日",
+        "path": "logs/京都大学２０２６年/week-1.md"
       }
     ]
   }
