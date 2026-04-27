@@ -1,85 +1,48 @@
 [
   {
-    "title": "Fall 2025",
-    "logs": [
+    "title": "UCSD",
+    "folders": [
       {
-        "filename": "Week 1 - 11/06/2025",
-        "path": "logs/Fall-2025/week-1.md"
-      },
-      {
-        "filename": "Week 2 - 11/17/2025",
-        "path": "logs/Fall-2025/week-2.md"
-      },
-      {"filename": "Week 3 - 11/25/2025",
-        "path": "logs/Fall-2025/week-3.md"
+        "title": "Junior Year 1",
+        "folders": [
+          {
+            "title": "Fall 2025",
+            "logs": [
+              { "filename": "Week 1 - 11/06/2025", "path": "logs/Fall-2025/week-1.md", "date": "2025-11-06" },
+              { "filename": "Week 2 - 11/17/2025", "path": "logs/Fall-2025/week-2.md", "date": "2025-11-17" },
+              { "filename": "Week 3 - 11/25/2025", "path": "logs/Fall-2025/week-3.md", "date": "2025-11-25" }
+            ]
+          },
+          {
+            "title": "Winter 2026",
+            "logs": [
+              { "filename": "Week 1 - 01/10/2026", "path": "logs/Winter-2026/week-1.md", "date": "2026-01-10" },
+              { "filename": "Week 2 - 01/18/2026", "path": "logs/Winter-2026/week-2.md", "date": "2026-01-18" },
+              { "filename": "Week 3 - 01/26/2026", "path": "logs/Winter-2026/week-3.md", "date": "2026-01-26" },
+              { "filename": "Week 4 - 02/02/2026", "path": "logs/Winter-2026/week-4.md", "date": "2026-02-02" },
+              { "filename": "Week 5 - 02/09/2026", "path": "logs/Winter-2026/week-5.md", "date": "2026-02-09" },
+              { "filename": "Week 6 - 02/16/2026", "path": "logs/Winter-2026/week-6.md", "date": "2026-02-16" },
+              { "filename": "Week 7 - 02/23/2026", "path": "logs/Winter-2026/week-7.md", "date": "2026-02-23" },
+              { "filename": "Week 8 - 03/02/2026", "path": "logs/Winter-2026/week-8.md", "date": "2026-03-02" },
+              { "filename": "Week 9 - 03/09/2026", "path": "logs/Winter-2026/week-9.md", "date": "2026-03-09" },
+              { "filename": "Week 10 - 03/16/2026", "path": "logs/Winter-2026/week-10.md", "date": "2026-03-16" }
+            ]
+          }
+        ]
       }
     ]
   },
   {
-    "title": "Winter 2026",
-    "logs": [
-      {
-        "filename": "Week 1 - 01/10/2026",
-        "path": "logs/Winter-2026/week-1.md"
-      },
-      {
-        "filename": "Week 2 - 01/18/2026",
-        "path": "logs/Winter-2026/week-2.md"
-      },
-       {
-        "filename": "Week 3 - 01/26/2026",
-        "path": "logs/Winter-2026/week-3.md"
-      },
-      {
-        "filename": "Week 4 - 02/02/2026",
-        "path": "logs/Winter-2026/week-4.md"
-      },
-      {
-        "filename": "Week 5 - 02/09/2026",
-        "path": "logs/Winter-2026/week-5.md"
-      },
-      {
-        "filename": "Week 6 - 02/16/2026",
-        "path": "logs/Winter-2026/week-6.md"
-      },
-      {
-        "filename": "Week 7 - 02/23/2026",
-        "path": "logs/Winter-2026/week-7.md"
-      },
-      {
-        "filename": "Week 8 - 03/02/2026",
-        "path": "logs/Winter-2026/week-8.md"
-      },
-      {
-        "filename": "Week 9 - 03/09/2026",
-        "path": "logs/Winter-2026/week-9.md"
-      },
-      {
-        "filename": "Week 10 - 03/16/2026",
-        "path": "logs/Winter-2026/week-10.md"
-      }
-    ]
-  },
-   {
     "title": "Reflections",
     "logs": [
-      {
-        "filename": "UCSD 2025-26 (Junior Year 1)",
-        "path": "logs/Reflections/junior1.md"
-      }
+      { "filename": "UCSD 2025-26 (Junior Year 1)", "path": "logs/Reflections/junior1.md", "date": "2026-03-20" }
     ]
   },
-   {
-    "title": "京都大学２０２６年",
+  {
+    "title": "京都大学",
     "logs": [
-      {
-        "filename": "Week 1 - ２０２６年０４月２０日",
-        "path": "logs/京都大学２０２６年/week-1.md"
-      },
-      {
-        "filename": "Week 2 - ２０２６年０４月２6日",
-        "path": "logs/京都大学２０２６年/week-2.md"
-      }
+      { "filename": "Week 1 - ２０２６年０４月２０日", "path": "logs/京都大学２０２６年/week-1.md", "date": "2026-04-20" },
+      { "filename": "Week 2 - ２０２６年０４月２6日", "path": "logs/京都大学２０２６年/week-2.md", "date": "2026-04-26" }
     ]
   }
 ]

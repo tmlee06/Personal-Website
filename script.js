@@ -312,22 +312,33 @@ async function loadWeeklyLogs() {
         const response = await fetch('logs-index.json');
         const sections = await response.json();
 
-        // Render sections (latest first)
-        const reversedSections = [...sections].reverse();
-        reversedSections.forEach(s => s.logs && s.logs.reverse());
+        // Standard logs page render
+        if (logsContainer) {
+            renderLogs(logsContainer, sections);
+        }
 
-        if (logsContainer) renderLogs(logsContainer, reversedSections);
-        if (bioContainer) renderBioLogs(bioContainer, reversedSections);
+        // Bio/Home screen render
+        if (bioContainer) {
+            renderBioLogs(bioContainer, sections);
+        }
 
-        // Deep link support: logs.html#log-<path>
+        // Deep link support
         const currentHash = window.location.hash || '';
         if (currentHash.startsWith('#log-')) {
             const filePath = currentHash.replace('#log-', '');
-            const allLogs = sections.flatMap(s => s.logs || []);
+            // Flatten to find the log for deep linking
+            const allLogs = [];
+            const flatten = (items) => {
+                items.forEach(i => {
+                    if (i.logs) allLogs.push(...i.logs);
+                    if (i.folders) flatten(i.folders);
+                });
+            };
+            flatten(sections);
             const targetLog = allLogs.find(l => l.path === filePath);
-
             if (targetLog) {
-            setTimeout(() => openFullscreenLog(targetLog, false, false), 100);            }
+                setTimeout(() => openFullscreenLog(targetLog, false, false), 100);
+            }
         }
     } catch (e) {
         console.error("Failed to load logs:", e);
@@ -336,51 +347,46 @@ async function loadWeeklyLogs() {
 
 // --- MAIN LOGS PAGE RENDERER ---
 
-function renderLogs(container, sections) {
-    container.innerHTML = ''; 
+function renderLogs(container, items) {
+    container.innerHTML = '';
 
-    sections.forEach((section) => {
-        const seasonFolder = document.createElement('details');
-        seasonFolder.className = 'season-folder';
+    function createFolderElement(item, level = 0) {
+        const details = document.createElement('details');
+        details.className = level === 0 ? 'season-folder' : 'season-folder sub-folder';
+        if (level > 0) details.style.marginLeft = '20px';
 
-        const seasonSummary = document.createElement('summary');
-        seasonSummary.className = 'season-header';
-        seasonSummary.innerHTML = `
+        const summary = document.createElement('summary');
+        summary.className = 'season-header';
+        summary.innerHTML = `
             <div class="folder-title">
-                <i class="fas fa-folder"></i>
-                <span>${section.title}</span>
+                <i class="fas ${item.folders ? 'fa-folder-tree' : 'fa-folder'}"></i>
+                <span>${item.title}</span>
             </div>
             <span class="custom-arrow"><i class="fas fa-chevron-right"></i></span>
         `;
+        details.appendChild(summary);
 
-        // Exclusive Logic: Close other folders when one opens
-        seasonSummary.addEventListener('click', () => {
-            if (!seasonFolder.hasAttribute('open')) {
-                document.querySelectorAll('.season-folder').forEach(other => {
-                    if (other !== seasonFolder) other.removeAttribute('open');
-                });
-            }
-        });
+        const contentWrapper = document.createElement('div');
+        contentWrapper.className = 'folder-content';
 
-        const logsList = document.createElement('div');
-        logsList.className = 'logs-preview-list';
-
-        // LIFO order for the logs
-        section.logs.forEach((log) => {
-            const logRow = document.createElement('div');
-            logRow.className = 'log-file-row';
-            logRow.innerHTML = `
-                <span class="file-name">${log.filename}</span>
-                <span class="file-date">${log.date || ''}</span>
-            `;
-            logRow.onclick = () => openFullscreenLog(log, true, false);
-            logsList.appendChild(logRow);
-        });
-
-        seasonFolder.appendChild(seasonSummary);
-        seasonFolder.appendChild(logsList);
-        container.appendChild(seasonFolder);
-    });
+        if (item.folders) {
+            item.folders.forEach(sub => contentWrapper.appendChild(createFolderElement(sub, level + 1)));
+        } else if (item.logs) {
+            const list = document.createElement('div');
+            list.className = 'logs-preview-list';
+            item.logs.forEach(log => {
+                const row = document.createElement('div');
+                row.className = 'log-file-row';
+                row.innerHTML = `<span class="file-name">${log.filename}</span><span class="file-date">${log.date || ''}</span>`;
+                row.onclick = (e) => { e.stopPropagation(); openFullscreenLog(log, true, false); };
+                list.appendChild(row);
+            });
+            contentWrapper.appendChild(list);
+        }
+        details.appendChild(contentWrapper);
+        return details;
+    }
+    items.forEach(item => container.appendChild(createFolderElement(item)));
 }
 
 // --- BIO SECTION RENDERER (Simplified to prevent crashing) ---
@@ -390,41 +396,52 @@ function renderLogs(container, sections) {
  */
 function renderBioLogs(container, sections) {
     let allLogs = [];
-    
-    // Process sections to flatten the log list
-    sections.forEach(section => {
-        section.logs.forEach(log => {
-            allLogs.push({ 
-                ...log, 
-                seasonTitle: section.title || "Recent" // Fallback if title is missing
-            });
+
+    const findLogs = (items, parentTitle = "") => {
+        items.forEach(item => {
+            // Combines titles: "Junior Year 1" + "Winter 2026"
+            const currentTitle = parentTitle 
+                ? `${parentTitle} - ${item.title}` 
+                : item.title;
+
+            if (item.logs) {
+                item.logs.forEach(l => {
+                    allLogs.push({
+                        ...l,
+                        // This is the clean "Junior Year 1 - Winter 2026" string
+                        displayCategory: currentTitle 
+                    });
+                });
+            }
+            
+            if (item.folders) {
+                findLogs(item.folders, currentTitle);
+            }
         });
-    });
+    };
+
+    findLogs(sections);
 
     // Sort by date (LIFO)
     allLogs.sort((a, b) => new Date(b.date) - new Date(a.date));
-
+    
     container.innerHTML = '';
     
-    // Render top 4
     allLogs.slice(0, 4).forEach(log => {
         const card = document.createElement('div');
         card.className = 'bio-log-card'; 
         
-        // Ensure strings are valid to avoid "undefined"
-        const displaySeason = (log.seasonTitle).toUpperCase();
-        const displayDate = log.date ? `• ${log.date}` : "";
-
+        // Removed the ${log.date} from the template literal for a cleaner look
         card.innerHTML = `
-            <span class="meta">${displaySeason} ${displayDate}</span>
-            <h3>${log.filename || "Untitled Log"}</h3>
+            <span class="meta">${log.displayCategory.toUpperCase()}</span>
+            <h3>${log.filename}</h3>
         `;
         
-        // Open the log directly on click
         card.onclick = () => openFullscreenLog(log, true, false);
         container.appendChild(card);
     });
 }
+
 function hydrateEmbeds(rootEl) {
   processInstagramEmbeds(rootEl);
 }
