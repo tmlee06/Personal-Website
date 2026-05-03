@@ -42,7 +42,8 @@
     "title": "京都大学",
     "logs": [
       { "filename": "Week 1 - ２０２６年０４月２０日", "path": "logs/京都大学２０２６年/week-1.md", "date": "2026-04-20" },
-      { "filename": "Week 2 - ２０２６年０４月２6日", "path": "logs/京都大学２０２６年/week-2.md", "date": "2026-04-26" }
+      { "filename": "Week 2 - ２０２６年０４月２6日", "path": "logs/京都大学２０２６年/week-2.md", "date": "2026-04-26" },
+      { "filename": "Week 3 - ２０２６年０５月０３日", "path": "logs/京都大学２０２６年/week-3.md", "date": "2026-05-03" }
     ]
   }
 ]
