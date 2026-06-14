@@ -2,7 +2,21 @@
 
 Almost forgot to hit the git add, commit, and push on this one, but here’s week 9. 
 
-UFC Freedom 250 is here! I cannot believe I am missing and not in the States for this historic event, but thankfully there is no PPV anymore and the streams are not laggy. The Twitter beef between Ilia and Justin actually pissed me off since it is so obviously forced to generate more buildup for the fight that already has enough. Topuria 18-0 and Poatan new interim heavyweight champion is my prediction. 🌹 🤝 🗿
+Praying for NY! The city is going to burn. Game 3 was madness, so I have no clue how they are going to control the celebrations. I already saw some concerning videos on X and Reels, so my prayers goes out to them. New York deserves the championship, but more specifically Jalen Brunson. Brunson's 45 point masterclass got me emotional. His story is so inspiring, but he is not LeBron Raymone James though. I can not believe it has been 10 years since the 3-1 comeback. It is tradition to go back to the video every month. I will not embed it though, but I will embed the video of the week:
+
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; margin-bottom: 24px;">
+  <iframe
+    src= "https://www.youtube.com/embed/RDNpN4Si98s?si=-fbSuQ5vtAflOuTo" 
+    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
+    frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowfullscreen>
+  </iframe>
+</div>
+
+Very well put together video, but I warn you might go down the sports rabbit hole of videos. Be good to yourself this month!
+
+Today has to be one of the most peak days for sports. World Cup, Stanley Cup Game 6 (Vegas in 7), and of course UFC Freedom 250 is here! I cannot believe I am missing and not in the States for this historic event, but thankfully there is no PPV anymore and the streams are not laggy. The Twitter beef between Ilia and Justin actually pissed me off since it is so obviously forced to generate more buildup for the fight that already has enough. Topuria 18-0 and Poatan new interim heavyweight champion is my prediction. 🌹 🤝 🗿
 
 America or North America is getting fed this summer with peak after peak. NHL and NBA playoffs, Freedom 250, return of McGregor, and World Cup is unfair. I can not lie and say I do not have fomo because I do. One of my colleagues posted a photo of the Torrey Pines greens on his story and I shed a little tear. The range and La Jolla is breathtakingly beautiful, and I am so lucky I get to go school there. I wish I would have spent more time exploring SD last year. Luckily, I still have another two years to do, so best believe I will get after it, once I get back.
 
