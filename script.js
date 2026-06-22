@@ -82,6 +82,68 @@ async function startSynchronizedTyping(element1, items1, element2, items2, { typ
     }
 }
 
+// Three-way synchronized typing for three elements that should change together
+async function startThreeSynchronizedTyping(element1, items1, element2, items2, element3, items3, { typeDelay = 70, eraseDelay = 45, holdDelay = 900 } = {}) {
+    if (!element1 || !element2 || !element3 || !items1 || !items2 || !items3) return;
+    let i = 0;
+    const len1 = items1.length || 1;
+    const len2 = items2.length || 1;
+    const len3 = items3.length || 1;
+    const total = Math.max(len1, len2, len3);
+    // eslint-disable-next-line no-constant-condition
+    while (true) {
+        try {
+            const text1 = String(items1[i % len1] || '');
+            const text2 = String(items2[i % len2] || '');
+            const text3 = String(items3[i % len3] || '');
+
+            element1.setAttribute('aria-label', text1);
+            element2.setAttribute('aria-label', text2);
+            element3.setAttribute('aria-label', text3);
+
+            // Prefer smooth fade-in/out for all three elements to avoid per-character jitter.
+            // Ensure CSS transitions exist (these will be set in styles.css as well).
+            try {
+                if (element1.style.transition === '') element1.style.transition = 'opacity 140ms ease';
+                if (element2.style.transition === '') element2.style.transition = 'opacity 140ms ease';
+                if (element3.style.transition === '') element3.style.transition = 'opacity 140ms ease';
+            } catch (e) {
+                // ignore if style access fails
+            }
+
+            // Fade out all three quickly, swap text, then fade in together
+            element1.style.opacity = '0';
+            element2.style.opacity = '0';
+            element3.style.opacity = '0';
+            await delay(100);
+
+            element1.textContent = text1;
+            element2.textContent = text2;
+            element3.textContent = text3;
+
+            element1.style.opacity = '1';
+            element2.style.opacity = '1';
+            element3.style.opacity = '1';
+
+            await delay(holdDelay);
+
+            // Fade out before next cycle and clear text
+            element1.style.opacity = '0';
+            element2.style.opacity = '0';
+            element3.style.opacity = '0';
+            await delay(100);
+            element1.textContent = '';
+            element2.textContent = '';
+            element3.textContent = '';
+
+            i = (i + 1) % total;
+        } catch (err) {
+            console.error('Three-way typing loop error:', err);
+            break;
+        }
+    }
+}
+
 // Smooth scroll for navigation links (only for hash links, not external URLs)
 document.querySelectorAll('a[href^="#"]:not([href^="http"])').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
@@ -477,6 +539,24 @@ async function openFullscreenLog(log, updateHash = true, scrollOnClose = false) 
                     <i class="fas fa-arrow-left"></i> BACK TO LOGS
                 </button>
             </div>
+
+            <button id="reader-theme-toggle" class="theme-toggle reader-theme-toggle" type="button" aria-label="Switch theme" title="Switch theme">
+                <svg class="theme-icon theme-icon-sun" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="4"/>
+                    <line x1="12" y1="1" x2="12" y2="3"/>
+                    <line x1="12" y1="21" x2="12" y2="23"/>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                    <line x1="1" y1="12" x2="3" y2="12"/>
+                    <line x1="21" y1="12" x2="23" y2="12"/>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                </svg>
+                <svg class="theme-icon theme-icon-moon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                </svg>
+            </button>
+
             <div class="reader-content">
                 <header class="reader-header">
                     <span class="reader-meta">${log.date || ''}</span>
@@ -522,6 +602,26 @@ async function openFullscreenLog(log, updateHash = true, scrollOnClose = false) 
                 }
             };
         }
+
+        const readerThemeToggle = reader.querySelector('#reader-theme-toggle');
+        if (readerThemeToggle) {
+            const syncReaderToggleLabel = () => {
+                const isLight = document.body.classList.contains('theme-light');
+                readerThemeToggle.setAttribute('aria-label', isLight ? 'Switch to dark mode' : 'Switch to light mode');
+                readerThemeToggle.setAttribute('title', isLight ? 'Switch to dark mode' : 'Switch to light mode');
+            };
+
+            syncReaderToggleLabel();
+
+            readerThemeToggle.addEventListener('click', () => {
+                const next = document.body.classList.contains('theme-light') ? 'dark' : 'light';
+                if (typeof window.tleeApplyTheme === 'function') {
+                    window.tleeApplyTheme(next);
+                    syncReaderToggleLabel();
+                }
+            });
+        }
+
     } catch (err) {
         console.error("Error opening log:", err);
     }
@@ -597,16 +697,20 @@ document.documentElement.style.setProperty('--page-bg', '#f7fbff');
     
     const typedName = document.querySelector('.typed-name');
     const typedGreeting = document.querySelector('.greeting');
-    if (typedName && typedGreeting) {
+    const typedFlags = document.querySelector('.typed-flags');
+    if (typedName && typedGreeting && typedFlags) {
         setTimeout(() => {
-            startSynchronizedTyping(
+            // Start a three-way synchronized typing loop for name, greeting, and flags
+            startThreeSynchronizedTyping(
                 typedName,
                 ['tlee', 'トリー', '智坦'],
                 typedGreeting,
                 ['Hi!', 'こんにちは!', '你好!'],
+                typedFlags,
+                ['🇺🇸 | 🇨🇦', '🇯🇵', '🇭🇰 | 🇨🇳'],
                 {
-                typeDelay: 150,
-                eraseDelay: 100,
+                    typeDelay: 150,
+                    eraseDelay: 100,
                     holdDelay: 2000,
                 }
             );
@@ -684,21 +788,9 @@ document.documentElement.style.setProperty('--page-bg', '#f7fbff');
 
         const overlay = ensureOverlay();
 
-        const updateSidebarForColor = (color) => {
-            const sidebar = document.querySelector('.sidebar');
-            if (sidebar) {
-                if (color === '#f7fbff' || color === '#000' || color === '#000000') {
-                    sidebar.style.color = '#282828';
-                    sidebar.style.borderRight = '1px solid rgba(255, 255, 255, 0.08)';
-                } else if (color === '#ede3d8' || color === '#16ca82') {
-                    // Light backgrounds - use dark text
-                    sidebar.style.color = '#282828';
-                    sidebar.style.borderRight = '1px solid rgba(0, 0, 0, 0.08)';
-                } else {
-                    sidebar.style.color = '#282828';
-                    sidebar.style.borderRight = '1px solid rgba(0, 0, 0, 0.06)';
-                }
-            }
+        const updateSidebarForColor = () => {
+            // Sidebar color is governed entirely by CSS (.sidebar / body.theme-light .sidebar)
+            // so the page background crossfade never has to fight the theme toggle.
         };
 
         const crossfadeTo = (color) => {
@@ -754,6 +846,7 @@ document.documentElement.style.setProperty('--page-bg', '#f7fbff');
             // Update foreground class immediately to prevent flicker
             if (foreground) {
                 document.body.classList.toggle('light-foreground', foreground === 'light');
+                document.body.classList.toggle('dark-foreground', foreground === 'dark');
             }
             
             rafPending = true;
@@ -1014,3 +1107,136 @@ console.log(`
    
    https://www.linkedin.com/in/tlee06/
 `);
+// ==========================================================================
+// Theme Toggle (Dark / Light)
+// ==========================================================================
+(function initThemeToggle() {
+    const STORAGE_KEY = 'tlee-theme';
+    const toggleBtn = document.getElementById('theme-toggle');
+    const sections = document.querySelectorAll('.content-section[data-bg]');
+
+    // Cache the original dark values on each section so we can swap back and forth
+    sections.forEach(section => {
+        if (!section.dataset.bgDark) {
+            section.dataset.bgDark = section.getAttribute('data-bg');
+            section.dataset.foregroundDark = section.getAttribute('data-foreground') || 'light';
+        }
+    });
+
+    function applyTheme(theme) {
+        const isLight = theme === 'light';
+        document.body.classList.toggle('theme-light', isLight);
+
+        // Swap each section's data-bg / data-foreground to the right palette
+        sections.forEach(section => {
+            const bg = isLight ? section.dataset.bgLight : section.dataset.bgDark;
+            const fg = isLight ? section.dataset.foregroundLight : section.dataset.foregroundDark;
+            if (bg) section.setAttribute('data-bg', bg);
+            if (fg) section.setAttribute('data-foreground', fg);
+        });
+
+        // Force the currently-visible section to re-apply its (now-swapped) color immediately
+        const overlay = document.getElementById('bg-overlay');
+        let current = null;
+        let bestRatio = 0;
+        const viewportHeight = window.innerHeight;
+        sections.forEach(section => {
+            const rect = section.getBoundingClientRect();
+            const visible = Math.max(0, Math.min(rect.bottom, viewportHeight) - Math.max(rect.top, 0));
+            const ratio = visible / Math.max(rect.height, 1);
+            if (ratio > bestRatio) {
+                bestRatio = ratio;
+                current = section;
+            }
+        });
+        if (current) {
+            const bg = current.getAttribute('data-bg');
+            const fg = current.getAttribute('data-foreground');
+            document.documentElement.style.setProperty('--page-bg', bg);
+            if (overlay) overlay.style.backgroundColor = bg;
+            document.body.classList.toggle('light-foreground', fg === 'light');
+            document.body.classList.toggle('dark-foreground', fg === 'dark');
+        }
+
+        if (toggleBtn) {
+            toggleBtn.setAttribute('aria-label', isLight ? 'Switch to dark mode' : 'Switch to light mode');
+            toggleBtn.setAttribute('title', isLight ? 'Switch to dark mode' : 'Switch to light mode');
+        }
+
+        const readerToggleBtn = document.getElementById('reader-theme-toggle');
+        if (readerToggleBtn) {
+            readerToggleBtn.setAttribute('aria-label', isLight ? 'Switch to dark mode' : 'Switch to light mode');
+            readerToggleBtn.setAttribute('title', isLight ? 'Switch to dark mode' : 'Switch to light mode');
+        }
+
+        try {
+            localStorage.setItem(STORAGE_KEY, theme);
+        } catch (e) {
+            // localStorage unavailable, ignore
+        }
+    }
+
+
+
+    window.tleeApplyTheme = applyTheme;
+    window.tleeGetTheme = () => document.body.classList.contains('theme-light') ? 'light' : 'dark';
+
+    // Determine initial theme: stored preference, else default to dark
+    let initialTheme = 'dark';
+    try {
+        const stored = localStorage.getItem(STORAGE_KEY);
+        if (stored === 'light' || stored === 'dark') initialTheme = stored;
+    } catch (e) {
+        // ignore
+    }
+
+    applyTheme(initialTheme);
+
+    if (toggleBtn) {
+        toggleBtn.addEventListener('click', () => {
+            const next = document.body.classList.contains('theme-light') ? 'dark' : 'light';
+            applyTheme(next);
+        });
+    }
+})();
+
+document.getElementById("year").textContent = new Date().getFullYear();
+
+// Last.fm Integration Configuration
+const LASTFM_USERNAME = 'tmlee06';
+const LASTFM_API_KEY = '05c804c9671368e09457e72507fc92ff';
+
+async function getNowPlaying() {
+    const url = `https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=${LASTFM_USERNAME}&api_key=${LASTFM_API_KEY}&format=json&limit=1`;
+    
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
+        
+        // Safety exit check in case there is zero play history
+        if (!data.recenttracks || !data.recenttracks.track || data.recenttracks.track.length === 0) {
+            return;
+        }
+
+        const track = data.recenttracks.track[0];
+        const statusElement = document.getElementById('music-status');
+        const iconElement = document.getElementById('music-icon');
+
+        // Check if the current track attribute flag indicates it's actively playing
+        const isPlaying = track['@attr'] && track['@attr'].nowplaying === 'true';
+
+        if (isPlaying) {
+            iconElement.textContent = '🎧';
+            statusElement.innerHTML = `Currently spinning: <strong>${track.name}</strong> by <em>${track.artist['#text']}</em>`;
+        } else {
+            iconElement.textContent = '🎵';
+            statusElement.innerHTML = `Last played: <strong>${track.name}</strong> by <em>${track.artist['#text']}</em>`;
+        }
+    } catch (error) {
+        console.error('Error fetching music data from Last.fm:', error);
+        document.getElementById('music-status').textContent = 'Couldn\'t load music data';
+    }
+}
+
+// Fire the tracker immediately on page load
+getNowPlaying();

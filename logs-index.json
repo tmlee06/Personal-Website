@@ -32,13 +32,7 @@
       }
     ]
   },
-  {
-    "title": "Reflections",
-    "logs": [
-      { "filename": "UCSD 2025-26 (Junior Year 1)", "path": "logs/Reflections/junior1.md", "date": "2026-03-20" }
-    ]
-  },
-  {
+    {
     "title": "京都大学",
     "logs": [
       { "filename": "Week 1 - ２０２６年０４月２０日", "path": "logs/京都大学２０２６年/week-1.md", "date": "2026-04-20" },
@@ -48,6 +42,35 @@
       { "filename": "Week 5 - ２０２６年０５月１７日", "path": "logs/京都大学２０２６年/week-5.md", "date": "2026-05-17" },
       { "filename": "Week 6-7 - ２０２６年０6月０3日", "path": "logs/京都大学２０２６年/week-6-7.md", "date": "2026-06-03" },
       { "filename": "Week 8 - ２０２６年０6月０８日", "path": "logs/京都大学２０２６年/week-8.md", "date": "2026-06-08" },
-      { "filename": "Week 9 - ２０２６年０6月１５日", "path": "logs/京都大学２０２６年/week-9.md", "date": "2026-06-15" }    ]
+      { "filename": "Week 9 - ２０２６年０6月１５日", "path": "logs/京都大学２０２６年/week-9.md", "date": "2026-06-15" },
+      { "filename": "Week 10 - ２０２６年０6月２２日", "path": "logs/京都大学２０２６年/week-10.md", "date": "2026-06-22" }
+    ]
+  },
+  {
+    "title": "Travel",
+    "logs": [
+    ]
+  },
+  {
+    "title": "Reads",
+    "logs": [
+      { "filename": "2026 Reading List", "path": "logs/Reads/2026reads.md" }
+    ]
+  },
+  {
+    "title": "Reflections",
+    "logs": [
+      { "filename": "UCSD 2025-26 (Junior Year 1)", "path": "logs/Reflections/junior1.md", "date": "2026-03-20" }
+    ]
+  },
+  {
+    "title": "Essays",
+    "logs": [
+      { "filename": "Repeated Resilience", "path": "logs/Essays/Repeated_Resilience.md", "date": "2024-07-16" },
+      { "filename": "The Rhetoric of Laziness", "path": "logs/Essays/laziness.md", "date": "2024-07-22" },
+      { "filename": "Privilege and Perseverance", "path": "logs/Essays/Privilege_and_Perseverance.md", "date": "2024-07-25" },
+      { "filename": "Unmasking Male Mental Health", "path": "logs/Essays/Unmasking_Male_Mental_Health.md", "date": "2024-07-31" },
+      { "filename": "The Parlay Problem", "path": "logs/Essays/The_Parlay_Problem.md", "date": "2024-07-29" }    
+    ]
   }
 ]

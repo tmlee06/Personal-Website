@@ -7,7 +7,7 @@
     <link rel="icon" type="image/png" href="./Assets/logos/tlee.png">
     <link rel="shortcut icon" type="image/png" href="./Assets/logos/tlee.png">
     <link rel="apple-touch-icon" href="./Assets/logos/tlee.png">
-    <link rel="stylesheet" href="styles.css?v=20251106-1">
+    <link rel="stylesheet" href="styles.css?v=20260620-km-palette">
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=Shippori+Mincho:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
@@ -15,9 +15,9 @@
         /* Ensure standalone page gets the same background transition base */
         html, body { background-color: var(--page-bg, #ffffff); }
     </style>
-    <div id="entrance-overlay"></div>
 </head>
 <body>
+    <div id="entrance-overlay"></div>
     <div class="sidebar-overlay" id="sidebar-overlay"></div>
     
     <button class="hamburger-menu" id="hamburger-menu" aria-label="Toggle menu">
@@ -61,12 +61,32 @@
                 <a href="https://www.youtube.com/@tlee06" target="_blank" class="social-link"><i class="fab fa-youtube" aria-hidden="true"></i></a>
             </div>
         </div>
+
+
+        <div class="theme-toggle-wrap">
+            <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Switch to light mode" title="Switch to light mode">
+                <svg class="theme-icon theme-icon-sun" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="4"/>
+                    <line x1="12" y1="1" x2="12" y2="3"/>
+                    <line x1="12" y1="21" x2="12" y2="23"/>
+                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                    <line x1="1" y1="12" x2="3" y2="12"/>
+                    <line x1="21" y1="12" x2="23" y2="12"/>
+                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                </svg>
+                <svg class="theme-icon theme-icon-moon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                </svg>
+            </button>
+        </div>
     </aside>
 
     <div class="page-layout">
         <main class="main-content">
-            <section id="logs" class="content-section" data-bg="#77c8ed" data-foreground="dark">
-                <div class="work-section">
+            <section id="logs" class="content-section" data-bg="#1F1D29" data-foreground="light" data-bg-light="#F7F1EA" data-foreground-light="dark" style="display: block !important; height: auto !important; min-height: 0 !important; max-height: none !important; padding: 2rem 0 !important; overflow: visible !important;">
+                <div class="work-section" style="width: 100%; max-width: 1520px; margin: 0 auto; padding: 0 clamp(36px, 4vw, 80px); box-sizing: border-box;">
                     <div class="section-title-small">WEEKLY LOGS</div>
                     <p class="logs-subtitle">Build notes, labs, wins, and lessons.</p>
                     <div id="logs-list" class="logs-grid"></div>
@@ -76,6 +96,6 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <script src="script.js?v=20260223-1"></script>
+    <script src="script.js?v=20260620-km-palette"></script>
 </body>
 </html>
