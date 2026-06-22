@@ -370,8 +370,23 @@ async function loadWeeklyLogs() {
     const logsContainer = document.getElementById('logs-list');
     const bioContainer = document.getElementById('bio-logs-list');
 
+    function normalizeLogPath(path) {
+        try {
+            return decodeURIComponent(String(path || ""))
+                .replace(/^#log-/, "")
+                .replace(/^\/+/, "")
+                .replace(/\\/g, "/")
+                .normalize("NFC");
+        } catch (error) {
+            return String(path || "")
+                .replace(/^#log-/, "")
+                .replace(/^\/+/, "")
+                .replace(/\\/g, "/");
+        }
+    }
+
     try {
-        const response = await fetch('logs-index.json');
+        const response = await fetch('logs-index.json', { cache: 'no-store' });
         const sections = await response.json();
 
         // Standard logs page render
@@ -384,48 +399,45 @@ async function loadWeeklyLogs() {
             renderBioLogs(bioContainer, sections);
         }
 
-       const currentHash = window.location.hash || '';
+        // Deep link support
+        const currentHash = window.location.hash || '';
 
-function normalizeLogPath(path) {
-    try {
-        return decodeURIComponent(String(path || ""))
-            .replace(/^#log-/, "")
-            .replace(/^\/+/, "")
-            .replace(/\\/g, "/")
-            .normalize("NFC");
+        if (currentHash.startsWith("#log-")) {
+            const filePath = currentHash.replace("#log-", "");
+
+            const allLogs = [];
+
+            const flatten = (items) => {
+                items.forEach((item) => {
+                    if (item.logs) {
+                        allLogs.push(...item.logs);
+                    }
+
+                    if (item.folders) {
+                        flatten(item.folders);
+                    }
+                });
+            };
+
+            flatten(sections);
+
+            const wantedPath = normalizeLogPath(filePath);
+
+            const targetLog = allLogs.find((log) => {
+                return normalizeLogPath(log.path) === wantedPath;
+            });
+
+            if (targetLog) {
+                setTimeout(() => {
+                    openFullscreenLog(targetLog, false, false);
+                }, 100);
+            } else {
+                console.warn("Could not find log for hash:", wantedPath);
+                console.warn("Available logs:", allLogs.map((log) => log.path));
+            }
+        }
     } catch (error) {
-        return String(path || "")
-            .replace(/^#log-/, "")
-            .replace(/^\/+/, "")
-            .replace(/\\/g, "/");
-    }
-}
-
-if (currentHash.startsWith("#log-")) {
-    const filePath = currentHash.replace("#log-", "");
-
-    const allLogs = [];
-
-    const flatten = (items) => {
-        items.forEach((item) => {
-            if (item.logs) allLogs.push(...item.logs);
-            if (item.folders) flatten(item.folders);
-        });
-    };
-
-    flatten(sections);
-
-    const wantedPath = normalizeLogPath(filePath);
-
-    const targetLog = allLogs.find((log) => {
-        return normalizeLogPath(log.path) === wantedPath;
-    });
-
-    if (targetLog) {
-        setTimeout(() => openFullscreenLog(targetLog, false, false), 100);
-    } else {
-        console.warn("Could not find log for hash:", wantedPath);
-        console.warn("Available logs:", allLogs.map((log) => log.path));
+        console.error("Failed to load logs:", error);
     }
 }
 
