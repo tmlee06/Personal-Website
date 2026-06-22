@@ -1202,41 +1202,90 @@ console.log(`
 
 document.getElementById("year").textContent = new Date().getFullYear();
 
-// Last.fm Integration Configuration
 const LASTFM_USERNAME = 'tmlee06';
-const LASTFM_API_KEY = '05c804c9671368e09457e72507fc92ff';
+const LASTFM_API_KEY = '05c804c9671368e90457e72507fc92ff';
 
-async function getNowPlaying() {
-    const url = `https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=${LASTFM_USERNAME}&api_key=${LASTFM_API_KEY}&format=json&limit=1`;
-    
+function escapeHTML(value) {
+    return String(value || "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+}
+
+async function loadNowPlaying() {
+    const box = document.getElementById("now-playing");
+    if (!box) return;
+
     try {
+        const url =
+            `https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=${encodeURIComponent(LASTFM_USERNAME)}&api_key=${encodeURIComponent(LASTFM_API_KEY)}&format=json&limit=1`;
+
         const response = await fetch(url);
         const data = await response.json();
-        
-        // Safety exit check in case there is zero play history
-        if (!data.recenttracks || !data.recenttracks.track || data.recenttracks.track.length === 0) {
+
+        console.log("Last.fm response:", data);
+
+        if (data.error) {
+            box.innerHTML = `
+                <div class="now-playing-status">
+                    Last.fm error: ${escapeHTML(data.message)}
+                </div>
+            `;
             return;
         }
 
-        const track = data.recenttracks.track[0];
-        const statusElement = document.getElementById('music-status');
-        const iconElement = document.getElementById('music-icon');
+        const track = data.recenttracks?.track?.[0];
 
-        // Check if the current track attribute flag indicates it's actively playing
-        const isPlaying = track['@attr'] && track['@attr'].nowplaying === 'true';
-
-        if (isPlaying) {
-            iconElement.textContent = '🎧';
-            statusElement.innerHTML = `Currently spinning: <strong>${track.name}</strong> by <em>${track.artist['#text']}</em>`;
-        } else {
-            iconElement.textContent = '🎵';
-            statusElement.innerHTML = `Last played: <strong>${track.name}</strong> by <em>${track.artist['#text']}</em>`;
+        if (!track) {
+            box.innerHTML = `
+                <div class="now-playing-status">
+                    No recent music found
+                </div>
+            `;
+            return;
         }
+
+        const isNowPlaying = track["@attr"]?.nowplaying === "true";
+        const song = track.name || "Unknown Song";
+        const artist = track.artist?.["#text"] || "Unknown Artist";
+        const trackUrl = track.url || "#";
+
+        const images = track.image || [];
+        const albumArt =
+            [...images].reverse().find((img) => img["#text"])?.["#text"] || "";
+
+        const statusText = isNowPlaying ? "Currently listening" : "Last listened";
+
+        box.innerHTML = `
+            <a href="${escapeHTML(trackUrl)}" target="_blank" rel="noopener noreferrer">
+                <div class="now-playing-status">${statusText}</div>
+                <div class="now-playing-inner">
+                    ${
+                        albumArt
+                            ? `<img class="now-playing-art" src="${escapeHTML(albumArt)}" alt="${escapeHTML(song)} album art">`
+                            : `<div class="now-playing-art"></div>`
+                    }
+                    <div class="now-playing-text">
+                        <div class="now-playing-title">${escapeHTML(song)}</div>
+                        <div class="now-playing-artist">${escapeHTML(artist)}</div>
+                    </div>
+                </div>
+            </a>
+        `;
     } catch (error) {
-        console.error('Error fetching music data from Last.fm:', error);
-        document.getElementById('music-status').textContent = 'Couldn\'t load music data';
+        console.error("Failed to load Last.fm music:", error);
+
+        box.innerHTML = `
+            <div class="now-playing-status">
+                Could not connect to Last.fm
+            </div>
+        `;
     }
 }
 
-// Fire the tracker immediately on page load
-getNowPlaying();
+document.addEventListener("DOMContentLoaded", () => {
+    loadNowPlaying();
+    setInterval(loadNowPlaying, 30000);
+});
