@@ -1,3 +1,4 @@
+@charset "UTF-8";
 /* Reset and Base */
 * {
     margin: 0;
@@ -148,88 +149,10 @@ footer {
 }
 
 
+
 /* Dark mode specific */
 body.dark footer {
     color: #e5e7eb;              /* Crisp, bright silver-white */
-}
-
-/* Music Widget - Exact Resume Button Aesthetic Match */
-#music-box {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.75rem;
-    margin-top: 0.75rem; /* Matches the gap spacing of the buttons */
-    padding: 0.6rem 1.5rem; /* Exact button padding */
-    font-size: 0.9rem; /* Exact button font-size */
-    text-decoration: none;
-    font-weight: 400;
-    letter-spacing: 0.05em;
-    text-align: center;
-    width: 100%;
-    border-radius: 9999px; /* Exact button pill shape */
-    box-sizing: border-box;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); /* Exact button physics transition */
-    overflow: hidden;
-
-    /* DARK MODE DEFAULT (Mirrors your exact button style) */
-    color: rgba(255, 255, 255, 0.8);
-    background: rgba(255, 255, 255, 0.03) !important;
-    border: 1px solid rgba(255, 255, 255, 0.15) !important;
-    backdrop-filter: blur(12px) saturate(180%) !important;
-    -webkit-backdrop-filter: blur(12px) saturate(180%);
-}
-
-/* Optional hover state to give it the exact same interactive feel */
-#music-box:hover {
-    background: rgba(255, 255, 255, 0.1) !important;
-    border-color: rgba(255, 255, 255, 0.4) !important;
-    color: #ffffff;
-    transform: translateY(-3px);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-}
-
-/* Inline text styling for track details inside dark mode */
-#music-box strong {
-    color: #ffffff;
-    font-weight: 500;
-}
-
-#music-box em {
-    color: rgba(255, 255, 255, 0.6);
-    font-style: normal;
-}
-
-
-/* ==========================================================================
-   ADAPTIVE LIGHT MODE STYLES
-   Inverts the glassmorphism parameters to absorb the light background natively
-   ========================================================================== */
-body.light #music-box, 
-[data-foreground-light="dark"] #music-box {
-    color: rgba(0, 0, 0, 0.7);
-    background: rgba(0, 0, 0, 0.03) !important;
-    border: 1px solid rgba(0, 0, 0, 0.08) !important;
-    backdrop-filter: blur(12px) saturate(180%) !important;
-    -webkit-backdrop-filter: blur(12px) saturate(180%);
-}
-
-body.light #music-box:hover,
-[data-foreground-light="dark"] #music-box:hover {
-    background: rgba(0, 0, 0, 0.06) !important;
-    border-color: rgba(0, 0, 0, 0.25) !important;
-    color: #000000;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-}
-
-body.light #music-box strong,
-[data-foreground-light="dark"] #music-box strong {
-    color: #000000;
-}
-
-body.light #music-box em,
-[data-foreground-light="dark"] #music-box em {
-    color: rgba(0, 0, 0, 0.5);
 }
 
 /* Background overlay */
@@ -1132,7 +1055,7 @@ body.theme-light .theme-toggle:hover {
 }
 
 .experience-bullets li::before {
-    content: '•';
+    content: none;
     position: absolute;
     left: 0;
     color: #fffeff;
@@ -2336,4 +2259,329 @@ body.theme-light .sidebar {
 body.theme-light .theme-toggle {
     color: #26242E !important;
     border-color: rgba(38, 36, 46, 0.2) !important;
+}
+
+/* =========================================================
+   FINAL RESPONSIVE POLISH OVERRIDES V4
+   Moderate logo sizing. Logo changes only happen when minimized.
+   ========================================================= */
+
+/* Desktop zoom only. Do not run this during hamburger layout. */
+@media (min-width: 1051px) {
+    html {
+        zoom: 0.8;
+    }
+
+    .sidebar {
+        height: 125vh !important;
+        min-height: 125vh !important;
+        bottom: auto !important;
+        overflow-y: auto !important;
+    }
+}
+
+/* Mobile / minimized layout should not be zoomed. */
+@media (max-width: 1050px) {
+    html {
+        zoom: 1;
+    }
+}
+
+/* Force real browser bullets, no custom bullet character. */
+.experience-bullets {
+    list-style-type: disc !important;
+    list-style-position: outside !important;
+    padding-left: 1.5rem !important;
+    margin-left: 0 !important;
+}
+
+.experience-bullets li {
+    display: list-item !important;
+    position: static !important;
+    padding-left: 0.25rem !important;
+    margin-bottom: 0.45rem !important;
+}
+
+.experience-bullets li::before {
+    content: none !important;
+    display: none !important;
+}
+
+/* Short centered divider between Logs and Contact. */
+#contact {
+    border-top: none !important;
+    position: relative;
+}
+
+#contact::before {
+    content: "";
+    display: block;
+    width: min(62vw, 900px);
+    height: 1px;
+    background: rgba(255, 255, 255, 0.12);
+    margin: 0 auto 2.5rem auto;
+}
+
+body.theme-light #contact::before {
+    background: rgba(38, 36, 46, 0.16);
+}
+
+/* Center profile section when screen is minimized. */
+@media (max-width: 1050px) {
+    #home .bio-section {
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
+        text-align: center !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        padding-left: 1.25rem !important;
+        padding-right: 1.25rem !important;
+    }
+
+    #home .bio-image-container {
+        order: -1 !important;
+        width: min(100%, 420px) !important;
+        max-width: 420px !important;
+        flex: 0 1 auto !important;
+        margin: 7rem auto 2rem auto !important;
+        padding: 0 !important;
+        align-self: center !important;
+        text-align: center !important;
+    }
+
+    #home .profile-image-wrapper,
+    #home .profile-image-wrapper img {
+        display: block !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+}
+
+/* Center videos when screen is minimized. */
+@media (max-width: 1050px) {
+    #home .left-content-column {
+        width: 100% !important;
+        max-width: 100% !important;
+        align-items: center !important;
+        text-align: center !important;
+    }
+
+    #home .home-videos-row {
+        width: 100% !important;
+        max-width: 100% !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 1.5rem !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+
+    #home .home-video-card {
+        width: min(92vw, 560px) !important;
+        max-width: 560px !important;
+        flex: 0 1 auto !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+
+    #home .home-video-card iframe {
+        width: 100% !important;
+        display: block !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+}
+
+/* Moderate logo/image fixes only when screen is minimized. */
+@media (max-width: 1050px) {
+    #about .experience-container {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding-left: 1.25rem !important;
+        padding-right: 1.25rem !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+
+    #about .experience-header,
+    #education .experience-header,
+    #experience .experience-header {
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        text-align: center !important;
+        gap: 1.25rem !important;
+        width: 100% !important;
+    }
+
+    #about .experience-header-left,
+    #education .experience-header-left,
+    #experience .experience-header-left {
+        width: 100% !important;
+        max-width: 900px !important;
+        min-width: 0 !important;
+        flex: 0 1 auto !important;
+        text-align: center !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+
+    #about .experience-header-right,
+    #education .experience-header-right,
+    #experience .experience-header-right {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        flex: 0 1 auto !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        text-align: center !important;
+        margin: 0 auto !important;
+        gap: 0.75rem !important;
+    }
+
+    #about .experience-logo-link,
+    #education .experience-logo-link,
+    #experience .experience-logo-link {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 100% !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+
+    #about .experience-logo,
+    #education .experience-logo,
+    #experience .experience-logo {
+        width: clamp(170px, 42vw, 260px) !important;
+        height: clamp(105px, 28vw, 180px) !important;
+        max-width: 100% !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        padding: 0.4rem !important;
+        background: transparent !important;
+        border: none !important;
+    }
+
+    #about .experience-logo img,
+    #education .experience-logo img,
+    #experience .experience-logo img {
+        width: auto !important;
+        height: auto !important;
+        max-width: 100% !important;
+        max-height: 100% !important;
+        object-fit: contain !important;
+        display: block !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+
+    #about .experience-header-right > img {
+        width: min(90vw, 460px) !important;
+        max-width: 460px !important;
+        height: auto !important;
+        object-fit: contain !important;
+        display: block !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        border-radius: 12px !important;
+    }
+
+    #about .verse-container {
+        margin-left: auto !important;
+        margin-right: auto !important;
+        text-align: left !important;
+        max-width: 680px !important;
+    }
+
+    #current-projects .current-projects-grid {
+        grid-template-columns: 1fr !important;
+        justify-items: center !important;
+        align-items: center !important;
+        width: 100% !important;
+    }
+
+    #current-projects .work-card-link {
+        width: min(92vw, 560px) !important;
+        max-width: 560px !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+
+    #current-projects .current-project-card {
+        width: 100% !important;
+        max-width: 560px !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+
+    #current-projects .current-project-logo {
+        width: 100% !important;
+        height: clamp(130px, 30vw, 200px) !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        padding: 1rem !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+
+    #current-projects .current-project-logo img {
+        width: auto !important;
+        height: auto !important;
+        max-width: 88% !important;
+        max-height: 88% !important;
+        object-fit: contain !important;
+        display: block !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+}
+
+/* Center the Goals photo when screen is minimized */
+@media (max-width: 1050px) {
+    #goals .experience-header {
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        text-align: center !important;
+    }
+
+    #goals .experience-header-right {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+
+    #goals .experience-header-right > div {
+        width: min(85vw, 360px) !important;
+        max-width: 360px !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+
+    #goals .experience-header-right img {
+        width: 100% !important;
+        height: auto !important;
+        display: block !important;
+        object-fit: contain !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
 }
