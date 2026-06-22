@@ -384,26 +384,48 @@ async function loadWeeklyLogs() {
             renderBioLogs(bioContainer, sections);
         }
 
-        // Deep link support
-        const currentHash = window.location.hash || '';
-        if (currentHash.startsWith('#log-')) {
-            const filePath = currentHash.replace('#log-', '');
-            // Flatten to find the log for deep linking
-            const allLogs = [];
-            const flatten = (items) => {
-                items.forEach(i => {
-                    if (i.logs) allLogs.push(...i.logs);
-                    if (i.folders) flatten(i.folders);
-                });
-            };
-            flatten(sections);
-            const targetLog = allLogs.find(l => l.path === filePath);
-            if (targetLog) {
-                setTimeout(() => openFullscreenLog(targetLog, false, false), 100);
-            }
-        }
-    } catch (e) {
-        console.error("Failed to load logs:", e);
+       const currentHash = window.location.hash || '';
+
+function normalizeLogPath(path) {
+    try {
+        return decodeURIComponent(String(path || ""))
+            .replace(/^#log-/, "")
+            .replace(/^\/+/, "")
+            .replace(/\\/g, "/")
+            .normalize("NFC");
+    } catch (error) {
+        return String(path || "")
+            .replace(/^#log-/, "")
+            .replace(/^\/+/, "")
+            .replace(/\\/g, "/");
+    }
+}
+
+if (currentHash.startsWith("#log-")) {
+    const filePath = currentHash.replace("#log-", "");
+
+    const allLogs = [];
+
+    const flatten = (items) => {
+        items.forEach((item) => {
+            if (item.logs) allLogs.push(...item.logs);
+            if (item.folders) flatten(item.folders);
+        });
+    };
+
+    flatten(sections);
+
+    const wantedPath = normalizeLogPath(filePath);
+
+    const targetLog = allLogs.find((log) => {
+        return normalizeLogPath(log.path) === wantedPath;
+    });
+
+    if (targetLog) {
+        setTimeout(() => openFullscreenLog(targetLog, false, false), 100);
+    } else {
+        console.warn("Could not find log for hash:", wantedPath);
+        console.warn("Available logs:", allLogs.map((log) => log.path));
     }
 }
 
