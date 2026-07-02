@@ -147,9 +147,9 @@ async function startThreeSynchronizedTyping(element1, items1, element2, items2, 
 // Smooth scroll for navigation links (only for hash links, not external URLs)
 document.querySelectorAll('a[href^="#"]:not([href^="http"])').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
-        // Don't prevent default if it's a link that wraps a project card going to external site
-        if (this.classList.contains('current-project-card-link')) {
-            return; // Let the link work normally
+        // Don't prevent default if it's a log deep link or project wrapper
+        if (this.getAttribute('href').startsWith('#log-') || this.classList.contains('current-project-card-link')) {
+            return; 
         }
         e.preventDefault();
         const href = this.getAttribute('href');
@@ -236,33 +236,38 @@ function parseFrontmatter(markdownText) {
 }
 
 /**
+ * Normalizes relative resource paths to handle subdirectory differences 
+ * between local deployment and GitHub Pages configurations.
+ */
+function getNormalizedFetchUrl(relativePath) {
+    const cleanPath = relativePath.startsWith('/') ? relativePath.slice(1) : relativePath;
+    if (window.location.hostname.includes('github.io')) {
+        return `/Personal-Website/${cleanPath}`;
+    }
+    return `/${cleanPath}`;
+}
+
+/**
  * Loads and processes all logs from logs-index.json.
- * It is now resilient to both the old (flat array of file names) and the new (nested) structure.
- *
- * @returns {Promise<Array<{sectionTitle: string, logs: Array<Object>}>>} Array of section objects.
  */
 async function loadLogsData() {
     try {
-        const indexRes = await fetch('logs-index.json', { cache: 'no-store' });
+        const indexUrl = getNormalizedFetchUrl('logs-index.json');
+        const indexRes = await fetch(indexUrl, { cache: 'no-store' });
         if (!indexRes.ok) {
             console.error('Failed to load logs-index.json');
             return null;
         }
         
         const indexData = await indexRes.json();
-
         let sectionsData = [];
         
-        // CHECK 1: If it's the OLD, FLAT array structure (e.g., ["file1.md", "file2.md"])
         if (Array.isArray(indexData) && typeof indexData[0] === 'string') {
-            // Convert flat array into the expected nested structure for processing
             const flatLogs = indexData.map(filename => ({
                 filename: filename.replace('.md', ''),
-                path: filename // Assumes all logs are in the root directory for now
+                path: filename 
             }));
             sectionsData = [{ title: 'All Logs', logs: flatLogs }];
-
-        // CHECK 2: If it's the NEW, NESTED array structure
         } else if (Array.isArray(indexData) && typeof indexData[0] === 'object' && indexData[0].logs) {
             sectionsData = indexData;
         } else {
@@ -270,20 +275,16 @@ async function loadLogsData() {
             return null;
         }
         
-        if (sectionsData.length === 0) {
-            return [];
-        }
+        if (sectionsData.length === 0) return [];
         
-        // The rest of the logic remains the same: process the now-standardized sectionsData
         const processedSections = await Promise.all(sectionsData.map(async (section) => {
             if (!Array.isArray(section.logs)) return { sectionTitle: section.title, logs: [] };
 
             const logPromises = section.logs.map(async (logEntry) => {
                 const path = logEntry.path; 
-                
                 try {
-                    const res = await fetch(path, { cache: 'no-store' });
-                    // CRITICAL: Robust error handling - skip if file is missing (404)
+                    const logUrl = getNormalizedFetchUrl(path);
+                    const res = await fetch(logUrl, { cache: 'no-store' });
                     if (!res.ok) {
                        console.error(`Log file not found or failed to load: ${path}`, res.status);
                        return null; 
@@ -308,7 +309,6 @@ async function loadLogsData() {
             
             const logs = (await Promise.all(logPromises)).filter(log => log !== null);
 
-            // Sort logs within the section
             logs.sort((a, b) => {
                 if (a.week && b.week) return a.week - b.week;
                 if (a.date && b.date) return new Date(a.date) - new Date(b.date);
@@ -318,15 +318,13 @@ async function loadLogsData() {
             return { sectionTitle: section.title, logs: logs };
         }));
 
-        // Filter out sections with no logs
         return processedSections.filter(section => section.logs.length > 0);
-
     } catch (err) {
         console.error('Error loading logs data:', err);
         return null;
     }
 }
-// Prevent double-init (your file was calling loadWeeklyLogs multiple times)
+
 let __weeklyLogsLoaded = false;
 
 // Instagram embeds injected via innerHTML need this to actually render
@@ -342,13 +340,11 @@ function processInstagramEmbeds(rootEl) {
         }
     };
 
-    // If embed lib already exists, just process
     if (window.instgrm && window.instgrm.Embeds) {
         run();
         return;
     }
 
-    // Load embed.js once, then process
     if (!document.querySelector('script[data-instgrm-embed]')) {
         const s = document.createElement('script');
         s.async = true;
@@ -386,56 +382,43 @@ async function loadWeeklyLogs() {
     }
 
     try {
-        const response = await fetch('logs-index.json', { cache: 'no-store' });
+        const indexUrl = getNormalizedFetchUrl('logs-index.json');
+        const response = await fetch(indexUrl, { cache: 'no-store' });
         const sections = await response.json();
 
-        // Standard logs page render
-        if (logsContainer) {
-            renderLogs(logsContainer, sections);
-        }
+        if (logsContainer) renderLogs(logsContainer, sections);
+        if (bioContainer) renderBioLogs(bioContainer, sections);
 
-        // Bio/Home screen render
-        if (bioContainer) {
-            renderBioLogs(bioContainer, sections);
-        }
+        // Process Deep Links and URL Hashes
+        const checkHashRoute = () => {
+            const currentHash = window.location.hash || '';
+            if (currentHash.startsWith("#log-")) {
+                const filePath = currentHash.replace("#log-", "");
+                const allLogs = [];
 
-        // Deep link support
-        const currentHash = window.location.hash || '';
+                const flatten = (items) => {
+                    items.forEach((item) => {
+                        if (item.logs) allLogs.push(...item.logs);
+                        if (item.folders) flatten(item.folders);
+                    });
+                };
 
-        if (currentHash.startsWith("#log-")) {
-            const filePath = currentHash.replace("#log-", "");
+                flatten(sections);
+                const wantedPath = normalizeLogPath(filePath);
+                const targetLog = allLogs.find((log) => normalizeLogPath(log.path) === wantedPath);
 
-            const allLogs = [];
-
-            const flatten = (items) => {
-                items.forEach((item) => {
-                    if (item.logs) {
-                        allLogs.push(...item.logs);
-                    }
-
-                    if (item.folders) {
-                        flatten(item.folders);
-                    }
-                });
-            };
-
-            flatten(sections);
-
-            const wantedPath = normalizeLogPath(filePath);
-
-            const targetLog = allLogs.find((log) => {
-                return normalizeLogPath(log.path) === wantedPath;
-            });
-
-            if (targetLog) {
-                setTimeout(() => {
-                    openFullscreenLog(targetLog, false, false);
-                }, 100);
-            } else {
-                console.warn("Could not find log for hash:", wantedPath);
-                console.warn("Available logs:", allLogs.map((log) => log.path));
+                if (targetLog) {
+                    setTimeout(() => {
+                        openFullscreenLog(targetLog, false, false);
+                    }, 150);
+                }
             }
-        }
+        };
+
+        // Listen for direct actions or backward browser steps
+        checkHashRoute();
+        window.addEventListener('hashchange', checkHashRoute);
+
     } catch (error) {
         console.error("Failed to load logs:", error);
     }
@@ -485,54 +468,34 @@ function renderLogs(container, items) {
     items.forEach(item => container.appendChild(createFolderElement(item)));
 }
 
-// --- BIO SECTION RENDERER (Simplified to prevent crashing) ---
+// --- BIO SECTION RENDERER ---
 
-/**
- * Renders the Bio section with the clean, minimalist grid
- */
 function renderBioLogs(container, sections) {
     let allLogs = [];
 
     const findLogs = (items, parentTitle = "") => {
         items.forEach(item => {
-            // Combines titles: "Junior Year 1" + "Winter 2026"
-            const currentTitle = parentTitle 
-                ? `${parentTitle} - ${item.title}` 
-                : item.title;
-
+            const currentTitle = parentTitle ? `${parentTitle} - ${item.title}` : item.title;
             if (item.logs) {
                 item.logs.forEach(l => {
-                    allLogs.push({
-                        ...l,
-                        // This is the clean "Junior Year 1 - Winter 2026" string
-                        displayCategory: currentTitle 
-                    });
+                    allLogs.push({ ...l, displayCategory: currentTitle });
                 });
             }
-            
-            if (item.folders) {
-                findLogs(item.folders, currentTitle);
-            }
+            if (item.folders) findLogs(item.folders, currentTitle);
         });
     };
 
     findLogs(sections);
-
-    // Sort by date (LIFO)
     allLogs.sort((a, b) => new Date(b.date) - new Date(a.date));
-    
     container.innerHTML = '';
     
     allLogs.slice(0, 4).forEach(log => {
         const card = document.createElement('div');
         card.className = 'bio-log-card'; 
-        
-        // Removed the ${log.date} from the template literal for a cleaner look
         card.innerHTML = `
             <span class="meta">${log.displayCategory.toUpperCase()}</span>
             <h3>${log.filename}</h3>
         `;
-        
         card.onclick = () => openFullscreenLog(log, true, false);
         container.appendChild(card);
     });
@@ -543,7 +506,7 @@ function hydrateEmbeds(rootEl) {
 }
 
 /**
- * Opens log in a persistent view with a pinned back button
+ * Opens log in a persistent fullscreen view.
  */
 async function openFullscreenLog(log, updateHash = true, scrollOnClose = false) {
     if (!log || !log.path) return;
@@ -552,7 +515,6 @@ async function openFullscreenLog(log, updateHash = true, scrollOnClose = false) 
         window.location.hash = `log-${log.path}`;
     }
 
-    // If a reader is already open, replace it
     const existingReader = document.querySelector('.fullscreen-reader');
     if (existingReader) {
         existingReader.remove();
@@ -563,7 +525,10 @@ async function openFullscreenLog(log, updateHash = true, scrollOnClose = false) 
     reader.className = 'fullscreen-reader';
 
     try {
-        const res = await fetch(log.path);
+        const logUrl = getNormalizedFetchUrl(log.path);
+        const res = await fetch(logUrl);
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        
         const text = await res.text();
         const content = typeof marked !== 'undefined' ? marked.parse(text) : text;
 
@@ -604,16 +569,13 @@ async function openFullscreenLog(log, updateHash = true, scrollOnClose = false) 
         document.body.appendChild(reader);
         document.body.style.overflow = 'hidden';
 
-        // Initialize embeds (Instagram, etc.)
         hydrateEmbeds(reader);
 
-        // Scroll to top within the reader
         const scrollTopBtn = reader.querySelector('#scroll-top-btn');
         if (scrollTopBtn) {
             scrollTopBtn.onclick = () => reader.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Close button
         const closeBtn = reader.querySelector('#close-viewer');
         if (closeBtn) {
             closeBtn.onclick = () => {
@@ -629,7 +591,6 @@ async function openFullscreenLog(log, updateHash = true, scrollOnClose = false) 
                 document.body.style.overflow = '';
                 history.pushState("", document.title, window.location.pathname + window.location.search);
 
-                // Only scroll to logs if you asked for it
                 if (scrollOnClose) {
                     const logsSection = document.getElementById('logs');
                     if (logsSection) logsSection.scrollIntoView({ behavior: 'smooth' });
@@ -646,7 +607,6 @@ async function openFullscreenLog(log, updateHash = true, scrollOnClose = false) 
             };
 
             syncReaderToggleLabel();
-
             readerThemeToggle.addEventListener('click', () => {
                 const next = document.body.classList.contains('theme-light') ? 'dark' : 'light';
                 if (typeof window.tleeApplyTheme === 'function') {
@@ -668,10 +628,8 @@ function escapeHtml(str) {
 }
 
 window.addEventListener('load', () => {
-   // Set initial background to a light color (like your default #f7fbff) in case JS fails
-document.documentElement.style.setProperty('--page-bg', '#f7fbff');
+    document.documentElement.style.setProperty('--page-bg', '#f7fbff');
     
-    // Hamburger menu toggle (mobile)
     const hamburgerMenu = document.getElementById('hamburger-menu');
     const sidebar = document.getElementById('sidebar');
     const sidebarOverlay = document.getElementById('sidebar-overlay');
@@ -681,38 +639,24 @@ document.documentElement.style.setProperty('--page-bg', '#f7fbff');
             const isActive = sidebar.classList.contains('active');
             sidebar.classList.toggle('active');
             hamburgerMenu.classList.toggle('active');
-            if (sidebarOverlay) {
-                sidebarOverlay.classList.toggle('active');
-            }
-            // Prevent body scroll when menu is open
+            if (sidebarOverlay) sidebarOverlay.classList.toggle('active');
             document.body.style.overflow = isActive ? '' : 'hidden';
         };
         
         hamburgerMenu.addEventListener('click', toggleMenu);
+        if (sidebarOverlay) sidebarOverlay.addEventListener('click', toggleMenu);
         
-        // Close menu when clicking overlay
-        if (sidebarOverlay) {
-            sidebarOverlay.addEventListener('click', toggleMenu);
-        }
-        
-        // Close menu when clicking a nav link (mobile only)
         const navLinks = sidebar.querySelectorAll('.nav-link');
         navLinks.forEach(link => {
             link.addEventListener('click', () => {
-                if (window.innerWidth <= 900) {
-                    toggleMenu();
-                }
+                if (window.innerWidth <= 900) toggleMenu();
             });
         });
         
-        // Close menu on ESC key
         document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape' && sidebar.classList.contains('active')) {
-                toggleMenu();
-            }
+            if (e.key === 'Escape' && sidebar.classList.contains('active')) toggleMenu();
         });
         
-        // Close menu when window is resized to desktop size
         let resizeTimeout;
         window.addEventListener('resize', () => {
             clearTimeout(resizeTimeout);
@@ -720,9 +664,7 @@ document.documentElement.style.setProperty('--page-bg', '#f7fbff');
                 if (window.innerWidth > 900 && sidebar.classList.contains('active')) {
                     sidebar.classList.remove('active');
                     hamburgerMenu.classList.remove('active');
-                    if (sidebarOverlay) {
-                        sidebarOverlay.classList.remove('active');
-                    }
+                    if (sidebarOverlay) sidebarOverlay.classList.remove('active');
                     document.body.style.overflow = '';
                 }
             }, 100);
@@ -734,7 +676,6 @@ document.documentElement.style.setProperty('--page-bg', '#f7fbff');
     const typedFlags = document.querySelector('.typed-flags');
     if (typedName && typedGreeting && typedFlags) {
         setTimeout(() => {
-            // Start a three-way synchronized typing loop for name, greeting, and flags
             startThreeSynchronizedTyping(
                 typedName,
                 ['tlee', 'トリー', '智坦'],
@@ -742,16 +683,11 @@ document.documentElement.style.setProperty('--page-bg', '#f7fbff');
                 ['Hi!', 'こんにちは!', '你好!'],
                 typedFlags,
                 ['🇺🇸 | 🇨🇦', '🇯🇵', '🇭🇰 | 🇨🇳'],
-                {
-                    typeDelay: 150,
-                    eraseDelay: 100,
-                    holdDelay: 2000,
-                }
+                { typeDelay: 150, eraseDelay: 100, holdDelay: 2000 }
             );
         }, 50);
     }
 
-    // Timestamp
     const timestamp = document.getElementById('timestamp');
     if (timestamp) {
         const updateTime = () => {
@@ -760,40 +696,24 @@ document.documentElement.style.setProperty('--page-bg', '#f7fbff');
             timestamp.textContent = now.toLocaleString('en-US', options).replace(/,/g, '');
         };
         updateTime();
-        setInterval(updateTime, 60000); // Update every minute
+        setInterval(updateTime, 60000);
     }
 
-     // Load logs
     loadWeeklyLogs();
-
-    // Load GitHub projects
     loadGitHubProjects('tmlee06');
 
-    // Profile picture modal (only on click, no auto-popup)
     const profileImage = document.getElementById('profile-image');
     const profileModal = document.getElementById('profile-modal');
     const modalClose = document.querySelector('.profile-modal-close');
     
     if (profileImage && profileModal) {
-        // Click on profile image to show modal
-        profileImage.addEventListener('click', () => {
-            profileModal.classList.add('show');
-        });
-
-        // Close modal when clicking X or outside
+        profileImage.addEventListener('click', () => profileModal.classList.add('show'));
         if (modalClose) {
-            modalClose.addEventListener('click', () => {
-                profileModal.classList.remove('show');
-            });
+            modalClose.addEventListener('click', () => profileModal.classList.remove('show'));
         }
-
         profileModal.addEventListener('click', (e) => {
-            if (e.target === profileModal) {
-                profileModal.classList.remove('show');
-            }
+            if (e.target === profileModal) profileModal.classList.remove('show');
         });
-
-        // Close modal on ESC key
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && profileModal.classList.contains('show')) {
                 profileModal.classList.remove('show');
@@ -801,7 +721,7 @@ document.documentElement.style.setProperty('--page-bg', '#f7fbff');
         });
     }
 
-    // Background color switching observer for seamless transitions between panels
+    // Background color crossfade loop
     (function registerBackgroundObserver() {
         const sections = document.querySelectorAll('.content-section[data-bg]');
         if (!sections.length) return;
@@ -809,7 +729,6 @@ document.documentElement.style.setProperty('--page-bg', '#f7fbff');
         let lastBg = null;
         let rafPending = false;
 
-        // create a full-screen overlay for crossfading
         function ensureOverlay() {
             let overlay = document.getElementById('bg-overlay');
             if (!overlay) {
@@ -821,55 +740,35 @@ document.documentElement.style.setProperty('--page-bg', '#f7fbff');
         }
 
         const overlay = ensureOverlay();
-
-        const updateSidebarForColor = () => {
-            // Sidebar color is governed entirely by CSS (.sidebar / body.theme-light .sidebar)
-            // so the page background crossfade never has to fight the theme toggle.
-        };
+        const updateSidebarForColor = () => {};
 
         const crossfadeTo = (color) => {
             if (color === lastBg) return;
-            
-            // Update lastBg immediately to prevent duplicate calls
             lastBg = color;
-            
-            // Also update sidebar text/border for readability first
             updateSidebarForColor(color);
             
-            // Set the background color directly on body/html for immediate update
-            // This prevents the "shake" by ensuring the color is applied instantly
             document.documentElement.style.setProperty('--page-bg', color || 'transparent');
-            
-            // Then use overlay for smooth crossfade effect
             overlay.style.willChange = 'opacity, background-color';
             overlay.style.backgroundColor = color || 'transparent';
             overlay.style.opacity = '0';
             
-            // Force layout to ensure transition triggers
             // eslint-disable-next-line no-unused-expressions
             overlay.offsetWidth;
-            
-            // Start the fade-in
             overlay.style.opacity = '1';
             
-            // fade out after the CSS duration
             const computed = getComputedStyle(document.documentElement).getPropertyValue('--bg-fade-duration') || '1200ms';
             let durationMs = 1200;
             try {
                 const val = computed.trim();
                 if (val.endsWith('ms')) durationMs = parseFloat(val);
                 else if (val.endsWith('s')) durationMs = parseFloat(val) * 1000;
-                else durationMs = parseFloat(val);
             } catch (e) {
                 durationMs = 1200;
             }
             
             setTimeout(() => { 
                 overlay.style.opacity = '0';
-                // Remove will-change after animation to free up resources
-                setTimeout(() => {
-                    overlay.style.willChange = 'auto';
-                }, durationMs + 100);
+                setTimeout(() => { overlay.style.willChange = 'auto'; }, durationMs + 100);
             }, Math.max(1, Math.round(durationMs)));
         };
 
@@ -877,7 +776,6 @@ document.documentElement.style.setProperty('--page-bg', '#f7fbff');
             if (rafPending && color === lastBg) return;
             if (color === lastBg) return;
             
-            // Update foreground class immediately to prevent flicker
             if (foreground) {
                 document.body.classList.toggle('light-foreground', foreground === 'light');
                 document.body.classList.toggle('dark-foreground', foreground === 'dark');
@@ -890,7 +788,6 @@ document.documentElement.style.setProperty('--page-bg', '#f7fbff');
             });
         };
         
-        // Fallback: determine the most-visible section by checking viewport center
         function updateVisibleBg() {
             const viewportHeight = window.innerHeight;
             const viewportCenter = window.scrollY + (viewportHeight / 2);
@@ -900,16 +797,10 @@ document.documentElement.style.setProperty('--page-bg', '#f7fbff');
             sections.forEach(s => {
                 const rect = s.getBoundingClientRect();
                 const sectionTop = rect.top + window.scrollY;
-                const sectionBottom = sectionTop + rect.height;
                 const sectionCenter = sectionTop + (rect.height / 2);
-                
-                // Calculate how close the section center is to viewport center
                 const distanceFromCenter = Math.abs(sectionCenter - viewportCenter);
-                // Also consider how much of the section is visible
                 const visibleHeight = Math.max(0, Math.min(rect.bottom, viewportHeight) - Math.max(rect.top, 0));
                 const visibilityRatio = visibleHeight / Math.max(rect.height, viewportHeight);
-                
-                // Score based on proximity to center and visibility
                 const score = visibilityRatio * (1 / (1 + distanceFromCenter / viewportHeight));
                 
                 if (score > bestScore) {
@@ -923,16 +814,13 @@ document.documentElement.style.setProperty('--page-bg', '#f7fbff');
                 const foreground = chosen.dataset.foreground || null;
                 const current = getComputedStyle(document.documentElement).getPropertyValue('--page-bg').trim();
                 if (bg && current !== bg.trim() && bg !== lastBg) {
-                    // Use setBg to ensure proper crossfade and sidebar update
                     setBg(bg, foreground);
                 }
             }
         }
 
-        // Create intersection observer as primary method
         let observerTimeout;
         const bgObserver = new IntersectionObserver((entries) => {
-            // Find the section with the highest intersection ratio
             let bestEntry = null;
             let bestRatio = 0;
             
@@ -943,18 +831,13 @@ document.documentElement.style.setProperty('--page-bg', '#f7fbff');
                 }
             });
             
-            // Debounce observer updates to prevent jitter
             clearTimeout(observerTimeout);
             observerTimeout = setTimeout(() => {
-                // Use the best visible section if it's at least 20% visible
                 if (bestEntry && bestRatio >= 0.2) {
                     const bg = bestEntry.target.getAttribute('data-bg');
                     const foreground = bestEntry.target.getAttribute('data-foreground');
-                    if (bg && bg !== lastBg) {
-                        setBg(bg, foreground);
-                    }
+                    if (bg && bg !== lastBg) setBg(bg, foreground);
                 } else {
-                    // Fallback to viewport center method if observer doesn't detect well
                     updateVisibleBg();
                 }
             }, 50);
@@ -963,99 +846,53 @@ document.documentElement.style.setProperty('--page-bg', '#f7fbff');
             rootMargin: '0px'
         });
 
-        // Observe all sections
         sections.forEach(section => bgObserver.observe(section));
         
-        // Also call updateVisibleBg on scroll and resize as fallback
         let scrollTimeout;
         let rafId = null;
-        
         const handleScroll = () => {
-            // Cancel any pending RAF
-            if (rafId) {
-                cancelAnimationFrame(rafId);
-            }
-            
-            // Use RAF for immediate updates during scroll
+            if (rafId) cancelAnimationFrame(rafId);
             rafId = window.requestAnimationFrame(() => {
                 updateVisibleBg();
                 rafId = null;
             });
-            
-            // Also set a debounced update for when scrolling stops
             clearTimeout(scrollTimeout);
             scrollTimeout = setTimeout(() => {
-                if (rafId) {
-                    cancelAnimationFrame(rafId);
-                    rafId = null;
-                }
+                if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
                 updateVisibleBg();
             }, 100);
         };
         
         window.addEventListener('scroll', handleScroll, { passive: true });
-        
         let resizeTimeout;
         window.addEventListener('resize', () => {
             clearTimeout(resizeTimeout);
-            resizeTimeout = setTimeout(() => {
-                updateVisibleBg();
-            }, 200);
+            resizeTimeout = setTimeout(() => { updateVisibleBg(); }, 200);
         }, { passive: true });
         
-        // Initial call
         updateVisibleBg();
-
     })();
 });
-// For now. no custom logos. always fall back to icons
-function getProjectLogo(repo) {
-  // When you have real logo files later, uncomment and edit this map.
-  /*
-  const name = (repo.name || '').toLowerCase();
-  const map = {
-    'blackjack': 'img/projects/blackjack.svg',
-    'personal-website': 'img/projects/personal-website.svg'
-    // add more mappings here
-  };
-  return map[name] || null;
-  */
-  return null;
-}
 
-// Fallback icons by language or name
+function getProjectLogo(repo) { return null; }
+
 function getIconClassForRepo(repo) {
   const lang = repo.language || '';
   const name = (repo.name || '').toLowerCase();
 
   switch (lang) {
-    case 'JavaScript':
-      return 'fab fa-js-square';
-    case 'TypeScript':
-      return 'fab fa-js';
-    case 'Python':
-      return 'fab fa-python';
-    case 'Jupyter Notebook':
-      // "Notebook" style icon for Jupyter projects
-      return 'fas fa-book-open';
-    case 'HTML':
-      return 'fab fa-html5';
-    case 'CSS':
-      return 'fab fa-css3-alt';
-    case 'C++':
-      return 'fas fa-code-branch';
-    case 'C':
-      return 'fas fa-microchip';
-    case 'Java':
-      return 'fab fa-java';
-    default:
-      break;
+    case 'JavaScript': return 'fab fa-js-square';
+    case 'TypeScript': return 'fab fa-js';
+    case 'Python': return 'fab fa-python';
+    case 'Jupyter Notebook': return 'fas fa-book-open';
+    case 'HTML': return 'fab fa-html5';
+    case 'CSS': return 'fab fa-css3-alt';
+    case 'C++': return 'fas fa-code-branch';
+    case 'C': return 'fas fa-microchip';
+    case 'Java': return 'fab fa-java';
+    default: break;
   }
-
-  if (name.includes('blackjack')) {
-    return 'fas fa-dice';
-  }
-
+  if (name.includes('blackjack')) return 'fas fa-dice';
   return 'fas fa-code';
 }
 
@@ -1076,30 +913,25 @@ async function loadGitHubProjects(username) {
     const frag = document.createDocumentFragment();
 
     filtered.forEach(repo => {
-      // Create the card as an anchor (The whole box is now clickable)
       const card = document.createElement('a');
       card.href = repo.html_url;
       card.target = '_blank';
       card.rel = 'noopener noreferrer';
       card.className = 'work-card project-card';
 
-      // Create Icon Container
-        const icon = document.createElement('div');
-        icon.className = 'work-icon';
+      const icon = document.createElement('div');
+      icon.className = 'work-icon';
 
-        if (repo.language === 'Jupyter Notebook') {
-        // Using a Simple Icons CDN link for the official Jupyter Logo
-        icon.innerHTML = `<img src="https://cdn.simpleicons.org/jupyter/F37626" style="width:20px; height:20px; display:block;" alt="Jupyter">`;
-        } else {
-            const iconClass = typeof getIconClassForRepo === 'function' ? getIconClassForRepo(repo) : 'fas fa-code';
-            icon.innerHTML = `<i class="${iconClass}"></i>`;
-        }
+      if (repo.language === 'Jupyter Notebook') {
+          icon.innerHTML = `<img src="https://cdn.simpleicons.org/jupyter/F37626" style="width:20px; height:20px; display:block;" alt="Jupyter">`;
+      } else {
+          const iconClass = typeof getIconClassForRepo === 'function' ? getIconClassForRepo(repo) : 'fas fa-code';
+          icon.innerHTML = `<i class="${iconClass}"></i>`;
+      }
 
-      // Create Info Container
       const info = document.createElement('div');
       info.className = 'work-info';
 
-      // Title (Using div here because the parent 'card' is already an <a>)
       const title = document.createElement('div');
       title.className = 'work-title';
       title.textContent = repo.name;
@@ -1126,30 +958,19 @@ async function loadGitHubProjects(username) {
 
 window.addEventListener('hashchange', () => {
     const reader = document.querySelector('.fullscreen-reader');
-    // If user hits 'Back' and hash is gone, close the reader
     if (!window.location.hash.includes('log-') && reader) {
         reader.remove();
         document.body.style.overflow = '';
     }
 });
 
-// Console welcome message
-console.log(`
-🚀 Welcome to Tristan Lee's Portfolio!
-   
-   Built with vanilla HTML, CSS, and JavaScript
-   
-   https://www.linkedin.com/in/tlee06/
-`);
-// ==========================================================================
-// Theme Toggle (Dark / Light)
-// ==========================================================================
+console.log(`\n🚀 Welcome to Tristan Lee's Portfolio!\n   Built with vanilla HTML, CSS, and JavaScript\n   https://www.linkedin.com/in/tlee06/\n`);
+
 (function initThemeToggle() {
     const STORAGE_KEY = 'tlee-theme';
     const toggleBtn = document.getElementById('theme-toggle');
     const sections = document.querySelectorAll('.content-section[data-bg]');
 
-    // Cache the original dark values on each section so we can swap back and forth
     sections.forEach(section => {
         if (!section.dataset.bgDark) {
             section.dataset.bgDark = section.getAttribute('data-bg');
@@ -1161,7 +982,6 @@ console.log(`
         const isLight = theme === 'light';
         document.body.classList.toggle('theme-light', isLight);
 
-        // Swap each section's data-bg / data-foreground to the right palette
         sections.forEach(section => {
             const bg = isLight ? section.dataset.bgLight : section.dataset.bgDark;
             const fg = isLight ? section.dataset.foregroundLight : section.dataset.foregroundDark;
@@ -1169,7 +989,6 @@ console.log(`
             if (fg) section.setAttribute('data-foreground', fg);
         });
 
-        // Force the currently-visible section to re-apply its (now-swapped) color immediately
         const overlay = document.getElementById('bg-overlay');
         let current = null;
         let bestRatio = 0;
@@ -1178,10 +997,7 @@ console.log(`
             const rect = section.getBoundingClientRect();
             const visible = Math.max(0, Math.min(rect.bottom, viewportHeight) - Math.max(rect.top, 0));
             const ratio = visible / Math.max(rect.height, 1);
-            if (ratio > bestRatio) {
-                bestRatio = ratio;
-                current = section;
-            }
+            if (ratio > bestRatio) { bestRatio = ratio; current = section; }
         });
         if (current) {
             const bg = current.getAttribute('data-bg');
@@ -1203,26 +1019,17 @@ console.log(`
             readerToggleBtn.setAttribute('title', isLight ? 'Switch to dark mode' : 'Switch to light mode');
         }
 
-        try {
-            localStorage.setItem(STORAGE_KEY, theme);
-        } catch (e) {
-            // localStorage unavailable, ignore
-        }
+        try { localStorage.setItem(STORAGE_KEY, theme); } catch (e) {}
     }
-
-
 
     window.tleeApplyTheme = applyTheme;
     window.tleeGetTheme = () => document.body.classList.contains('theme-light') ? 'light' : 'dark';
 
-    // Determine initial theme: stored preference, else default to dark
     let initialTheme = 'dark';
     try {
         const stored = localStorage.getItem(STORAGE_KEY);
         if (stored === 'light' || stored === 'dark') initialTheme = stored;
-    } catch (e) {
-        // ignore
-    }
+    } catch (e) {}
 
     applyTheme(initialTheme);
 
@@ -1253,31 +1060,18 @@ async function loadNowPlaying() {
     if (!box) return;
 
     try {
-        const url =
-            `https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=${encodeURIComponent(LASTFM_USERNAME)}&api_key=${encodeURIComponent(LASTFM_API_KEY)}&format=json&limit=1`;
-
+        const url = `https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=${encodeURIComponent(LASTFM_USERNAME)}&api_key=${encodeURIComponent(LASTFM_API_KEY)}&format=json&limit=1`;
         const response = await fetch(url);
         const data = await response.json();
 
-        console.log("Last.fm response:", data);
-
         if (data.error) {
-            box.innerHTML = `
-                <div class="now-playing-status">
-                    Last.fm error: ${escapeHTML(data.message)}
-                </div>
-            `;
+            box.innerHTML = `<div class="now-playing-status">Last.fm error: ${escapeHTML(data.message)}</div>`;
             return;
         }
 
         const track = data.recenttracks?.track?.[0];
-
         if (!track) {
-            box.innerHTML = `
-                <div class="now-playing-status">
-                    No recent music found
-                </div>
-            `;
+            box.innerHTML = `<div class="now-playing-status">No recent music found</div>`;
             return;
         }
 
@@ -1285,22 +1079,15 @@ async function loadNowPlaying() {
         const song = track.name || "Unknown Song";
         const artist = track.artist?.["#text"] || "Unknown Artist";
         const trackUrl = track.url || "#";
-
         const images = track.image || [];
-        const albumArt =
-            [...images].reverse().find((img) => img["#text"])?.["#text"] || "";
-
+        const albumArt = [...images].reverse().find((img) => img["#text"])?.["#text"] || "";
         const statusText = isNowPlaying ? "Currently listening" : "Last listened";
 
         box.innerHTML = `
             <a href="${escapeHTML(trackUrl)}" target="_blank" rel="noopener noreferrer">
                 <div class="now-playing-status">${statusText}</div>
                 <div class="now-playing-inner">
-                    ${
-                        albumArt
-                            ? `<img class="now-playing-art" src="${escapeHTML(albumArt)}" alt="${escapeHTML(song)} album art">`
-                            : `<div class="now-playing-art"></div>`
-                    }
+                    ${albumArt ? `<img class="now-playing-art" src="${escapeHTML(albumArt)}" alt="${escapeHTML(song)} album art">` : `<div class="now-playing-art"></div>`}
                     <div class="now-playing-text">
                         <div class="now-playing-title">${escapeHTML(song)}</div>
                         <div class="now-playing-artist">${escapeHTML(artist)}</div>
@@ -1310,12 +1097,7 @@ async function loadNowPlaying() {
         `;
     } catch (error) {
         console.error("Failed to load Last.fm music:", error);
-
-        box.innerHTML = `
-            <div class="now-playing-status">
-                Could not connect to Last.fm
-            </div>
-        `;
+        box.innerHTML = `<div class="now-playing-status">Could not connect to Last.fm</div>`;
     }
 }
 
