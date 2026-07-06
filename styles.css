@@ -2797,3 +2797,92 @@ body:has(.fullscreen-reader) .fullscreen-reader {
         right: 20px !important;
     }
 }
+/* Mobile Optimization Upgrades */
+@media screen and (max-width: 768px) {
+    /* 1. Eliminate the desktop sidebar spacing constraint */
+    .page-layout {
+        margin-left: 0 !important;
+        width: 100% !important;
+    }
+
+    /* 2. Fix the home column wrapping & spacing */
+    .bio-section {
+        flex-direction: column !important;
+        align-items: center !important;
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+        gap: 2rem !important;
+    }
+
+    .left-content-column {
+        flex: 1 1 100% !important;
+        max-width: 100% !important;
+        width: 100% !important;
+    }
+
+    /* 3. Center and scale the profile layout box properly */
+    .bio-image-container {
+        width: 100% !important;
+        max-width: 320px !important;
+        margin: 1.5rem auto 0 auto !important;
+        flex: none !important;
+    }
+
+    .profile-image-wrapper img {
+        width: 100% !important;
+        max-width: 260px !important;
+        height: auto !important;
+    }
+
+    .profile-name {
+        font-size: 28px !important; /* Scaled down down from 38px */
+    }
+
+    /* 4. Fix Experience & Education multi-row misalignment */
+    .experience-header {
+        flex-direction: column !important;
+        gap: 1.5rem !important;
+        align-items: flex-start !important;
+    }
+
+    .experience-header-right {
+        min-width: 100% !important;
+        align-items: flex-start !important;
+        text-align: left !important;
+    }
+
+    .experience-date {
+        text-align: left !important;
+    }
+
+    .experience-logo {
+        width: 140px !important;
+        height: auto !important;
+        justify-content: flex-start !important;
+    }
+
+    .experience-logo img {
+        max-width: 140px !important;
+    }
+
+    /* 5. Clean up grid systems (Personal Projects & Video Rows) */
+    .work-grid {
+        grid-template-columns: 1fr !important;
+        gap: 1rem !important;
+    }
+
+    .home-videos-row {
+        flex-direction: column !important;
+        gap: 1.5rem !important;
+    }
+
+    .home-video-card {
+        max-width: 100% !important;
+        flex: 1 1 100% !important;
+    }
+
+    #bio-logs-list {
+        grid-template-columns: 1fr !important;
+        gap: 1.5rem !important;
+    }
+}
