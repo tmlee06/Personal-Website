@@ -1,4 +1,21 @@
 @charset "UTF-8";
+/* ============================================================
+   TABLE OF CONTENTS
+   1. Reset & base
+   2. Layout (page-layout, main-content, sections)
+   3. Sidebar (nav, socials, theme toggle, hamburger)
+   4. Home / bio
+   5. Work & project cards (team + personal projects)
+   6. Experience / education / goals
+   7. Logs & reader
+   8. Now-playing widget
+   9. Media queries:
+      - >=1051px  desktop-only refinements (consolidated)
+      - <=1050px  mobile/tablet layout (consolidated)
+      - other breakpoints (1150/900/768/700/600) for
+        specific fine-tuning only
+   ============================================================ */
+
 /* Reset and Base */
 * {
     margin: 0;
@@ -148,8 +165,6 @@ footer {
     opacity: 1 !important;       /* Forces it to ignore any parent transparency */
 }
 
-
-
 /* Dark mode specific */
 body.dark footer {
     color: #e5e7eb;              /* Crisp, bright silver-white */
@@ -168,8 +183,6 @@ body.dark footer {
     backface-visibility: hidden;
     transform: translateZ(0);
 }
-
-
 
 /* Foreground switching */
 body.light-foreground .sidebar,
@@ -692,8 +705,6 @@ body.theme-light .theme-toggle:hover {
 /* Work and cards */
 .work-section {
     margin-top: 0;
-    width: 100% !important;
-    max-width: 90% !important;
 }
 
 .contact-section .work-section {
@@ -1490,6 +1501,11 @@ body.theme-light .theme-toggle:hover {
 }
 
 /* Desktop layout refinements */
+/* ============================================= */
+/* DESKTOP-ONLY REFINEMENTS (>=1051px)            */
+/* Consolidated from several previously-duplicated */
+/* @media (min-width: 1051px) blocks.              */
+/* ============================================= */
 @media (min-width: 1051px) {
     .page-layout {
         margin-left: var(--sidebar-width, 150px) !important;
@@ -1698,6 +1714,22 @@ body.theme-light .theme-toggle:hover {
     .work-info {
         padding: 1.25rem !important;
     }
+
+    html {
+        zoom: 0.8;
+    }
+
+    .sidebar {
+        height: 125vh !important;
+        min-height: 125vh !important;
+        bottom: auto !important;
+        overflow-y: auto !important;
+    }
+
+    .fullscreen-reader {
+        width: 125vw !important;
+        height: 125vh !important;
+    }
 }
 
 /* Light mode */
@@ -1897,6 +1929,11 @@ body.dark-foreground .current-project-logo * {
 }
 
 /* Mobile navigation */
+/* ============================================= */
+/* MOBILE / TABLET LAYOUT (<=1050px)              */
+/* Consolidated from several previously-duplicated */
+/* @media (max-width: 1050px) blocks.              */
+/* ============================================= */
 @media (max-width: 1050px) {
     .page-layout {
         margin-left: 0 !important;
@@ -2066,6 +2103,259 @@ body.dark-foreground .current-project-logo * {
     body:not(.theme-light) .pronunciation {
         color: #FFFFFF !important;
     }
+
+    html {
+        zoom: 1;
+    }
+
+    #home .bio-section {
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: flex-start !important;
+        text-align: center !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        padding-left: 1.25rem !important;
+        padding-right: 1.25rem !important;
+    }
+
+    #home .bio-image-container {
+        order: -1 !important;
+        width: min(100%, 420px) !important;
+        max-width: 420px !important;
+        flex: 0 1 auto !important;
+        margin: 7rem auto 2rem auto !important;
+        padding: 0 !important;
+        align-self: center !important;
+        text-align: center !important;
+    }
+
+    #home .profile-image-wrapper,
+    #home .profile-image-wrapper img {
+        display: block !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+
+    #home .left-content-column {
+        width: 100% !important;
+        max-width: 100% !important;
+        align-items: center !important;
+        text-align: center !important;
+    }
+
+    #home .home-videos-row {
+        width: 100% !important;
+        max-width: 100% !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        gap: 1.5rem !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+
+    #home .home-video-card {
+        width: 100% !important;
+        max-width: 560px !important;
+        flex: 0 1 auto !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+
+    #home .home-video-card iframe {
+        width: 100% !important;
+        display: block !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+
+    #about .experience-container {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding-left: 1.25rem !important;
+        padding-right: 1.25rem !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+
+    #about .experience-header,
+    #education .experience-header,
+    #experience .experience-header {
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        text-align: center !important;
+        gap: 1.25rem !important;
+        width: 100% !important;
+    }
+
+    #about .experience-header-left,
+    #education .experience-header-left,
+    #experience .experience-header-left {
+        width: 100% !important;
+        max-width: 900px !important;
+        min-width: 0 !important;
+        flex: 0 1 auto !important;
+        text-align: center !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+
+    #about .experience-header-right,
+    #education .experience-header-right,
+    #experience .experience-header-right {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        flex: 0 1 auto !important;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        text-align: center !important;
+        margin: 0 auto !important;
+        gap: 0.75rem !important;
+    }
+
+    #about .experience-logo-link,
+    #education .experience-logo-link,
+    #experience .experience-logo-link {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        width: 100% !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+
+    #about .experience-logo,
+    #education .experience-logo,
+    #experience .experience-logo {
+        width: clamp(170px, 42vw, 260px) !important;
+        height: clamp(105px, 28vw, 180px) !important;
+        max-width: 100% !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        padding: 0.4rem !important;
+        background: transparent !important;
+        border: none !important;
+    }
+
+    #about .experience-logo img,
+    #education .experience-logo img,
+    #experience .experience-logo img {
+        width: auto !important;
+        height: auto !important;
+        max-width: 100% !important;
+        max-height: 100% !important;
+        object-fit: contain !important;
+        display: block !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+
+    #about .experience-header-right > img {
+        width: 100% !important;
+        max-width: 460px !important;
+        height: auto !important;
+        object-fit: contain !important;
+        display: block !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+        border-radius: 12px !important;
+    }
+
+    #about .verse-container {
+        margin-left: auto !important;
+        margin-right: auto !important;
+        text-align: left !important;
+        max-width: 680px !important;
+    }
+
+    #current-projects .current-projects-grid {
+        grid-template-columns: 1fr !important;
+        justify-items: center !important;
+        align-items: center !important;
+        width: 100% !important;
+    }
+
+    #current-projects .work-card-link {
+        width: 100% !important;
+        max-width: 560px !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+
+    #current-projects .current-project-card {
+        width: 100% !important;
+        max-width: 560px !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+
+    #current-projects .current-project-logo {
+        width: 100% !important;
+        height: clamp(90px, 22vw, 130px) !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        padding: 1rem !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+
+    #current-projects .current-project-logo img {
+        width: auto !important;
+        height: auto !important;
+        max-width: 88% !important;
+        max-height: 88% !important;
+        object-fit: contain !important;
+        display: block !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+
+    #goals .experience-header {
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        text-align: center !important;
+    }
+
+    #goals .experience-header-right {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+
+    #goals .experience-header-right > div {
+        width: 100% !important;
+        max-width: 360px !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+
+    #goals .experience-header-right img {
+        width: 100% !important;
+        height: auto !important;
+        display: block !important;
+        object-fit: contain !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+    }
+
 }
 
 /* Tablet */
@@ -2137,17 +2427,8 @@ body.dark-foreground .current-project-logo * {
         height: 80px;
     }
 
-    .current-project-logo {
-        height: 160px;
-        padding: 1.5rem;
-    }
-
     .experience-date {
         align-self: flex-start;
-    }
-
-    .current-projects-grid {
-        grid-template-columns: 1fr !important;
     }
 }
 
@@ -2267,25 +2548,8 @@ body.theme-light .theme-toggle {
    ========================================================= */
 
 /* Desktop zoom only. Do not run this during hamburger layout. */
-@media (min-width: 1051px) {
-    html {
-        zoom: 0.8;
-    }
-
-    .sidebar {
-        height: 125vh !important;
-        min-height: 125vh !important;
-        bottom: auto !important;
-        overflow-y: auto !important;
-    }
-}
 
 /* Mobile / minimized layout should not be zoomed. */
-@media (max-width: 1050px) {
-    html {
-        zoom: 1;
-    }
-}
 
 /* Force real browser bullets, no custom bullet character. */
 .experience-bullets {
@@ -2327,264 +2591,12 @@ body.theme-light #contact::before {
 }
 
 /* Center profile section when screen is minimized. */
-@media (max-width: 1050px) {
-    #home .bio-section {
-        flex-direction: column !important;
-        align-items: center !important;
-        justify-content: flex-start !important;
-        text-align: center !important;
-        width: 100% !important;
-        max-width: 100% !important;
-        margin-left: auto !important;
-        margin-right: auto !important;
-        padding-left: 1.25rem !important;
-        padding-right: 1.25rem !important;
-    }
-
-    #home .bio-image-container {
-        order: -1 !important;
-        width: min(100%, 420px) !important;
-        max-width: 420px !important;
-        flex: 0 1 auto !important;
-        margin: 7rem auto 2rem auto !important;
-        padding: 0 !important;
-        align-self: center !important;
-        text-align: center !important;
-    }
-
-    #home .profile-image-wrapper,
-    #home .profile-image-wrapper img {
-        display: block !important;
-        margin-left: auto !important;
-        margin-right: auto !important;
-    }
-}
 
 /* Center videos when screen is minimized. */
-@media (max-width: 1050px) {
-    #home .left-content-column {
-        width: 100% !important;
-        max-width: 100% !important;
-        align-items: center !important;
-        text-align: center !important;
-    }
-
-    #home .home-videos-row {
-        width: 100% !important;
-        max-width: 100% !important;
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: center !important;
-        justify-content: center !important;
-        gap: 1.5rem !important;
-        margin-left: auto !important;
-        margin-right: auto !important;
-    }
-
-    #home .home-video-card {
-        width: min(92vw, 560px) !important;
-        max-width: 560px !important;
-        flex: 0 1 auto !important;
-        margin-left: auto !important;
-        margin-right: auto !important;
-    }
-
-    #home .home-video-card iframe {
-        width: 100% !important;
-        display: block !important;
-        margin-left: auto !important;
-        margin-right: auto !important;
-    }
-}
 
 /* Moderate logo/image fixes only when screen is minimized. */
-@media (max-width: 1050px) {
-    #about .experience-container {
-        width: 100% !important;
-        max-width: 100% !important;
-        padding-left: 1.25rem !important;
-        padding-right: 1.25rem !important;
-        margin-left: auto !important;
-        margin-right: auto !important;
-    }
-
-    #about .experience-header,
-    #education .experience-header,
-    #experience .experience-header {
-        flex-direction: column !important;
-        align-items: center !important;
-        justify-content: center !important;
-        text-align: center !important;
-        gap: 1.25rem !important;
-        width: 100% !important;
-    }
-
-    #about .experience-header-left,
-    #education .experience-header-left,
-    #experience .experience-header-left {
-        width: 100% !important;
-        max-width: 900px !important;
-        min-width: 0 !important;
-        flex: 0 1 auto !important;
-        text-align: center !important;
-        margin-left: auto !important;
-        margin-right: auto !important;
-    }
-
-    #about .experience-header-right,
-    #education .experience-header-right,
-    #experience .experience-header-right {
-        width: 100% !important;
-        max-width: 100% !important;
-        min-width: 0 !important;
-        flex: 0 1 auto !important;
-        display: flex !important;
-        flex-direction: column !important;
-        align-items: center !important;
-        justify-content: center !important;
-        text-align: center !important;
-        margin: 0 auto !important;
-        gap: 0.75rem !important;
-    }
-
-    #about .experience-logo-link,
-    #education .experience-logo-link,
-    #experience .experience-logo-link {
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        width: 100% !important;
-        margin-left: auto !important;
-        margin-right: auto !important;
-    }
-
-    #about .experience-logo,
-    #education .experience-logo,
-    #experience .experience-logo {
-        width: clamp(170px, 42vw, 260px) !important;
-        height: clamp(105px, 28vw, 180px) !important;
-        max-width: 100% !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        margin-left: auto !important;
-        margin-right: auto !important;
-        padding: 0.4rem !important;
-        background: transparent !important;
-        border: none !important;
-    }
-
-    #about .experience-logo img,
-    #education .experience-logo img,
-    #experience .experience-logo img {
-        width: auto !important;
-        height: auto !important;
-        max-width: 100% !important;
-        max-height: 100% !important;
-        object-fit: contain !important;
-        display: block !important;
-        margin-left: auto !important;
-        margin-right: auto !important;
-    }
-
-    #about .experience-header-right > img {
-        width: min(90vw, 460px) !important;
-        max-width: 460px !important;
-        height: auto !important;
-        object-fit: contain !important;
-        display: block !important;
-        margin-left: auto !important;
-        margin-right: auto !important;
-        border-radius: 12px !important;
-    }
-
-    #about .verse-container {
-        margin-left: auto !important;
-        margin-right: auto !important;
-        text-align: left !important;
-        max-width: 680px !important;
-    }
-
-    #current-projects .current-projects-grid {
-        grid-template-columns: 1fr !important;
-        justify-items: center !important;
-        align-items: center !important;
-        width: 100% !important;
-    }
-
-    #current-projects .work-card-link {
-        width: min(92vw, 560px) !important;
-        max-width: 560px !important;
-        margin-left: auto !important;
-        margin-right: auto !important;
-    }
-
-    #current-projects .current-project-card {
-        width: 100% !important;
-        max-width: 560px !important;
-        margin-left: auto !important;
-        margin-right: auto !important;
-    }
-
-    #current-projects .current-project-logo {
-        width: 100% !important;
-        height: clamp(130px, 30vw, 200px) !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        padding: 1rem !important;
-        margin-left: auto !important;
-        margin-right: auto !important;
-    }
-
-    #current-projects .current-project-logo img {
-        width: auto !important;
-        height: auto !important;
-        max-width: 88% !important;
-        max-height: 88% !important;
-        object-fit: contain !important;
-        display: block !important;
-        margin-left: auto !important;
-        margin-right: auto !important;
-    }
-}
 
 /* Center the Goals photo when screen is minimized */
-@media (max-width: 1050px) {
-    #goals .experience-header {
-        flex-direction: column !important;
-        align-items: center !important;
-        justify-content: center !important;
-        text-align: center !important;
-    }
-
-    #goals .experience-header-right {
-        width: 100% !important;
-        max-width: 100% !important;
-        min-width: 0 !important;
-        display: flex !important;
-        align-items: center !important;
-        justify-content: center !important;
-        margin-left: auto !important;
-        margin-right: auto !important;
-    }
-
-    #goals .experience-header-right > div {
-        width: min(85vw, 360px) !important;
-        max-width: 360px !important;
-        margin-left: auto !important;
-        margin-right: auto !important;
-    }
-
-    #goals .experience-header-right img {
-        width: 100% !important;
-        height: auto !important;
-        display: block !important;
-        object-fit: contain !important;
-        margin-left: auto !important;
-        margin-right: auto !important;
-    }
-}
 
 .now-playing-card {
     width: 100%;
@@ -2662,14 +2674,6 @@ body.theme-light .now-playing-card {
     border-color: rgba(38, 36, 46, 0.16);
     color: #26242E;
     box-shadow: 0 10px 28px rgba(38, 36, 46, 0.12);
-}
-
-@media (max-width: 1050px) {
-    #home .now-playing-card {
-        max-width: min(92vw, 360px);
-        margin-left: auto;
-        margin-right: auto;
-    }
 }
 
 /* Smaller Last.fm music widget */
@@ -2751,12 +2755,6 @@ body.theme-light .now-playing-card {
 }
 
 /* Because html is zoomed to 0.8 on desktop, make the reader 125% wide/tall */
-@media (min-width: 1051px) {
-    .fullscreen-reader {
-        width: 125vw !important;
-        height: 125vh !important;
-    }
-}
 
 /* Hide the normal page behind the log reader */
 body:has(.fullscreen-reader) .sidebar,
