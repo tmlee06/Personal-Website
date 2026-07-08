@@ -1726,10 +1726,6 @@ body.theme-light .theme-toggle:hover {
         overflow-y: auto !important;
     }
 
-    .fullscreen-reader {
-        width: 125vw !important;
-        height: 125vh !important;
-    }
 }
 
 /* Light mode */
@@ -2755,6 +2751,12 @@ body.theme-light .now-playing-card {
 }
 
 /* Because html is zoomed to 0.8 on desktop, make the reader 125% wide/tall */
+@media (min-width: 1051px) {
+    .fullscreen-reader {
+        width: 125vw !important;
+        height: 125vh !important;
+    }
+}
 
 /* Hide the normal page behind the log reader */
 body:has(.fullscreen-reader) .sidebar,
