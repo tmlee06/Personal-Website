@@ -489,7 +489,7 @@ function renderBioLogs(container, sections) {
     allLogs.sort((a, b) => new Date(b.date) - new Date(a.date));
     container.innerHTML = '';
     
-    allLogs.slice(0, 4).forEach(log => {
+    allLogs.slice(0, 2).forEach(log => {
         const card = document.createElement('div');
         card.className = 'bio-log-card'; 
         card.innerHTML = `
@@ -898,17 +898,39 @@ function getIconClassForRepo(repo) {
 
 async function loadGitHubProjects(username) {
   const grid = document.getElementById('projects-grid');
-  if (!grid) return;
+  const homeGrid = document.getElementById('bio-projects-list');
+  if (!grid && !homeGrid) return;
 
   try {
     const res = await fetch(`https://api.github.com/users/${encodeURIComponent(username)}/repos?per_page=100&sort=updated`);
     if (!res.ok) throw new Error('Failed to fetch');
     const repos = await res.json();
 
-    const filtered = (Array.isArray(repos) ? repos : [])
+    const sorted = (Array.isArray(repos) ? repos : [])
       .filter(r => !r.fork)
-      .sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at))
-      .slice(0, 9);
+      .sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
+
+    const filtered = sorted.slice(0, 9);
+
+    if (homeGrid) {
+      homeGrid.innerHTML = '';
+      sorted.slice(0, 2).forEach(repo => {
+        const card = document.createElement('a');
+        card.href = repo.html_url;
+        card.target = '_blank';
+        card.rel = 'noopener noreferrer';
+        card.className = 'bio-log-card';
+        card.style.display = 'block';
+        card.style.textDecoration = 'none';
+        card.innerHTML = `
+            <span class="meta">${(repo.language || 'REPO').toUpperCase()}</span>
+            <h3>${repo.name}</h3>
+        `;
+        homeGrid.appendChild(card);
+      });
+    }
+
+    if (!grid) return;
 
     const frag = document.createDocumentFragment();
 
@@ -1078,20 +1100,20 @@ async function loadNowPlaying() {
         const isNowPlaying = track["@attr"]?.nowplaying === "true";
         const song = track.name || "Unknown Song";
         const artist = track.artist?.["#text"] || "Unknown Artist";
+        const album = track.album?.["#text"] || ""; // Extracted Album Name
         const trackUrl = track.url || "#";
         const images = track.image || [];
         const albumArt = [...images].reverse().find((img) => img["#text"])?.["#text"] || "";
         const statusText = isNowPlaying ? "Currently listening" : "Last listened";
 
         box.innerHTML = `
-            <a href="${escapeHTML(trackUrl)}" target="_blank" rel="noopener noreferrer">
-                <div class="now-playing-status">${statusText}</div>
-                <div class="now-playing-inner">
-                    ${albumArt ? `<img class="now-playing-art" src="${escapeHTML(albumArt)}" alt="${escapeHTML(song)} album art">` : `<div class="now-playing-art"></div>`}
-                    <div class="now-playing-text">
-                        <div class="now-playing-title">${escapeHTML(song)}</div>
-                        <div class="now-playing-artist">${escapeHTML(artist)}</div>
-                    </div>
+            <a href="${escapeHTML(trackUrl)}" target="_blank" rel="noopener noreferrer" style="text-decoration: none; display: flex; flex-direction: column; height: 100%;">
+                <div class="now-playing-status" style="font-size: 0.75rem; color: #aaa; padding: 0.75rem 0.75rem 0 0.75rem; margin-bottom: 0.75rem; font-weight: 500; letter-spacing: 0.02em;">${statusText}</div>
+                ${albumArt ? `<img class="now-playing-art" src="${escapeHTML(albumArt)}" alt="${escapeHTML(song)}" style="width: 100% !important; aspect-ratio: 1 / 1 !important; border-radius: 0 !important; object-fit: cover !important; display: block !important; flex-shrink: 0 !important; box-shadow: none !important;">` : `<div class="now-playing-art" style="width: 100%; aspect-ratio: 1 / 1; background: rgba(255,255,255,0.1); flex-shrink: 0;"></div>`}
+                <div class="now-playing-text" style="text-align: left; overflow: hidden; padding: 0.65rem 0.75rem 0.75rem 0.75rem;">
+                    <div class="now-playing-title" style="font-weight: 700; color: #fff; font-size: 0.95rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 0.15rem;">${escapeHTML(song)}</div>
+                    ${album ? `<div class="now-playing-album" style="color: #b3b3b3; font-size: 0.85rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-bottom: 0.15rem;">${escapeHTML(album)}</div>` : ''}
+                    <div class="now-playing-artist" style="color: #888; font-size: 0.85rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${escapeHTML(artist)}</div>
                 </div>
             </a>
         `;
@@ -1105,3 +1127,72 @@ document.addEventListener("DOMContentLoaded", () => {
     loadNowPlaying();
     setInterval(loadNowPlaying, 30000);
 });
+
+async function fetchLatestLetterboxd() {
+    const rssUrl = `https://letterboxd.com/tlee06/rss/`;
+    const apiUrl = `https://api.rss2json.com/v1/api.json?rss_url=${encodeURIComponent(rssUrl)}`;
+
+    try {
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+
+        if (data.status === 'ok' && data.items.length > 0) {
+            const latestItem = data.items[0]; 
+            document.getElementById('letterboxd-link').href = latestItem.link;
+
+            // Clean up the title string (Extracting pure title vs stars)
+            let fullTitle = latestItem.title || "";
+            let cleanTitle = fullTitle;
+            let ratingText = "";
+
+            // If the RSS title contains trailing star indicators, separate them cleanly
+            if (fullTitle.includes(" - ")) {
+                const parts = fullTitle.split(" - ");
+                const possibleStars = parts[parts.length - 1];
+                if (/(★|½)+/.test(possibleStars)) {
+                    ratingText = possibleStars;
+                    parts.pop(); // Remove stars string from title array
+                    cleanTitle = parts.join(" - ");
+                }
+            }
+
+            // Set clean DOM text outputs
+            document.getElementById('film-title').innerText = cleanTitle;
+            document.getElementById('film-rating').innerText = ratingText;
+
+            // Process image markup without layout distortion
+            if (latestItem.description) {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(latestItem.description, 'text/html');
+                const imgTag = doc.querySelector('img');
+                
+                if (imgTag && imgTag.src) {
+                    const posterImg = document.getElementById('film-poster');
+                    const posterWrapper = document.getElementById('film-poster-wrapper');
+                    
+                    posterImg.src = imgTag.src;
+                    posterWrapper.style.display = 'block';
+                }
+            }
+        } else {
+            document.getElementById('film-title').innerText = 'No films logged';
+        }
+    } catch (error) {
+        console.error('Error parsing Letterboxd RSS feed:', error);
+        document.getElementById('film-title').innerText = 'Offline';
+    }
+}
+
+// Global initialization
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', fetchLatestLetterboxd);
+} else {
+    fetchLatestLetterboxd();
+}
+// In your script.js, wherever you inject the log content
+document.getElementById('logs-list').innerHTML = renderedMarkdown;
+
+// Trigger the X/Twitter widget refresh
+if (window.twttr) {
+    window.twttr.widgets.load();
+}

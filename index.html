@@ -118,10 +118,10 @@
                   <a href="https://www.instagram.com/tlee.06/" target="_blank" class="social-link" style="color: #ffffff;">
                      <svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
                   </a>
-                  <!-- YouTube -->
+                  <!-- YouTube 
                   <a href="https://www.youtube.com/@tlee06" target="_blank" class="social-link" style="color: #ffffff;">
                      <svg width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.33 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg>
-                  </a>
+                  </a> -->
                </div>
             </div>
             <div class="theme-toggle-wrap">
@@ -144,7 +144,7 @@
             </div>
          </nav>
       </aside>
-      <div class="page-layout">
+  <div class="page-layout">
          <!-- Main Content -->
          <main class="main-content">
             <!-- Home Section -->
@@ -153,48 +153,75 @@
                <div style="position: absolute; top: 1.75rem; right: clamp(42px, 4vw, 88px); z-index: 20;">
                   <div class="timestamp" id="timestamp" style="font-size: 0.85rem; color: rgba(255, 255, 255, 0.6); font-family: sans-serif; text-align: right;"></div>
                </div>
-               <!-- MAIN TWO-COLUMN CONTAINER (Updated max-width and right padding to reduce empty space) -->
+               <!-- MAIN TWO-COLUMN CONTAINER -->
                <div class="bio-section" style="display: flex; flex-wrap: wrap; gap: clamp(3rem, 5vw, 5rem); width: 100%; max-width: 1540px; margin: 0 auto; padding-left: clamp(42px, 4vw, 88px); padding-right: clamp(42px, 4vw, 88px); box-sizing: border-box; justify-content: center; align-items: flex-start;">
                   <!-- LEFT COLUMN: Content, Logs, and Nested Videos Grid -->
                   <div class="left-content-column" style="flex: 1 1 760px; min-width: 290px; max-width: 980px; display: flex; flex-direction: column; gap: 0px; padding-top: 0.75rem;">
-                    <p class="bio-text" style="margin-top: 1.4rem; margin-bottom: 0; line-height: 1.65; display: block;">
-                      Welcome to my website! I am an Electrical Engineering student specializing in Signal and Image Processing, minoring in Cognitive Science with a 
-                      focus in Neuroscience and Human-Computer Interaction at UC San Diego. I am currently studying abroad at Kyoto University for the Spring 2026 quarter. 
-                      Read about my <a href="#logs" style="color: #ffffff; text-decoration: underline; display: inline; text-underline-offset: 3px;">adventures</a> 
-                      in Japan or watch my videos below!
+                  <p class="bio-text" style="margin-top: 1.4rem; margin-bottom: 0; line-height: 1.65; display: block; width: 100%;">
+                     Welcome to my website! I am an Electrical Engineering student specializing in Signal and Image Processing, minoring in Cognitive Science with a 
+                     focus in Neuroscience and Human-Computer Interaction at UC San Diego. I am currently studying abroad at Kyoto University for the Spring 2026 quarter. 
+                     Read about my <a href="#logs" style="color: #ffffff; text-decoration: underline; display: inline; text-underline-offset: 3px;">adventures</a>!
                      </p>
+                     
                      <div class="bio-logs-container" style="width: 100%;">
                         <div class="section-title-small" style="text-align: left; margin-top: 1.5rem; margin-bottom: 0.85rem;">LOGS</div>
                         <div id="bio-logs-list" class="bio-logs-grid"></div>
                      </div>
-                     <!-- Videos Row Nested inside Left Column -->
-                     <div class="home-videos-row" style="display: flex; flex-wrap: wrap; gap: 1.75rem; width: 100%; margin-top: 2.25rem; box-sizing: border-box;">
-                        <!-- Video 1 -->
+
+                     <div class="bio-projects-container" style="width: 100%;">
+                        <div class="section-title-small" style="text-align: left; margin-top: 1.5rem; margin-bottom: 0.85rem;">PROJECTS</div>
+                        <div id="bio-projects-list" class="bio-logs-grid"></div>
+                     </div>
+                     
+                     <!-- CONTAINER ROW FOR VIDEO, LETTERBOXD & MUSIC (ALIGN-ITEMS: FLEX-START FOR FLUSH HEADERS) -->
+                     <div class="video-letterboxd-row" style="display: flex; flex-wrap: wrap; gap: 1.5rem; width: 100%; margin-top: 1.5rem; justify-content: flex-start; align-items: flex-start;">
+
+                        <!-- LEFT: VIDEO CARD -->
                         <div class="home-video-card" style="flex: 1 1 340px; max-width: 500px; box-sizing: border-box;">
-                           <div class="section-title-small" style="text-align: center; margin-bottom: 0.85rem; font-weight: bold; letter-spacing: 0.05em; color: #fff; font-size: 0.8rem;">MY VIDEOS</div>
-                           <div style="width: 100%; border-radius: 16px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.15); line-height: 0; background: #000; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
-                              <iframe
-                                 src="https://www.youtube.com/embed/izSZs1wx6vE?si=GmG5tkfX0yV4VLi_" 
-                                 style="width: 100%; aspect-ratio: 16 / 9; border: none; display: block;"
-                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                 allowfullscreen>
-                              </iframe>
+                                 <div class="section-title-small" style="text-align: center; margin-bottom: 0.85rem; font-weight: bold; letter-spacing: 0.05em; color: #fff; font-size: 0.8rem;">VIDEO OF THE WEEK</div>
+                                 <div style="width: 100%; border-radius: 16px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.15); line-height: 0; background: #000; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+                                    <iframe
+                                       src="https://www.youtube.com/embed/kNVnl1RcbLk?si=jYodpG6fxJPYQML3" 
+                                       style="width: 100%; aspect-ratio: 16 / 9; border: none; display: block;"
+                                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                       allowfullscreen>
+                                    </iframe>
                            </div>
                         </div>
-                        <!-- Video 2 -->
-                        <div class="home-video-card" style="flex: 1 1 340px; max-width: 500px; box-sizing: border-box;">
-                           <div class="section-title-small" style="text-align: center; margin-bottom: 0.85rem; font-weight: bold; letter-spacing: 0.05em; color: #fff; font-size: 0.8rem;">VIDEO OF THE WEEK</div>
-                           <div style="width: 100%; border-radius: 16px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.15); line-height: 0; background: #000; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
-                              <iframe
-                                 src="https://www.youtube.com/embed/kNVnl1RcbLk?si=jYodpG6fxJPYQML3" 
-                                 style="width: 100%; aspect-ratio: 16 / 9; border: none; display: block;"
-                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                 allowfullscreen>
-                              </iframe>
+
+                        <!-- MIDDLE: LETTERBOXD CARD (Sized symmetrically with Spotify) -->
+                           <div class="letterboxd-card" style="flex: 0 0 165px !important; width: 165px !important; max-width: 165px !important; display: flex; flex-direction: column; margin: 0; box-sizing: border-box;">
+                              <div class="section-title-small" style="text-align: center; margin-bottom: 0.85rem; font-weight: bold; letter-spacing: 0.05em; color: #fff; font-size: 0.8rem; width: 100%;">LAST WATCHED</div>
+                              
+                              <a id="letterboxd-link" href="https://letterboxd.com/tlee06" target="_blank" style="text-decoration: none; width: 100%;">
+                                 <!-- Aspect ratio matched cleanly to accommodate image + metadata comfortably -->
+                                 <div style="width: 100% !important; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 0.75rem; box-sizing: border-box; box-shadow: 0 10px 30px rgba(0,0,0,0.3); display: flex; flex-direction: column; justify-content: flex-start; gap: 0.6rem; overflow: hidden;">
+                                    
+                                    <!-- Poster wrapper expands fully to the borders of the card padding -->
+                                    <div id="film-poster-wrapper" style="width: 100% !important; aspect-ratio: 26 / 40 !important; border-radius: 8px; overflow: hidden; background: rgba(0, 0, 0, 0.2); display: block !important; box-shadow: 0 4px 12px rgba(0,0,0,0.5);">
+                                       <img id="film-poster" src="" alt="Film Poster" style="width: 100% !important; height: 100% !important; object-fit: cover !important; display: block !important;" />
+                                    </div>
+                                    
+                                    <div style="display: flex; flex-direction: column; gap: 0.15rem; width: 100%; text-align: left;">
+                                       <div id="film-title" style="font-weight: 600; color: #fff; font-size: 0.8rem; font-family: sans-serif; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; width: 100%;">Loading...</div>
+                                       <div id="film-rating" style="color: #ff8000; font-size: 0.8rem; font-family: sans-serif; min-height: 1.15rem; display: flex; align-items: center;"></div>
+                                    </div>
+                                 </div>
+                              </a>
+                           </div>
+                        <div class="spotify-card" style="flex: 0 0 260px !important; width: 260px !important; max-width: 260px !important; display: flex; flex-direction: column; align-items: center; margin: 0;">
+                           <div class="section-title-small" style="text-align: center; margin-bottom: 0.85rem; font-weight: bold; letter-spacing: 0.05em; color: #fff; font-size: 0.8rem; width: 100%;">LAST LISTENED</div>
+                           
+                           <div id="now-playing" class="now-playing-card" aria-live="polite" 
+style="width: 100% !important; min-height: 220px !important; height: 100% !important; background: rgba(255, 255, 255, 0.05) !important; border: 1px solid rgba(255, 255, 255, 0.1) !important; border-radius: 16px !important; padding: 0 !important; overflow: hidden !important; box-sizing: border-box !important; box-shadow: 0 10px 30px rgba(0,0,0,0.3) !important; display: flex !important; flex-direction: column !important; justify-content: flex-start !important; align-items: stretch !important; gap: 0 !important;">
+                              
+                              <div class="now-playing-status">Loading music...</div>
                            </div>
                         </div>
+
                      </div>
                   </div>
+
                   <!-- RIGHT COLUMN: Centering Adaptive Profile Component -->
                   <div class="bio-image-container" style="width: 350px; max-width: 100%; flex: 0 0 350px; margin: 2.35rem 0 0 0; display: flex; flex-direction: column; align-items: center;">
                      <div class="profile-image-wrapper">
@@ -204,7 +231,6 @@
                            <a href="https://github.com/tmlee06" target="_blank" class="profile-social-link"><i class="fab fa-github"></i></a>
                            <a href="https://www.linkedin.com/in/tlee06/" target="_blank" class="profile-social-link"><i class="fab fa-linkedin"></i></a>
                            <a href="https://www.instagram.com/tlee.06/" target="_blank" class="profile-social-link"><i class="fab fa-instagram"></i></a>
-                           <a href="https://www.youtube.com/@tlee06" target="_blank" class="profile-social-link"><i class="fab fa-youtube"></i></a>
                         </div>
                      </div>
                      <h2 class="profile-name" style="text-align: center; color: #ffffff; font-size: 38px; font-weight: 600; margin: 0.35rem 0 0.45rem 0; font-family: sans-serif; letter-spacing: -0.01em;">
@@ -221,20 +247,72 @@
                         <a href="./Assets/Tristan Lee - Resume.pdf" target="_blank" class="resume-button resume-button-view">View Resume</a>
                         <a href="./Assets/Tristan Lee - Resume.pdf" download class="resume-button">Download Resume</a>
                      </div>
-
-                     <div id="now-playing" class="now-playing-card" aria-live="polite">
-                        <div class="now-playing-status">Loading music...</div>
-                     </div>
                                  
-               <!-- Modal Overlay -->
-               <div id="profile-modal" class="profile-modal">
-                  <div class="profile-modal-content">
-                     <span class="profile-modal-close">&times;</span>
-                     <img src="./Assets/profile-pic.png" alt="Tristan Lee profile picture" />
+                     <!-- Modal Overlay -->
+                     <div id="profile-modal" class="profile-modal">
+                        <div class="profile-modal-content">
+                           <span class="profile-modal-close">&times;</span>
+                           <img src="./Assets/profile-pic.png" alt="Tristan Lee profile picture" />
+                        </div>
+                     </div>
                   </div>
                </div>
-            </div>
             </section>
+    
+
+            <!-- <div class="page-layout">
+               Main Content 
+               <main class="main-content">
+                  Home Section 
+                  <section id="home" class="content-section" data-bg="#1F1D29" data-foreground="light" data-bg-light="#F7F1EA" data-foreground-light="dark" style="display: block !important; height: auto !important; min-height: 0 !important; max-height: none !important; padding: 3rem 0 4rem 0 !important; overflow: visible !important; position: relative;">
+                     Dynamic Mobile-Responsive Timestamp Placement 
+                     <div style="position: absolute; top: 1.75rem; right: clamp(42px, 4vw, 88px); z-index: 20;">
+                        <div class="timestamp" id="timestamp" style="font-size: 0.85rem; color: rgba(255, 255, 255, 0.6); font-family: sans-serif; text-align: right;"></div>
+                     </div>
+                     MAIN TWO-COLUMN CONTAINER (Updated max-width and right padding to reduce empty space) 
+                     <div class="bio-section" style="display: flex; flex-wrap: wrap; gap: clamp(3rem, 5vw, 5rem); width: 100%; max-width: 1540px; margin: 0 auto; padding-left: clamp(42px, 4vw, 88px); padding-right: clamp(42px, 4vw, 88px); box-sizing: border-box; justify-content: center; align-items: flex-start;">
+                        LEFT COLUMN: Content, Logs, and Nested Videos Grid 
+                        <div class="left-content-column" style="flex: 1 1 760px; min-width: 290px; max-width: 980px; display: flex; flex-direction: column; gap: 0px; padding-top: 0.75rem;">
+                        <p class="bio-text" style="margin-top: 1.4rem; margin-bottom: 0; line-height: 1.65; display: block;">
+                           Welcome to my website! I am an Electrical Engineering student specializing in Signal and Image Processing, minoring in Cognitive Science with a 
+                           focus in Neuroscience and Human-Computer Interaction at UC San Diego. I am currently studying abroad at Kyoto University for the Spring 2026 quarter. 
+                           Read about my <a href="#logs" style="color: #ffffff; text-decoration: underline; display: inline; text-underline-offset: 3px;">adventures</a>!
+                           </p>
+                           
+                           <div class="bio-logs-container" style="width: 100%;">
+                              <div class="section-title-small" style="text-align: left; margin-top: 1.5rem; margin-bottom: 0.85rem;">LOGS</div>
+                              <div id="bio-logs-list" class="bio-logs-grid"></div>
+                           </div>
+                     
+                           Videos Row Nested inside Left Column 
+                           <div class="home-videos-row" style="display: flex; flex-wrap: wrap; gap: 1.75rem; width: 100%; margin-top: 2.25rem; box-sizing: border-box;">
+                              Video 1 
+                              <div class="home-video-card" style="flex: 1 1 340px; max-width: 500px; box-sizing: border-box;">
+                                 <div class="section-title-small" style="text-align: center; margin-bottom: 0.85rem; font-weight: bold; letter-spacing: 0.05em; color: #fff; font-size: 0.8rem;">MY VIDEOS</div>
+                                 <div style="width: 100%; border-radius: 16px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.15); line-height: 0; background: #000; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+                                    <iframe
+                                       src="https://www.youtube.com/embed/izSZs1wx6vE?si=GmG5tkfX0yV4VLi_" 
+                                       style="width: 100%; aspect-ratio: 16 / 9; border: none; display: block;"
+                                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                       allowfullscreen>
+                                    </iframe>
+                                 </div>
+                              </div> -->
+                              <!-- Video 2 
+                              <div class="home-video-card" style="flex: 1 1 340px; max-width: 500px; box-sizing: border-box;">
+                                 <div class="section-title-small" style="text-align: center; margin-bottom: 0.85rem; font-weight: bold; letter-spacing: 0.05em; color: #fff; font-size: 0.8rem;">VIDEO OF THE WEEK</div>
+                                 <div style="width: 100%; border-radius: 16px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.15); line-height: 0; background: #000; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+                                    <iframe
+                                       src="https://www.youtube.com/embed/kNVnl1RcbLk?si=jYodpG6fxJPYQML3" 
+                                       style="width: 100%; aspect-ratio: 16 / 9; border: none; display: block;"
+                                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                       allowfullscreen>
+                                    </iframe>
+                                 </div>
+                              </div>
+                           </div>
+                        </div> -->
+                   
             <!-- About Section -->
             <section id="about" class="content-section" data-bg="#EFC69B" data-foreground="light" data-bg-light="#F5E4EE" data-foreground-light="dark" style="display: block !important; height: auto !important; min-height: 0 !important; max-height: none !important; padding: 2.5rem 0 !important; overflow: visible !important;">
                <div class="experience-container" style="width: 100%; max-width: 1520px; margin: 0 auto; padding: 0 clamp(36px, 4vw, 80px); box-sizing: border-box;">

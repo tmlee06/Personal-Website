@@ -609,8 +609,9 @@ body.theme-light .theme-toggle:hover {
     }
 }
 
-/* Bio logs */
-#bio-logs-list {
+/* Bio logs & home-page projects */
+#bio-logs-list,
+#bio-projects-list {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 40px 20px;
@@ -2594,7 +2595,103 @@ body.theme-light #contact::before {
 
 /* Center the Goals photo when screen is minimized */
 
-.now-playing-card {
+/* --- Tightened Square Layout for Last.fm Card --- */
+
+/* Removed the forced 300px height so the card body dynamically shrinks to fit the square layout */
+/* 1. CONTAINERS: FORCE UNIFORM SIZE AND ALIGNMENT */
+#home #now-playing.now-playing-card,
+.letterboxd-card-inner {
+    width: 190px !important;
+    max-width: 190px !important;
+    height: 100% !important;
+    min-height: 300px !important; /* Matches your video card height */
+    box-sizing: border-box !important;
+    padding: 0.75rem !important; /* Unified padding for a clean look */
+    background: rgba(255, 255, 255, 0.05) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+    border-radius: 16px !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3) !important;
+    margin: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: flex-start !important;
+    gap: 0.6rem !important;
+}
+
+/* 1. Force the image to occupy its own "slot" at the top */
+#home #now-playing img.now-playing-art,
+#home #now-playing .now-playing-art {
+    width: 100% !important;
+    aspect-ratio: 1 / 1 !important; 
+    border-radius: 8px !important;
+    object-fit: cover !important;   
+    display: block !important;
+    /* Remove min-height: 0 if it exists; it can cause the image to 'shrink' away */
+    min-height: auto !important; 
+    flex-shrink: 0 !important; /* This prevents the image from squishing */
+}
+
+
+
+/* 2. Ensure the parent container is actually creating the space */
+#home #now-playing.now-playing-card {
+    display: flex !important;
+    flex-direction: column !important;
+    height: 100% !important; /* Forces the card to take up the full 278px */
+    justify-content: flex-start !important; 
+}
+
+/* 4. TYPOGRAPHY */
+#home #now-playing .now-playing-title {
+    font-size: 0.9rem !important;
+    font-weight: 600 !important;
+    color: #ffffff !important;
+    line-height: 1.3 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+}
+
+#home #now-playing .now-playing-artist {
+    font-size: 0.82rem !important;
+    color: rgba(255, 255, 255, 0.5) !important;
+    line-height: 1.3 !important;
+    opacity: 1 !important;
+}
+
+/* 5. CLEANUP */
+#home #now-playing.now-playing-card .now-playing-status {
+    display: none !important;
+}
+
+#home #now-playing.now-playing-card a {
+    text-decoration: none !important;
+    display: flex !important;
+    flex-direction: column !important;
+    height: 100% !important;
+}
+@media (max-width: 1100px) {
+  .video-letterboxd-row {
+    justify-content: center !important;
+  }
+}
+
+@media (max-width: 780px) {
+  .video-letterboxd-row {
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+
+  .home-video-card,
+  .letterboxd-card,
+  .spotify-card {
+    flex: 1 1 100% !important;
+    max-width: 520px !important;
+    width: 100% !important;
+  }
+}
+
+/*.now-playing-card {
     width: 100%;
     max-width: 320px;
     margin: 1rem auto 0 auto;
@@ -2672,7 +2769,36 @@ body.theme-light .now-playing-card {
     box-shadow: 0 10px 28px rgba(38, 36, 46, 0.12);
 }
 
-/* Smaller Last.fm music widget */
+/* Spotify card light-mode fix: the "Tightened Square Layout" rules above
+   use #home #now-playing.now-playing-card with !important, which outranks
+   the generic .now-playing-card light rule above, so the card stayed dark
+   when switching themes. */
+#home #now-playing.now-playing-card {
+    transition: background-color var(--bg-fade-duration) ease,
+                border-color var(--bg-fade-duration) ease,
+                box-shadow var(--bg-fade-duration) ease;
+}
+
+#home #now-playing .now-playing-title,
+#home #now-playing .now-playing-artist {
+    transition: color var(--bg-fade-duration) ease;
+}
+
+body.theme-light #home #now-playing.now-playing-card {
+    background: var(--km-card) !important;
+    border-color: rgba(38, 36, 46, 0.12) !important;
+    box-shadow: 0 12px 28px rgba(38, 36, 46, 0.05) !important;
+}
+
+body.theme-light #home #now-playing .now-playing-title {
+    color: var(--km-text) !important;
+}
+
+body.theme-light #home #now-playing .now-playing-artist {
+    color: var(--km-muted) !important;
+}
+
+/* Smaller Last.fm music widget 
 #home .now-playing-card {
     max-width: 280px !important;
     width: 100% !important;
@@ -2733,7 +2859,7 @@ body.theme-light .now-playing-card {
     white-space: nowrap !important;
     overflow: hidden !important;
     text-overflow: ellipsis !important;
-}
+} */
 
 /* Fix fullscreen log reader when desktop zoom is active */
 .fullscreen-reader {
