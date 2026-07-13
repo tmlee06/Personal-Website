@@ -360,6 +360,33 @@ function processInstagramEmbeds(rootEl) {
 // --- LOG LOADING & DATA PROCESSING ---
 
 async function loadWeeklyLogs() {
+    // --- START SPA REDIRECT INTERCEPTOR ---
+    try {
+        const urlParams = new URLSearchParams(window.location.search);
+        const redirectedPath = urlParams.get('p');
+        if (redirectedPath) {
+            // Clean up the redirected path (e.g., remove trailing slashes)
+            let cleanPath = redirectedPath.replace(/\/$/, "");
+            
+            // If the path doesn't already start with 'log-', prepend it to match your router
+            if (!cleanPath.startsWith('log-')) {
+                // If they typed just 'logs', transform it to your route structure or ignore
+                if (cleanPath === 'logs') {
+                    cleanPath = ''; // Or keep it to navigate to a logs landing section
+                } else {
+                    cleanPath = 'log-' + cleanPath;
+                }
+            }
+            
+            // Rewrite the URL cleanly without reloading the page, setting the correct hash
+            const newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname + (cleanPath ? '#' + cleanPath : '');
+            window.history.replaceState(null, '', newUrl);
+        }
+    } catch (e) {
+        console.error("SPA routing parameter parsing failed:", e);
+    }
+    // --- END SPA REDIRECT INTERCEPTOR ---
+
     if (__weeklyLogsLoaded) return;
     __weeklyLogsLoaded = true;
 
