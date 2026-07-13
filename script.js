@@ -241,12 +241,14 @@ function parseFrontmatter(markdownText) {
  */
 function getNormalizedFetchUrl(relativePath) {
     const cleanPath = relativePath.startsWith('/') ? relativePath.slice(1) : relativePath;
-    if (window.location.hostname.includes('github.io')) {
-        return `/Personal-Website/${cleanPath}`;
+    
+    // If you are using a custom domain or standard github.io, point directly to your repo files
+    if (window.location.hostname.includes('tlee06.me') || window.location.hostname.includes('github.io')) {
+        // Force the absolute structure so pages don't look relative to a deep-linked folder path
+        return window.location.origin + '/' + cleanPath;
     }
     return `/${cleanPath}`;
 }
-
 /**
  * Loads and processes all logs from logs-index.json.
  */
