@@ -710,7 +710,7 @@ function initLocationMap() {
     // https://client.stadiamaps.com) — or append ?api_key=YOUR_KEY to the
     // URL below. Without one of those, deployed tiles will show a
     // "no longer available" placeholder instead of the map.
-    L.tileLayer('https://tiles.stadiamaps.com/tiles/stamen_toner_lite/{z}/{x}/{y}{r}.png', {
+    L.tileLayer('https://tiles.stadiamaps.com/tiles/stamen_toner_lite/{z}/{x}/{y}{r}.png?api_key=b6cf1e2f-a73e-4025-a83b-a6877c578e82', {
         maxZoom: 20,
         attribution: '&copy; <a href="https://stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://stamen.com/" target="_blank">Stamen Design</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>'
     }).addTo(map);
