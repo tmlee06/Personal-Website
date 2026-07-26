@@ -287,7 +287,12 @@ body.dark-foreground .theme-toggle:hover {
 
 .typed-name {
     position: relative;
-    white-space: nowrap;
+    display: inline-block;
+    font-size: clamp(1.2rem, 1.5vw, 1.75rem);
+    line-height: 1.1;
+    white-space: normal;
+    max-width: 100%;
+    overflow-wrap: anywhere;
 }
 
 .typed-name::after {
@@ -324,6 +329,10 @@ body.dark-foreground .theme-toggle:hover {
 .sidebar-nav .nav-link.active {
     opacity: 1;
     transform: translateY(-2px);
+}
+
+.sidebar-nav .nav-link:active {
+    transform: scale(0.94);
 }
 
 .nav-icon {
@@ -376,6 +385,11 @@ body.dark-foreground .theme-toggle:hover {
 .social-link:hover {
     opacity: 1;
     transform: translateY(-2px);
+}
+
+.project-link:active,
+.social-link:active {
+    transform: scale(0.92);
 }
 
 .social-link i,
@@ -530,6 +544,16 @@ body.theme-light .theme-toggle:hover {
     pointer-events: all;
 }
 
+/* Touch devices don't have a reliable :hover state, so the icons above
+   were invisible and unclickable on iPad/mobile. Show them by default
+   there instead of gating behind hover. */
+@media (hover: none), (pointer: coarse) {
+    .profile-social-links {
+        opacity: 1;
+        pointer-events: all;
+    }
+}
+
 .profile-social-link {
     width: 40px;
     height: 40px;
@@ -548,6 +572,10 @@ body.theme-light .theme-toggle:hover {
 .profile-social-link:hover {
     transform: scale(1.1);
     background: #fff;
+}
+
+.profile-social-link:active {
+    transform: scale(0.95);
 }
 
 /* Profile modal */
@@ -683,6 +711,87 @@ body.theme-light .theme-toggle:hover {
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
 }
 
+.resume-button:active {
+    transform: translateY(-1px) scale(0.97);
+    transition: transform 0.1s ease;
+}
+
+/* Location map */
+.location-map {
+    width: 100%;
+    height: 200px;
+    margin-top: 0.5rem;
+    border-radius: 16px;
+    overflow: hidden;
+    background: #1a1a1a;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+
+    /* Dark mode: Stamen Toner Lite is a bright B&W style by default, so
+       grayscale + a lower brightness dims it to sit against the dark bg. */
+    filter: grayscale(100%) brightness(0.9);
+    transition: filter 0.5s ease, background 0.5s ease, box-shadow 0.5s ease;
+
+    /* Forces Safari to composite this correctly. Without these, filter +
+       border-radius + overflow:hidden on a container whose children use
+       transforms (Leaflet's pan/zoom tile pane does) can render as a
+       solid black box in Safari/iOS. */
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    transform: translateZ(0);
+}
+
+/* Light mode: closer to the tiles' natural bright style, just softened
+   and warmed slightly so it doesn't look starkly white against the cream
+   page background. */
+body.theme-light .location-map {
+    background: var(--km-cream);
+    filter: grayscale(35%) brightness(1.04) contrast(0.95) sepia(6%);
+    box-shadow: 0 10px 24px rgba(38, 36, 46, 0.1);
+}
+
+.location-map .leaflet-container {
+    background: #1a1a1a;
+    font-family: 'IBM Plex Sans', sans-serif;
+}
+
+.location-map .leaflet-control-zoom {
+    border: none !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+}
+
+.location-map .leaflet-control-zoom a {
+    background: rgba(20, 20, 20, 0.85) !important;
+    color: rgba(255, 255, 255, 0.8) !important;
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.location-map .leaflet-control-zoom a:hover {
+    background: rgba(40, 40, 40, 0.95) !important;
+    color: #ffffff !important;
+}
+
+.location-map .leaflet-control-attribution {
+    background: rgba(0, 0, 0, 0.4) !important;
+    color: rgba(255, 255, 255, 0.4) !important;
+    font-size: 0.6rem !important;
+}
+
+.location-map .leaflet-control-attribution a {
+    color: rgba(255, 255, 255, 0.55) !important;
+}
+
+.map-caption {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0.55;
+    color: #fffeff;
+    text-align: center;
+    margin-top: 1rem;
+    font-family: 'IBM Plex Sans', sans-serif;
+}
+
 .resume-button-view,
 .resume-button:not(.resume-button-view) {
     border-color: rgba(255, 255, 255, 0.15);
@@ -736,6 +845,147 @@ body.theme-light .theme-toggle:hover {
 .work-card:hover {
     transform: translateY(-1px);
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.work-card:active {
+    transform: scale(0.988);
+}
+
+/* Certifications */
+.cert-grid {
+    display: flex;
+    gap: 0.9rem;
+    max-width: min(1440px, 100%);
+    margin: 0 auto;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: 0.6rem;
+    scroll-snap-type: x proximity;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.25) transparent;
+}
+
+.cert-grid::-webkit-scrollbar {
+    height: 6px;
+}
+
+.cert-grid::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.cert-grid::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 10px;
+}
+
+.cert-grid::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.4);
+}
+
+.cert-card {
+    flex: 1 0 232px;
+    scroll-snap-align: start;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 1.1rem 1.2rem;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.3s ease, border-color 0.3s ease;
+}
+
+.cert-card:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+}
+
+.cert-card:active {
+    transform: scale(0.988);
+}
+
+.cert-card-top {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+}
+
+.cert-badge {
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 0.95rem;
+}
+
+.cert-title {
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: #fffeff;
+    margin: 0 0 0.15rem 0;
+    line-height: 1.35;
+}
+
+.cert-issuer {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.6);
+    margin: 0;
+}
+
+.cert-credential-id {
+    font-size: 0.72rem;
+    color: rgba(255, 255, 255, 0.4);
+    margin: 0.75rem 0 0 0;
+    font-family: 'IBM Plex Sans', sans-serif;
+}
+
+.cert-skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.85rem;
+}
+
+.cert-skill-tag {
+    font-size: 0.72rem;
+    color: rgba(255, 255, 255, 0.7);
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    padding: 0.2rem 0.65rem;
+}
+
+.cert-credential-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 0.85rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.85);
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 20px;
+    padding: 0.35rem 0.85rem;
+    text-decoration: none;
+    transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+}
+
+.cert-credential-link i {
+    font-size: 0.7rem;
+}
+
+.cert-credential-link:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.4);
+    transform: translateY(-1px);
+}
+
+.cert-credential-link:active {
+    transform: scale(0.96);
 }
 
 .work-card-link {
@@ -1105,6 +1355,10 @@ body.theme-light .theme-toggle:hover {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
 }
 
+.log-card:active {
+    transform: scale(0.988);
+}
+
 .log-meta {
     display: flex;
     align-items: center;
@@ -1188,6 +1442,38 @@ body.theme-light .theme-toggle:hover {
     transition: all 0.3s ease;
 }
 
+/* Unified pop-in: same springy entrance for every tracked element,
+   whether it's on-screen at page load (fires immediately) or scrolled
+   into view later (fires on intersection). Starts hidden... */
+.pop-in {
+    opacity: 0;
+    transform: translateY(18px) scale(0.95);
+}
+
+/* ...and animates in once JS adds this class via IntersectionObserver. */
+.pop-in.pop-in-visible {
+    animation: popIn 0.55s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    animation-delay: var(--pop-delay, 0ms);
+}
+
+@keyframes popIn {
+    from {
+        opacity: 0;
+        transform: translateY(18px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .pop-in {
+        opacity: 1;
+        transform: none;
+    }
+}
+
 .season-folder::-webkit-details-marker,
 .season-header::marker {
     display: none;
@@ -1228,7 +1514,7 @@ body.theme-light .theme-toggle:hover {
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.season-folder[open] .custom-arrow {
+.season-folder[open] > summary .custom-arrow {
     transform: rotate(90deg);
 }
 
@@ -1341,6 +1627,32 @@ body.theme-light .theme-toggle:hover {
 .reader-body p {
     margin-bottom: 1.5rem;
     text-align: left !important;
+}
+
+/* Responsive video embeds (YouTube/Vimeo/etc pasted into log markdown) */
+.video-embed-wrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    margin: 1.75rem 0;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #000;
+}
+
+.video-embed-wrap iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+    border: 0 !important;
+    display: block;
+}
+
+/* Fallback for any iframe that wasn't caught by the wrapping script */
+.reader-body iframe {
+    max-width: 100%;
 }
 
 .reader-header h1 {
@@ -1809,6 +2121,49 @@ body.theme-light #projects-grid .project-card:hover,
 body.theme-light .log-card:hover {
     background: var(--km-card-strong) !important;
     border-color: rgba(38, 36, 46, 0.22) !important;
+}
+
+body.theme-light .cert-card {
+    background: var(--km-card) !important;
+    border-color: rgba(38, 36, 46, 0.12) !important;
+}
+
+body.theme-light .cert-grid {
+    scrollbar-color: rgba(38, 36, 46, 0.3) transparent;
+}
+
+body.theme-light .cert-grid::-webkit-scrollbar-thumb {
+    background: rgba(38, 36, 46, 0.3);
+}
+
+body.theme-light .cert-card:hover {
+    background: var(--km-card-strong) !important;
+    border-color: rgba(38, 36, 46, 0.22) !important;
+}
+
+body.theme-light .cert-title {
+    color: var(--km-text) !important;
+}
+
+body.theme-light .cert-issuer,
+body.theme-light .cert-credential-id {
+    color: rgba(38, 36, 46, 0.6) !important;
+}
+
+body.theme-light .cert-skill-tag {
+    color: rgba(38, 36, 46, 0.7) !important;
+    background: rgba(38, 36, 46, 0.06) !important;
+    border-color: rgba(38, 36, 46, 0.12) !important;
+}
+
+body.theme-light .cert-credential-link {
+    color: var(--km-text) !important;
+    border-color: rgba(38, 36, 46, 0.25) !important;
+}
+
+body.theme-light .cert-credential-link:hover {
+    background: rgba(38, 36, 46, 0.06) !important;
+    border-color: rgba(38, 36, 46, 0.4) !important;
 }
 
 body.theme-light .work-title,

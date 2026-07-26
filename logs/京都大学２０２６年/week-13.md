@@ -106,7 +106,7 @@ Here are some photos from this week:
             style="width: 100%; height: auto; border-radius: 8px;"
         />
        <figcaption style="margin-top: 8px; text-align: center; font-size: 14px; color: #FFFFFF;">
-       Not quite a California, but I do not mind this at all!
+       Not quite a California sunset, but I do not mind this at all!
         </figcaption>
     </figure>
 </div>

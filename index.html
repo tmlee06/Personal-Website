@@ -7,9 +7,10 @@
       <link rel="icon" type="image/png" href="./Assets/logos/tlee.png">
       <link rel="shortcut icon" type="image/png" href="./Assets/logos/tlee.png">
       <link rel="apple-touch-icon" href="./Assets/logos/tlee.png">
-      <link rel="stylesheet" href="styles.css?v=20260707-mobilefix">
+      <link rel="stylesheet" href="styles.css?v=20260715-certsfix">
       <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=Shippori+Mincho:wght@400;600;700&display=swap" rel="stylesheet">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+      <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
       <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
    </head>
    <body>
@@ -181,7 +182,7 @@
                                  <div class="section-title-small" style="text-align: center; margin-bottom: 0.85rem; font-weight: bold; letter-spacing: 0.05em; color: #fff; font-size: 0.8rem;">VIDEO OF THE WEEK</div>
                                  <div style="width: 100%; border-radius: 16px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.15); line-height: 0; background: #000; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
                                     <iframe
-                                       src="https://www.youtube.com/embed/kNVnl1RcbLk?si=jYodpG6fxJPYQML3" 
+                                       src="https://www.youtube.com/embed/ta-pVVanLMs?si=CNSf4MDPyXcejtZj" 
                                        style="width: 100%; aspect-ratio: 16 / 9; border: none; display: block;"
                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                        allowfullscreen>
@@ -247,6 +248,9 @@ style="width: 100% !important; min-height: 220px !important; height: 100% !impor
                         <a href="./Assets/Tristan Lee - Resume.pdf" target="_blank" class="resume-button resume-button-view">View Resume</a>
                         <a href="./Assets/Tristan Lee - Resume.pdf" download class="resume-button">Download Resume</a>
                      </div>
+
+                     <p class="map-caption">Current Location</p>
+                     <div id="location-map" class="location-map" role="img" aria-label="Map centered on Kyoto, Japan"></div>
                                  
                      <!-- Modal Overlay -->
                      <div id="profile-modal" class="profile-modal">
@@ -594,7 +598,103 @@ style="width: 100% !important; min-height: 220px !important; height: 100% !impor
             </div>
             </div>
             </div>
-      </div>
+
+            <div class="experience-section-header" style="margin-top: 3rem; margin-bottom: 1.25rem;">
+            <h2 class="experience-title" style="border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 0.5rem;">CERTIFICATIONS</h2>
+            </div>
+            <div class="cert-grid">
+
+                <div class="cert-card">
+                    <div class="cert-card-top">
+                        <div class="cert-badge" style="background: #1a1a1a;"><i class="fas fa-robot"></i></div>
+                        <div class="cert-info">
+                            <h4 class="cert-title">AI Fluency: Framework &amp; Foundations</h4>
+                            <p class="cert-issuer">Anthropic · Jul 2026</p>
+                        </div>
+                    </div>
+                        <div class="cert-skills">
+                        <span class="cert-skill-tag">AI Safety</span>
+                        <span class="cert-skill-tag">AI Systems</span>
+                    </div>
+                    <a href="https://verify.skilljar.com/c/nrt93v4xkwy7" target="_blank" rel="noopener noreferrer" class="cert-credential-link">Show credential <i class="fas fa-arrow-up-right-from-square"></i></a>
+                </div>
+
+                <div class="cert-card">
+                    <div class="cert-card-top">
+                        <div class="cert-badge" style="background: #1a1a1a;"><i class="fas fa-robot"></i></div>
+                        <div class="cert-info">
+                            <h4 class="cert-title">Introduction to Agent Skills</h4>
+                            <p class="cert-issuer">Anthropic · Jul 2026</p>
+                        </div>
+                    </div>
+                        <div class="cert-skills">
+                        <span class="cert-skill-tag">Claude Code</span>
+                        <span class="cert-skill-tag">Claude Skills</span>
+                    </div>
+                    <a href="https://verify.skilljar.com/c/y7ksvh8s4f78" target="_blank" rel="noopener noreferrer" class="cert-credential-link">Show credential <i class="fas fa-arrow-up-right-from-square"></i></a>
+                </div>
+
+                <div class="cert-card">
+                    <div class="cert-card-top">
+                        <div class="cert-badge" style="background: #0B3D91;"><i class="fas fa-rocket"></i></div>
+                        <div class="cert-info">
+                            <h4 class="cert-title">California Space Grant Consortium</h4>
+                            <p class="cert-issuer">NASA · Aug 2025</p>
+                        </div>
+                    </div>
+                    <div class="cert-skills">
+                        <span class="cert-skill-tag">Python</span>
+                        <span class="cert-skill-tag">C++</span>
+                    </div>
+                    <a href="https://www.linkedin.com/in/tlee06/overlay/Certifications/756303867/treasury/?profileId=ACoAADKTI8ABJcrnP06FU1s3Mfap38UzkhOk1h4" target="_blank" rel="noopener noreferrer" class="cert-credential-link">Show credential <i class="fas fa-arrow-up-right-from-square"></i></a>
+                </div>
+
+                <div class="cert-card">
+                    <div class="cert-card-top">
+                        <div class="cert-badge" style="background: #0B3D91;"><i class="fas fa-rocket"></i></div>
+                        <div class="cert-info">
+                            <h4 class="cert-title">Community College Aerospace Scholars</h4>
+                            <p class="cert-issuer">NASA · Apr 2025</p>
+                        </div>
+                    </div>
+                    <div class="cert-skills">
+                        <span class="cert-skill-tag">Research Skills</span>
+                        <span class="cert-skill-tag">Design Research</span>
+                    </div>
+                    <a href="https://www.linkedin.com/in/tlee06/overlay/Certifications/1318575431/treasury/?profileId=ACoAADKTI8ABJcrnP06FU1s3Mfap38UzkhOk1h4" target="_blank" rel="noopener noreferrer" class="cert-credential-link">Show credential <i class="fas fa-arrow-up-right-from-square"></i></a>
+                </div>
+
+                <div class="cert-card">
+                    <div class="cert-card-top">
+                        <div class="cert-badge" style="background: #03362F;"><i class="fa-solid fa-chart-area"></i></div>
+                        <div class="cert-info">
+                            <h4 class="cert-title">Understanding Data Visualization</h4>
+                            <p class="cert-issuer">DataCamp · Apr 2022</p>
+                        </div>
+                    </div>
+                    <div class="cert-skills">
+                        <span class="cert-skill-tag">Data Analysis</span>
+                        <span class="cert-skill-tag">Data Entry</span>
+                    </div>
+                    <a href="https://www.datacamp.com/completed/statement-of-accomplishment/course/d1c97850cbae03abd2d2c70cc30551a12c69b523" target="_blank" rel="noopener noreferrer" class="cert-credential-link">Show credential <i class="fas fa-arrow-up-right-from-square"></i></a>
+                </div>
+
+                <div class="cert-card">
+                    <div class="cert-card-top">
+                        <div class="cert-badge" style="background: #03362F;"><i class="fa-solid fa-chart-area"></i></div>
+                        <div class="cert-info">
+                            <h4 class="cert-title">Data Visualization in Spreadsheets</h4>
+                            <p class="cert-issuer">DataCamp· Apr 2022</p>
+                        </div>
+                    </div>
+                    <div class="cert-skills">
+                        <span class="cert-skill-tag">Data Analysis</span>
+                        <span class="cert-skill-tag">Microsoft Excel</span>
+                    </div>
+                    <a href="https://www.datacamp.com/completed/statement-of-accomplishment/course/223601fd71ab2a3cc32cd2f03785a603afaffbe7" target="_blank" rel="noopener noreferrer" class="cert-credential-link">Show credential <i class="fas fa-arrow-up-right-from-square"></i></a>
+                </div>
+
+            </div>
       </section>
       <!-- Team Projects Section -->
       <section id="current-projects" class="content-section" data-bg="#637081" data-foreground="light" data-bg-light="#F3E8FB" data-foreground-light="dark" style="display: block !important; height: auto !important; min-height: 0 !important; max-height: none !important; padding: 2rem 0 1.5rem 0 !important; overflow: visible !important;">
@@ -657,7 +757,7 @@ style="width: 100% !important; min-height: 220px !important; height: 100% !impor
       </div>
       </section>
     <section id="contact" class="content-section contact-section" data-bg="#637081" data-foreground="light" data-bg-light="#ECE6FB" data-foreground-light="dark" style="padding: 4rem 0">
-    <div style="width: 100%; max-width: 800px; margin: 0 auto; padding: 0 2rem; text-align: center;">
+    <div class="contact-content" style="width: 100%; max-width: 800px; margin: 0 auto; padding: 0 2rem; text-align: center;">
         
         <h2 style="font-size: 0.9rem; letter-spacing: 0.2rem; color: rgba(255,255,255,0.5); margin-bottom: 1.5rem; text-transform: uppercase;">Get in Touch</h2>
         
@@ -667,28 +767,24 @@ style="width: 100% !important; min-height: 220px !important; height: 100% !impor
         </p>
 
         <div style="display: flex; justify-content: center; gap: 2rem;">
-            <a href="mailto:trl015@ucsd.edu" style="color: #fff; transition: opacity 0.3s; opacity: 0.7;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'">
+            <a href="mailto:trl015@ucsd.edu" class="social-icon-link" style="color: #fff; transition: opacity 0.3s; opacity: 0.7;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'">
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
             </a>
-            <a href="https://github.com/tmlee06" target="_blank" style="color: #fff; transition: opacity 0.3s; opacity: 0.7;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'">
+            <a href="https://github.com/tmlee06" target="_blank" class="social-icon-link" style="color: #fff; transition: opacity 0.3s; opacity: 0.7;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'">
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
             </a>
-            <a href="https://www.linkedin.com/in/tlee06/" target="_blank" style="color: #fff; transition: opacity 0.3s; opacity: 0.7;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'">
+            <a href="https://www.linkedin.com/in/tlee06/" target="_blank" class="social-icon-link" style="color: #fff; transition: opacity 0.3s; opacity: 0.7;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'">
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
             </a>
         </div>
         </div>
-      </section>
-      </a>
-      </div>
-      </div>
-      </div>
       </section>
       <footer>
           <p>&copy; <span id="year"></span> Tristan Lee.</p>
       </footer>
       </main>
       </div>
-      <script src="script.js?v=20260623-loghashfix"></script>
+      <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+      <script src="script.js?v=20260715-certsfix"></script>
    </body>
 </html>

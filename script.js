@@ -459,41 +459,49 @@ function renderLogs(container, items) {
     container.innerHTML = '';
 
     function createFolderElement(item, level = 0) {
-        const details = document.createElement('details');
-        details.className = level === 0 ? 'season-folder' : 'season-folder sub-folder';
-        if (level > 0) details.style.marginLeft = '20px';
+    const details = document.createElement('details');
+    details.className = level === 0 ? 'season-folder' : 'season-folder sub-folder';
+    if (level > 0) details.style.marginLeft = '20px';
 
-        const summary = document.createElement('summary');
-        summary.className = 'season-header';
-        summary.innerHTML = `
-            <div class="folder-title">
-                <i class="fas ${item.folders ? 'fa-folder-tree' : 'fa-folder'}"></i>
-                <span>${item.title}</span>
-            </div>
-            <span class="custom-arrow"><i class="fas fa-chevron-right"></i></span>
-        `;
-        details.appendChild(summary);
+    const summary = document.createElement('summary');
+    summary.className = 'season-header';
+    summary.innerHTML = `
+        <div class="folder-title">
+            <i class="fas ${item.folders ? 'fa-folder-tree' : 'fa-folder'}"></i>
+            <span>${item.title || 'Untitled Folder'}</span>
+        </div>
+        <span class="custom-arrow"><i class="fas fa-chevron-right"></i></span>
+    `;
+    details.appendChild(summary);
 
-        const contentWrapper = document.createElement('div');
-        contentWrapper.className = 'folder-content';
+    const contentWrapper = document.createElement('div');
+    contentWrapper.className = 'folder-content';
 
-        if (item.folders) {
-            item.folders.forEach(sub => contentWrapper.appendChild(createFolderElement(sub, level + 1)));
-        } else if (item.logs) {
-            const list = document.createElement('div');
-            list.className = 'logs-preview-list';
-            item.logs.forEach(log => {
+    // 1. Process nested folders (if they exist)
+    if (item.folders) {
+        item.folders.forEach(sub => contentWrapper.appendChild(createFolderElement(sub, level + 1)));
+    }
+
+    // 2. Process logs (Now renders even if folders are present)
+    if (item.logs && item.logs.length > 0) {
+        const list = document.createElement('div');
+        list.className = 'logs-preview-list';
+        item.logs.forEach(log => {
+            if (log.filename) {
                 const row = document.createElement('div');
                 row.className = 'log-file-row';
                 row.innerHTML = `<span class="file-name">${log.filename}</span><span class="file-date">${log.date || ''}</span>`;
                 row.onclick = (e) => { e.stopPropagation(); openFullscreenLog(log, true, false); };
                 list.appendChild(row);
-            });
-            contentWrapper.appendChild(list);
-        }
-        details.appendChild(contentWrapper);
-        return details;
+            }
+        });
+        contentWrapper.appendChild(list);
     }
+    
+    details.appendChild(contentWrapper);
+    return details;
+    }
+    
     items.forEach(item => container.appendChild(createFolderElement(item)));
 }
 
@@ -530,8 +538,192 @@ function renderBioLogs(container, sections) {
     });
 }
 
+// Wraps raw <iframe> embeds (YouTube, Vimeo, etc.) pasted into log markdown
+// in a responsive 16:9 container so they scale to the reader width instead
+// of rendering at a fixed pixel size (which looked broken/cramped on iPad).
+function processVideoEmbeds(rootEl) {
+    if (!rootEl) return;
+
+    const iframes = rootEl.querySelectorAll('iframe');
+    iframes.forEach(iframe => {
+        // Skip if already wrapped (e.g. re-hydration)
+        if (iframe.parentElement && iframe.parentElement.classList.contains('video-embed-wrap')) return;
+
+        // Only touch video-style embeds, leave other iframes alone
+        const src = iframe.getAttribute('src') || '';
+        const isVideo = /youtube\.com|youtu\.be|vimeo\.com|player\.twitch\.tv/i.test(src);
+        if (!isVideo) return;
+
+        const wrap = document.createElement('div');
+        wrap.className = 'video-embed-wrap';
+
+        iframe.removeAttribute('width');
+        iframe.removeAttribute('height');
+        iframe.style.width = '100%';
+        iframe.style.height = '100%';
+        iframe.style.border = '0';
+
+        iframe.parentNode.insertBefore(wrap, iframe);
+        wrap.appendChild(iframe);
+    });
+}
+
+// --- POP-IN (page load + scroll) ---
+// One system for the whole site: every tracked element starts hidden,
+// then springs in via IntersectionObserver — elements already on screen
+// at load animate right away (giving that refresh "cascade" feel),
+// elements further down animate the moment they scroll into view.
+// Watches the dynamic grids (GitHub projects, weekly logs) too, since
+// those cards get added after an async fetch resolves.
+function initPopInAnimation() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (typeof IntersectionObserver === 'undefined') return;
+
+    const selector = [
+        // Sidebar
+        '.sidebar-name', '.sidebar-nav .nav-link', '.project-link', '.social-link', '.theme-toggle-wrap',
+        // Hero / profile
+        '.profile-image-wrapper', '.profile-name', '.profile-title', '.resume-buttons',
+        '.map-caption', '.location-map', '.now-playing-card', '.spotify-card',
+        '.home-video-card', '.letterboxd-card', '.verse-container',
+        '.left-content-column', '.bio-text',
+        // Section headers used throughout (TEAM PROJECTS, LOGS, etc.)
+        '.section-title-small', '.experience-section-header',
+        // Cards
+        '.work-card', '.current-project-card', '.log-card', '.bio-log-card', '.experience-item', '.cert-card',
+        // Contact + footer
+        '.social-icon-link', '.resume-download-button', '.resume-download-link',
+        '.contact-content h2', '.contact-content p', 'footer p',
+        // Logs page folder browser
+        '.season-folder'
+    ].join(', ');
+    const seen = new WeakSet();
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, i) => {
+            if (entry.isIntersecting) {
+                const el = entry.target;
+                // Stagger within whatever batch just intersected: a big
+                // cascade on initial load (many elements at once), near-
+                // instant for the 1-2 elements that cross in during a
+                // normal scroll.
+                el.style.setProperty('--pop-delay', `${Math.min(i * 40, 480)}ms`);
+                el.classList.add('pop-in-visible');
+                observer.unobserve(el);
+            }
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+
+    function markAndObserve(el) {
+        if (seen.has(el)) return;
+        seen.add(el);
+        el.classList.add('pop-in');
+        observer.observe(el);
+    }
+
+    document.querySelectorAll(selector).forEach(markAndObserve);
+
+    const grids = document.querySelectorAll('#projects-grid, #logs-list, .current-projects-grid');
+    grids.forEach(grid => {
+        const mo = new MutationObserver(() => {
+            grid.querySelectorAll(selector).forEach(markAndObserve);
+        });
+        mo.observe(grid, { childList: true });
+    });
+}
+
+// --- CERTIFICATIONS HORIZONTAL SCROLL ---
+// Lets a normal vertical mouse wheel scroll the certifications strip
+// sideways instead of doing nothing (trackpads/touch already scroll it
+// natively via horizontal swipe).
+function initCertScroll() {
+    const grid = document.querySelector('.cert-grid');
+    if (!grid) return;
+
+    grid.addEventListener('wheel', (e) => {
+        if (Math.abs(e.deltaY) <= Math.abs(e.deltaX)) return; // already horizontal, let it be
+        e.preventDefault();
+        grid.scrollLeft += e.deltaY;
+    }, { passive: false });
+}
+
 function hydrateEmbeds(rootEl) {
   processInstagramEmbeds(rootEl);
+  processVideoEmbeds(rootEl);
+  initReaderReveal(rootEl);
+}
+
+// --- LOG CONTENT SCROLL REVEAL ---
+// Fades/slides in each block of a log's rendered markdown (paragraphs,
+// headings, images, video embeds, lists, quotes) as you scroll through it.
+// Runs fresh every time a log is opened since the content is swapped in.
+// Uses the same .pop-in/.pop-in-visible system as the rest of the site.
+function initReaderReveal(rootEl) {
+    if (!rootEl) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (typeof IntersectionObserver === 'undefined') return;
+
+    const body = rootEl.querySelector ? rootEl.querySelector('.reader-body') : null;
+    if (!body) return;
+
+    const blocks = body.querySelectorAll(
+        'p, h1, h2, h3, h4, blockquote, ul, ol, .video-embed-wrap, img, hr, table'
+    );
+    if (!blocks.length) return;
+
+    const observer = new IntersectionObserver((entries) => {
+        const visible = entries.filter(e => e.isIntersecting);
+        visible.forEach((entry, i) => {
+            entry.target.style.setProperty('--pop-delay', `${Math.min(i * 45, 300)}ms`);
+            entry.target.classList.add('pop-in-visible');
+            observer.unobserve(entry.target);
+        });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    blocks.forEach(el => {
+        el.classList.add('pop-in');
+        observer.observe(el);
+    });
+}
+
+// --- LOCATION MAP (Leaflet, CartoDB Dark Matter tiles) ---
+// Assumption: centered on Kyoto, Japan, matching the KUINEP study-abroad
+// dates on the Education card. Update KYOTO_COORDS / the caption text below
+// if you want it to point somewhere else.
+function initLocationMap() {
+    const mapEl = document.getElementById('location-map');
+    if (!mapEl || typeof L === 'undefined') return;
+    if (mapEl.dataset.initialized === 'true') return;
+
+    const COORDS = [35.0116, 135.7681]; // Kyoto, Japan
+
+    const map = L.map(mapEl, {
+        center: COORDS,
+        zoom: 10,
+        scrollWheelZoom: false,
+        zoomControl: true
+    });
+
+    // Stamen tiles are now hosted by Stadia Maps. Stadia's free tier works
+    // out of the box on localhost, but for a live domain (tlee06.me) you
+    // need to add that domain in your Stadia Maps dashboard (free,
+    // https://client.stadiamaps.com) — or append ?api_key=YOUR_KEY to the
+    // URL below. Without one of those, deployed tiles will show a
+    // "no longer available" placeholder instead of the map.
+    L.tileLayer('https://tiles.stadiamaps.com/tiles/stamen_toner_lite/{z}/{x}/{y}{r}.png', {
+        maxZoom: 20,
+        attribution: '&copy; <a href="https://stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://stamen.com/" target="_blank">Stamen Design</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>'
+    }).addTo(map);
+
+    L.circleMarker(COORDS, {
+        radius: 7,
+        weight: 2,
+        color: '#ffffff',
+        fillColor: '#EE964B',
+        fillOpacity: 1
+    }).addTo(map);
+
+    mapEl.dataset.initialized = 'true';
 }
 
 /**
@@ -707,7 +899,7 @@ window.addEventListener('load', () => {
         setTimeout(() => {
             startThreeSynchronizedTyping(
                 typedName,
-                ['tlee', 'トリー', '智坦'],
+                ['tlee', 'ティー・リー', '明宇'],
                 typedGreeting,
                 ['Hi!', 'こんにちは!', '你好!'],
                 typedFlags,
@@ -730,6 +922,9 @@ window.addEventListener('load', () => {
 
     loadWeeklyLogs();
     loadGitHubProjects('tmlee06');
+    initLocationMap();
+    initPopInAnimation();
+    initCertScroll();
 
     const profileImage = document.getElementById('profile-image');
     const profileModal = document.getElementById('profile-modal');

@@ -46,15 +46,78 @@
       { "filename": "Week 10 - ２０２６年０6月２２日", "path": "logs/京都大学２０２６年/week-10.md", "date": "2026-06-22" },
       { "filename": "Week 11 - ２０２６年０6月２９日", "path": "logs/京都大学２０２６年/week-11.md", "date": "2026-06-29"},
       { "filename": "Week 12 - ２０２６年０７月０５日", "path": "logs/京都大学２０２６年/week-12.md", "date": "2026-07-05"},
-      { "filename": "Week 13 - ２０２６年０７月１２日", "path": "logs/京都大学２０２６年/week-13.md", "date": "2026-07-12"}
+      { "filename": "Week 13 - ２０２６年０７月１２日", "path": "logs/京都大学２０２６年/week-13.md", "date": "2026-07-12"},
+      { "filename": "Week 14 - ２０２６年０７月１９日", "path": "logs/京都大学２０２６年/week-14-15.md", "date": "2026-07-19"}
+
     ]
   },
-  {
+{
     "title": "Travel",
-    "logs": [
+    "folders": [
+      {
+        "title": "North America",
+        "folders": [
+          {
+            "title": "United States of America (USA 🇺🇸)",
+            "logs": [
+              {  }
+            ]
+          },
+          {
+            "title": "Canada (CAN 🇨🇦)",
+            "folders": [
+              {
+                "title": "Toronto, Ontario",
+                "logs": [
+                  { "filename": "Toronto, Ontario", "path": "logs/Travel/North America/Canada/toronto.md", "date": "2025-09-05" }
+                ]
+              }
+            ],
+            "logs": [
+              { "filename": "Calgary, Alberta", "path": "logs/Travel/North America/Canada/calgary.md", "date": "2019-04-25 - 04-29" },
+              { "filename": "Vancouver, British Columbia", "path": "logs/Travel/North America/Canada/vancouver.md", "date": "2017-07-23, 2018-12-30 - 12-31" }
+            ]
+          }
+        ]
+      },
+{
+  "title": "Asia",
+  "folders": [
+    {
+      "title": "China (中國 🇨🇳)",
+      "logs": [{ 
+        }]
+    },
+    {
+      "title": "Hong Kong (香港 🇭🇰)",
+      "logs": [
+        { 
+        }
+      ]
+    },
+    {
+      "title": "Japan (日本 🇯🇵)",
+      "logs": [
+        {  }
+      ]
+    },
+    {
+      "title": "Taiwan (台灣 🇹🇼)",
+      "logs": [
+        { }
+      ]
+    },
+    {
+      "title": "South Korea (한국 🇰🇷)",
+      "logs": [
+        { }
+      ]
+    }
+  ]
+}
     ]
   },
-  {
+{
     "title": "Reads",
     "logs": [
       { "filename": "2026 Reading List", "path": "logs/Reads/2026reads.md" }
@@ -76,4 +139,4 @@
       { "filename": "The Parlay Problem", "path": "logs/Essays/The_Parlay_Problem.md", "date": "2024-07-29" }    
     ]
   }
-]
+  ]

@@ -1,14 +1,45 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>Tristan Lee</title>
-    <script type="text/javascript">
-      // SPA Routing Hack for GitHub Pages
-      var l = window.location;
-      l.replace(l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') + l.pathname.split('/').slice(0, 1).join('/') + '/?p=' + l.pathname.slice(1).replace(/&/g, '~and~') + (l.search ? '&q=' + l.search.slice(1).replace(/&/g, '~and~') : '') + l.hash);
-    </script>
-  </head>
-  <body>
-  </body>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>tlee — redirecting…</title>
+<meta name="robots" content="noindex">
+<script>
+    // Maps pretty paths (tlee06.me/logs, tlee06.me/education, ...) to the
+    // real file + section on the site. Add new routes here as new sections
+    // get added — everything else falls back to the homepage.
+    var ROUTES = {
+        ""                 : "index.html",
+        "home"              : "index.html#home",
+        "about"             : "index.html#about",
+        "goals"             : "index.html#goals",
+        "experience"        : "index.html#experience",
+        "education"         : "index.html#education",
+        "current-projects"  : "index.html#current-projects",
+        "team-projects"     : "index.html#current-projects",
+        "projects"          : "index.html#projects",
+        "contact"           : "index.html#contact",
+        "logs"              : "logs.html",
+        "log"               : "logs.html"
+    };
+
+    // Normalize: strip leading/trailing slashes, lowercase, drop any query/hash
+    var path = window.location.pathname
+        .replace(/^\/+|\/+$/g, "")
+        .toLowerCase();
+
+    // If the URL has multiple segments (e.g. /logs/some-entry), only look
+    // at the first segment for routing purposes.
+    var firstSegment = path.split("/")[0];
+
+    var destination = ROUTES.hasOwnProperty(firstSegment)
+        ? ROUTES[firstSegment]
+        : "index.html";
+
+    window.location.replace(destination + window.location.search);
+</script>
+</head>
+<body>
+    <p>Redirecting… if you're not taken there automatically, <a href="index.html">click here</a>.</p>
+</body>
 </html>
