@@ -28,15 +28,27 @@
         .replace(/^\/+|\/+$/g, "")
         .toLowerCase();
 
-    // If the URL has multiple segments (e.g. /logs/some-entry), only look
-    // at the first segment for routing purposes.
-    var firstSegment = path.split("/")[0];
+    // If the URL has multiple segments (e.g. /logs/travel), only look at
+    // the first segment for file routing — but forward a known second
+    // segment as a #logs-<category> hash so /logs/travel still lands
+    // directly on that category's card in the Logs Wayfinder.
+    var segments = path.split("/");
+    var firstSegment = segments[0];
+    var secondSegment = segments[1];
+
+    var LOG_CATEGORY_SLUGS = ["ucsd", "kyoto", "travel", "reads", "reflections", "thoughts"];
 
     var destination = ROUTES.hasOwnProperty(firstSegment)
         ? ROUTES[firstSegment]
         : "index.html";
 
-    window.location.replace(destination + window.location.search);
+    var hash = "";
+    if ((firstSegment === "logs" || firstSegment === "log") && secondSegment) {
+        var normalized = secondSegment.toLowerCase();
+        if (LOG_CATEGORY_SLUGS.indexOf(normalized) !== -1) hash = "#logs-" + normalized;
+    }
+
+    window.location.replace(destination + window.location.search + hash);
 </script>
 </head>
 <body>

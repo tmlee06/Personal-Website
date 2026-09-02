@@ -507,11 +507,11 @@ body.theme-light .theme-toggle:hover {
     flex-direction: column;
     align-items: center;
     flex-shrink: 0;
+    gap: 12px; /* replaces the individual top/bottom margins that used to be on each child below */
 }
 
 .profile-image-wrapper {
     position: relative;
-    margin-bottom: 1rem;
 }
 
 .bio-image-container img,
@@ -680,7 +680,6 @@ body.theme-light .theme-toggle:hover {
     display: flex;
     flex-direction: column;
     gap: 0.75rem;
-    margin-top: 1rem;
     width: 100%;
 }
 
@@ -719,9 +718,9 @@ body.theme-light .theme-toggle:hover {
 /* Location map */
 .location-map {
     width: 100%;
-    height: 200px;
-    margin-top: 0.5rem;
-    border-radius: 16px;
+    aspect-ratio: 16 / 9;
+    max-height: 180px;
+    border-radius: 12px;
     overflow: hidden;
     background: #1a1a1a;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
@@ -788,7 +787,6 @@ body.theme-light .location-map {
     opacity: 0.55;
     color: #fffeff;
     text-align: center;
-    margin-top: 1rem;
     font-family: 'IBM Plex Sans', sans-serif;
 }
 
@@ -1549,6 +1547,238 @@ body.theme-light .location-map {
     letter-spacing: 0.05em;
 }
 
+/* ============================================================
+   LOGS WAYFINDER — category card grid, with an inline drawer
+   (not a modal) for browsing into a category's folders/logs.
+   Replaces the old <details> accordion tree from renderLogs().
+   Each category tile keeps a fixed jewel-tone gradient in both
+   themes (verified >=7:1 white-text contrast on every gradient
+   stop); only the surrounding chrome (drawer, breadcrumb, entry
+   rows) follows the site's light/dark theme.
+   ============================================================ */
+.logs-wayfinder {
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    margin-top: 1.5rem;
+    width: 100%;
+}
+
+.log-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 18px;
+}
+
+.log-tile {
+    position: relative;
+    text-align: left;
+    font: inherit;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    padding: 20px 18px 18px;
+    min-height: 186px;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(150deg, var(--a), var(--b));
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.3);
+    transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.18s ease;
+}
+
+.log-tile:hover { transform: translateY(-4px); box-shadow: 0 16px 34px rgba(0, 0, 0, 0.4); }
+.log-tile:focus-visible { transform: translateY(-4px); outline: 3px solid #EE964B; outline-offset: 2px; }
+.log-tile[aria-expanded="true"] { box-shadow: 0 16px 34px rgba(0, 0, 0, 0.4), 0 0 0 2px rgba(255, 255, 255, 0.8); }
+.log-tile:active { transform: translateY(-1px) scale(0.99); }
+
+.tile-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+
+.tile-icon {
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.16);
+    font-size: 1rem;
+    flex: 0 0 auto;
+}
+
+.tile-count {
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: rgba(255, 255, 255, 0.92);
+    background: rgba(0, 0, 0, 0.22);
+    padding: 5px 9px;
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+}
+
+.tile-title {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-weight: 700;
+    font-size: 1.28rem;
+    line-height: 1.2;
+    margin: 16px 0 6px;
+}
+
+.tile-desc {
+    font-size: 0.86rem;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.92);
+    margin: 0;
+    flex: 1;
+}
+
+.tile-cta {
+    margin-top: 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 0.82rem;
+    font-weight: 700;
+}
+
+.tile-cta i { font-size: 0.75rem; transition: transform 0.15s ease; }
+.log-tile:hover .tile-cta i, .log-tile:focus-visible .tile-cta i { transform: translateX(4px); }
+
+/* Drawer — expands inline below the grid, never a modal, so back/close
+   is always just "scroll up", not "find the X". */
+.drawer-slot { width: 100%; }
+
+.log-drawer {
+    --pulse-rgb: 238, 150, 75;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.3);
+    padding: 24px clamp(16px, 4vw, 30px) 26px;
+    animation: logDrawerIn 0.28s cubic-bezier(0.2, 0.8, 0.3, 1);
+}
+
+.log-drawer.pulse { animation: logDrawerIn 0.28s cubic-bezier(0.2, 0.8, 0.3, 1), logDrawerPulse 1.1s ease 0.15s 1; }
+
+@keyframes logDrawerIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes logDrawerPulse {
+    0% { box-shadow: 0 14px 30px rgba(0, 0, 0, 0.3), 0 0 0 0 rgba(var(--pulse-rgb), 0.5); }
+    40% { box-shadow: 0 14px 30px rgba(0, 0, 0, 0.3), 0 0 0 10px rgba(var(--pulse-rgb), 0); }
+    100% { box-shadow: 0 14px 30px rgba(0, 0, 0, 0.3), 0 0 0 0 rgba(var(--pulse-rgb), 0); }
+}
+
+.drawer-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; margin-bottom: 6px; }
+
+.drawer-eyebrow {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.5);
+    margin: 0 0 4px;
+}
+
+.drawer-head h2 { font-family: 'IBM Plex Sans', sans-serif; font-size: 1.5rem; color: #fff; margin: 0; }
+
+.drawer-close {
+    width: 48px;
+    height: 48px;
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    color: #fff;
+    cursor: pointer;
+    font-size: 1.05rem;
+}
+
+.drawer-close:hover { background: #EE964B; border-color: #EE964B; color: #241202; }
+
+.breadcrumb {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+    margin: 18px 0;
+    padding: 0;
+    font-size: 0.87rem;
+}
+
+.breadcrumb li { display: flex; align-items: center; gap: 6px; }
+.breadcrumb li:not(:first-child)::before { content: "/"; color: rgba(255, 255, 255, 0.3); }
+
+.breadcrumb button {
+    font: inherit;
+    font-size: 0.87rem;
+    font-weight: 600;
+    color: #EE964B;
+    background: none;
+    border: none;
+    padding: 10px 6px;
+    min-height: 44px;
+    cursor: pointer;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+}
+
+.breadcrumb li.current { color: #fff; font-weight: 700; }
+.breadcrumb li.current span { padding: 10px 6px; }
+
+.entry-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; }
+
+.entry-row {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-align: left;
+    font: inherit;
+    background: none;
+    border: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    padding: 15px 8px;
+    min-height: 56px;
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.entry-row:last-child { border-bottom: none; }
+.entry-row:hover { background: rgba(238, 150, 75, 0.1); }
+.entry-row[disabled] { cursor: default; opacity: 0.5; }
+.entry-row[disabled]:hover { background: none; }
+
+.entry-icon { width: 20px; text-align: center; flex: 0 0 auto; color: rgba(255, 255, 255, 0.4); }
+.entry-row.is-folder .entry-icon { color: #EE964B; }
+
+.entry-main { flex: 1; min-width: 0; }
+.entry-title { font-weight: 600; font-size: 0.95rem; color: #fff; }
+.entry-date { font-size: 0.76rem; color: rgba(255, 255, 255, 0.4); margin-top: 2px; font-variant-numeric: tabular-nums; }
+
+.entry-cue { font-size: 0.8rem; font-weight: 700; color: #EE964B; white-space: nowrap; flex: 0 0 auto; }
+.entry-row[disabled] .entry-cue { color: rgba(255, 255, 255, 0.4); font-weight: 500; }
+.entry-empty { padding: 20px 8px; color: rgba(255, 255, 255, 0.5); font-size: 0.9rem; }
+
+.drawer-close:focus-visible,
+.breadcrumb button:focus-visible,
+.entry-row:focus-visible {
+    outline: 2px solid #EE964B;
+    outline-offset: 2px;
+    background: rgba(238, 150, 75, 0.1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .log-tile, .log-drawer, .tile-cta i { transition: none !important; animation: none !important; }
+}
+
+@media (max-width: 560px) {
+    .log-grid { grid-template-columns: 1fr; }
+}
+
 /* Fullscreen reader */
 .fullscreen-reader {
     position: fixed;
@@ -1573,27 +1803,40 @@ body.theme-light .location-map {
     position: fixed;
     top: 40px;
     left: 40px;
+    right: 40px;
     z-index: 10000;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
+/* Same translucent-pill treatment as .translate-quick-btn (see the
+   translate section below) — Back/Previous/Next now read as the same
+   family of top-bar chip buttons instead of a separate solid-black style. */
 .back-link {
-    background: #000;
+    background: rgba(255, 255, 255, 0.06);
     color: #fff;
-    border: 1px solid #333;
+    border: 1px solid rgba(255, 255, 255, 0.15);
     padding: 10px 18px;
     font-size: 0.7rem;
     font-weight: 700;
     letter-spacing: 0.05em;
     cursor: pointer;
-    border-radius: 2px;
+    border-radius: 20px;
     display: flex;
     align-items: center;
     gap: 10px;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
 .back-link:hover {
-    background: #fff;
-    color: #000;
+    background: rgba(255, 255, 255, 0.14);
+    border-color: rgba(255, 255, 255, 0.35);
+}
+
+.back-link:focus-visible {
+    outline: 2px solid #EE964B;
+    outline-offset: 2px;
 }
 
 .scroll-top {
@@ -1627,6 +1870,65 @@ body.theme-light .location-map {
 .reader-body p {
     margin-bottom: 1.5rem;
     text-align: left !important;
+}
+
+/* Lists (checklists, bucket-list items, etc). Overrides the default UA
+   spacing, which otherwise stacks list + list-item margins into large gaps
+   between entries. */
+.reader-body ul,
+.reader-body ol {
+    margin: 0 0 1.4rem;
+    padding-left: 1.4rem;
+}
+
+.reader-body li {
+    margin: 0 0 0.4rem;
+}
+
+.reader-body li:last-child {
+    margin-bottom: 0;
+}
+
+/* A nested list directly under a list item indents further under its
+   parent instead of sitting almost flush with it. Plain (non-checklist)
+   nested items read as a note/caption on the parent (e.g. "Born there"
+   under "United States"), so those get de-bulleted and muted; nested
+   checklists (e.g. the Vietnam route sub-stops) keep their checkboxes. */
+.reader-body li > ul,
+.reader-body li > ol {
+    margin: 0.3rem 0 0.6rem 1.1rem;
+    padding-left: 1.4rem;
+}
+
+.reader-body li ul > li:not(:has(> input[type="checkbox"])) {
+    position: relative;
+    list-style: none;
+    margin-bottom: 0.25rem;
+    font-size: 0.85em;
+    font-style: italic;
+    opacity: 0.65;
+    padding-left: 0;
+}
+
+.reader-body li ul > li:not(:has(> input[type="checkbox"]))::before {
+    content: "–";
+    position: absolute;
+    left: -1.1rem;
+}
+
+/* GFM task list checkboxes (- [ ] / - [x]). marked emits a bare
+   <input type="checkbox"> as the first child with no wrapper class, so
+   detect the item by content rather than a class name. */
+.reader-body li:has(> input[type="checkbox"]) {
+    list-style: none;
+    margin-left: -1.4rem;
+    padding-left: 1.4rem;
+}
+
+.reader-body li > input[type="checkbox"] {
+    margin: 0 0.6em 0 0;
+    transform: translateY(1px);
+    accent-color: var(--km-link, #7dd3fc);
 }
 
 /* Responsive video embeds (YouTube/Vimeo/etc pasted into log markdown) */
@@ -1669,11 +1971,24 @@ body.theme-light .location-map {
     font-size: 0.8rem;
 }
 
-.reader-theme-toggle {
+/* Groups the theme toggle with the translate pills so both sit together,
+   fixed at the top-right corner, above the article content but never
+   overlapping it (reader-content's top margin starts well below here). */
+.reader-top-controls {
     position: fixed;
     top: 40px;
     right: 40px;
     z-index: 10001;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 14px;
+    max-width: calc(100vw - 80px);
+}
+
+.reader-theme-toggle {
+    position: static;
 }
 
 /* Contact */
@@ -1893,14 +2208,12 @@ body.theme-light .location-map {
     .left-content-column {
         flex: 1 1 760px !important;
         max-width: 980px !important;
-        padding-top: 0.75rem !important;
+        padding-top: 24px !important; /* matches .home-side-column so both columns share one top edge */
     }
 
-    .bio-image-container {
-        flex: 0 0 350px !important;
-        width: 350px !important;
-        margin-top: 2.35rem !important;
-    }
+    /* .bio-image-container's own sizing/spacing now lives entirely in its
+       base rule + .home-side-column (its parent) — no per-breakpoint
+       width/margin override needed here. */
 
     .bio-image-container img,
     .profile-image-wrapper img {
@@ -1909,14 +2222,13 @@ body.theme-light .location-map {
 
     .profile-name {
         font-size: 38px !important;
-        margin-top: 0.35rem !important;
-        margin-bottom: 0.45rem !important;
+        margin: 0 !important; /* spacing now comes from .bio-image-container's gap */
     }
 
     .profile-title {
         font-size: 13.5px !important;
         line-height: 1.6 !important;
-        margin-bottom: 1.25rem !important;
+        margin: 0 !important;
     }
 
     .bio-text {
@@ -1970,7 +2282,6 @@ body.theme-light .location-map {
     }
 
     .resume-buttons {
-        margin-top: 0.9rem !important;
         gap: 0.65rem !important;
     }
 
@@ -2179,10 +2490,93 @@ body.theme-light .folder-title span {
     color: var(--km-text) !important;
 }
 
+/* .work-card-link:hover .current-project-title (dark-mode base rule,
+   further up the file) forces #ffffff on hover with 3 class selectors of
+   specificity — higher than the plain-state override just above, which
+   only has 2. Without a hover-specific override here, hovering a Current
+   Projects card in light mode made the title vanish (white text on the
+   card's light hover background). Same fix for dark-foreground, which
+   drives this same "needs dark text" state while scrolling past a
+   light-background section in dark theme. */
+body.theme-light .work-card-link:hover .current-project-title,
+body.dark-foreground .work-card-link:hover .current-project-title {
+    color: var(--km-text) !important;
+}
+
 body.theme-light .log-tag {
     background: rgba(38, 36, 46, 0.08) !important;
     color: var(--km-muted) !important;
 }
+
+/* Logs wayfinder — light mode. The six tile gradients stay fixed
+   across themes (they carry their own contrast-verified white text);
+   only the drawer chrome around them follows the site's cream palette.
+   That "stays white" intent was never actually enforced against
+   `body.theme-light .content-section :is(h1,h2,h3,...,span,...)` further
+   up — a broad rule that forces dark text on every heading/paragraph/span
+   in a content section, .log-tile's included. It has 2 classes + 1 type;
+   these use 3 classes (body.theme-light + .log-tile/.tile-* + the
+   element), which outranks it, so the tiles' title/description/count/CTA
+   go back to their intended white/near-white on the dark gradients
+   instead of unreadable dark-on-dark. */
+body.theme-light .log-tile,
+body.theme-light .tile-title,
+body.theme-light .tile-cta,
+body.theme-light .tile-icon {
+    color: #fff !important;
+}
+
+body.theme-light .tile-desc,
+body.theme-light .tile-count {
+    color: rgba(255, 255, 255, 0.92) !important;
+}
+
+body.theme-light .log-drawer {
+    background: var(--km-card-strong) !important;
+    border-color: var(--km-border) !important;
+    box-shadow: 0 12px 28px rgba(38, 36, 46, 0.08) !important;
+}
+
+body.theme-light .drawer-eyebrow { color: var(--km-muted) !important; }
+body.theme-light .drawer-head h2 { color: var(--km-text) !important; }
+
+body.theme-light .drawer-close {
+    background: var(--km-card) !important;
+    border-color: var(--km-border) !important;
+    color: var(--km-text) !important;
+}
+body.theme-light .drawer-close:hover {
+    background: var(--km-link) !important;
+    border-color: var(--km-link) !important;
+    color: #ffffff !important;
+}
+
+body.theme-light .breadcrumb li:not(:first-child)::before { color: var(--km-muted) !important; }
+body.theme-light .breadcrumb button { color: var(--km-link) !important; }
+body.theme-light .breadcrumb li.current { color: var(--km-text) !important; }
+
+body.theme-light .entry-row { color: var(--km-text) !important; border-color: var(--km-border) !important; }
+body.theme-light .entry-row:hover { background: var(--km-link-soft, rgba(15, 114, 181, 0.08)) !important; }
+body.theme-light .entry-icon { color: var(--km-muted) !important; }
+body.theme-light .entry-row.is-folder .entry-icon { color: var(--km-link) !important; }
+body.theme-light .entry-title { color: var(--km-text) !important; }
+body.theme-light .entry-date { color: var(--km-muted) !important; }
+body.theme-light .entry-cue { color: var(--km-link) !important; }
+body.theme-light .entry-row[disabled] .entry-cue { color: var(--km-muted) !important; }
+body.theme-light .entry-empty { color: var(--km-muted) !important; }
+
+body.theme-light .drawer-close:focus-visible,
+body.theme-light .breadcrumb button:focus-visible,
+body.theme-light .entry-row:focus-visible {
+    outline-color: var(--km-link) !important;
+    background: rgba(15, 114, 181, 0.08) !important;
+}
+
+body.theme-light .log-tile:focus-visible {
+    outline-color: var(--km-link) !important;
+}
+
+body.theme-light .log-drawer { --pulse-rgb: 15, 114, 181; }
 
 body.theme-light .resume-button {
     color: var(--km-text) !important;
@@ -2211,19 +2605,19 @@ body.theme-light .reader-body h3,
 body.theme-light .reader-body h4,
 body.theme-light .reader-body span,
 body.theme-light .reader-body strong,
-body.theme-light .reader-body em {
+body.theme-light .reader-body em,
+body.theme-light .reader-body figcaption {
     color: var(--km-text) !important;
 }
 
 body.theme-light .back-link {
-    background: #ffffff !important;
+    background: var(--km-card) !important;
+    border-color: var(--km-border) !important;
     color: var(--km-text) !important;
-    border-color: rgba(38, 36, 46, 0.18) !important;
 }
 
 body.theme-light .back-link:hover {
-    background: var(--km-text) !important;
-    color: #ffffff !important;
+    background: var(--km-card-strong) !important;
 }
 
 body.theme-light .scroll-top {
@@ -2408,13 +2802,11 @@ body.dark-foreground .current-project-logo * {
     }
 
     .bio-section {
-        flex-direction: column-reverse !important;
+        /* flex-direction was fought here between column-reverse (this rule)
+           and column (the higher-specificity #home .bio-section below) —
+           the ID rule always won, making the reverse dead code. Order is
+           now handled cleanly by .home-side-column { order: -1 } instead. */
         gap: 2rem;
-    }
-
-    .bio-image-container {
-        align-self: center;
-        margin: 0 auto !important;
     }
 
     body.theme-light .sidebar,
@@ -2473,16 +2865,11 @@ body.dark-foreground .current-project-logo * {
         padding-right: 1.25rem !important;
     }
 
-    #home .bio-image-container {
-        order: -1 !important;
-        width: min(100%, 420px) !important;
-        max-width: 420px !important;
-        flex: 0 1 auto !important;
-        margin: 7rem auto 2rem auto !important;
-        padding: 0 !important;
-        align-self: center !important;
-        text-align: center !important;
-    }
+    /* This used to force .bio-image-container to the top of its own flex
+       row with order:-1 and a 7rem top margin — from before it was nested
+       inside .home-side-column. That's the real source of the reported
+       112px of dead space; superseded by .home-side-column's own layout
+       and its order:-1 at <=768px specifically. */
 
     #home .profile-image-wrapper,
     #home .profile-image-wrapper img {
@@ -2710,40 +3097,16 @@ body.dark-foreground .current-project-logo * {
 
 }
 
-/* Tablet */
-@media (max-width: 1150px) and (min-width: 1051px) {
-    .bio-section {
-        flex-direction: column-reverse !important;
-        gap: 2.5rem;
-        align-items: center;
-    }
-
-    .left-content-column {
-        max-width: 100% !important;
-        width: 100%;
-    }
-
-    .bio-image-container {
-        width: 100% !important;
-        max-width: 420px !important;
-        margin: 0 auto 2rem auto !important;
-        align-self: center;
-    }
-}
+/* The old "tablet" 1051-1150px sliver used to reverse .bio-section into a
+   stacked, profile-card-first layout — a narrow, inconsistent special case
+   nothing else in the responsive system matched (768-1050px showed the
+   normal order via the #home .bio-section override above; >1150px was
+   never reversed either). Removed so 1051-1150px behaves like the rest of
+   the >=1051px desktop range: normal side-by-side order, sized by
+   .home-side-column/.left-content-column like everywhere else in it. */
 
 /* Medium mobile */
 @media (max-width: 900px) {
-    .bio-image-container {
-        width: 100% !important;
-        max-width: 320px !important;
-        margin: 0 auto 2rem auto !important;
-        padding: 0 1rem;
-    }
-
-    .profile-image-wrapper {
-        margin: 0 auto 1rem !important;
-    }
-
     .profile-image-wrapper img {
         width: min(220px, 100%);
     }
@@ -2810,7 +3173,7 @@ body.dark-foreground .current-project-logo * {
 
 /* Reader mobile */
 @media (max-width: 768px) {
-    .reader-theme-toggle {
+    .reader-top-controls {
         top: 20px;
         right: 20px;
     }
@@ -3253,7 +3616,10 @@ body:has(.fullscreen-reader) .fullscreen-reader {
 /* Make log reader nicer on smaller screens */
 @media (max-width: 700px) {
     .reader-content {
-        margin: 100px auto 40px auto !important;
+        /* Extra top margin vs desktop's 120px: with Back/Previous/Next all
+           visible, the pinned-nav can wrap to two rows on narrow phones —
+           leave room so it never overlaps the header. */
+        margin: 140px auto 40px auto !important;
         padding: 0 24px !important;
         max-width: 100% !important;
     }
@@ -3271,11 +3637,22 @@ body:has(.fullscreen-reader) .fullscreen-reader {
     .pinned-nav {
         top: 20px !important;
         left: 20px !important;
+        right: 20px !important;
+        flex-wrap: wrap;
+        gap: 8px;
     }
 
-    .reader-theme-toggle {
+    .pinned-nav .back-link {
+        padding: 9px 14px;
+        font-size: 0.65rem;
+        gap: 7px;
+    }
+
+    .reader-top-controls {
         top: 20px !important;
         right: 20px !important;
+        gap: 8px !important;
+        max-width: calc(100vw - 40px) !important;
     }
 }
 /* Mobile Optimization Upgrades */
@@ -3299,14 +3676,6 @@ body:has(.fullscreen-reader) .fullscreen-reader {
         flex: 1 1 100% !important;
         max-width: 100% !important;
         width: 100% !important;
-    }
-
-    /* 3. Center and scale the profile layout box properly */
-    .bio-image-container {
-        width: 100% !important;
-        max-width: 320px !important;
-        margin: 1.5rem auto 0 auto !important;
-        flex: none !important;
     }
 
     .profile-image-wrapper img {
@@ -3366,4 +3735,577 @@ body:has(.fullscreen-reader) .fullscreen-reader {
         grid-template-columns: 1fr !important;
         gap: 1.5rem !important;
     }
+}
+/* ============================================================
+   PHOTO HERO — adaptive gradient overlay + glassmorphism card, for any
+   section with a background photo (e.g. a future La Jolla / Torrey Pines
+   shot). Nothing on the site uses a photographic background yet, so this
+   isn't wired into any section — it's a ready-to-use drop-in. To use it:
+
+     <section class="photo-hero" style="background-image:url('Assets/la-jolla.jpg')">
+       <div class="photo-hero__overlay">
+         <div class="glass-card">
+           <h2>Your heading</h2>
+           <p>Your copy.</p>
+         </div>
+       </div>
+     </section>
+
+   The overlay is deliberately heavy (78–94% opaque) so contrast holds
+   regardless of what's actually in the photo — dark mode gets a near-black
+   scrim under white text, light mode a bright frosted scrim under dark
+   text, both re-verified >=7:1 against worst-case photo content, not just
+   against an empty background. Both follow the site's existing
+   body.theme-light toggle and its --bg-fade-duration crossfade automatically.
+   ============================================================ */
+.photo-hero {
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    isolation: isolate;
+    overflow: hidden;
+}
+
+.photo-hero__overlay {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(24px, 5vw, 64px);
+    background: linear-gradient(180deg, rgba(18, 18, 24, 0.78), rgba(18, 18, 24, 0.92));
+    transition: background var(--bg-fade-duration) ease;
+}
+
+body.theme-light .photo-hero__overlay {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.86), rgba(245, 247, 250, 0.94));
+}
+
+.glass-card {
+    position: relative;
+    width: 100%;
+    max-width: 640px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 4px;
+    padding: clamp(20px, 4vw, 36px);
+    color: #ffffff;
+    box-shadow: 0 20px 44px rgba(0, 0, 0, 0.35);
+    transition: background-color var(--bg-fade-duration) ease,
+                border-color var(--bg-fade-duration) ease,
+                color var(--bg-fade-duration) ease;
+}
+
+body.theme-light .glass-card {
+    background: rgba(255, 255, 255, 0.62);
+    border-color: rgba(38, 36, 46, 0.14);
+    color: var(--km-text);
+    box-shadow: 0 20px 44px rgba(38, 36, 46, 0.12);
+}
+
+/* backdrop-filter is unsupported on very old browsers — fall back to a
+   fully opaque card so text never sits directly on an un-scrimmed photo. */
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .glass-card { background: rgba(20, 20, 26, 0.94); }
+    body.theme-light .glass-card { background: rgba(255, 255, 255, 0.94); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .photo-hero__overlay, .glass-card { transition: none !important; }
+}
+
+/* ============================================================
+   MESSAGE SECTION — personal manifesto quote between Home and About.
+   ============================================================ */
+.manifesto-quote {
+    margin: 0 auto;
+    max-width: 780px;
+    text-align: center;
+    border: none;
+    padding: 0;
+}
+
+.manifesto-mark {
+    display: block;
+    font-family: 'Shippori Mincho', serif;
+    font-size: clamp(3rem, 8vw, 5rem);
+    line-height: 1;
+    margin-bottom: 0.25rem;
+    color: rgba(255, 255, 255, 0.28);
+}
+
+.manifesto-line {
+    font-family: 'IBM Plex Sans', sans-serif;
+    line-height: 1.55;
+    margin: 0 0 1.5rem;
+    color: rgba(255, 255, 255, 0.95);
+}
+
+.manifesto-line:last-child { margin-bottom: 0; }
+
+.manifesto-line--lead {
+    font-size: clamp(1.4rem, 3vw, 2rem);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+}
+
+.manifesto-line--close {
+    font-size: clamp(1.05rem, 2vw, 1.3rem);
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.78);
+    text-wrap: balance;
+}
+
+body.theme-light .manifesto-mark { color: rgba(38, 36, 46, 0.22) !important; }
+body.theme-light .manifesto-line { color: var(--km-text) !important; }
+body.theme-light .manifesto-line--close { color: var(--km-muted) !important; }
+
+
+/* ============================================================
+   HIGHLIGHTS STRIP — small horizontal-scroll strip in the Current
+   section, same format as the certifications strip below (.cert-grid/
+   .cert-card): native momentum scroll + snap points, no dots/arrows/
+   autoplay, just a wheel-to-horizontal assist via initHorizontalScroll()
+   in script.js. Rotates a few highlights (travel photo, lab photos once
+   uploaded, the linked paper).
+   ============================================================ */
+.highlights-strip {
+    display: flex;
+    gap: 0.9rem;
+    max-width: min(720px, 100%);
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: 0.6rem;
+    scroll-snap-type: x proximity;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.25) transparent;
+}
+
+.highlights-strip::-webkit-scrollbar { height: 6px; }
+.highlights-strip::-webkit-scrollbar-track { background: transparent; }
+.highlights-strip::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.25); border-radius: 10px; }
+.highlights-strip::-webkit-scrollbar-thumb:hover { background: rgba(255, 255, 255, 0.4); }
+
+.highlights-card {
+    flex: 0 0 160px;
+    scroll-snap-align: start;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.3s ease, border-color 0.3s ease;
+}
+
+.highlights-card:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+}
+
+.highlights-card:active { transform: scale(0.988); }
+
+.highlights-card:focus-visible {
+    outline: 2px solid #EE964B;
+    outline-offset: 2px;
+}
+
+.highlights-media {
+    width: 100%;
+    height: 110px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.highlights-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.highlights-card--placeholder .highlights-media,
+.highlights-card--doc .highlights-media {
+    background: repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.04) 0 10px, rgba(255, 255, 255, 0.02) 10px 20px);
+}
+
+.highlights-card--placeholder .highlights-media {
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.2);
+}
+
+.highlights-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 0.95rem;
+}
+
+.highlights-caption {
+    padding: 0.65rem 0.75rem 0.8rem;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #fffeff;
+    line-height: 1.35;
+}
+
+.highlights-card--placeholder .highlights-caption,
+.highlights-card--doc .highlights-caption {
+    color: rgba(255, 255, 255, 0.65);
+    font-weight: 500;
+}
+
+body.theme-light .highlights-strip {
+    scrollbar-color: rgba(38, 36, 46, 0.3) transparent !important;
+}
+body.theme-light .highlights-strip::-webkit-scrollbar-thumb {
+    background: rgba(38, 36, 46, 0.3) !important;
+}
+
+body.theme-light .highlights-card {
+    background: var(--km-card) !important;
+    border-color: rgba(38, 36, 46, 0.12) !important;
+}
+
+body.theme-light .highlights-card:hover {
+    background: var(--km-card-strong) !important;
+    border-color: rgba(38, 36, 46, 0.22) !important;
+}
+
+body.theme-light .highlights-card--placeholder .highlights-media {
+    border-color: rgba(38, 36, 46, 0.2) !important;
+}
+
+body.theme-light .highlights-icon {
+    background: rgba(38, 36, 46, 0.08) !important;
+    color: var(--km-muted) !important;
+}
+
+body.theme-light .highlights-caption { color: var(--km-text) !important; }
+body.theme-light .highlights-card--placeholder .highlights-caption,
+body.theme-light .highlights-card--doc .highlights-caption {
+    color: var(--km-muted) !important;
+}
+
+/* ============================================================
+   SITE TRANSLATOR — Google's free client-side "Website Translator"
+   widget (no API key/server). Google injects a top banner iframe and
+   shoves the whole page down when a translation is active; both are
+   suppressed below so it behaves like a normal in-page control instead.
+   ============================================================ */
+.goog-te-banner-frame.skiptranslate { display: none !important; }
+body { top: 0px !important; }
+.goog-tooltip, .goog-tooltip:hover { display: none !important; }
+.goog-text-highlight { background: none !important; box-shadow: none !important; }
+
+.translate-wrap {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    margin-top: 0.75rem;
+}
+
+.translate-quick {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 4px;
+}
+
+.translate-quick-btn {
+    font: inherit;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #fff;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 20px;
+    padding: 8px 14px;
+    min-height: 40px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.translate-quick-btn:hover {
+    background: rgba(255, 255, 255, 0.14);
+    border-color: rgba(255, 255, 255, 0.35);
+}
+
+.translate-quick-btn:focus-visible {
+    outline: 2px solid #EE964B;
+    outline-offset: 2px;
+}
+
+body.theme-light .translate-quick-btn {
+    background: var(--km-card) !important;
+    border-color: var(--km-border) !important;
+    color: var(--km-text) !important;
+}
+
+body.theme-light .translate-quick-btn:hover {
+    background: var(--km-card-strong) !important;
+}
+
+/* Heads-up banner shown (in-language) only once a curated translation is
+   active — see showTranslationNotice() in script.js. */
+.translate-notice {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    max-width: 1520px;
+    margin: 1.25rem auto 0;
+    padding: 12px clamp(20px, 4vw, 40px);
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 10px;
+}
+
+.translate-notice p {
+    margin: 0;
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: #fff;
+    text-align: center;
+}
+
+.translate-notice-close {
+    flex-shrink: 0;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 1.3rem;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.translate-notice-close:hover { color: #fff; }
+.translate-notice-close:focus-visible { outline: 2px solid #EE964B; outline-offset: 2px; }
+
+body.theme-light .translate-notice {
+    background: var(--km-card) !important;
+    border-color: var(--km-border) !important;
+}
+body.theme-light .translate-notice p { color: var(--km-text) !important; }
+body.theme-light .translate-notice-close { color: var(--km-muted) !important; }
+body.theme-light .translate-notice-close:hover { color: var(--km-text) !important; }
+
+/* ============================================================
+   HOME RIGHT COLUMN — the timestamp/theme/translate controls and the
+   profile card now share one flex column (.home-side-column) instead of
+   the controls floating position:absolute over an independently-laid-out
+   card below. That's what was causing the misalignment on wide screens:
+   two different positioning systems (absolute-from-viewport vs
+   flex-content-relative) trying to occupy the same visual column.
+   Both this column and .left-content-column sit in the same
+   .bio-section flex row (align-items: flex-start, flex-wrap: wrap), so
+   they already share one top edge and collapse to a single column
+   together at whatever width they stop fitting side-by-side — no extra
+   breakpoint needed, and no separate one to keep in sync with it.
+   ============================================================ */
+.home-side-column {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    width: 100%;
+    max-width: 340px;
+    flex: 0 0 340px;
+    height: fit-content; /* never let an ancestor's own height stretch/clip this column */
+    padding-top: 24px;
+}
+
+/* #home carries .content-section's `contain: layout style paint` (see the
+   base rule) for render-performance isolation. `contain: paint` clips
+   anything that overflows the section's own box regardless of
+   `overflow: visible` — the two are independent. That's a real risk for
+   Home specifically now that its right column (controls + profile card +
+   map) is tall enough to occasionally exceed the section's computed
+   height, so paint containment is dropped here; layout/style containment
+   (the parts that don't clip) stay for the performance benefit. */
+#home {
+    contain: layout style;
+}
+
+@media (max-width: 1050px) {
+    /* Profile photo/name/title first, bio text and logs below — the
+       whole right column (it carries the header controls too) moves as
+       one unit rather than splitting it from the profile card. Matches
+       the #home .bio-section breakpoint (also max-width: 1050px) that
+       actually stacks the two columns into one, so the timestamp,
+       translate pills, and headshot show up first as soon as the layout
+       stacks at all instead of only below 768px, which used to leave a
+       769-1050px gap where bio text/logs still rendered first. */
+    .home-side-column { order: -1; }
+}
+
+.home-controls {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+    margin-bottom: 24px;
+    width: 100%;
+}
+
+.home-controls-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+
+/* Compact horizontal variant of .translate-wrap for sitting beside the
+   theme toggle instead of stacked in the sidebar. Only the three pill
+   buttons are shown here — Google's own dropdown is fully capable and
+   still does the actual translating, it's just redundant next to the
+   pills as a second, uglier way to pick the same two languages. */
+.translate-wrap--home {
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    margin-top: 0;
+    width: auto;
+}
+
+.translate-wrap--home .translate-label { display: none; }
+.translate-wrap--home .translate-quick { margin-bottom: 0; gap: 8px; }
+.translate-wrap--home #google_translate_element { display: none; }
+
+/* Same compact horizontal variant, for the log reader's top-of-page
+   control group (see .reader-top-controls). The reader never renders its
+   own #google_translate_element — the page underneath (logs.html's
+   sidebar) already has one and that's all the widget needs to attach to;
+   these pills just set the googtrans cookie and reload. */
+.translate-wrap--reader {
+    flex-direction: row;
+    align-items: center;
+    gap: 12px;
+    margin-top: 0;
+    width: auto;
+}
+
+.translate-wrap--reader .translate-quick { margin-bottom: 0; gap: 8px; }
+
+@media (max-width: 700px) {
+    /* Pills alone can outgrow the phone-width top bar next to the theme
+       toggle — shrink them to match .pinned-nav .back-link at this
+       breakpoint instead of wrapping onto their own row. */
+    .translate-wrap--reader .translate-quick-btn {
+        padding: 8px 11px;
+        font-size: 0.65rem;
+        min-height: 36px;
+    }
+}
+
+@media (max-width: 1050px) {
+    /* Matches .left-content-column's own full-width breakpoint (set in the
+       >=1051px block above and again at <=1050px) — these two used to be
+       out of sync (this was 900px), which is exactly what squeezed the
+       right column into a leftover 340px sliver anywhere from 900-1050px
+       while the left column had already gone full-width. */
+    .home-side-column {
+        max-width: 100%;
+        flex-basis: 100%;
+        padding-top: 0;
+    }
+
+    .home-controls-row { justify-content: flex-start; }
+}
+
+@media (max-width: 1050px) {
+    /* Compact single-row header bar: timestamp + toggle + language pills
+       all inline together, so the block that now sits above the hero
+       (via .home-side-column's order: -1, also flipped at 1050px) stays
+       short instead of using two stacked rows worth of vertical space. */
+    .home-controls {
+        flex-direction: row;
+        align-items: center;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        gap: 10px;
+        margin-bottom: 16px;
+    }
+
+    #timestamp {
+        font-size: 0.75rem !important;
+        text-align: left !important;
+    }
+}
+
+.translate-label {
+    margin: 0;
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+/* Google renders its own markup/classes inside #google_translate_element
+   once the widget loads — style it to sit quietly in the sidebar rather
+   than looking like a bolted-on third-party badge. */
+#google_translate_element .goog-te-gadget {
+    font-family: 'IBM Plex Sans', sans-serif !important;
+    font-size: 0.68rem !important;
+    color: rgba(255, 255, 255, 0.35) !important;
+}
+
+#google_translate_element .goog-te-gadget-simple {
+    background: rgba(255, 255, 255, 0.06) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    border-radius: 20px !important;
+    padding: 6px 12px !important;
+    display: inline-flex !important;
+    align-items: center;
+    cursor: pointer;
+}
+
+#google_translate_element .goog-te-gadget-simple:hover {
+    background: rgba(255, 255, 255, 0.12) !important;
+}
+
+#google_translate_element .goog-te-gadget-icon { display: none !important; }
+
+#google_translate_element .goog-te-menu-value,
+#google_translate_element .goog-te-menu-value span {
+    color: #ffffff !important;
+    font-size: 0.78rem !important;
+}
+
+body.theme-light .translate-label { color: var(--km-muted) !important; }
+
+body.theme-light #google_translate_element .goog-te-gadget { color: var(--km-muted) !important; }
+
+body.theme-light #google_translate_element .goog-te-gadget-simple {
+    background: var(--km-card) !important;
+    border-color: var(--km-border) !important;
+}
+
+body.theme-light #google_translate_element .goog-te-gadget-simple:hover {
+    background: var(--km-card-strong) !important;
+}
+
+body.theme-light #google_translate_element .goog-te-menu-value,
+body.theme-light #google_translate_element .goog-te-menu-value span {
+    color: var(--km-text) !important;
 }

@@ -53,6 +53,9 @@
   },
 {
     "title": "Travel",
+    "logs": [
+      { "filename": "My Bucket List Adventures", "path": "logs/Travel/bucketlist.md", "pinned": true }
+    ],
     "folders": [
       {
         "title": "North America",
@@ -69,7 +72,7 @@
               {
                 "title": "Toronto, Ontario",
                 "logs": [
-                  { "filename": "Toronto, Ontario", "path": "logs/Travel/North America/Canada/toronto.md", "date": "2025-09-05" }
+                  { "filename": "Toronto, Ontario", "path": "logs/Travel/North America/Canada/toronto.md", "date": "2025-09-05", "draft": true }
                 ]
               }
             ],
@@ -85,9 +88,47 @@
   "folders": [
     {
       "title": "China (中國 🇨🇳)",
-      "logs": [{ 
-        }]
-    },
+      "folders": [
+        {
+          "title": "Beijing, Beijing Municipality (北京)",
+          "logs": [
+            { "filename": "Arrival - Day 1", "path": "logs/Travel/Asia/China/Beijing/beijing1.md", "date": "2026-07-29" },
+            { "filename": "Forbidden City & Temple of Heaven - Day 2", "path": "logs/Travel/Asia/China/Beijing/beijing2.md", "date": "2026-07-30" },
+            { "filename": "Mutianyu Great Wall - Day 3", "path": "logs/Travel/Asia/China/Beijing/beijing3.md", "date": "2026-07-31" },
+            { "filename": "Tian'anmen Square, Beihei Park, Lama Temple, & CBD Mall - Day 4", "path": "logs/Travel/Asia/China/Beijing/beijing4.md", "date": "2026-08-01" },
+            { "filename": "Church, Summer Palace & Marco Polo Bridge - Day 5", "path": "logs/Travel/Asia/China/Beijing/beijing5.md", "date": "2026-08-02"}
+          ]
+        },
+        {
+          "title": "Chengdu, Sichuan Province (四川省成都)",
+          "logs": [
+            { "filename": "Panda Research Center - Day 1", "path": "logs/Travel/Asia/China/Chengdu/chengdu1.md", "date": "2026-08-03"},
+            { "filename": "People's Park & IFS - Day 2", "path": "logs/Travel/Asia/China/Chengdu/chengdu2.md", "date": "2026-08-04", "draft": true }
+          ]
+        },
+        {
+          "title": "Chongqing, Chongqing Municipality (重庆)",
+          "logs": [
+            { "filename": "Arrival - Day 1", "path": "logs/Travel/Asia/China/Chongqing/chongqing1.md", "date": "2026-08-04", "draft": true },
+            { "filename": "Cyberpunk - Day 2", "path": "logs/Travel/Asia/China/Chongqing/chongqing2.md", "date": "2026-08-05", "draft": true },
+            { "filename": "Grand Theatre - Day 3", "path": "logs/Travel/Asia/China/Chongqing/chongqing3.md", "date": "2026-08-06", "draft": true }
+          ]
+        },
+        {
+           "title": "Shanghai, Shanghai Municipality (上海)",
+          "logs": [
+            { "filename": "Arrival - Day 1", "path": "logs/Travel/Asia/China/Shanghai/shanghai1.md", "date": "2026-08-07", "draft": true },
+            { "filename": "Day 2", "path": "logs/Travel/Asia/China/Shanghai/shanghai2.md", "date": "2026-08-09", "draft": true },
+            { "filename": "Day 3", "path": "logs/Travel/Asia/China/Shanghai/shanghai3.md", "date": "2026-08-10", "draft": true },
+            { "filename": "Day 4", "path": "logs/Travel/Asia/China/Shanghai/shanghai4.md", "date": "2026-08-11", "draft": true }
+          ]
+        }
+      ],
+         "logs": [
+              { "filename": "Hangzhou, ", "path": "logs/Travel/Asia/China/hangzhou.md", "date": "2026-08-08", "draft": true },
+              { "filename": "Shenzhen, Guangdong (深圳)", "path": "logs/Travel/Asia/China/shenzhen.md", "date": "2026-05-16" }
+            ]
+          },
     {
       "title": "Hong Kong (香港 🇭🇰)",
       "logs": [
@@ -105,6 +146,12 @@
       "title": "Taiwan (台灣 🇹🇼)",
       "logs": [
         { }
+      ]
+    },
+    {
+      "title": "Singapore ( 🇸🇬)",
+      "logs": [
+        {"filename": "Airport, NUS, etc - Day 1", "path": "logs/Travel/Asia/Singapore/singapore1.md", "date": "2026-08-18", "draft": true }
       ]
     },
     {
@@ -130,13 +177,14 @@
     ]
   },
   {
-    "title": "Essays",
+    "title": "Thoughts & Papers",
     "logs": [
       { "filename": "Repeated Resilience", "path": "logs/Essays/Repeated_Resilience.md", "date": "2024-07-16" },
       { "filename": "The Rhetoric of Laziness", "path": "logs/Essays/laziness.md", "date": "2024-07-22" },
       { "filename": "Privilege and Perseverance", "path": "logs/Essays/Privilege_and_Perseverance.md", "date": "2024-07-25" },
       { "filename": "Unmasking Male Mental Health", "path": "logs/Essays/Unmasking_Male_Mental_Health.md", "date": "2024-07-31" },
-      { "filename": "The Parlay Problem", "path": "logs/Essays/The_Parlay_Problem.md", "date": "2024-07-29" }    
+      { "filename": "The Parlay Problem", "path": "logs/Essays/The_Parlay_Problem.md", "date": "2024-07-29" },
+      { "filename": "Playing in the In-Between: Ice, Identity, and the Long Way Home", "path": "logs/Essays/Playing_in_the_In-Between:_Ice,_Identity,_and_the_Long_Way_Home.md", "date": "2026-07-21" }
     ]
   }
   ]

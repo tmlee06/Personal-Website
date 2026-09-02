@@ -329,6 +329,42 @@ async function loadLogsData() {
 
 let __weeklyLogsLoaded = false;
 
+// Flat, in-visual-order list of every navigable log across all folders/sections.
+// Rebuilt whenever logs-index.json loads; powers the reader's Next button.
+let logNavList = [];
+
+function normalizeLogPath(path) {
+    try {
+        return decodeURIComponent(String(path || ""))
+            .replace(/^#log-/, "")
+            .replace(/^\/+/, "")
+            .replace(/\\/g, "/")
+            .normalize("NFC");
+    } catch (error) {
+        return String(path || "")
+            .replace(/^#log-/, "")
+            .replace(/^\/+/, "")
+            .replace(/\\/g, "/");
+    }
+}
+
+// Flattens the folder tree into the same order renderLogs draws it in:
+// a folder's own "pinned" logs first, then its subfolders, then its
+// remaining logs. Skips placeholder log entries that have no path/filename
+// yet, and entries flagged "draft" (written but not ready to publish —
+// e.g. an empty stub file).
+function flattenLogsInOrder(items) {
+    const result = [];
+    (items || []).forEach((item) => {
+        const logs = Array.isArray(item.logs) ? item.logs : [];
+        const isVisible = (log) => log && log.path && log.filename && !log.draft;
+        logs.filter((log) => isVisible(log) && log.pinned).forEach((log) => result.push(log));
+        if (item.folders) result.push(...flattenLogsInOrder(item.folders));
+        logs.filter((log) => isVisible(log) && !log.pinned).forEach((log) => result.push(log));
+    });
+    return result;
+}
+
 // Instagram embeds injected via innerHTML need this to actually render
 function processInstagramEmbeds(rootEl) {
     if (!rootEl) return;
@@ -395,25 +431,12 @@ async function loadWeeklyLogs() {
     const logsContainer = document.getElementById('logs-list');
     const bioContainer = document.getElementById('bio-logs-list');
 
-    function normalizeLogPath(path) {
-        try {
-            return decodeURIComponent(String(path || ""))
-                .replace(/^#log-/, "")
-                .replace(/^\/+/, "")
-                .replace(/\\/g, "/")
-                .normalize("NFC");
-        } catch (error) {
-            return String(path || "")
-                .replace(/^#log-/, "")
-                .replace(/^\/+/, "")
-                .replace(/\\/g, "/");
-        }
-    }
-
     try {
         const indexUrl = getNormalizedFetchUrl('logs-index.json');
         const response = await fetch(indexUrl, { cache: 'no-store' });
         const sections = await response.json();
+
+        logNavList = flattenLogsInOrder(sections);
 
         if (logsContainer) renderLogs(logsContainer, sections);
         if (bioContainer) renderBioLogs(bioContainer, sections);
@@ -423,18 +446,8 @@ async function loadWeeklyLogs() {
             const currentHash = window.location.hash || '';
             if (currentHash.startsWith("#log-")) {
                 const filePath = currentHash.replace("#log-", "");
-                const allLogs = [];
-
-                const flatten = (items) => {
-                    items.forEach((item) => {
-                        if (item.logs) allLogs.push(...item.logs);
-                        if (item.folders) flatten(item.folders);
-                    });
-                };
-
-                flatten(sections);
                 const wantedPath = normalizeLogPath(filePath);
-                const targetLog = allLogs.find((log) => normalizeLogPath(log.path) === wantedPath);
+                const targetLog = logNavList.find((log) => normalizeLogPath(log.path) === wantedPath);
 
                 if (targetLog) {
                     setTimeout(() => {
@@ -453,56 +466,225 @@ async function loadWeeklyLogs() {
     }
 }
 
-// --- MAIN LOGS PAGE RENDERER ---
+// --- MAIN LOGS PAGE RENDERER: category rail + card grid + inline drawer ---
+
+// Per-category presentation. Colors are fixed jewel-tone gradients (kept
+// constant across light/dark — verified >=7:1 white-text contrast on every
+// gradient's lightest stop) so they read the same regardless of site theme.
+const CATEGORY_META = {
+    'UCSD': { slug: 'ucsd', a: '#0E1D3D', b: '#16294F', icon: 'fa-regular fa-umbrella-beach',
+        desc: 'My time at UC San Diego — coursework, labs, and the occasional 2am debugging spiral.' },
+    '京都大学': { slug: 'kyoto', a: '#231A3A', b: '#2E2350', icon: 'fa-torii-gate',
+        desc: 'A study-abroad log series from Kyoto University, spring through summer 2026.' },
+    'Travel': { slug: 'travel', a: '#5A2A0F', b: '#7C3D14', icon: 'fa-compass',
+        desc: 'Everywhere I’ve pointed a camera, city by city.' },
+    'Reads': { slug: 'reads', a: '#4A3216', b: '#5E4220', icon: 'fa-book-open',
+        desc: 'What I’m reading this year.' },
+    'Reflections': { slug: 'reflections', a: '#341F3B', b: '#432A4F', icon: 'fa-moon',
+        desc: 'Longer, slower check-ins on how I am actually feeling.' },
+    'Thoughts & Papers': { slug: 'thoughts', a: '#202226', b: '#2E3138', icon: 'fa-regular fa-pen-to-square',
+        desc: 'Essays written for class, or just for myself, worth keeping.' }
+};
+// Rotating fallback so a future top-level category in logs-index.json
+// still renders something reasonable instead of breaking.
+const FALLBACK_GRADIENTS = [['#1F2937', '#2E3B4E'], ['#2B2636', '#3A3348'], ['#1B3A3A', '#215050']];
+let __fallbackMetaIndex = 0;
+
+// Note: only used for categories NOT in CATEGORY_META above — slugifyTitle
+// strips non-ASCII (CJK included), so known titles carry an explicit,
+// hardcoded `slug` instead of relying on this for anything user-facing.
+function slugifyTitle(title) {
+    return String(title || '')
+        .toLowerCase()
+        .normalize('NFKD')
+        .replace(/[^\w\s-]/g, '')
+        .trim()
+        .replace(/\s+/g, '-') || 'section';
+}
+
+function getCategoryMeta(title) {
+    const known = CATEGORY_META[title];
+    if (known) return known;
+    const g = FALLBACK_GRADIENTS[__fallbackMetaIndex % FALLBACK_GRADIENTS.length];
+    __fallbackMetaIndex++;
+    return { slug: slugifyTitle(title), a: g[0], b: g[1], icon: 'fa-folder-tree', desc: 'A collection of logs.' };
+}
+
+// Ordered children of a folder/category node: any "pinned" logs first,
+// then subfolders, then its remaining logs — matches flattenLogsInOrder()
+// so counts and browse order agree.
+function getChildren(node) {
+    const children = [];
+    const logs = Array.isArray(node.logs) ? node.logs : [];
+    const isVisible = (l) => l && l.path && l.filename && !l.draft;
+    logs.filter((l) => isVisible(l) && l.pinned).forEach((l) => children.push({ type: 'log', title: l.filename, log: l }));
+    (node.folders || []).forEach((f) => children.push({ type: 'folder', title: f.title, node: f }));
+    logs.filter((l) => isVisible(l) && !l.pinned).forEach((l) => children.push({ type: 'log', title: l.filename, log: l }));
+    return children;
+}
 
 function renderLogs(container, items) {
     container.innerHTML = '';
 
-    function createFolderElement(item, level = 0) {
-    const details = document.createElement('details');
-    details.className = level === 0 ? 'season-folder' : 'season-folder sub-folder';
-    if (level > 0) details.style.marginLeft = '20px';
+    const grid = document.createElement('div');
+    grid.className = 'log-grid';
+    grid.setAttribute('aria-label', 'Log categories');
 
-    const summary = document.createElement('summary');
-    summary.className = 'season-header';
-    summary.innerHTML = `
-        <div class="folder-title">
-            <i class="fas ${item.folders ? 'fa-folder-tree' : 'fa-folder'}"></i>
-            <span>${item.title || 'Untitled Folder'}</span>
-        </div>
-        <span class="custom-arrow"><i class="fas fa-chevron-right"></i></span>
-    `;
-    details.appendChild(summary);
+    const drawerSlot = document.createElement('div');
+    drawerSlot.className = 'drawer-slot';
 
-    const contentWrapper = document.createElement('div');
-    contentWrapper.className = 'folder-content';
+    const bySlug = {};
+    const state = { slug: null, item: null, stack: [], lastTrigger: null };
 
-    // 1. Process nested folders (if they exist)
-    if (item.folders) {
-        item.folders.forEach(sub => contentWrapper.appendChild(createFolderElement(sub, level + 1)));
+    function setExpanded(slug, val) {
+        container.querySelectorAll(`[data-slug="${slug}"]`).forEach((el) => el.setAttribute('aria-expanded', String(val)));
     }
 
-    // 2. Process logs (Now renders even if folders are present)
-    if (item.logs && item.logs.length > 0) {
-        const list = document.createElement('div');
-        list.className = 'logs-preview-list';
-        item.logs.forEach(log => {
-            if (log.filename) {
-                const row = document.createElement('div');
-                row.className = 'log-file-row';
-                row.innerHTML = `<span class="file-name">${log.filename}</span><span class="file-date">${log.date || ''}</span>`;
-                row.onclick = (e) => { e.stopPropagation(); openFullscreenLog(log, true, false); };
-                list.appendChild(row);
-            }
+    function openCategory(item, meta, trigger) {
+        if (state.slug && state.slug !== meta.slug) setExpanded(state.slug, false);
+        state.slug = meta.slug;
+        state.item = item;
+        state.stack = [];
+        state.lastTrigger = trigger || null;
+        setExpanded(meta.slug, true);
+        renderDrawer({});
+        history.pushState({}, '', '#logs-' + meta.slug);
+    }
+
+    function openCategoryBySlug(slug, opts) {
+        const entry = bySlug[slug];
+        if (!entry) return;
+        if (state.slug && state.slug !== slug) setExpanded(state.slug, false);
+        state.slug = slug;
+        state.item = entry.item;
+        state.stack = [];
+        state.lastTrigger = container.querySelector(`.log-tile[data-slug="${slug}"]`);
+        setExpanded(slug, true);
+        renderDrawer({ pulse: !!(opts && opts.pulse), skipFocus: true });
+        if (opts && opts.scroll) {
+            const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            const drawerEl = drawerSlot.querySelector('.log-drawer');
+            if (drawerEl) drawerEl.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+        }
+    }
+
+    function closeDrawer(updateUrl) {
+        if (!state.slug) return;
+        setExpanded(state.slug, false);
+        const trigger = state.lastTrigger;
+        state.slug = null; state.item = null; state.stack = [];
+        drawerSlot.innerHTML = '';
+        if (updateUrl !== false) history.pushState({}, '', window.location.pathname + window.location.search);
+        if (trigger) trigger.focus();
+    }
+
+    function renderDrawer(opts) {
+        const crumbs = [{ label: state.item.title, depth: -1 }];
+        let node = { folders: state.item.folders, logs: state.item.logs };
+        state.stack.forEach((idx, i) => {
+            const kids = getChildren(node);
+            node = kids[idx].node;
+            crumbs.push({ label: kids[idx].title, depth: i });
         });
-        contentWrapper.appendChild(list);
+        const children = getChildren(node);
+
+        drawerSlot.innerHTML = `
+            <section class="log-drawer${opts && opts.pulse ? ' pulse' : ''}" id="logs-drawer" role="region" aria-label="${escapeHtml(state.item.title)} logs" tabindex="-1">
+                <div class="drawer-head">
+                    <div>
+                        <p class="drawer-eyebrow">Category</p>
+                        <h2>${escapeHtml(state.item.title)}</h2>
+                    </div>
+                    <button type="button" class="drawer-close" aria-label="Close, back to all categories"><i class="fas fa-xmark"></i></button>
+                </div>
+                <ol class="breadcrumb">
+                    ${crumbs.map((c, i) => {
+                        const isLast = i === crumbs.length - 1;
+                        return `<li${isLast ? ' class="current"' : ''}>${isLast ? `<span>${escapeHtml(c.label)}</span>` : `<button type="button" data-depth="${c.depth}">${escapeHtml(c.label)}</button>`}</li>`;
+                    }).join('')}
+                </ol>
+                <ul class="entry-list">
+                    ${children.length ? children.map((c, i) => {
+                        if (c.type === 'folder') {
+                            const empty = flattenLogsInOrder([c.node]).length === 0;
+                            return `<li><button type="button" class="entry-row is-folder" data-action="folder" data-index="${i}"${empty ? ' disabled' : ''}>
+                                <span class="entry-icon"><i class="fas fa-folder"></i></span>
+                                <span class="entry-main"><span class="entry-title">${escapeHtml(c.title)}</span></span>
+                                <span class="entry-cue">${empty ? 'No entries yet' : 'Open folder <i class="fas fa-arrow-right"></i>'}</span>
+                            </button></li>`;
+                        }
+                        return `<li><button type="button" class="entry-row" data-action="log" data-index="${i}">
+                            <span class="entry-icon"><i class="fas fa-file-lines"></i></span>
+                            <span class="entry-main"><span class="entry-title">${escapeHtml(c.title)}</span>${c.log.date ? `<div class="entry-date">${escapeHtml(c.log.date)}</div>` : ''}</span>
+                            <span class="entry-cue">Read <i class="fas fa-arrow-right"></i></span>
+                        </button></li>`;
+                    }).join('') : '<li class="entry-empty">No entries yet — check back soon.</li>'}
+                </ul>
+            </section>
+        `;
+
+        const drawerEl = drawerSlot.querySelector('.log-drawer');
+        drawerEl.querySelector('.drawer-close').onclick = () => closeDrawer();
+        drawerEl.querySelector('.breadcrumb').addEventListener('click', (ev) => {
+            const btn = ev.target.closest('button[data-depth]');
+            if (!btn) return;
+            state.stack = state.stack.slice(0, parseInt(btn.dataset.depth, 10) + 1);
+            renderDrawer({});
+        });
+        drawerEl.querySelectorAll('.entry-row[data-action="folder"]:not([disabled])').forEach((btn) => {
+            btn.onclick = () => { state.stack.push(parseInt(btn.dataset.index, 10)); renderDrawer({}); };
+        });
+        drawerEl.querySelectorAll('.entry-row[data-action="log"]').forEach((btn) => {
+            btn.onclick = () => {
+                const c = children[parseInt(btn.dataset.index, 10)];
+                openFullscreenLog(c.log, true, true);
+            };
+        });
+
+        if (!(opts && opts.skipFocus)) drawerEl.focus();
     }
-    
-    details.appendChild(contentWrapper);
-    return details;
+
+    function handleCategoryRoute() {
+        const hash = (window.location.hash || '').replace('#', '');
+        if (hash.indexOf('logs-') === 0) {
+            const slug = hash.slice(5);
+            if (bySlug[slug]) { openCategoryBySlug(slug, { pulse: true, scroll: true }); return; }
+        }
+        if (hash.indexOf('log-') === 0) return; // an individual-log deep link — leave drawer state alone
+        if (state.slug) closeDrawer(false);
     }
-    
-    items.forEach(item => container.appendChild(createFolderElement(item)));
+
+    items.forEach((item) => {
+        const meta = getCategoryMeta(item.title);
+        const count = flattenLogsInOrder([item]).length;
+        bySlug[meta.slug] = { item, meta };
+
+        const tile = document.createElement('button');
+        tile.type = 'button';
+        tile.className = 'log-tile';
+        tile.style.setProperty('--a', meta.a);
+        tile.style.setProperty('--b', meta.b);
+        tile.dataset.slug = meta.slug;
+        tile.setAttribute('aria-expanded', 'false');
+        tile.setAttribute('aria-controls', 'logs-drawer');
+        tile.innerHTML = `
+            <div class="tile-top">
+                <span class="tile-icon"><i class="fas ${meta.icon}"></i></span>
+                <span class="tile-count">${count} ${count === 1 ? 'log' : 'logs'}</span>
+            </div>
+            <h3 class="tile-title">${escapeHtml(item.title)}</h3>
+            <p class="tile-desc">${escapeHtml(meta.desc)}</p>
+            <span class="tile-cta">Explore <i class="fas fa-arrow-right"></i></span>
+        `;
+        tile.addEventListener('click', () => openCategory(item, meta, tile));
+        grid.appendChild(tile);
+    });
+
+    container.appendChild(grid);
+    container.appendChild(drawerSlot);
+
+    window.addEventListener('hashchange', handleCategoryRoute);
+    handleCategoryRoute();
 }
 
 // --- BIO SECTION RENDERER ---
@@ -515,7 +697,7 @@ function renderBioLogs(container, sections) {
             const currentTitle = parentTitle ? `${parentTitle} - ${item.title}` : item.title;
             if (item.logs) {
                 item.logs.forEach(l => {
-                    allLogs.push({ ...l, displayCategory: currentTitle });
+                    if (l && l.path && l.filename && !l.draft) allLogs.push({ ...l, displayCategory: currentTitle });
                 });
             }
             if (item.folders) findLogs(item.folders, currentTitle);
@@ -586,11 +768,12 @@ function initPopInAnimation() {
         '.profile-image-wrapper', '.profile-name', '.profile-title', '.resume-buttons',
         '.map-caption', '.location-map', '.now-playing-card', '.spotify-card',
         '.home-video-card', '.letterboxd-card', '.verse-container',
+        '.manifesto-quote',
         '.left-content-column', '.bio-text',
         // Section headers used throughout (TEAM PROJECTS, LOGS, etc.)
         '.section-title-small', '.experience-section-header',
         // Cards
-        '.work-card', '.current-project-card', '.log-card', '.bio-log-card', '.experience-item', '.cert-card',
+        '.work-card', '.current-project-card', '.log-card', '.bio-log-card', '.experience-item', '.cert-card', '.highlights-card',
         // Contact + footer
         '.social-icon-link', '.resume-download-button', '.resume-download-link',
         '.contact-content h2', '.contact-content p', 'footer p',
@@ -632,19 +815,150 @@ function initPopInAnimation() {
     });
 }
 
-// --- CERTIFICATIONS HORIZONTAL SCROLL ---
-// Lets a normal vertical mouse wheel scroll the certifications strip
-// sideways instead of doing nothing (trackpads/touch already scroll it
-// natively via horizontal swipe).
-function initCertScroll() {
-    const grid = document.querySelector('.cert-grid');
-    if (!grid) return;
+// --- HORIZONTAL SCROLL STRIPS (certifications, highlights) ---
+// Lets a normal vertical mouse wheel scroll these strips sideways instead
+// of doing nothing (trackpads/touch already scroll them natively via
+// horizontal swipe; scroll-snap in the CSS handles settling on a card).
+function initHorizontalScroll(selector) {
+    document.querySelectorAll(selector).forEach((strip) => {
+        strip.addEventListener('wheel', (e) => {
+            if (Math.abs(e.deltaY) <= Math.abs(e.deltaX)) return; // already horizontal, let it be
+            e.preventDefault();
+            strip.scrollLeft += e.deltaY;
+        }, { passive: false });
+    });
+}
 
-    grid.addEventListener('wheel', (e) => {
-        if (Math.abs(e.deltaY) <= Math.abs(e.deltaX)) return; // already horizontal, let it be
-        e.preventDefault();
-        grid.scrollLeft += e.deltaY;
-    }, { passive: false });
+// --- CURATED TRANSLATIONS (About + Message sections) ---
+// Google's live translator is fine for gist, but it mangles slang, jokes,
+// and wordplay — so the two sections carrying the most personal voice get
+// real hand-drafted Japanese and Traditional Chinese instead. Anything
+// without a curated entry (every other section/log) still falls through
+// to Google's widget normally. These are solid first-draft translations,
+// not native-speaker-polished — worth having a fluent reader (hi, aunt
+// and grandma) correct anything that reads off.
+const CURATED_TRANSLATIONS = {
+    'message-lead': {
+        ja: '生きるに値する人生が困難と向き合うことの上に築かれるのなら、誰もがもう少しうまく苦しめるように、私たちはどんな技術を作れるだろうか。',
+        'zh-TW': '如果值得過的人生，是建立在面對逆境之上，那我們該如何開發科技，幫助每個人更好地承受這份掙扎？'
+    },
+    'message-close': {
+        ja: '満ち足りた、濃密な人生を貪欲に求めている。辛い日々も含めて、全部。でも、その重荷を一人で背負う人がいてはいけない。',
+        'zh-TW': '我渴望活得豐盛、熾烈，連艱難的日子也不例外。但沒有人應該獨自扛起這份重擔。'
+    },
+    'about-p1': {
+        ja: '現在19歳。17歳のとき、6時間目まで授業を受けて、「良い」大学に入るためだけにGPA4.0にこだわり続けるより、もっと大事な生き方があるはずだと思った。だから、人生を早めにスタートさせようと決めて、高校を中退した（正確には、高卒認定を取って卒業扱いにした、というやつ）。でも、その解放感は長くは続かなかった。結局、1年半後にはUCサンディエゴに入学することになった😂。UCSDでの最初の1年（学年としては3年生）は、想像以上に自分の鼻をへし折られる経験だった。大変だったけど、それでも生きて、学んで、道中を楽しむ方法をちゃんと見つけられたと思う。',
+        'zh-TW': '我今年19歲。17歲那年，我覺得人生應該不只是坐在教室上六節課、拼命維持4.0的GPA，只為了擠進一所「好」大學。於是我決定提早開始過自己想要的生活，從高中輟學（嚴格來說，是用同等學力考試「跳」出來的）。不過那種解放感沒有維持太久——一年半後，我還是進了加州大學聖地牙哥分校（UCSD）😂。在UCSD的第一年（學制上算大三），讓我謙卑的程度遠超我的想像。過程很不容易，但我還是找到了活著、學習、並且享受這趟旅程的方法。'
+    },
+    // John 16:33 — a faithful rendering, not a specific published edition's
+    // exact wording. If you use a particular Bible translation, swap this
+    // for its exact text; the Chinese line below is the (public-domain)
+    // Union Version, quoted as-is.
+    'about-verse': {
+        ja: '<h3 style="font-size: 0.9rem; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.5rem; opacity: 0.7;">ヨハネによる福音書 16章33節</h3><h1 style="font-size: 1.8rem; margin: 0; line-height: 1.2;">「あなたがたは世にあって苦難がある。</h1><h2 style="font-size: 1.5rem; margin: 0.5rem 0; font-weight: 300;">しかし、勇気を出しなさい。</h2><h3 style="font-size: 1.2rem; margin: 0; font-style: italic;">わたしはすでに世に勝っている。」</h3>',
+        'zh-TW': '<h3 style="font-size: 0.9rem; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.5rem; opacity: 0.7;">約翰福音 16:33</h3><h1 style="font-size: 1.8rem; margin: 0; line-height: 1.2;">「在世上，你們有苦難；</h1><h2 style="font-size: 1.5rem; margin: 0.5rem 0; font-weight: 300;">但你們可以放心，</h2><h3 style="font-size: 1.2rem; margin: 0; font-style: italic;">我已經勝了世界。」</h3>'
+    },
+    'about-p2': {
+        ja: '「勉強」をしていないときの生活は、3つの「G」——God（信仰）、Golf（ゴルフ）、Gym（筋トレ）、日曜日なら信仰・家族・フットボールで回っている。新しいことを理解するのにものすごく情熱を燃やす一方で、テクノロジーから離れて息抜きするのも大好きだ。映画を観たり、本を読んだり、ジグソーパズルを解いたり、あるいはスポーツの試合展開やオッズを追いかけたりする。でも一番の情熱は、なんといってもアイスホッケー。もう15年もプレーしているから、草試合で「もう衰えた」フォワードが必要になったらいつでも声をかけてほしい。ただし、事前にエリートプロスペクツ（有名なホッケー選手データベース）で僕のプロフィールを調べないでほしい。スポーツ以外にも、旅すること、新しい文化を学ぶこと、冒険することが大好きだ。若いうちにいろんな国を巡れているのは本当に幸運だと思うし、これからも続けていきたい。僕自身や考えていることについては、こちらの<a href="#logs" style="color: #ffffff; text-decoration: underline; display: inline; text-underline-offset: 3px;">ログ</a>でもっと読める。',
+        'zh-TW': '當我沒在「讀書」的時候，生活主要圍繞著三個「G」——God（信仰）、Golf（高爾夫）、Gym（健身房），星期天則是信仰、家庭、美式足球。我對認識新事物有極大的熱情，但同時也很享受遠離科技、放鬆一下，像是看電影、看書、拼拼圖，或是研究一下球賽走勢、預測和盤口。不過我最深的熱情，還是冰球。我已經打了15年，如果哪天你需要一個「已經過氣」的前鋒來湊人數打野球，儘管找我，只是拜託不要事先去查我在Elite Prospects（知名冰球球探資料庫）上的檔案。除了運動和其他興趣，我也很愛旅行、認識不同文化、探索世界。能在這麼年輕的時候就有機會走訪這麼多國家，我覺得非常幸運，也希望能繼續下去。想更了解我和我的想法，歡迎到這裡看看我的<a href="#logs" style="color: #ffffff; text-decoration: underline; display: inline; text-underline-offset: 3px;">網誌</a>。'
+    },
+    'about-p3': {
+        ja: '僕の学業、キャリア、そして人生の歩みは、かなり型破りで、なかなかの冒険だった。仕事の話をしたい、専門的な話で盛り上がりたい、旅の話を交換したい、レブロン・レイモン・ジェームズについて論争したい、あるいはただ挨拶したいだけでも、気軽に<a href="#contact" style="color: #ffffff; text-decoration: underline; display: inline; text-underline-offset: 3px;">連絡</a>してほしい。',
+        'zh-TW': '我的求學、職涯與人生歷程都相當不按牌理出牌，稱得上是一場精彩的冒險。如果你想聊聊工作機會、交流專業話題、分享旅行故事、辯論一下「LeBron Raymone James」到底多厲害，或只是想打聲招呼，都歡迎<a href="#contact" style="color: #ffffff; text-decoration: underline; display: inline; text-underline-offset: 3px;">聯絡</a>我。'
+    }
+};
+
+// Only these two languages have curated text above; anything else the
+// visitor picks (via the dropdown, not just the quick buttons) still runs
+// through Google's live translator like the rest of the site.
+const CURATED_LANGS = ['ja', 'zh-TW'];
+
+function getGoogTransLang() {
+    const match = document.cookie.match(/googtrans=\/en\/([a-zA-Z-]+)/);
+    return match ? match[1] : null;
+}
+
+function applyCuratedTranslations() {
+    const lang = getGoogTransLang();
+    if (!lang || CURATED_LANGS.indexOf(lang) === -1) return;
+
+    let curatedCount = 0;
+    document.querySelectorAll('[data-i18n]').forEach((el) => {
+        const entry = CURATED_TRANSLATIONS[el.dataset.i18n];
+        if (entry && entry[lang]) {
+            el.innerHTML = entry[lang];
+            el.setAttribute('translate', 'no');
+            curatedCount++;
+        }
+    });
+
+    showTranslationNotice(lang, curatedCount > 0);
+}
+
+// A small, dismissible, in-language heads-up. Wording differs depending on
+// whether this page actually has curated sections (index.html's About/
+// Message) or is machine-translated throughout (logs.html, etc.) — the
+// notice shouldn't claim credit for a section that isn't on this page.
+function showTranslationNotice(lang, hasCurated) {
+    if (document.querySelector('.translate-notice')) return;
+    const main = document.querySelector('.main-content') || document.querySelector('.page-layout');
+    if (!main) return;
+
+    const copy = hasCurated
+        ? {
+            ja: 'このサイトの大部分は自動翻訳です。ジョークがうまく伝わらないところがあっても大目に見てください 😅　「A MESSAGE」と「ABOUT」のセクションは僕が自分で訳しました。',
+            'zh-TW': '這個網站大部分內容是機器翻譯，如果有些玩笑翻得怪怪的，請多包涵 😅　「A MESSAGE」和「ABOUT」這兩個部分是我自己翻譯的。'
+        }
+        : {
+            ja: 'このページは自動翻訳です。ジョークやスラングがうまく伝わらないところがあっても大目に見てください 😅',
+            'zh-TW': '這個頁面是機器翻譯，如果有些玩笑或用語翻得怪怪的，請多包涵 😅'
+        };
+    const dismissLabel = { ja: '閉じる', 'zh-TW': '關閉' };
+    if (!copy[lang]) return;
+
+    const notice = document.createElement('div');
+    notice.className = 'translate-notice';
+    notice.innerHTML = `<p>${copy[lang]}</p><button type="button" class="translate-notice-close" aria-label="${dismissLabel[lang]}">&times;</button>`;
+    main.insertBefore(notice, main.firstChild);
+    notice.querySelector('.translate-notice-close').addEventListener('click', () => notice.remove());
+}
+
+applyCuratedTranslations();
+
+// --- ONE-CLICK TRANSLATE BUTTONS ---
+// Drives Google's translate widget via its own googtrans cookie rather
+// than reaching into the widget's internal <select> — the cookie is the
+// documented, stable mechanism Google's script itself reads on load, so
+// this keeps working even if they change the dropdown's internal markup.
+// Costs a reload, but that's a fair trade for "always works."
+//
+// Takes an optional root so it can be re-run against markup injected after
+// the initial page load (e.g. the log reader's own set of pills) without
+// double-binding the buttons that were already wired up — each button is
+// flagged once it has a listener.
+function initQuickTranslate(root) {
+    const buttons = (root || document).querySelectorAll('.translate-quick-btn:not([data-translate-bound])');
+    if (!buttons.length) return;
+
+    function setGoogTransCookie(lang) {
+        const host = window.location.hostname;
+        const expired = 'googtrans=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/;';
+        document.cookie = expired;
+        document.cookie = expired + 'domain=.' + host + ';';
+        if (lang !== 'en') {
+            const value = 'googtrans=/en/' + lang + ';path=/;';
+            document.cookie = value;
+            document.cookie = value + 'domain=.' + host + ';';
+        }
+    }
+
+    buttons.forEach((btn) => {
+        btn.dataset.translateBound = 'true';
+        btn.addEventListener('click', () => {
+            setGoogTransCookie(btn.dataset.lang);
+            window.location.reload();
+        });
+    });
 }
 
 function hydrateEmbeds(rootEl) {
@@ -687,15 +1001,12 @@ function initReaderReveal(rootEl) {
 }
 
 // --- LOCATION MAP (Leaflet, CartoDB Dark Matter tiles) ---
-// Assumption: centered on Kyoto, Japan, matching the KUINEP study-abroad
-// dates on the Education card. Update KYOTO_COORDS / the caption text below
-// if you want it to point somewhere else.
 function initLocationMap() {
     const mapEl = document.getElementById('location-map');
     if (!mapEl || typeof L === 'undefined') return;
     if (mapEl.dataset.initialized === 'true') return;
 
-    const COORDS = [35.0116, 135.7681]; // Kyoto, Japan
+    const COORDS = [32.8788, -117.2366]; 
 
     const map = L.map(mapEl, {
         center: COORDS,
@@ -704,12 +1015,7 @@ function initLocationMap() {
         zoomControl: true
     });
 
-    // Stamen tiles are now hosted by Stadia Maps. Stadia's free tier works
-    // out of the box on localhost, but for a live domain (tlee06.me) you
-    // need to add that domain in your Stadia Maps dashboard (free,
-    // https://client.stadiamaps.com) — or append ?api_key=YOUR_KEY to the
-    // URL below. Without one of those, deployed tiles will show a
-    // "no longer available" placeholder instead of the map.
+
     L.tileLayer('https://tiles.stadiamaps.com/tiles/stamen_toner_lite/{z}/{x}/{y}{r}.png?api_key=b6cf1e2f-a73e-4025-a83b-a6877c578e82', {
         maxZoom: 20,
         attribution: '&copy; <a href="https://stadiamaps.com/" target="_blank">Stadia Maps</a> &copy; <a href="https://stamen.com/" target="_blank">Stamen Design</a> &copy; <a href="https://openmaptiles.org/" target="_blank">OpenMapTiles</a> &copy; <a href="https://www.openstreetmap.org/copyright" target="_blank">OpenStreetMap</a>'
@@ -724,6 +1030,14 @@ function initLocationMap() {
     }).addTo(map);
 
     mapEl.dataset.initialized = 'true';
+
+    // Leaflet measures its container once at init. If anything above it
+    // (fonts loading late, the async Google Translate widget, a flex
+    // reflow) shifts the layout afterward, the map is left thinking it's
+    // still the old size — tiles only render for that stale area and the
+    // rest looks cut off/grey. invalidateSize() re-measures and redraws.
+    setTimeout(() => map.invalidateSize(), 150);
+    window.addEventListener('resize', () => map.invalidateSize());
 }
 
 /**
@@ -753,29 +1067,61 @@ async function openFullscreenLog(log, updateHash = true, scrollOnClose = false) 
         const text = await res.text();
         const content = typeof marked !== 'undefined' ? marked.parse(text) : text;
 
+        // Figure out what comes before/after this log (in folder-browse order)
+        // so we can offer Previous/Next buttons. No wraparound: the first/
+        // last log in the list simply doesn't get one.
+        const currentIndex = logNavList.findIndex(
+            (l) => normalizeLogPath(l.path) === normalizeLogPath(log.path)
+        );
+        const prevLog = currentIndex > 0 ? logNavList[currentIndex - 1] : null;
+        const nextLog = (currentIndex !== -1 && currentIndex < logNavList.length - 1)
+            ? logNavList[currentIndex + 1]
+            : null;
+
         reader.innerHTML = `
             <div class="pinned-nav">
                 <button class="back-link" id="close-viewer">
-                    <i class="fas fa-arrow-left"></i> BACK TO LOGS
+                    <i class="fas fa-arrow-left"></i> BACK TO MAIN
                 </button>
+                ${prevLog ? `
+                <button class="back-link prev-link" id="prev-log-btn">
+                    <i class="fas fa-chevron-left"></i> PREVIOUS
+                </button>` : ''}
+                ${nextLog ? `
+                <button class="back-link next-link" id="next-log-btn">
+                    NEXT <i class="fas fa-chevron-right"></i>
+                </button>` : ''}
             </div>
 
-            <button id="reader-theme-toggle" class="theme-toggle reader-theme-toggle" type="button" aria-label="Switch theme" title="Switch theme">
-                <svg class="theme-icon theme-icon-sun" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="4"/>
-                    <line x1="12" y1="1" x2="12" y2="3"/>
-                    <line x1="12" y1="21" x2="12" y2="23"/>
-                    <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
-                    <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-                    <line x1="1" y1="12" x2="3" y2="12"/>
-                    <line x1="21" y1="12" x2="23" y2="12"/>
-                    <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
-                    <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-                </svg>
-                <svg class="theme-icon theme-icon-moon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-                </svg>
-            </button>
+            <div class="reader-top-controls">
+                <!-- Same one-click pills as the sidebar/home translate control (see
+                     initQuickTranslate in script.js) — kept up here, out of the
+                     article flow, so it doesn't interrupt the log content below. -->
+                <div class="translate-wrap translate-wrap--reader">
+                    <div class="translate-quick">
+                        <button type="button" class="translate-quick-btn" data-lang="ja">日本語</button>
+                        <button type="button" class="translate-quick-btn" data-lang="zh-TW">中文</button>
+                        <button type="button" class="translate-quick-btn" data-lang="en">EN</button>
+                    </div>
+                </div>
+
+                <button id="reader-theme-toggle" class="theme-toggle reader-theme-toggle" type="button" aria-label="Switch theme" title="Switch theme">
+                    <svg class="theme-icon theme-icon-sun" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="4"/>
+                        <line x1="12" y1="1" x2="12" y2="3"/>
+                        <line x1="12" y1="21" x2="12" y2="23"/>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                        <line x1="1" y1="12" x2="3" y2="12"/>
+                        <line x1="21" y1="12" x2="23" y2="12"/>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                    </svg>
+                    <svg class="theme-icon theme-icon-moon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                    </svg>
+                </button>
+            </div>
 
             <div class="reader-content">
                 <header class="reader-header">
@@ -791,10 +1137,21 @@ async function openFullscreenLog(log, updateHash = true, scrollOnClose = false) 
         document.body.style.overflow = 'hidden';
 
         hydrateEmbeds(reader);
+        initQuickTranslate(reader);
 
         const scrollTopBtn = reader.querySelector('#scroll-top-btn');
         if (scrollTopBtn) {
             scrollTopBtn.onclick = () => reader.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        const prevBtn = reader.querySelector('#prev-log-btn');
+        if (prevBtn && prevLog) {
+            prevBtn.onclick = () => openFullscreenLog(prevLog, true, scrollOnClose);
+        }
+
+        const nextBtn = reader.querySelector('#next-log-btn');
+        if (nextBtn && nextLog) {
+            nextBtn.onclick = () => openFullscreenLog(nextLog, true, scrollOnClose);
         }
 
         const closeBtn = reader.querySelector('#close-viewer');
@@ -924,7 +1281,8 @@ window.addEventListener('load', () => {
     loadGitHubProjects('tmlee06');
     initLocationMap();
     initPopInAnimation();
-    initCertScroll();
+    initHorizontalScroll('.cert-grid, .highlights-strip');
+    initQuickTranslate();
 
     const profileImage = document.getElementById('profile-image');
     const profileModal = document.getElementById('profile-modal');
@@ -1212,6 +1570,87 @@ window.addEventListener('hashchange', () => {
 
 console.log(`\n🚀 Welcome to Tristan Lee's Portfolio!\n   Built with vanilla HTML, CSS, and JavaScript\n   https://www.linkedin.com/in/tlee06/\n`);
 
+// --- INTELLIGENT THEME ENGINE ---
+// Auto mode (active whenever no explicit choice is saved) goes dark if
+// EITHER it's nighttime at the visitor's approximate location OR their OS
+// is set to prefers-color-scheme: dark. System preference is the safety-net
+// baseline; real sunrise/sunset is what actually drives the decision, so a
+// default-light OS still dims the site once the sun goes down.
+
+// Rough {lat, lon} per IANA time zone — just enough to get day-length in
+// the right ballpark. Falls back to the zone's UTC-offset meridian at a
+// mid-populated latitude for anything not listed.
+const TIMEZONE_COORDS = {
+    'America/Los_Angeles': [34.05, -118.24], 'America/Denver': [39.74, -104.99],
+    'America/Chicago': [41.88, -87.63], 'America/New_York': [40.71, -74.01],
+    'America/Anchorage': [61.22, -149.90], 'Pacific/Honolulu': [21.31, -157.86],
+    'America/Toronto': [43.65, -79.38], 'America/Vancouver': [49.28, -123.12],
+    'America/Mexico_City': [19.43, -99.13], 'America/Sao_Paulo': [-23.55, -46.63],
+    'America/Bogota': [4.71, -74.07], 'America/Argentina/Buenos_Aires': [-34.60, -58.38],
+    'Europe/London': [51.51, -0.13], 'Europe/Dublin': [53.35, -6.26],
+    'Europe/Paris': [48.85, 2.35], 'Europe/Berlin': [52.52, 13.40],
+    'Europe/Madrid': [40.42, -3.70], 'Europe/Rome': [41.90, 12.50],
+    'Europe/Amsterdam': [52.37, 4.90], 'Europe/Moscow': [55.76, 37.62],
+    'Europe/Istanbul': [41.01, 28.98], 'Europe/Athens': [37.98, 23.73],
+    'Africa/Cairo': [30.04, 31.24], 'Africa/Lagos': [6.52, 3.38],
+    'Africa/Johannesburg': [-26.20, 28.05], 'Africa/Nairobi': [-1.29, 36.82],
+    'Asia/Dubai': [25.20, 55.27], 'Asia/Karachi': [24.86, 67.01],
+    'Asia/Kolkata': [28.61, 77.21], 'Asia/Dhaka': [23.81, 90.41],
+    'Asia/Bangkok': [13.76, 100.50], 'Asia/Jakarta': [-6.21, 106.85],
+    'Asia/Singapore': [1.35, 103.82], 'Asia/Hong_Kong': [22.32, 114.17],
+    'Asia/Shanghai': [31.23, 121.47], 'Asia/Taipei': [25.03, 121.57],
+    'Asia/Tokyo': [35.68, 139.65], 'Asia/Seoul': [37.57, 126.98],
+    'Australia/Perth': [-31.95, 115.86], 'Australia/Sydney': [-33.87, 151.21],
+    'Australia/Melbourne': [-37.81, 144.96], 'Pacific/Auckland': [-36.85, 174.76]
+};
+
+function getApproxCoords() {
+    try {
+        const zone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        if (zone && TIMEZONE_COORDS[zone]) return TIMEZONE_COORDS[zone];
+    } catch (e) {}
+    // No exact zone match — approximate longitude from the UTC offset itself
+    // (each hour of offset ≈ 15° of longitude) and assume a mid latitude.
+    const offsetHours = -(new Date().getTimezoneOffset() / 60);
+    return [35, offsetHours * 15];
+}
+
+// Simplified sunrise-equation approximation (skips the ~15min equation-of-
+// time correction and atmospheric refraction — plenty precise for "is it
+// dark out yet"). Returns local sunrise/sunset as decimal hours, or null at
+// latitudes currently in polar day/night.
+function computeSunHours(lat, lon, date) {
+    const rad = Math.PI / 180;
+    const dayOfYear = Math.floor((date - new Date(date.getFullYear(), 0, 0)) / 86400000);
+    const declination = -23.44 * Math.cos(rad * (360 / 365) * (dayOfYear + 10));
+    const cosH = -Math.tan(lat * rad) * Math.tan(declination * rad);
+    if (cosH <= -1 || cosH >= 1) return null; // polar day (-1) or polar night (+1)
+    const hourAngle = (Math.acos(cosH) * (180 / Math.PI)) / 15; // hours either side of solar noon
+    const solarNoonUtc = 12 - lon / 15;
+    const localOffset = -date.getTimezoneOffset() / 60;
+    const norm = (h) => ((h % 24) + 24) % 24;
+    return {
+        sunrise: norm(solarNoonUtc - hourAngle + localOffset),
+        sunset: norm(solarNoonUtc + hourAngle + localOffset)
+    };
+}
+
+function isDaytimeNow() {
+    const [lat, lon] = getApproxCoords();
+    const now = new Date();
+    const sun = computeSunHours(lat, lon, now);
+    const hour = now.getHours() + now.getMinutes() / 60;
+    if (!sun) return hour >= 6 && hour < 19; // polar edge case — clock fallback
+    return sun.sunrise < sun.sunset
+        ? (hour >= sun.sunrise && hour < sun.sunset)
+        : !(hour >= sun.sunset && hour < sun.sunrise); // day span crosses midnight
+}
+
+function resolveAutoTheme() {
+    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    return (prefersDark || !isDaytimeNow()) ? 'dark' : 'light';
+}
+
 (function initThemeToggle() {
     const STORAGE_KEY = 'tlee-theme';
     const toggleBtn = document.getElementById('theme-toggle');
@@ -1224,7 +1663,15 @@ console.log(`\n🚀 Welcome to Tristan Lee's Portfolio!\n   Built with vanilla H
         }
     });
 
-    function applyTheme(theme) {
+    function hasManualOverride() {
+        try {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            return stored === 'light' || stored === 'dark';
+        } catch (e) { return false; }
+    }
+
+    function applyTheme(theme, opts) {
+        const persist = !!(opts && opts.persist);
         const isLight = theme === 'light';
         document.body.classList.toggle('theme-light', isLight);
 
@@ -1265,25 +1712,49 @@ console.log(`\n🚀 Welcome to Tristan Lee's Portfolio!\n   Built with vanilla H
             readerToggleBtn.setAttribute('title', isLight ? 'Switch to dark mode' : 'Switch to light mode');
         }
 
-        try { localStorage.setItem(STORAGE_KEY, theme); } catch (e) {}
+        if (persist) {
+            try { localStorage.setItem(STORAGE_KEY, theme); } catch (e) {}
+        }
     }
 
-    window.tleeApplyTheme = applyTheme;
+    window.tleeApplyTheme = (theme) => applyTheme(theme, { persist: true });
     window.tleeGetTheme = () => document.body.classList.contains('theme-light') ? 'light' : 'dark';
 
-    let initialTheme = 'dark';
+    let initialTheme;
     try {
         const stored = localStorage.getItem(STORAGE_KEY);
-        if (stored === 'light' || stored === 'dark') initialTheme = stored;
-    } catch (e) {}
-
-    applyTheme(initialTheme);
+        initialTheme = (stored === 'light' || stored === 'dark') ? stored : resolveAutoTheme();
+    } catch (e) {
+        initialTheme = resolveAutoTheme();
+    }
+    applyTheme(initialTheme, { persist: false });
 
     if (toggleBtn) {
         toggleBtn.addEventListener('click', () => {
             const next = document.body.classList.contains('theme-light') ? 'dark' : 'light';
-            applyTheme(next);
+            applyTheme(next, { persist: true });
         });
+    }
+
+    // Auto mode stays "live" — re-checked on a timer, whenever the tab
+    // regains focus, and whenever the OS theme changes — but only while no
+    // explicit choice has been saved. The moment someone clicks the toggle,
+    // none of this adjusts anything for them again.
+    function recheckAutoTheme() {
+        if (hasManualOverride()) return;
+        const next = resolveAutoTheme();
+        if (next !== window.tleeGetTheme()) applyTheme(next, { persist: false });
+    }
+
+    setInterval(recheckAutoTheme, 15 * 60 * 1000); // catches a sunrise/sunset crossing mid-session
+    document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') recheckAutoTheme();
+    });
+    if (window.matchMedia) {
+        const mql = window.matchMedia('(prefers-color-scheme: dark)');
+        const onChange = () => recheckAutoTheme();
+        if (mql.addEventListener) mql.addEventListener('change', onChange);
+        else if (mql.addListener) mql.addListener(onChange); // older Safari
     }
 })();
 
@@ -1413,9 +1884,6 @@ if (document.readyState === 'loading') {
 } else {
     fetchLatestLetterboxd();
 }
-// In your script.js, wherever you inject the log content
-document.getElementById('logs-list').innerHTML = renderedMarkdown;
-
 // Trigger the X/Twitter widget refresh
 if (window.twttr) {
     window.twttr.widgets.load();

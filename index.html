@@ -7,13 +7,33 @@
       <link rel="icon" type="image/png" href="./Assets/logos/tlee.png">
       <link rel="shortcut icon" type="image/png" href="./Assets/logos/tlee.png">
       <link rel="apple-touch-icon" href="./Assets/logos/tlee.png">
-      <link rel="stylesheet" href="styles.css?v=20260715-certsfix">
+      <link rel="stylesheet" href="styles.css?v=20260902-lightmodefix">
       <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=Shippori+Mincho:wght@400;600;700&display=swap" rel="stylesheet">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
       <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
       <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
    </head>
    <body>
+      <script>
+      // Instant, zero-flash theme guess — runs before anything paints, so a
+      // returning light-mode visitor never sees a dark flash. A stored
+      // explicit choice always wins outright; otherwise this is a rough
+      // clock-hour stand-in for "is it dark out", upgraded moments later by
+      // the real sunrise/sunset engine in script.js (initThemeToggle).
+      (function () {
+          try {
+              var stored = localStorage.getItem('tlee-theme');
+              if (stored === 'light' || stored === 'dark') {
+                  if (stored === 'light') document.body.classList.add('theme-light');
+                  return;
+              }
+              var hour = new Date().getHours();
+              var isNightByClock = hour < 6 || hour >= 19;
+              var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+              if (!isNightByClock && !prefersDark) document.body.classList.add('theme-light');
+          } catch (e) {}
+      })();
+      </script>
       <div id="entrance-overlay"></div>
       <!-- Sidebar Overlay (mobile only) -->
       <div class="sidebar-overlay" id="sidebar-overlay"></div>
@@ -125,24 +145,6 @@
                   </a> -->
                </div>
             </div>
-            <div class="theme-toggle-wrap">
-               <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Switch to light mode" title="Switch to light mode">
-                  <svg class="theme-icon theme-icon-sun" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                     <circle cx="12" cy="12" r="4"/>
-                     <line x1="12" y1="1" x2="12" y2="3"/>
-                     <line x1="12" y1="21" x2="12" y2="23"/>
-                     <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
-                     <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-                     <line x1="1" y1="12" x2="3" y2="12"/>
-                     <line x1="21" y1="12" x2="23" y2="12"/>
-                     <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
-                     <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-                  </svg>
-                  <svg class="theme-icon theme-icon-moon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                     <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-                  </svg>
-               </button>
-            </div>
          </nav>
       </aside>
   <div class="page-layout">
@@ -150,17 +152,13 @@
          <main class="main-content">
             <!-- Home Section -->
             <section id="home" class="content-section" data-bg="#1F1D29" data-foreground="light" data-bg-light="#F7F1EA" data-foreground-light="dark" style="display: block !important; height: auto !important; min-height: 0 !important; max-height: none !important; padding: 3rem 0 4rem 0 !important; overflow: visible !important; position: relative;">
-               <!-- Dynamic Mobile-Responsive Timestamp Placement -->
-               <div style="position: absolute; top: 1.75rem; right: clamp(42px, 4vw, 88px); z-index: 20;">
-                  <div class="timestamp" id="timestamp" style="font-size: 0.85rem; color: rgba(255, 255, 255, 0.6); font-family: sans-serif; text-align: right;"></div>
-               </div>
                <!-- MAIN TWO-COLUMN CONTAINER -->
                <div class="bio-section" style="display: flex; flex-wrap: wrap; gap: clamp(3rem, 5vw, 5rem); width: 100%; max-width: 1540px; margin: 0 auto; padding-left: clamp(42px, 4vw, 88px); padding-right: clamp(42px, 4vw, 88px); box-sizing: border-box; justify-content: center; align-items: flex-start;">
                   <!-- LEFT COLUMN: Content, Logs, and Nested Videos Grid -->
-                  <div class="left-content-column" style="flex: 1 1 760px; min-width: 290px; max-width: 980px; display: flex; flex-direction: column; gap: 0px; padding-top: 0.75rem;">
+                  <div class="left-content-column" style="flex: 1 1 760px; min-width: 290px; max-width: 980px; display: flex; flex-direction: column; gap: 0px; padding-top: 24px;">
                   <p class="bio-text" style="margin-top: 1.4rem; margin-bottom: 0; line-height: 1.65; display: block; width: 100%;">
                      Welcome to my website! I am an Electrical Engineering student specializing in Signal and Image Processing, minoring in Cognitive Science with a 
-                     focus in Neuroscience and Human-Computer Interaction at UC San Diego. I am currently studying abroad at Kyoto University for the Spring 2026 quarter. 
+                     focus in Neuroscience and Human-Computer Interaction at UC San Diego. I just finished studying abroad at Kyoto University for the Spring 2026 quarter. 
                      Read about my <a href="#logs" style="color: #ffffff; text-decoration: underline; display: inline; text-underline-offset: 3px;">adventures</a>!
                      </p>
                      
@@ -223,8 +221,58 @@ style="width: 100% !important; min-height: 220px !important; height: 100% !impor
                      </div>
                   </div>
 
-                  <!-- RIGHT COLUMN: Centering Adaptive Profile Component -->
-                  <div class="bio-image-container" style="width: 350px; max-width: 100%; flex: 0 0 350px; margin: 2.35rem 0 0 0; display: flex; flex-direction: column; align-items: center;">
+                  <!-- RIGHT COLUMN: header controls (timestamp/theme/translate) stacked
+                       above the profile card, sharing one flex column so both align
+                       to the same top edge and width as the left column instead of
+                       floating independently over it. -->
+                  <div class="home-side-column">
+                     <!-- Dynamic Mobile-Responsive Timestamp + site controls. Normal
+                          flow at every width now (part of the two-column flex layout
+                          below), so it never floats over content and always shares
+                          the right column's alignment. -->
+                     <div class="home-controls">
+                        <div class="timestamp" id="timestamp" style="font-size: 0.85rem; color: rgba(255, 255, 255, 0.6); font-family: sans-serif; text-align: right;"></div>
+                        <div class="home-controls-row">
+                           <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Switch to light mode" title="Switch to light mode">
+                              <svg class="theme-icon theme-icon-sun" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                 <circle cx="12" cy="12" r="4"/>
+                                 <line x1="12" y1="1" x2="12" y2="3"/>
+                                 <line x1="12" y1="21" x2="12" y2="23"/>
+                                 <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                                 <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                                 <line x1="1" y1="12" x2="3" y2="12"/>
+                                 <line x1="21" y1="12" x2="23" y2="12"/>
+                                 <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                                 <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                              </svg>
+                              <svg class="theme-icon theme-icon-moon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                 <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                              </svg>
+                           </button>
+
+                           <!-- Site translator (Google's free client-side widget — live-
+                                translates the page in place, no API key/server needed).
+                                Add more codes to includedLanguages if other relatives
+                                need them: https://cloud.google.com/translate/docs/languages -->
+                           <div class="translate-wrap translate-wrap--home">
+                              <div class="translate-quick">
+                                 <button type="button" class="translate-quick-btn" data-lang="ja">日本語</button>
+                                 <button type="button" class="translate-quick-btn" data-lang="zh-TW">中文</button>
+                                 <button type="button" class="translate-quick-btn" data-lang="en">EN</button>
+                              </div>
+                              <!-- Google's own dropdown is hidden here (see .translate-wrap--home
+                                   #google_translate_element in styles.css) — the three pill
+                                   buttons above are the only visible language control. This
+                                   div must stay in the DOM even though it's invisible: it's
+                                   where google.translate.TranslateElement attaches and does
+                                   its actual translating, which the pill buttons depend on. -->
+                              <div id="google_translate_element"></div>
+                           </div>
+                        </div>
+                     </div>
+
+                     <!-- Centering Adaptive Profile Component -->
+                     <div class="bio-image-container" style="width: 100%; max-width: 100%; display: flex; flex-direction: column; align-items: center;">
                      <div class="profile-image-wrapper">
                         <img src="./Assets/profile-pic.png" alt="Tristan Lee profile picture" id="profile-image" />
                         <div class="profile-social-links">
@@ -234,22 +282,22 @@ style="width: 100% !important; min-height: 220px !important; height: 100% !impor
                            <a href="https://www.instagram.com/tlee.06/" target="_blank" class="profile-social-link"><i class="fab fa-instagram"></i></a>
                         </div>
                      </div>
-                     <h2 class="profile-name" style="text-align: center; color: #ffffff; font-size: 38px; font-weight: 600; margin: 0.35rem 0 0.45rem 0; font-family: sans-serif; letter-spacing: -0.01em;">
+                     <h2 class="profile-name" style="text-align: center; color: #ffffff; font-size: 38px; font-weight: 600; margin: 0; font-family: sans-serif; letter-spacing: -0.01em;">
                         Tristan Lee
                      </h2>
-                     <h3 class="profile-title" style="text-align: center; color: #cccccc; font-size: 13.5px; font-weight: 400; margin: 0 0 1.25rem 0; font-family: sans-serif; line-height: 1.4;">
+                     <h3 class="profile-title" style="text-align: center; color: #cccccc; font-size: 13.5px; font-weight: 400; margin: 0; font-family: sans-serif; line-height: 1.4;">
                         <span style="color: #ffffff;">
-                        Neurobotics @ <a href="https://neurorobotics.med.kyoto-u.ac.jp/" target="_blank" style="color: #ffffff; text-decoration: none; font-weight: bold; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">Kyoto University</a>
-                        | 
                         ECE @ <a href="https://ece.ucsd.edu/" target="_blank" style="color: #ffffff; text-decoration: none; font-weight: bold; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">UCSD</a>
-                        </span>                
+                        |
+                        <strong>Aspiring Design Engineer</strong>                        
+                     </span>                
                      </h3>
                      <div class="resume-buttons">
                         <a href="./Assets/Tristan Lee - Resume.pdf" target="_blank" class="resume-button resume-button-view">View Resume</a>
                         <a href="./Assets/Tristan Lee - Resume.pdf" download class="resume-button">Download Resume</a>
                      </div>
 
-                     <p class="map-caption">Current Location</p>
+                     <p class="map-caption">Currently Located</p>
                      <div id="location-map" class="location-map" role="img" aria-label="Map centered on Kyoto, Japan"></div>
                                  
                      <!-- Modal Overlay -->
@@ -260,9 +308,10 @@ style="width: 100% !important; min-height: 220px !important; height: 100% !impor
                         </div>
                      </div>
                   </div>
+                  </div>
                </div>
             </section>
-    
+
 
             <!-- <div class="page-layout">
                Main Content 
@@ -316,7 +365,21 @@ style="width: 100% !important; min-height: 220px !important; height: 100% !impor
                               </div>
                            </div>
                         </div> -->
-                   
+
+            <!-- Message Section -->
+            <section id="message" class="content-section" data-bg="#241B33" data-foreground="light" data-bg-light="#EFE3F0" data-foreground-light="dark" style="display: block !important; height: auto !important; min-height: 0 !important; max-height: none !important; padding: 4rem 0 !important; overflow: visible !important;">
+               <div class="experience-container" style="width: 100%; max-width: 900px; margin: 0 auto; padding: 0 clamp(36px, 4vw, 80px); box-sizing: border-box;">
+                  <div class="experience-section-header" style="margin-bottom: 2rem; text-align: center;">
+                     <h2 class="experience-title" style="display: inline-block; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 0.5rem;">A MESSAGE</h2>
+                  </div>
+                  <blockquote class="manifesto-quote">
+                     <span class="manifesto-mark" aria-hidden="true">&ldquo;</span>
+                     <p class="manifesto-line manifesto-line--lead" data-i18n="message-lead">If a life worth living is built on facing adversity, how can we build technology to help everyone struggle better?</p>
+                     <p class="manifesto-line manifesto-line--close" data-i18n="message-close">I'm greedy for a full, intense life, hard days included. But no one should have to carry the strain alone.</p>
+                  </blockquote>
+               </div>
+            </section>
+
             <!-- About Section -->
             <section id="about" class="content-section" data-bg="#EFC69B" data-foreground="light" data-bg-light="#F5E4EE" data-foreground-light="dark" style="display: block !important; height: auto !important; min-height: 0 !important; max-height: none !important; padding: 2.5rem 0 !important; overflow: visible !important;">
                <div class="experience-container" style="width: 100%; max-width: 1520px; margin: 0 auto; padding: 0 clamp(36px, 4vw, 80px); box-sizing: border-box;">
@@ -327,38 +390,38 @@ style="width: 100% !important; min-height: 220px !important; height: 100% !impor
                      <div class="experience-header" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 2rem; width: 100%;">
                         <div class="experience-header-left" style="flex: 1; min-width: 280px; max-width: 900px;">
                            <span style="font-size: 1rem; line-height: 1.6; color: rgba(255,255,255,0.95); display: block;">
-                              <p style="margin-bottom: 1.2rem;">
-                                 I am currently 19 years-old. At 17, I figured there was more to life than sitting through 
-                                 six periods of classes and stressing over a 4.0 GPA just for a shot at getting into a "good" 
-                                 university. So, I decided to get busy and get a head start on living and dropped out 
-                                 (technically, tested out) of high school. That liberating sense of freedom did not last long. 
-                                 I managed to find my way into UC San Diego just a year and a half later 😂. My first year of junior at 
-                                 UCSD humbled me in more ways than I could have imagined. The experience was rough, but I still found ways to 
+                              <p style="margin-bottom: 1.2rem;" data-i18n="about-p1">
+                                 I am currently 19 years-old. At 17, I figured there was more to life than sitting through
+                                 six periods of classes and stressing over a 4.0 GPA just for a shot at getting into a "good"
+                                 university. So, I decided to get busy and get a head start on living and dropped out
+                                 (technically, tested out) of high school. That liberating sense of freedom did not last long.
+                                 I managed to find my way into UC San Diego just a year and a half later 😂. My first year of junior at
+                                 UCSD humbled me in more ways than I could have imagined. The experience was rough, but I still found ways to
                                  live, learn, and enjoy the ride along the way.
                               </p>
-                               <div class="verse-container" style="margin: 3rem 0; padding-left: 1.5rem; border-left: 3px solid #ffffff;">
+                               <div class="verse-container" style="margin: 3rem 0; padding-left: 1.5rem; border-left: 3px solid #ffffff;" data-i18n="about-verse">
                                  <h3 style="font-size: 0.9rem; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.5rem; opacity: 0.7;">John 16:33</h3>
                                  <h1 style="font-size: 1.8rem; margin: 0; line-height: 1.2;">"In the world you will have tribulation.</h1>
                                  <h2 style="font-size: 1.5rem; margin: 0.5rem 0; font-weight: 300;">But take heart;</h2>
                                  <h3 style="font-size: 1.2rem; margin: 0; font-style: italic;">I have overcome the world."</h3>
                               </div>
 
-                              <p style="margin-bottom: 1.2rem;">
-                                 When I am not "studying", my life is driven by the 3 G's: 
-                                 God, golf, and the gym or on Sundays, faith, family, and football. I have a massive passion 
-                                 for understanding new things, but I also love unwinding outside of technology. Whether 
-                                 that's watching a movie, reading book, solving jigsaw puzzles, or tracking game lines, projections, and 
-                                 spreads. My deepest passion, though, is ice hockey. I have been playing for 15 years now, so if you ever need a 
-                                 short washed forward for pick-up games, hit me up, just don't look up my elite prospects profile beforehand. 
+                              <p style="margin-bottom: 1.2rem;" data-i18n="about-p2">
+                                 When I am not "studying", my life is driven by the 3 G's:
+                                 God, golf, and the gym or on Sundays, faith, family, and football. I have a massive passion
+                                 for understanding new things, but I also love unwinding outside of technology. Whether
+                                 that's watching a movie, reading book, solving jigsaw puzzles, or tracking game lines, projections, and
+                                 spreads. My deepest passion, though, is ice hockey. I have been playing for 15 years now, so if you ever need a
+                                 short washed forward for pick-up games, hit me up, just don't look up my elite prospects profile beforehand.
                                  Aside from sports and other interests, I love to travel, learn new cultures, and adventure. I have
-                                 been very fortunate to explore different countries at such a young age, and I am hoping 
-                                 to continue to do so. You can read more about me and my thoughts right here in my 
-                                 <a href="#logs" style="color: #ffffff; text-decoration: underline; display: inline; text-underline-offset: 3px;">logs.</a> 
+                                 been very fortunate to explore different countries at such a young age, and I am hoping
+                                 to continue to do so. You can read more about me and my thoughts right here in my
+                                 <a href="#logs" style="color: #ffffff; text-decoration: underline; display: inline; text-underline-offset: 3px;">logs.</a>
                               </p>
-                              <p style="margin-bottom: 0;">
-                                 My academic, professional, and personal journey is very unorthodox, and has been 
-                                 quite the adventure. If you want to discuss professional opportunities, talk shop, 
-                                 swap travel stories, debate LeBron Raymone James, or just say hi, feel free to 
+                              <p style="margin-bottom: 0;" data-i18n="about-p3">
+                                 My academic, professional, and personal journey is very unorthodox, and has been
+                                 quite the adventure. If you want to discuss professional opportunities, talk shop,
+                                 swap travel stories, debate LeBron Raymone James, or just say hi, feel free to
                                  <a href="#contact" style="color: #ffffff; text-decoration: underline; display: inline; text-underline-offset: 3px;">contact</a> me.
                               </p>
                            </span>
@@ -371,33 +434,16 @@ style="width: 100% !important; min-height: 220px !important; height: 100% !impor
                   <div class="experience-section-header" style="margin-top: 2rem; margin-bottom: 1.25rem;">
                      <h2 class="experience-title" style="border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 0.5rem;">CURRENT</h2>
                   </div>
-                  <div class="experience-item" style="margin-bottom: 1.75rem; width: 100%;">
-                     <div class="experience-header" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 2rem; width: 100%;">
-                        <div class="experience-header-left" style="flex: 1; min-width: 280px; max-width: 960px;">
-                           <h3 class="experience-role" style="font-size: 1.3rem; margin-top: 0; margin-bottom: 0.75rem;"> Research Student at <strong style="border-bottom: 2px solid #fff;">Kyoto University</strong></h3>
-                           <span style="font-size: 1rem; line-height: 1.6; color: rgba(255,255,255,0.95);">
-                           Assisting in research at the
-                           <a href="https://neurorobotics.med.kyoto-u.ac.jp/" target="_blank" rel="noopener noreferrer" style="color: #fff; text-decoration: underline; font-weight: 600;">
-                           Developmental Neurorobotics Lab (Veale Lab)
-                           </a> within the Graduate School of Medicine, focusing on gaze-tracking and computational neuroscience.
-                           </span>
-                           <p class="experience-description" style="color: rgba(255,255,255,0.8); margin-top: 1rem; font-size: 0.95rem; line-height: 1.5;"> Taking courses in the Basics of Informatics and Artificial Intelligence, Fundamentals of Artificial Intelligence, and Behavioral Neuroscience.</p>
-                        </div>
-                        <div class="experience-header-right" style="flex-shrink: 0; margin-top: 0.5rem;">
-                           <a href="https://www.kyoto-u.ac.jp/en/education-campus/education-and-admissions/non-degree-programs/exchange-students/kuinep" target="_blank" rel="noopener noreferrer" class="experience-logo-link">
-                              <div class="experience-logo" style="background: none; padding: 0; border: none;">
-                                 <img src="./Assets/logos/kyoto_university.png" alt="Kyoto University logo" style="max-width: 400px; height: auto; display: block;" onerror="this.style.display='none'">
-                              </div>
-                           </a>
-                        </div>
-                     </div>
-                  </div>
                   <div class="experience-item" style="width: 100%; margin-bottom: 2rem;">
                      <div class="experience-header" style="display: flex; justify-content: space-between; align-items: center; gap: 2.5rem; width: 100%;">
                         <div class="experience-header-left" style="flex: 1; max-width: 900px;">
                            <h3 class="experience-role" style="font-size: 1.25rem; font-weight: 500; line-height: 1.6; margin: 0; color: rgba(255,255,255,0.95);">
-                              Primarily a Junior at <strong style="color: #fff; font-weight: 700;">UC San Diego</strong> pursuing a B.S. in Electrical Engineering with specialization in Signal and Image Processing, minoring in Cognitive Science focused in Neuroscience (2025-2028).
+                            Senior* at <strong style="color: #fff; font-weight: 700;">UC San Diego</strong> pursuing a B.S. in Electrical Engineering with specialization in Signal and Image Processing, minoring in Cognitive Science with a focus in Neuroscience and Human-Computer Interaction (2025-2028).
                            </h3>
+                           <br>
+                            <span style="font-size: 1rem; line-height: 1.6; color: rgba(255,255,255,0.95);">
+                           <a>*Senior standing, I still have a few more years 😂</a>
+                           </span>
                         </div>
                         <div class="experience-header-right" style="flex-shrink: 0; min-width: 140px; display: flex; justify-content: flex-end;">
                            <a href="https://ece.ucsd.edu/" target="_blank" rel="noopener noreferrer" class="experience-logo-link" style="display: inline-block;">
@@ -408,6 +454,65 @@ style="width: 100% !important; min-height: 220px !important; height: 100% !impor
                         </div>
                      </div>
                   </div>
+                   <div class="experience-item" style="margin-bottom: 1.75rem; width: 100%;">
+                     <div class="experience-header" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 2rem; width: 100%;">
+                        <div class="experience-header-left" style="flex: 1; min-width: 280px; max-width: 960px;">
+                           <span style="font-size: 1rem; line-height: 1.6; color: rgba(255,255,255,0.95);">
+                           Assisting in research at the
+                           <a href="https://neurorobotics.med.kyoto-u.ac.jp/" target="_blank" rel="noopener noreferrer" style="color: #fff; text-decoration: underline; font-weight: 600;">
+                           Developmental Neurorobotics Lab (Veale Lab)
+                           </a> within the Graduate School of Medicine, focusing on gaze-tracking and computational neuroscience. Here is a paper on
+                           <a href="Assets/Lee, Tristan, B990387015 - Final Paper.pdf" style="color: #ffffff; text-decoration: underline; display: inline; text-underline-offset: 3px;">CTE Research</a> I am proud of.
+
+                           </span>
+                        </div>
+                        <div class="experience-header-right" style="flex-shrink: 0; margin-top: 0.5rem;">
+                           <a href="https://www.kyoto-u.ac.jp/en/education-campus/education-and-admissions/non-degree-programs/exchange-students/kuinep" target="_blank" rel="noopener noreferrer" class="experience-logo-link">
+                              <div class="experience-logo" style="background: none; padding: 0; border: none;">
+                                 <img src="./Assets/logos/kyoto_university.png" alt="Kyoto University logo" style="max-width: 400px; height: auto; display: block;" onerror="this.style.display='none'">
+                              </div>
+                           </a>
+                        </div>
+                     </div>
+                  </div>
+
+                  <!--
+                    HIGHLIGHTS STRIP — same format as the certifications
+                    strip below (small scrollable cards). Add real lab
+                    photos by replacing either placeholder card with:
+                      <div class="highlights-card">
+                        <div class="highlights-media"><img src="./Assets/your-photo.jpg" alt="Describe the photo"></div>
+                        <span class="highlights-caption">Your caption</span>
+                      </div>
+                    Add more cards the same way — no JS changes needed,
+                    initHorizontalScroll() in script.js picks up any
+                    .highlights-strip on the page.
+                  -->
+                  <div class="highlights-strip" style="margin-top: 2rem;">
+                     <div class="highlights-card">
+                        <div class="highlights-media">
+                           <img src="./Assets/hand.JPG" alt="hand" onerror="this.closest('.highlights-card').remove()">
+                        </div>
+                        <span class="highlights-caption">Triton NeuroTech (TNT) -  Neuroprosthetic Hand</span>
+                     </div>
+                     <div class="highlights-card">
+                        <div class="highlights-media">
+                           <img src="./Assets/battery.JPG" alt="hand" onerror="this.closest('.highlights-card').remove()">
+                        </div>
+                        <span class="highlights-caption">Triton Solar Car (TSC) - Battery Management System (BMS)</span>
+                     </div>
+                      <div class="highlights-card">
+                        <div class="highlights-media">
+                           <img src="./Assets/hft.JPG" alt="hand" onerror="this.closest('.highlights-card').remove()">
+                        </div>
+                        <span class="highlights-caption">Triton Quantitative Trading (TQT) - High Frequency Trading (HFT) ITCH 5.0 Parser</span>
+                     </div>
+                     <div class="highlights-card">
+                        <div class="highlights-media">
+                           <img src="./Assets/gaze.JPG" alt="hand" onerror="this.closest('.highlights-card').remove()">
+                        </div>
+                        <span class="highlights-caption">  Developmental Neurorobotics Lab (Veale Lab) - Eye Tracking Gaze Map </span>
+                     </div>
             </section>
             <section id="goals" class="content-section" data-bg="#EE964B" data-foreground="light" data-bg-light="#FDE7D7" data-foreground-light="dark" style="display: block !important; height: auto !important; min-height: 0 !important; max-height: none !important; padding: 2.5rem 0 !important; overflow: visible !important;">
             <div class="experience-section-header" style="margin-top: 2rem; margin-bottom: 1.25rem;">
@@ -436,9 +541,72 @@ style="width: 100% !important; min-height: 220px !important; height: 100% !impor
             </div>
          </div>
             </section>
-            <section id="experience" class="content-section" data-bg="#2B4570" data-foreground="light" data-bg-light="#E8F3FB" data-foreground-light="dark" style="display: block !important; height: auto !important; min-height: 0 !important; max-height: none !important; padding: 2.5rem 0 !important; overflow: visible !important;">
+            <section id="experience" class="content-section" data-bg="#EE964B" data-foreground="light" data-bg-light="#E8F3FB" data-foreground-light="dark" style="display: block !important; height: auto !important; min-height: 0 !important; max-height: none !important; padding: 2.5rem 0 !important; overflow: visible !important;">
             <div class="experience-section-header" style="margin-top: 2rem; margin-bottom: 1.25rem;">
             <h2 class="experience-title" style="border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 0.5rem;">EXPERIENCE</h2>
+            </div>
+            <div class="experience-item" style="margin-bottom: 2rem; width: 100%;">
+            <div class="experience-header" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 2rem; width: 100%;">
+            <div class="experience-header-left" style="flex: 1; min-width: 280px; max-width: 960px;">
+            <h3 class="experience-role" style="font-size: 1.3rem; margin-top: 0; margin-bottom: 0.25rem;">FPGA / RTL Design Engineer</h3>
+            <p class="experience-company" style="color: rgba(255,255,255,0.85); margin-top: 0; margin-bottom: 1rem; font-style: italic;">Triton Quantitative Trading (TQT)</p>
+            <ul class="experience-bullets" style="color: rgba(255,255,255,0.9); line-height: 1.6; padding-left: 1.2rem;">
+            <li>Develop an FPGA-based ITCH 5.0 decoder in SystemVerilog to parse NASDAQ feeds from a 100G CMAC interface.</li>
+            <li>Build an AXI4-Stream adapter to deserialize 512-bit bus data into 8-bit streams using <code>tkeep</code> masks for partial frames.</li>
+            <li>Extract order attributes (price, volume, side) at 1 byte/cycle and update Limit Order Book registers to output live top-of-book prices.</li>
+            <li>Verify pipeline throughput and sub-microsecond latency using Vivado behavioral simulations on real market data.</li>
+            <li>Unfortunately, I did not win a math competition in China 😔 </li>
+            </ul>
+            </div>
+            <div class="experience-header-right" style="display: flex; flex-direction: column; align-items: flex-start; gap: 0.5rem; flex-shrink: 0;">
+            <span class="experience-date" style="color: rgba(255,255,255,0.7); font-size: 0.9rem; line-height: 1.4;">February 2026 - Present<br>La Jolla, California</span>
+            <a href="https://docs.google.com/presentation/d/1u1ggpr6EhYuNv_0GP__bUO9FDj0GBn7I/edit?usp=sharing&ouid=117330742356530150246&rtpof=true&sd=true" target="_blank" rel="noopener noreferrer" class="experience-logo-link">
+            <div class="experience-logo" style="background: none; padding: 0; border: none;">
+            <img src="./Assets/logos/TQT.png" alt="California Space Grant Consortium logo" style="max-width: 400px; height: auto; display: block;" onerror="this.style.display='none'">
+            </div>
+            </a>
+            </div>
+            </div>
+            </div>
+            <div class="experience-item" style="margin-bottom: 2rem; width: 100%;">
+            <div class="experience-header" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 2rem; width: 100%;">
+            <div class="experience-header-left" style="flex: 1; min-width: 280px; max-width: 960px;">
+            <h3 class="experience-role" style="font-size: 1.3rem; margin-top: 0; margin-bottom: 0.25rem;">Firmware Engineer</h3>
+            <p class="experience-company" style="color: rgba(255,255,255,0.85); margin-top: 0; margin-bottom: 1rem; font-style: italic;">Triton NeuroTech (TNT)</p>
+            <ul class="experience-bullets" style="color: rgba(255,255,255,0.9); line-height: 1.6; padding-left: 1.2rem;">
+            <li>Programmming Arduino microcontrollers in C++ to read raw input data from EMG sensors and drive motor movements for prosthetic control.</li>
+            <li>Configuring hardware pins and signal thresholds to ensure smooth, responsive sensor-to-actuator execution during initial testing.</li>
+            <li>Documenting board configurations and baseline firmware setup before handing off the system to the mechanical team.</li>
+            </ul>
+            </div>
+            <div class="experience-header-right" style="display: flex; flex-direction: column; align-items: flex-start; gap: 0.5rem; flex-shrink: 0;">
+            <span class="experience-date" style="color: rgba(255,255,255,0.7); font-size: 0.9rem; line-height: 1.4;">October 2025 - Present<br>La Jolla, California</span>
+            <a href="https://sites.google.com/ucsd.edu/triton-neurotech/projects/emg-neural-prosthetics?authuser=0" target="_blank" rel="noopener noreferrer" class="experience-logo-link">
+            <div class="experience-logo" style="background: none; padding: 0; border: none;">
+            <img src="./Assets/logos/triton-neurotech.png" alt="California Space Grant Consortium logo" style="max-width: 400px; height: auto; display: block;" onerror="this.style.display='none'">
+            </div>
+            </a>
+            </div>
+            </div>
+            </div>
+            <div class="experience-item" style="margin-bottom: 2rem; width: 100%;">
+            <div class="experience-header" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 2rem; width: 100%;">
+            <div class="experience-header-left" style="flex: 1; min-width: 280px; max-width: 960px;">
+            <h3 class="experience-role" style="font-size: 1.3rem; margin-top: 0; margin-bottom: 0.25rem;">Battery Engineer</h3>
+            <p class="experience-company" style="color: rgba(255,255,255,0.85); margin-top: 0; margin-bottom: 1rem; font-style: italic;">Triton Solar Car (TSC)</p>
+            <ul class="experience-bullets" style="color: rgba(255,255,255,0.9); line-height: 1.6; padding-left: 1.2rem;">
+            <li>Almost shorted a circuit my first year, hopefully they bring me back 🙏</li>
+            </ul>
+            </div>
+            <div class="experience-header-right" style="display: flex; flex-direction: column; align-items: flex-start; gap: 0.5rem; flex-shrink: 0;">
+            <span class="experience-date" style="color: rgba(255,255,255,0.7); font-size: 0.9rem; line-height: 1.4;">October 2025 - Present<br>La Jolla, California</span>
+            <a href="https://tritonsolarcar.org/" target="_blank" rel="noopener noreferrer" class="experience-logo-link">
+            <div class="experience-logo" style="background: none; padding: 0; border: none;">
+            <img src="./Assets/logos/triton-solar-car.png" alt="California Space Grant Consortium logo" style="max-width: 400px; height: auto; display: block;" onerror="this.style.display='none'">
+            </div>
+            </a>
+            </div>
+            </div>
             </div>
             <div class="experience-item" style="margin-bottom: 2rem; width: 100%;">
             <div class="experience-header" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 2rem; width: 100%;">
@@ -525,6 +693,35 @@ style="width: 100% !important; min-height: 220px !important; height: 100% !impor
             <div class="experience-section-header" style="margin-top: 2rem; margin-bottom: 1.25rem;">
             <h2 class="experience-title" style="border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 0.5rem;">EDUCATION</h2>
             </div>
+               <div class="experience-item" style="margin-bottom: 2rem; width: 100%;">
+            <div class="experience-header" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 2rem; width: 100%;">
+            <div class="experience-header-left" style="flex: 1; min-width: 280px; max-width: 960px;">
+            <h3 class="experience-role" style="font-size: 1.3rem; margin-top: 0; margin-bottom: 0.25rem;"><strong>University of California, San Diego</strong></h3>
+            <p class="experience-company" style="color: rgba(255,255,255,0.85); margin-top: 0; margin-bottom: 0.25rem;">B.S. Electrical Engineering, Minor in Cognitive Science</p>
+            <p class="experience-description" style="color: rgba(255,255,255,0.7); margin-top: 0; margin-bottom: 0.75rem; font-size: 0.95rem;">Signal and Image Processing</p>
+            <p class="experience-activities" style="margin-bottom: 0.75rem;"><strong>Activities and Societies:</strong> UCSD Ice Hockey Club, UCSD Surf Club, IEEE, Triton Neurotech, Triton Solar Car, Triton Quantitative Trading</p>
+            <p class="experience-activities" style="margin-bottom: 0.5rem; color: rgba(255,255,255,0.7);"><strong>Relevant Coursework:</strong> </p>
+            <ul class="experience-bullets" style="color: rgba(255,255,255,0.9); line-height: 1.5; padding-left: 1.2rem;">
+            <li>COGS 108: Data Science in Practice</li>
+            <li>DSC 10: Principles of Data Science</li>
+            <li>ECE 15: Engineering Computation: Introduction to Programming in C</li>
+            <li>ECE 17: Object-Oriented Programming: Design and Development with C++</li>
+            <li>ECE 25: Introduction to Digital Circuit Design</li>
+            <li>ECE 35: Introduction to Analog Circuit Design</li>
+            <li>ECE 45: Circuits and Systems</li>
+            <li>ECE 109: Engineering Probability and Statistics</li>
+            </ul>
+            </div>
+            <div class="experience-header-right" style="display: flex; flex-direction: column; align-items: flex-start; gap: 0.5rem; flex-shrink: 0;">
+            <span class="experience-date" style="color: rgba(255,255,255,0.7); font-size: 0.9rem; line-height: 1.4;">September 2025 - June 2028<br>La Jolla, California</span>
+            <a href="https://ece.ucsd.edu/" target="_blank" rel="noopener noreferrer" class="experience-logo-link">
+            <div class="experience-logo" style="background: none; padding: 0; border: none;">
+            <img src="./Assets/logos/ucsd.png" alt="UC San Diego logo" style="max-width: 400px; height: auto; display: block;" onerror="this.style.display='none'">
+            </div>
+            </a>
+            </div>
+            </div>
+            </div>
             <div class="experience-item" style="margin-bottom: 2rem; width: 100%;">
             <div class="experience-header" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 2rem; width: 100%;">
             <div class="experience-header-left" style="flex: 1; min-width: 280px; max-width: 960px;">
@@ -548,32 +745,7 @@ style="width: 100% !important; min-height: 220px !important; height: 100% !impor
             </div>
             </div>
             </div>
-            <div class="experience-item" style="margin-bottom: 2rem; width: 100%;">
-            <div class="experience-header" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 2rem; width: 100%;">
-            <div class="experience-header-left" style="flex: 1; min-width: 280px; max-width: 960px;">
-            <h3 class="experience-role" style="font-size: 1.3rem; margin-top: 0; margin-bottom: 0.25rem;"><strong>University of California, San Diego</strong></h3>
-            <p class="experience-company" style="color: rgba(255,255,255,0.85); margin-top: 0; margin-bottom: 0.25rem;">B.S. Electrical Engineering, Minor in Cognitive Science</p>
-            <p class="experience-description" style="color: rgba(255,255,255,0.7); margin-top: 0; margin-bottom: 0.75rem; font-size: 0.95rem;">Signal and Image Processing</p>
-            <p class="experience-activities" style="margin-bottom: 0.75rem;"><strong>Activities and Societies:</strong> UCSD Ice Hockey Club, UCSD Surf Club, IEEE, Triton Neurotech, Triton Solar Car, Triton Quantitative Trading</p>
-            <p class="experience-activities" style="margin-bottom: 0.5rem; color: rgba(255,255,255,0.7);"><strong>Relevant Coursework:</strong> </p>
-            <ul class="experience-bullets" style="color: rgba(255,255,255,0.9); line-height: 1.5; padding-left: 1.2rem;">
-            <li>DSC 10: Principles of Data Science</li>
-            <li>ECE 15: Engineering Computation: Introduction to Programming in C</li>
-            <li>ECE 17: Object-Oriented Programming: Design and Development with C++</li>
-            <li>ECE 25: Introduction to Digital Circuit Design</li>
-            <li>ECE 35: Introduction to Analog Circuit Design</li>
-            </ul>
-            </div>
-            <div class="experience-header-right" style="display: flex; flex-direction: column; align-items: flex-start; gap: 0.5rem; flex-shrink: 0;">
-            <span class="experience-date" style="color: rgba(255,255,255,0.7); font-size: 0.9rem; line-height: 1.4;">September 2025 - June 2028<br>La Jolla, California</span>
-            <a href="https://ece.ucsd.edu/" target="_blank" rel="noopener noreferrer" class="experience-logo-link">
-            <div class="experience-logo" style="background: none; padding: 0; border: none;">
-            <img src="./Assets/logos/ucsd.png" alt="UC San Diego logo" style="max-width: 400px; height: auto; display: block;" onerror="this.style.display='none'">
-            </div>
-            </a>
-            </div>
-            </div>
-            </div>
+         
             <div class="experience-item" style="margin-bottom: 2rem; width: 100%;">
             <div class="experience-header" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 2rem; width: 100%;">
             <div class="experience-header-left" style="flex: 1; min-width: 280px; max-width: 960px;">
@@ -753,7 +925,7 @@ style="width: 100% !important; min-height: 220px !important; height: 100% !impor
       <div class="work-section" style="width: 100%; max-width: 1520px; margin: 0 auto; padding: 0 clamp(36px, 4vw, 80px); box-sizing: border-box;">
       <div class="section-title-small">LOGS</div>
       <p class="logs-subtitle">Thoughts, reflections, and other musings</p>
-      <div id="logs-list" class="logs-grid"></div>
+      <div id="logs-list" class="logs-wayfinder"></div>
       </div>
       </section>
     <section id="contact" class="content-section contact-section" data-bg="#637081" data-foreground="light" data-bg-light="#ECE6FB" data-foreground-light="dark" style="padding: 4rem 0">
@@ -785,6 +957,17 @@ style="width: 100% !important; min-height: 220px !important; height: 100% !impor
       </main>
       </div>
       <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-      <script src="script.js?v=20260715-certsfix"></script>
+      <script src="script.js?v=20260902-lightmodefix"></script>
+      <script>
+         function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+               pageLanguage: 'en',
+               includedLanguages: 'ja,zh-TW,zh-CN',
+               layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+               autoDisplay: false
+            }, 'google_translate_element');
+         }
+      </script>
+      <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
    </body>
 </html>

@@ -7,7 +7,7 @@
     <link rel="icon" type="image/png" href="./Assets/logos/tlee.png">
     <link rel="shortcut icon" type="image/png" href="./Assets/logos/tlee.png">
     <link rel="apple-touch-icon" href="./Assets/logos/tlee.png">
-    <link rel="stylesheet" href="styles.css?v=20260715-certsfix">
+    <link rel="stylesheet" href="styles.css?v=20260902-lightmodefix">
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=Shippori+Mincho:wght@400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
@@ -17,6 +17,22 @@
     </style>
 </head>
 <body>
+    <script>
+    // Instant, zero-flash theme guess — see index.html for the full comment.
+    (function () {
+        try {
+            var stored = localStorage.getItem('tlee-theme');
+            if (stored === 'light' || stored === 'dark') {
+                if (stored === 'light') document.body.classList.add('theme-light');
+                return;
+            }
+            var hour = new Date().getHours();
+            var isNightByClock = hour < 6 || hour >= 19;
+            var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+            if (!isNightByClock && !prefersDark) document.body.classList.add('theme-light');
+        } catch (e) {}
+    })();
+    </script>
     <div id="entrance-overlay"></div>
     <div class="sidebar-overlay" id="sidebar-overlay"></div>
     
@@ -81,6 +97,20 @@
                 </svg>
             </button>
         </div>
+
+        <!-- Site translator (Google's free client-side widget — live-
+             translates the page in place, no API key/server needed).
+             Add more codes to includedLanguages if other relatives need
+             them: https://cloud.google.com/translate/docs/languages -->
+        <div class="translate-wrap">
+            <p class="translate-label">Read this site in</p>
+            <div class="translate-quick">
+                <button type="button" class="translate-quick-btn" data-lang="ja">日本語</button>
+                <button type="button" class="translate-quick-btn" data-lang="zh-TW">中文</button>
+                <button type="button" class="translate-quick-btn" data-lang="en">EN</button>
+            </div>
+            <div id="google_translate_element"></div>
+        </div>
     </aside>
 
     <div class="page-layout">
@@ -89,17 +119,25 @@
                 <div class="work-section" style="width: 100%; max-width: 1520px; margin: 0 auto; padding: 0 clamp(36px, 4vw, 80px); box-sizing: border-box;">
                     <div class="section-title-small">WEEKLY LOGS</div>
                     <p class="logs-subtitle">Build notes, labs, wins, and lessons.</p>
-                    <div id="logs-list" class="logs-grid"></div>
+                    <div id="logs-list" class="logs-wayfinder"></div>
                 </div>
             </section>
         </main>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <script src="script.js?v=20260715-certsfix"></script>
-    <!-- Inside logs.html, before the closing </body> tag -->
-    <!-- Inside logs.html, before the closing </body> tag -->
+    <script src="script.js?v=20260902-lightmodefix"></script>
     <script async src="https://platform.x.com/widgets.js" charset="utf-8"></script>
-    <script src="script.js?v=20260715-certsfix"></script>
+    <script>
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'en',
+                includedLanguages: 'ja,zh-TW,zh-CN',
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+                autoDisplay: false
+            }, 'google_translate_element');
+        }
+    </script>
+    <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>
