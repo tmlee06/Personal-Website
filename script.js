@@ -1079,48 +1079,61 @@ async function openFullscreenLog(log, updateHash = true, scrollOnClose = false) 
             : null;
 
         reader.innerHTML = `
-            <div class="pinned-nav">
-                <button class="back-link" id="close-viewer">
-                    <i class="fas fa-arrow-left"></i> BACK TO MAIN
-                </button>
-                ${prevLog ? `
-                <button class="back-link prev-link" id="prev-log-btn">
-                    <i class="fas fa-chevron-left"></i> PREVIOUS
-                </button>` : ''}
-                ${nextLog ? `
-                <button class="back-link next-link" id="next-log-btn">
-                    NEXT <i class="fas fa-chevron-right"></i>
-                </button>` : ''}
-            </div>
+            <!-- Single fixed toolbar, two flex rows in normal flow — not two
+                 independently-fixed boxes racing for the same top-right
+                 corner, which is what let Back/Previous/Next collide with
+                 the translate pills/theme toggle on narrow phones. Row 1:
+                 Back left, translate+theme right. Row 2 (only when a prev
+                 or next log exists): Previous/Next. -->
+            <div class="reader-toolbar">
+                <div class="reader-toolbar-row reader-toolbar-top">
+                    <button class="back-link" id="close-viewer">
+                        <i class="fas fa-arrow-left"></i> BACK TO MAIN
+                    </button>
 
-            <div class="reader-top-controls">
-                <!-- Same one-click pills as the sidebar/home translate control (see
-                     initQuickTranslate in script.js) — kept up here, out of the
-                     article flow, so it doesn't interrupt the log content below. -->
-                <div class="translate-wrap translate-wrap--reader">
-                    <div class="translate-quick">
-                        <button type="button" class="translate-quick-btn" data-lang="ja">日本語</button>
-                        <button type="button" class="translate-quick-btn" data-lang="zh-TW">中文</button>
-                        <button type="button" class="translate-quick-btn" data-lang="en">EN</button>
+                    <div class="reader-top-controls">
+                        <!-- Same one-click pills as the sidebar/home translate control
+                             (see initQuickTranslate in script.js) — kept up here, out
+                             of the article flow, so it doesn't interrupt the log
+                             content below. -->
+                        <div class="translate-wrap translate-wrap--reader">
+                            <div class="translate-quick">
+                                <button type="button" class="translate-quick-btn" data-lang="ja">日本語</button>
+                                <button type="button" class="translate-quick-btn" data-lang="zh-TW">中文</button>
+                                <button type="button" class="translate-quick-btn" data-lang="en">EN</button>
+                            </div>
+                        </div>
+
+                        <button id="reader-theme-toggle" class="theme-toggle reader-theme-toggle" type="button" aria-label="Switch theme" title="Switch theme">
+                            <svg class="theme-icon theme-icon-sun" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="4"/>
+                                <line x1="12" y1="1" x2="12" y2="3"/>
+                                <line x1="12" y1="21" x2="12" y2="23"/>
+                                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+                                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+                                <line x1="1" y1="12" x2="3" y2="12"/>
+                                <line x1="21" y1="12" x2="23" y2="12"/>
+                                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+                                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+                            </svg>
+                            <svg class="theme-icon theme-icon-moon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                            </svg>
+                        </button>
                     </div>
                 </div>
 
-                <button id="reader-theme-toggle" class="theme-toggle reader-theme-toggle" type="button" aria-label="Switch theme" title="Switch theme">
-                    <svg class="theme-icon theme-icon-sun" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="12" cy="12" r="4"/>
-                        <line x1="12" y1="1" x2="12" y2="3"/>
-                        <line x1="12" y1="21" x2="12" y2="23"/>
-                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
-                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-                        <line x1="1" y1="12" x2="3" y2="12"/>
-                        <line x1="21" y1="12" x2="23" y2="12"/>
-                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
-                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-                    </svg>
-                    <svg class="theme-icon theme-icon-moon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-                    </svg>
-                </button>
+                ${(prevLog || nextLog) ? `
+                <div class="reader-toolbar-row reader-toolbar-nav">
+                    ${prevLog ? `
+                    <button class="back-link prev-link" id="prev-log-btn">
+                        <i class="fas fa-chevron-left"></i> PREVIOUS
+                    </button>` : '<span></span>'}
+                    ${nextLog ? `
+                    <button class="back-link next-link" id="next-log-btn">
+                        NEXT <i class="fas fa-chevron-right"></i>
+                    </button>` : ''}
+                </div>` : ''}
             </div>
 
             <div class="reader-content">

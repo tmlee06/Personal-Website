@@ -1799,13 +1799,27 @@ body.theme-light .location-map {
     text-align: left !important;
 }
 
-.pinned-nav {
+/* One fixed container with two stacked flex rows (see reader.innerHTML
+   in openFullscreenLog) instead of the old .pinned-nav + .reader-top-controls
+   pair, which were each independently `position: fixed` and anchored to
+   the same top-right corner — on narrow phones the translate pills/theme
+   toggle could land right on top of Back/Previous/Next. Stacking them as
+   rows inside one box keeps them in a predictable flow at every width. */
+.reader-toolbar {
     position: fixed;
     top: 40px;
     left: 40px;
     right: 40px;
     z-index: 10000;
     display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.reader-toolbar-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     flex-wrap: wrap;
     gap: 10px;
 }
@@ -1971,20 +1985,15 @@ body.theme-light .location-map {
     font-size: 0.8rem;
 }
 
-/* Groups the theme toggle with the translate pills so both sit together,
-   fixed at the top-right corner, above the article content but never
-   overlapping it (reader-content's top margin starts well below here). */
+/* Groups the theme toggle with the translate pills so both sit together
+   as the right-hand side of .reader-toolbar-top (see .reader-toolbar
+   above) — no positioning of its own now, it's just a flex item inside
+   that row. */
 .reader-top-controls {
-    position: fixed;
-    top: 40px;
-    right: 40px;
-    z-index: 10001;
     display: flex;
     align-items: center;
-    justify-content: flex-end;
     flex-wrap: wrap;
     gap: 14px;
-    max-width: calc(100vw - 80px);
 }
 
 .reader-theme-toggle {
@@ -3171,14 +3180,6 @@ body.dark-foreground .current-project-logo * {
     }
 }
 
-/* Reader mobile */
-@media (max-width: 768px) {
-    .reader-top-controls {
-        top: 20px;
-        right: 20px;
-    }
-}
-
 /* Short desktop screens */
 @media (max-height: 720px) and (min-width: 1051px) {
     .sidebar {
@@ -3616,10 +3617,12 @@ body:has(.fullscreen-reader) .fullscreen-reader {
 /* Make log reader nicer on smaller screens */
 @media (max-width: 700px) {
     .reader-content {
-        /* Extra top margin vs desktop's 120px: with Back/Previous/Next all
-           visible, the pinned-nav can wrap to two rows on narrow phones —
-           leave room so it never overlaps the header. */
-        margin: 140px auto 40px auto !important;
+        /* Extra top margin vs desktop's 120px: .reader-toolbar-top (Back +
+           translate pills + theme toggle) can itself wrap to 2 lines on a
+           narrow phone, stacked above .reader-toolbar-nav (Previous/Next)
+           — worst case is 3 lines of controls. Leave enough room that
+           never overlaps the header regardless. */
+        margin: 180px auto 40px auto !important;
         padding: 0 24px !important;
         max-width: 100% !important;
     }
@@ -3634,25 +3637,25 @@ body:has(.fullscreen-reader) .fullscreen-reader {
         line-height: 1.75 !important;
     }
 
-    .pinned-nav {
+    .reader-toolbar {
         top: 20px !important;
         left: 20px !important;
         right: 20px !important;
-        flex-wrap: wrap;
+        gap: 8px !important;
+    }
+
+    .reader-toolbar-row {
         gap: 8px;
     }
 
-    .pinned-nav .back-link {
+    .reader-toolbar .back-link {
         padding: 9px 14px;
         font-size: 0.65rem;
         gap: 7px;
     }
 
     .reader-top-controls {
-        top: 20px !important;
-        right: 20px !important;
         gap: 8px !important;
-        max-width: calc(100vw - 40px) !important;
     }
 }
 /* Mobile Optimization Upgrades */
@@ -4208,7 +4211,7 @@ body.theme-light .translate-notice-close:hover { color: var(--km-text) !importan
 
 @media (max-width: 700px) {
     /* Pills alone can outgrow the phone-width top bar next to the theme
-       toggle — shrink them to match .pinned-nav .back-link at this
+       toggle — shrink them to match .reader-toolbar .back-link at this
        breakpoint instead of wrapping onto their own row. */
     .translate-wrap--reader .translate-quick-btn {
         padding: 8px 11px;
