@@ -180,7 +180,7 @@
                                  <div class="section-title-small" style="text-align: center; margin-bottom: 0.85rem; font-weight: bold; letter-spacing: 0.05em; color: #fff; font-size: 0.8rem;">VIDEO OF THE WEEK</div>
                                  <div style="width: 100%; border-radius: 16px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.15); line-height: 0; background: #000; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
                                     <iframe
-                                       src="https://www.youtube.com/embed/ta-pVVanLMs?si=CNSf4MDPyXcejtZj" 
+                                       src="https://www.youtube.com/watch?v=YT7Am4i2zHk" 
                                        style="width: 100%; aspect-ratio: 16 / 9; border: none; display: block;"
                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                        allowfullscreen>
@@ -478,41 +478,44 @@ style="width: 100% !important; min-height: 220px !important; height: 100% !impor
 
                   <!--
                     HIGHLIGHTS STRIP — same format as the certifications
-                    strip below (small scrollable cards). Add real lab
-                    photos by replacing either placeholder card with:
-                      <div class="highlights-card">
+                    strip below (small scrollable cards). Each card links
+                    out on click (project site, repo, lab page, etc — see
+                    .highlights-card:hover/:focus-visible in styles.css,
+                    which already styles it as a link). Add a new one with:
+                      <a href="https://example.com" target="_blank" rel="noopener noreferrer" class="highlights-card">
                         <div class="highlights-media"><img src="./Assets/your-photo.jpg" alt="Describe the photo"></div>
                         <span class="highlights-caption">Your caption</span>
-                      </div>
+                      </a>
                     Add more cards the same way — no JS changes needed,
                     initHorizontalScroll() in script.js picks up any
                     .highlights-strip on the page.
                   -->
                   <div class="highlights-strip" style="margin-top: 2rem;">
-                     <div class="highlights-card">
+                     <a href="https://sites.google.com/ucsd.edu/triton-neurotech/projects/emg-neural-prosthetics?authuser=0" target="_blank" rel="noopener noreferrer" class="highlights-card">
                         <div class="highlights-media">
                            <img src="./Assets/hand.JPG" alt="hand" onerror="this.closest('.highlights-card').remove()">
                         </div>
                         <span class="highlights-caption">Triton NeuroTech (TNT) -  Neuroprosthetic Hand</span>
-                     </div>
-                     <div class="highlights-card">
+                     </a>
+                     <a href="https://tritonsolarcar.org/" target="_blank" rel="noopener noreferrer" class="highlights-card">
                         <div class="highlights-media">
                            <img src="./Assets/battery.JPG" alt="hand" onerror="this.closest('.highlights-card').remove()">
                         </div>
                         <span class="highlights-caption">Triton Solar Car (TSC) - Battery Management System (BMS)</span>
-                     </div>
-                      <div class="highlights-card">
+                     </a>
+                      <a href="https://tmlee06.github.io/Itch-Parser/" target="_blank" rel="noopener noreferrer" class="highlights-card">
                         <div class="highlights-media">
                            <img src="./Assets/hft.JPG" alt="hand" onerror="this.closest('.highlights-card').remove()">
                         </div>
                         <span class="highlights-caption">Triton Quantitative Trading (TQT) - High Frequency Trading (HFT) ITCH 5.0 Parser</span>
-                     </div>
-                     <div class="highlights-card">
+                     </a>
+                     <a href="https://neurorobotics.med.kyoto-u.ac.jp/" target="_blank" rel="noopener noreferrer" class="highlights-card">
                         <div class="highlights-media">
                            <img src="./Assets/gaze.JPG" alt="hand" onerror="this.closest('.highlights-card').remove()">
                         </div>
                         <span class="highlights-caption">  Developmental Neurorobotics Lab (Veale Lab) - Eye Tracking Gaze Map </span>
-                     </div>
+                     </a>
+                  </div>
             </section>
             <section id="goals" class="content-section" data-bg="#EE964B" data-foreground="light" data-bg-light="#FDE7D7" data-foreground-light="dark" style="display: block !important; height: auto !important; min-height: 0 !important; max-height: none !important; padding: 2.5rem 0 !important; overflow: visible !important;">
             <div class="experience-section-header" style="margin-top: 2rem; margin-bottom: 1.25rem;">
