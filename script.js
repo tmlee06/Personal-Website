@@ -878,17 +878,33 @@ function getGoogTransLang() {
     return match ? match[1] : null;
 }
 
+// Was originally only ever called once, right after page load, when
+// initQuickTranslate() still always reloaded the page on every switch.
+// Now that the quick-translate buttons can also drive the widget directly
+// with no reload (see initQuickTranslate), this can run again mid-session
+// with a *different* language than last time — so it also needs to revert
+// what it changed, not just apply.
 function applyCuratedTranslations() {
     const lang = getGoogTransLang();
-    if (!lang || CURATED_LANGS.indexOf(lang) === -1) return;
+    const isCurated = lang && CURATED_LANGS.indexOf(lang) !== -1;
 
     let curatedCount = 0;
     document.querySelectorAll('[data-i18n]').forEach((el) => {
+        // Stash the original English markup the first time this element is
+        // touched at all, so a later revert (switch to English, or to a
+        // language with no curated text) has something to restore.
+        if (el.dataset.i18nOriginal === undefined) {
+            el.dataset.i18nOriginal = el.innerHTML;
+        }
+
         const entry = CURATED_TRANSLATIONS[el.dataset.i18n];
-        if (entry && entry[lang]) {
+        if (isCurated && entry && entry[lang]) {
             el.innerHTML = entry[lang];
             el.setAttribute('translate', 'no');
             curatedCount++;
+        } else if (el.innerHTML !== el.dataset.i18nOriginal) {
+            el.innerHTML = el.dataset.i18nOriginal;
+            el.removeAttribute('translate');
         }
     });
 
@@ -899,11 +915,11 @@ function applyCuratedTranslations() {
 // whether this page actually has curated sections (index.html's About/
 // Message) or is machine-translated throughout (logs.html, etc.) — the
 // notice shouldn't claim credit for a section that isn't on this page.
+// Re-callable mid-session (see applyCuratedTranslations above): leaves an
+// already-shown notice for the *same* language alone (so dismissing it
+// still sticks if nothing actually changed), swaps it if the language
+// changed, and removes it entirely on revert to English/non-curated.
 function showTranslationNotice(lang, hasCurated) {
-    if (document.querySelector('.translate-notice')) return;
-    const main = document.querySelector('.main-content') || document.querySelector('.page-layout');
-    if (!main) return;
-
     const copy = hasCurated
         ? {
             ja: 'このサイトの大部分は自動翻訳です。ジョークがうまく伝わらないところがあっても大目に見てください 😅　「A MESSAGE」と「ABOUT」のセクションは僕が自分で訳しました。',
@@ -914,10 +930,25 @@ function showTranslationNotice(lang, hasCurated) {
             'zh-TW': '這個頁面是機器翻譯，如果有些玩笑或用語翻得怪怪的，請多包涵 😅'
         };
     const dismissLabel = { ja: '閉じる', 'zh-TW': '關閉' };
-    if (!copy[lang]) return;
+
+    const existing = document.querySelector('.translate-notice');
+
+    if (!lang || !copy[lang]) {
+        if (existing) existing.remove();
+        return;
+    }
+
+    if (existing) {
+        if (existing.dataset.lang === lang) return; // already showing for this language — let a dismissal stick
+        existing.remove();
+    }
+
+    const main = document.querySelector('.main-content') || document.querySelector('.page-layout');
+    if (!main) return;
 
     const notice = document.createElement('div');
     notice.className = 'translate-notice';
+    notice.dataset.lang = lang;
     notice.innerHTML = `<p>${copy[lang]}</p><button type="button" class="translate-notice-close" aria-label="${dismissLabel[lang]}">&times;</button>`;
     main.insertBefore(notice, main.firstChild);
     notice.querySelector('.translate-notice-close').addEventListener('click', () => notice.remove());
@@ -926,11 +957,22 @@ function showTranslationNotice(lang, hasCurated) {
 applyCuratedTranslations();
 
 // --- ONE-CLICK TRANSLATE BUTTONS ---
-// Drives Google's translate widget via its own googtrans cookie rather
-// than reaching into the widget's internal <select> — the cookie is the
-// documented, stable mechanism Google's script itself reads on load, so
-// this keeps working even if they change the dropdown's internal markup.
-// Costs a reload, but that's a fair trade for "always works."
+// Two ways to drive Google's translate widget, tried in order:
+//
+// 1. Reach into the widget's own <select class="goog-te-combo"> and fire
+//    it directly — this is what the (hidden) dropdown does when a person
+//    picks a language themselves, so it's driving the actual live widget
+//    rather than a side-channel it merely reads on some future load.
+//    Works instantly, no page reload, and sidesteps cookie domain/timing
+//    semantics entirely (browsers don't have to agree on cookie-jar
+//    ordering if there's no cookie in the loop for this click).
+// 2. If that element hasn't mounted yet — translate.google.com's
+//    element.js loads async and a fast click can beat it — fall back to
+//    the documented googtrans cookie + reload, which is slower but keeps
+//    working regardless of load timing.
+//
+// The cookie is still written on every click either way, so a reload (or
+// opening the log reader, a separate page load) picks up the same choice.
 //
 // Takes an optional root so it can be re-run against markup injected after
 // the initial page load (e.g. the log reader's own set of pills) without
@@ -957,11 +999,29 @@ function initQuickTranslate(root) {
         }
     }
 
+    // Returns true if it managed to trigger the widget directly (no
+    // reload needed), false if the widget isn't mounted yet.
+    function applyViaWidget(lang) {
+        const combo = document.querySelector('select.goog-te-combo');
+        if (!combo) return false;
+        combo.value = lang === 'en' ? '' : lang; // '' is the combo's own "show original" option
+        combo.dispatchEvent(new Event('change'));
+        return true;
+    }
+
     buttons.forEach((btn) => {
         btn.dataset.translateBound = 'true';
         btn.addEventListener('click', () => {
-            setGoogTransCookie(btn.dataset.lang);
-            window.location.reload();
+            const lang = btn.dataset.lang;
+            setGoogTransCookie(lang);
+            if (applyViaWidget(lang)) {
+                // No reload happened, so nothing re-runs the curated
+                // ja/zh-TW overrides or the notice banner on its own —
+                // they only ever ran once at page load. Re-run them now.
+                applyCuratedTranslations();
+            } else {
+                window.location.reload();
+            }
         });
     });
 }
