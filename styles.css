@@ -4059,6 +4059,13 @@ body { top: 0px !important; }
     padding: 8px 14px;
     min-height: 40px;
     cursor: pointer;
+    /* touch-action skips the ~300ms tap-delay iOS Safari otherwise waits
+       out to check for a double-tap-to-zoom; tap-highlight-color drops the
+       gray flash Safari paints on tap so it doesn't fight this button's
+       own :hover/:active styling. Neither is the fix for taps not
+       registering (this is already a real <button>) — just iOS polish. */
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
     transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 

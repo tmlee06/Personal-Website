@@ -940,15 +940,20 @@ function initQuickTranslate(root) {
     const buttons = (root || document).querySelectorAll('.translate-quick-btn:not([data-translate-bound])');
     if (!buttons.length) return;
 
+    // Writes exactly one googtrans cookie, host-only (no Domain attribute).
+    // This used to also write a second `domain=.<host>` copy of the same
+    // cookie "for safety" — but that leaves two live cookies with the same
+    // name and different Domain scopes, and RFC 6265 doesn't define which
+    // one document.cookie (or the widget's own read of it) sees first.
+    // Chromium and WebKit aren't guaranteed to agree, which is exactly the
+    // kind of thing that could work on desktop and silently pick the wrong
+    // (stale/empty) value on iOS Safari. One cookie removes the ambiguity
+    // outright, and a host-only cookie is all this single-domain site needs.
     function setGoogTransCookie(lang) {
-        const host = window.location.hostname;
         const expired = 'googtrans=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/;';
         document.cookie = expired;
-        document.cookie = expired + 'domain=.' + host + ';';
         if (lang !== 'en') {
-            const value = 'googtrans=/en/' + lang + ';path=/;';
-            document.cookie = value;
-            document.cookie = value + 'domain=.' + host + ';';
+            document.cookie = 'googtrans=/en/' + lang + ';path=/;';
         }
     }
 
