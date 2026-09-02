@@ -1609,6 +1609,24 @@ body.theme-light .location-map {
 .log-tile[aria-expanded="true"] { box-shadow: 0 16px 34px rgba(0, 0, 0, 0.4), 0 0 0 2px rgba(255, 255, 255, 0.8); }
 .log-tile:active { transform: translateY(-1px) scale(0.99); }
 
+/* The six tile gradients stay fixed across themes (they carry their own
+   contrast-verified white text) — so this text stays white/near-white no
+   matter the site theme, not scoped to body.theme-light. Chaining 3
+   classes (.logs-wayfinder .log-tile .tile-*) gives this enough
+   specificity to beat `body.theme-light .content-section :is(h1,...,
+   span,...)` elsewhere, which would otherwise force dark text onto these
+   in light mode — without this rule needing body.theme-light itself. */
+.logs-wayfinder .log-tile .tile-title,
+.logs-wayfinder .log-tile .tile-cta,
+.logs-wayfinder .log-tile .tile-icon {
+    color: #fff !important;
+}
+
+.logs-wayfinder .log-tile .tile-desc,
+.logs-wayfinder .log-tile .tile-count {
+    color: rgba(255, 255, 255, 0.92) !important;
+}
+
 .tile-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
 
 .tile-icon {
@@ -2535,29 +2553,10 @@ body.theme-light .log-tag {
     color: var(--km-muted) !important;
 }
 
-/* Logs wayfinder — light mode. The six tile gradients stay fixed
-   across themes (they carry their own contrast-verified white text);
-   only the drawer chrome around them follows the site's cream palette.
-   That "stays white" intent was never actually enforced against
-   `body.theme-light .content-section :is(h1,h2,h3,...,span,...)` further
-   up — a broad rule that forces dark text on every heading/paragraph/span
-   in a content section, .log-tile's included. It has 2 classes + 1 type;
-   these use 3 classes (body.theme-light + .log-tile/.tile-* + the
-   element), which outranks it, so the tiles' title/description/count/CTA
-   go back to their intended white/near-white on the dark gradients
-   instead of unreadable dark-on-dark. */
-body.theme-light .log-tile,
-body.theme-light .tile-title,
-body.theme-light .tile-cta,
-body.theme-light .tile-icon {
-    color: #fff !important;
-}
-
-body.theme-light .tile-desc,
-body.theme-light .tile-count {
-    color: rgba(255, 255, 255, 0.92) !important;
-}
-
+/* Logs wayfinder — light mode. The tile text color itself is handled
+   unconditionally up in the base .log-tile rules now (not theme-scoped);
+   only the drawer chrome around the tiles follows the site's cream
+   palette here. */
 body.theme-light .log-drawer {
     background: var(--km-card-strong) !important;
     border-color: var(--km-border) !important;
@@ -4091,7 +4090,11 @@ body.theme-light .translate-quick-btn:hover {
     justify-content: center;
     gap: 14px;
     max-width: 1520px;
-    margin: 1.25rem auto 0;
+    /* Extra top clearance so this never sits flush against a browser's own
+       translate bar (Chrome/Safari's native banner) — it's already in
+       normal document flow (no position: fixed/absolute here), this is
+       just breathing room. */
+    margin: 2.5rem auto 1.5rem;
     padding: 12px clamp(20px, 4vw, 40px);
     background: rgba(255, 255, 255, 0.08);
     border: 1px solid rgba(255, 255, 255, 0.15);

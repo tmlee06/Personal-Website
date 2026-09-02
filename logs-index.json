@@ -54,7 +54,7 @@
 {
     "title": "Travel",
     "logs": [
-      { "filename": "My Bucket List Adventures", "path": "logs/Travel/bucketlist.md", "pinned": true, "date": "2026-09-02" }
+      { "filename": "My Bucket List Adventures", "path": "logs/Travel/bucketlist.md", "pinned": true, "date": "2026-07-31" }
     ],
     "folders": [
       {
@@ -77,8 +77,8 @@
               }
             ],
             "logs": [
-              { "filename": "Calgary, Alberta", "path": "logs/Travel/North America/Canada/calgary.md", "date": "2019-04-29" },
-              { "filename": "Vancouver, British Columbia", "path": "logs/Travel/North America/Canada/vancouver.md", "date": "2018-12-31" }
+              { "filename": "Calgary, Alberta", "path": "logs/Travel/North America/Canada/calgary.md", "date": "2019-04-29", "draft": true },
+              { "filename": "Vancouver, British Columbia", "path": "logs/Travel/North America/Canada/vancouver.md", "date": "2018-12-31","draft": true  }
             ]
           }
         ]

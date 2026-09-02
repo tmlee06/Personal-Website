@@ -1491,16 +1491,33 @@ function getIconClassForRepo(repo) {
   return 'fas fa-code';
 }
 
-async function loadGitHubProjects(username) {
-  const grid = document.getElementById('projects-grid');
-  const homeGrid = document.getElementById('bio-projects-list');
-  if (!grid && !homeGrid) return;
+// GitHub's unauthenticated REST API caps at 60 requests/hour per IP,
+// shared across everything that visitor's network does against
+// api.github.com — easy to exhaust on a shared/corporate connection or
+// just from repeat page loads. A rate-limited or offline fetch used to
+// leave the whole Personal Projects section showing only an error
+// message. Cache the last successful response so a failed fetch can
+// still render something instead of an empty-looking section.
+const GITHUB_REPOS_CACHE_KEY = 'tlee-github-repos-cache';
+const GITHUB_REPOS_CACHE_MAX_AGE_MS = 30 * 24 * 60 * 60 * 1000; // 30 days
 
-  try {
-    const res = await fetch(`https://api.github.com/users/${encodeURIComponent(username)}/repos?per_page=100&sort=updated`);
-    if (!res.ok) throw new Error('Failed to fetch');
-    const repos = await res.json();
+function readCachedRepos() {
+    try {
+        const raw = localStorage.getItem(GITHUB_REPOS_CACHE_KEY);
+        if (!raw) return null;
+        const { savedAt, repos } = JSON.parse(raw);
+        if (!Array.isArray(repos) || Date.now() - savedAt > GITHUB_REPOS_CACHE_MAX_AGE_MS) return null;
+        return repos;
+    } catch (e) { return null; }
+}
 
+function writeCachedRepos(repos) {
+    try {
+        localStorage.setItem(GITHUB_REPOS_CACHE_KEY, JSON.stringify({ savedAt: Date.now(), repos }));
+    } catch (e) { /* storage full/unavailable — cache is a nice-to-have, not required */ }
+}
+
+function renderGitHubProjects(repos, grid, homeGrid) {
     const sorted = (Array.isArray(repos) ? repos : [])
       .filter(r => !r.fork)
       .sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
@@ -1567,9 +1584,29 @@ async function loadGitHubProjects(username) {
 
     grid.innerHTML = '';
     grid.appendChild(frag);
+}
+
+async function loadGitHubProjects(username) {
+  const grid = document.getElementById('projects-grid');
+  const homeGrid = document.getElementById('bio-projects-list');
+  if (!grid && !homeGrid) return;
+
+  try {
+    const res = await fetch(`https://api.github.com/users/${encodeURIComponent(username)}/repos?per_page=100&sort=updated`);
+    if (!res.ok) throw new Error('Failed to fetch');
+    const repos = await res.json();
+    if (!Array.isArray(repos)) throw new Error('Unexpected response shape');
+
+    writeCachedRepos(repos);
+    renderGitHubProjects(repos, grid, homeGrid);
   } catch (e) {
     console.error("GitHub Load Error:", e);
-    grid.innerHTML = '<p style="opacity:0.5; font-size:0.8rem; text-align:center; grid-column: 1/-1;">Unable to load projects.</p>';
+    const cached = readCachedRepos();
+    if (cached) {
+        renderGitHubProjects(cached, grid, homeGrid);
+    } else if (grid) {
+        grid.innerHTML = '<p style="opacity:0.5; font-size:0.8rem; text-align:center; grid-column: 1/-1;">Unable to load projects.</p>';
+    }
   }
 }
 
