@@ -366,7 +366,7 @@ If you're curious about a panda's daily schedule, here it is:
 <div style="display: flex; justify-content: center; width: 100%; padding: 10px 0;">
     <figure style="display: flex; flex-direction: column; align-items: center; margin: 0; max-width: 500px; width: 100%;">
         <img 
-            src="https://lh3.googleusercontent.com/pw/AP1GczNIEbKz_yBHsnIYlaLJ144I9S-0OD_L8I3S2UYIMzGe8PgXCdFCoCfueRvetwmkS83snChiG3hou_EGm4Mo63LQvaQbFAda0dR3orcizrr9pofiYLbomYQai6-BMHwOs-sAjnKDXatERIhg1mN56wZnYA=w752-h1002-s-no-gm?authuser=0"
+            src="https://lh3.googleusercontent.com/pw/AP1GczO2iB2BQa9lcpv79bWpBMwIYQ8uXtRk2uDIDJWIDRNrT1ynZ7qh4AzeoZcClP3qxu7LiW-PHqZhbjhNqUshy2wubhcYRkBwyUZL7WnPWVtxvxvFARDCZ5JZsuFn_wFnkD0nFSm1zDf7uMyCNx9ui_172w=w1136-h1514-s-no-gm?authuser=0"
             alt="wall"
             style="width: 100%; height: auto; border-radius: 8px;"
         />
