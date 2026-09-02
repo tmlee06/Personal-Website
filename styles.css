@@ -4220,7 +4220,25 @@ body.theme-light .translate-notice-close:hover { color: var(--km-text) !importan
 
 .translate-wrap--home .translate-label { display: none; }
 .translate-wrap--home .translate-quick { margin-bottom: 0; gap: 8px; }
-.translate-wrap--home #google_translate_element { display: none; }
+
+/* Deliberately NOT display:none. Google's widget script attaches to this
+   div and measures/lays out its own injected markup inside it — a
+   display:none container is removed from the render tree entirely, and
+   an unmeasurable container is a plausible reason the widget's actual
+   translate-apply could fail unpredictably (index.html is the one page
+   this div was ever display:none on; logs.html's sidebar keeps its
+   equivalent visibly rendered and hasn't shown this problem). Kept in
+   the render tree and fully measurable, just visually/interactively
+   invisible and out of flow so it doesn't affect the pill buttons'
+   layout — the standard "visually-hidden but still real" pattern. */
+.translate-wrap--home #google_translate_element {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+}
 
 /* Same compact horizontal variant, for the log reader's top-of-page
    control group (see .reader-top-controls). The reader never renders its
