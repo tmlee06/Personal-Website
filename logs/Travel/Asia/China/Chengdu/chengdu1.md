@@ -380,7 +380,7 @@ Any ways, back to the real pandas:
 <div style="display: flex; justify-content: center; width: 100%; padding: 10px 0;">
     <figure style="display: flex; flex-direction: column; align-items: center; margin: 0; max-width: 500px; width: 100%;">
         <img 
-            src="https://lh3.googleusercontent.com/pw/AP1GczPCvx05gkEINId2AQ9NujjLCpqFErOP_td1Du1o9JSfGiZ2siA_5E2xEgVS5Bi8we_nBIbphXc2ZPZZ2kyZVqVdsr4I_kxAJrHcDl84rrqPIWsCvs6nbCb2v1_oQqzLq2bYRmjcyHF5AyQxZS18HMQO8A=w752-h1002-s-no-gm?authuser=0"
+            src="https://lh3.googleusercontent.com/pw/AP1GczOsCWrj2rm7I5yucwarfy4piwpVzQuDGSTtXQMnPDK7YzeGg0GJMWPJfW-IlzNarPgArYtpiDvjGlljQv1iOg_jFssGj2YPv0C4EVhg-T-lcs9KBV5cgWiXGhuJbtA6_biaud3z4e9ZxaEdRxoDxL35fQ=w1128-h1504-s-no-gm?authuser=0"
             alt="wall"
             style="width: 100%; height: auto; border-radius: 8px;"
         />

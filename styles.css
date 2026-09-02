@@ -522,9 +522,14 @@ body.theme-light .theme-toggle:hover {
     transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
-.profile-image-wrapper:hover img {
-    transform: scale(1.05);
-    opacity: 0.9;
+/* Same reasoning as the social-links reveal below: a tap on a touch
+   device satisfies :hover with nothing to "unhover" afterward, so this
+   zoom/dim used to stick on the photo after tapping it. Real hover only. */
+@media (hover: hover) and (pointer: fine) {
+    .profile-image-wrapper:hover img {
+        transform: scale(1.05);
+        opacity: 0.9;
+    }
 }
 
 .profile-social-links {
@@ -535,22 +540,35 @@ body.theme-light .theme-toggle:hover {
     display: flex;
     gap: 1rem;
     opacity: 0;
+    visibility: hidden;
     pointer-events: none;
-    transition: opacity 0.3s ease;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
 }
 
-.profile-image-wrapper:hover .profile-social-links {
-    opacity: 1;
-    pointer-events: all;
+/* Hover-to-reveal only makes sense with a real pointer that can hover
+   without committing to a click — gate it to mouse/trackpad devices. */
+@media (hover: hover) and (pointer: fine) {
+    .profile-image-wrapper:hover .profile-social-links {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: all;
+    }
 }
 
-/* Touch devices don't have a reliable :hover state, so the icons above
-   were invisible and unclickable on iPad/mobile. Show them by default
-   there instead of gating behind hover. */
+/* Touch devices have no hover to reveal these with, and permanently
+   overlaying them on the photo instead just plants 4 icons on top of
+   your face. Move them out of the overlay into a static row below the
+   avatar (still inside .profile-image-wrapper, so they stay part of the
+   same block — .bio-image-container's column layout handles the gap). */
 @media (hover: none), (pointer: coarse) {
     .profile-social-links {
+        position: static;
+        transform: none;
         opacity: 1;
+        visibility: visible;
         pointer-events: all;
+        justify-content: center;
+        margin-top: 14px;
     }
 }
 
