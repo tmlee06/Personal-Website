@@ -925,6 +925,59 @@ function showTranslationNotice(lang, hasCurated) {
 
 applyCuratedTranslations();
 
+// The googtrans cookie is the documented way to make a language choice
+// stick across page loads/navigation, but relying on Google's widget to
+// notice that cookie and auto-apply translation entirely on its own
+// (i.e. without ever touching its own <select>) has turned out to be
+// unreliable in practice, especially on iOS Safari: our own curated
+// About/Message overrides (driven purely by reading the cookie ourselves)
+// apply correctly, but the rest of the page — Google's actual widget
+// translation — sometimes just doesn't, with no error of any kind. Same
+// symptom, same exact code, worked one load and not the next.
+//
+// So on top of the cookie, once the widget's own <select class="goog-te-
+// combo"> has mounted (element.js loads async, hence the poll), actively
+// drive it the way Google's own dropdown does: set .value and dispatch a
+// 'change' event — firing it twice, since a single dispatch is widely
+// reported as not always registering with the widget's internal listener.
+// This isn't the same thing 1687ceb tried and reverted: that used the
+// select instead of the cookie/reload (to skip the reload) and had no way
+// to tell whether it had actually worked. This keeps the cookie/reload as
+// the source of truth for which language is active, and only forces the
+// select afterward, checking the 'translated-ltr'/'translated-rtl' class
+// Google's widget stamps onto <html> once translation is actually live —
+// so it can tell whether the nudge was even necessary, and keep retrying
+// for a few seconds if it wasn't.
+function ensureWidgetTranslationApplied() {
+    const lang = getGoogTransLang();
+    if (!lang) return;
+
+    let attempts = 0;
+    const maxAttempts = 25; // ~10s at 400ms apart
+    const poll = setInterval(() => {
+        attempts++;
+        const applied = document.documentElement.classList.contains('translated-ltr') ||
+            document.documentElement.classList.contains('translated-rtl');
+        if (applied) {
+            clearInterval(poll);
+            return;
+        }
+
+        const combo = document.querySelector('#google_translate_element select.goog-te-combo');
+        if (combo && combo.value !== lang) {
+            combo.value = lang;
+            const evt = document.createEvent('HTMLEvents');
+            evt.initEvent('change', true, true);
+            combo.dispatchEvent(evt);
+            combo.dispatchEvent(evt);
+        }
+
+        if (attempts >= maxAttempts) clearInterval(poll);
+    }, 400);
+}
+
+ensureWidgetTranslationApplied();
+
 // --- ONE-CLICK TRANSLATE BUTTONS ---
 // Drives Google's translate widget via its own googtrans cookie rather
 // than reaching into the widget's internal <select> — the cookie is the
