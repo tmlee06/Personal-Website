@@ -945,30 +945,26 @@ function initQuickTranslate(root) {
     const buttons = (root || document).querySelectorAll('.translate-quick-btn:not([data-translate-bound])');
     if (!buttons.length) return;
 
-    // Writes both a host-only and a domain=.<host> copy of the cookie.
-    // A later "fix" tried trimming this to just the host-only cookie
-    // (reasoning: two same-name cookies with different Domain scopes is
-    // technically ambiguous per RFC 6265) and separately tried skipping
-    // the reload entirely by driving google's own <select
-    // class="goog-te-combo"> directly (set .value, dispatch a synthetic
-    // `change`). Both were reverted: the timing correlated with
-    // translation breaking on iOS Safari specifically (About/Message —
-    // our own independent curated overrides — kept working, but Google's
-    // actual widget translation stopped applying to the rest of the
-    // page), and the <select> trick is the more likely culprit — a
-    // synthetic change event isn't guaranteed to trigger Google's
-    // internal listener, and there was no way to detect that failure and
-    // fall back. Reverted to this exact form since it's the one
-    // confirmed to have worked before either change.
+    // Writes exactly one googtrans cookie, host-only (no Domain attribute).
+    // This used to also write a second `domain=.<host>` copy of the same
+    // cookie "for safety", leaving two live cookies with the same name and
+    // different Domain scopes — RFC 6265 doesn't define which one
+    // document.cookie (or the widget's own read of it) sees first, and
+    // WebKit/Chromium aren't guaranteed to agree. That's the same iOS-
+    // Safari-only symptom this site has hit twice now (pills work
+    // everywhere else, nothing translates on iOS Safari). A previous
+    // attempt to fix this got bundled in the same commit as an unrelated,
+    // genuinely broken change (driving Google's <select class="goog-te-
+    // combo"> directly to skip the reload — a synthetic `change` event
+    // isn't guaranteed to fire its listener), and when the bug persisted
+    // both got reverted together without isolating which one was actually
+    // at fault. This time it's reapplied on its own: still cookie +
+    // reload, just one cookie instead of two.
     function setGoogTransCookie(lang) {
-        const host = window.location.hostname;
         const expired = 'googtrans=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/;';
         document.cookie = expired;
-        document.cookie = expired + 'domain=.' + host + ';';
         if (lang !== 'en') {
-            const value = 'googtrans=/en/' + lang + ';path=/;';
-            document.cookie = value;
-            document.cookie = value + 'domain=.' + host + ';';
+            document.cookie = 'googtrans=/en/' + lang + ';path=/;';
         }
     }
 
