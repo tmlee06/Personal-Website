@@ -37,7 +37,7 @@ By the time Cole got out of immigration, we had to board. I have trouble underst
             style="width: 100%; height: auto; border-radius: 8px;"
         />
           <figcaption style="margin-top: 8px; text-align: center; font-size: 14px; color: #FFFFFF;">
-          This is the type of travel I aspire to be. Only carry the essentials 😤
+          This is the type of traveler I aspire to be. Only carry the essentials 😤
         </figcaption>
     </figure>
 </div>
