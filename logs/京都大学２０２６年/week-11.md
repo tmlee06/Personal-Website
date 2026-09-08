@@ -10,15 +10,7 @@
 
 Probably fitting that Bieber was the one to announce him at the draft, but how sick would it be if the Ice Man did it. He is going to get the shout out eventually like Bedard though.  
 
- <div style="display: flex; justify-content: center; width: 100%; padding: 10px 0;">
-    <figure style="display: flex; flex-direction: column; align-items: center; margin: 0; max-width: 500px; width: 100%;">
-        <img 
-            src="https://s.yimg.com/ny/api/res/1.2/2fBCGIJh4fWaXyt0oZz87g--/YXBwaWQ9aGlnaGxhbmRlcjt3PTY0MDtoPTExMzk7Y2Y9d2VicA--/https://media.zenfs.com/en/csnchicago.com/e0da1ad5c75e54ca74de6fafad0db94e"
-            alt="Bedard"
-            style="width: 100%; height: auto; border-radius: 8px;"
-        />
-    </figure>
-</div>
+ ![](https://s.yimg.com/ny/api/res/1.2/2fBCGIJh4fWaXyt0oZz87g--/YXBwaWQ9aGlnaGxhbmRlcjt3PTY0MDtoPTExMzk7Y2Y9d2VicA--/https://media.zenfs.com/en/csnchicago.com/e0da1ad5c75e54ca74de6fafad0db94e)
 
 This was tough when I saw this. I miss that tour so much. Hoping he announces the Ice Man one soon, and hopefully I can get tickets for the Toronto show. 
 
@@ -42,15 +34,7 @@ I can not lie seeing players younger than you get drafted is a punch in the gut.
 
 Aside from the jokes, these experiences really makes you or at least me wonder what I'm doing with your life and what I should have been doing all those years ago. Some things are meant to happen and some are not, and I am pretty happy with where I am at right now or that's what I tell myself at least. We are all going to end up in beer-league eventually. By then, status does not matter and all that's left is the actual love for continuing to play the game. I wish I would have come to that conclusion much earlier. Probably would have saved me a lot of sleepless nights, unnecessary stress, and anxiety especially when I was 14-16. I was looking back and reading my logs from the archives, and found it quite cathartic. I should probably unarchive them because I got nothing to hide now and what relevance do they hold now. It's just basically me talking to myself or what I am doing currently 😂.
 
- <div style="display: flex; justify-content: center; width: 100%; padding: 10px 0;">
-    <figure style="display: flex; flex-direction: column; align-items: center; margin: 0; max-width: 500px; width: 100%;">
-        <img 
-            src="https://media.tenor.com/h-keGojVwLwAAAAM/talking-to-a-wall.gif"
-            alt="wall"
-            style="width: 100%; height: auto; border-radius: 8px;"
-        />
-    </figure>
-</div>
+ ![](https://media.tenor.com/h-keGojVwLwAAAAM/talking-to-a-wall.gif)
 
 In many ways I changed and many ways I did not. I still have that on and off again love-hate relationship with hockey, and repeat that same broken record. There's plenty of regrets and "what-ifs" I often envision with this sport, but I believe I made the best possible decisions I thought were right at the time. If I could do it all over again, I would just change my mindset to be do not treat hockey like a job ladder. Stop tying my worth with an extra A in my Instagram bio, stop trying so hard to not mess up, not get so mad when I do not produce on the stat sheet, and play solely because it is fun and I love it. I wish I would have taken my sophomore English teacher's advice stop being so hard on myself and take things less seriously at the time. But being 16 I was so naive, egotistical, and frankly did not know any better. I associated myself being the student-athlete or the "hockey" guy in school or anywhere. I even had a <a href="https://raiderreviewcom.wordpress.com/2022/05/19/tristan-le-star-of-the-san-jose-sharks-jr-hockey-team/" style="color: #fffefe; font-weight: bold; text-decoration: underline;"> school paper</a> written about me. Although the title is absolute bogus and absolutely no one reads the school paper, it made me feel good at the time and everything stated was true except playing many years with the Jr. Sharks. I was an infamous one and done player, and I have no clue how Nguyen (the writer) slipped up there. I could have gone back to play 16AAA with the Sharks and as much I really wanted to win states and go to nattys with the Blackhawks that’s only part of the reason. The real truth was that I was scared of putting myself through another year of playing sharks. That was the toughest season of my career and probably the hardest I worked too. The team having one of the lowest records in the country (2nd page MyHockeyRankings 🤣) and not getting adequate ice time along with being the shortest on the team was brutal. I think that was the start of my “always have to prove myself” mindset on the ice. I took every shift personal, hyper focused on not making mistakes, taking hits, blocking shots, going into corners, and trying to prove I was not a roster filler. That was how “tlee” was born. For a while it worked, but by the end of the season I have taken enough hits and hid a few concussions to decide I was not going to return for next season. I decided I was going back to Fremont to develop my game, grow (physically), win states, go to nattys, have fun (probably had too much of that), and try to take my talents elsewhere for next season. As fun as 16AA was, it was equal as much as painful too. Being the captain along with my self-imposed unnecessary pressure to back up everything I said ruined me. Before I knew it the season was over, I did not develop as much as I wanted too, did not get that growth spurt, and had no concrete options to play prep school or elsewhere. I was finished and officially washed. Played high-school for the 2023-24 season then another last dance with the Blackhawks for 2024-25. The teams were not bad at all, I had a lot of fun, but they did not hit as hard as 16AA. The realization of waking up to find the dream was just a dream is hard to stomach, and a few years out I am still digesting. But you know it's like this Cam Newton clip:
 
@@ -70,27 +54,11 @@ This game, man I can talk about it forever! What I wrote I could probably put in
 
 Monday: Got a haircut, travel back to Kyoto. My Grandpa an artist, he drew this freehand, very impressive, I thought I'd share:
 
- <div style="display: flex; justify-content: center; width: 100%; padding: 10px 0;">
-    <figure style="display: flex; flex-direction: column; align-items: center; margin: 0; max-width: 500px; width: 100%;">
-        <img 
-            src="https://lh3.googleusercontent.com/pw/AP1GczNWWLU-JaFLD3cZUUiwOJMAc7b5lpwkOjNnCLKuqklWZ2aX-mYftdJypreYCi6bbqICrmcwE-4hxxlq_eVLpaFPU2pOScfWOURjvnaYr9EAmPp0a9Q4FKiEq1GRSt8pY5fntC_7rspCUNJrsLYv09oitg=w1124-h1498-s-no-gm?authuser=0"
-            alt="wall"
-            style="width: 100%; height: auto; border-radius: 8px;"
-        />
-    </figure>
-</div>
+ ![](https://lh3.googleusercontent.com/pw/AP1GczNWWLU-JaFLD3cZUUiwOJMAc7b5lpwkOjNnCLKuqklWZ2aX-mYftdJypreYCi6bbqICrmcwE-4hxxlq_eVLpaFPU2pOScfWOURjvnaYr9EAmPp0a9Q4FKiEq1GRSt8pY5fntC_7rspCUNJrsLYv09oitg=w1124-h1498-s-no-gm?authuser=0)
 
 Tuesday: Met up with the coworker who was on the Fremont House League Japan trip, and spent the most unethical $20 of my life. 
 
- <div style="display: flex; justify-content: center; width: 100%; padding: 10px 0;">
-    <figure style="display: flex; flex-direction: column; align-items: center; margin: 0; max-width: 500px; width: 100%;">
-        <img 
-            src="https://lh3.googleusercontent.com/pw/AP1GczOVX-iTnLIY98R_Ry6TgSnEce02G7gDB-M1dkO6TTnCGR7X95uo0oTuEcWjljH0ZQu2S_jCKTYdK4vXYb77Yz9FO0CZY4XDg-xlZZuIqz6sbVoknn-bckgDTGozJHYwswzZ8ZHZ_6R2p0PxR-rOoEPiQA=w1124-h1498-s-no-gm?authuser=0"
-            alt="wall"
-            style="width: 100%; height: auto; border-radius: 8px;"
-        />
-    </figure>
-</div>
+ ![](https://lh3.googleusercontent.com/pw/AP1GczOVX-iTnLIY98R_Ry6TgSnEce02G7gDB-M1dkO6TTnCGR7X95uo0oTuEcWjljH0ZQu2S_jCKTYdK4vXYb77Yz9FO0CZY4XDg-xlZZuIqz6sbVoknn-bckgDTGozJHYwswzZ8ZHZ_6R2p0PxR-rOoEPiQA=w1124-h1498-s-no-gm?authuser=0)
 
 I will not be surprised if that otter gets sick. The one I went to in Harajuku, I had to throw on the whole hazmat suit:
  <div style="display: flex; justify-content: center; width: 100%; padding: 10px 0;">
@@ -112,47 +80,14 @@ not as embarrassing of how soft my team is. I have never seen and played on such
 
 Sunday: Went to Ryoanji and Ninnaji Temples.
 
- <div style="display: flex; justify-content: center; width: 100%; padding: 10px 0;">
-    <figure style="display: flex; flex-direction: column; align-items: center; margin: 0; max-width: 500px; width: 100%;">
-        <img 
-            src="https://lh3.googleusercontent.com/pw/AP1GczOlnWofDbW4Akk9yaDikSxvzHDhg976M_WE1af-_fLr6_HRvh812VYIVoDaegX5DoL1R-KNvp8w7jHuNtddje2JjAVcC-JSE1tMHYsmARUnxjGgZolZb3-2aTDk84acd7RLpyv07N-B14v9i3MDAvMrbQ=w1124-h1498-s-no-gm?authuser=0"
-            alt="wall"
-            style="width: 100%; height: auto; border-radius: 8px;"
-        />
-        <figcaption style="margin-top: 8px; text-align: center; font-size: 14px; color: #FFFFFF;">
-        Ryoan-ji (龍安寺)
-        </figcaption>
-    </figure>
-</div>
+ ![Ryoan-ji (龍安寺)](https://lh3.googleusercontent.com/pw/AP1GczOlnWofDbW4Akk9yaDikSxvzHDhg976M_WE1af-_fLr6_HRvh812VYIVoDaegX5DoL1R-KNvp8w7jHuNtddje2JjAVcC-JSE1tMHYsmARUnxjGgZolZb3-2aTDk84acd7RLpyv07N-B14v9i3MDAvMrbQ=w1124-h1498-s-no-gm?authuser=0)
 
 I will not be surprised if that otter gets sick. The one I went to in Harajuku, I had to throw on the whole hazmat suit:
- <div style="display: flex; justify-content: center; width: 100%; padding: 10px 0;">
-    <figure style="display: flex; flex-direction: column; align-items: center; margin: 0; max-width: 500px; width: 100%;">
-        <img 
-            src="https://lh3.googleusercontent.com/pw/AP1GczNDR1V8T_8pYr6jnwpnjOlgvFxN8PS_e-joAibrBKkZTsmA_nUtroICsiiEW-0aUpyoK6yUE-egQ3MpzVVPYT3w4p_ffe3SppT2LKacgFhbY1zAWVxHnjuYSYAK7FWyVbLXPIJNBShU85JlFsDsMxA8pw=w1124-h1498-s-no-gm?authuser=0"
-            alt="wall"
-            style="width: 100%; height: auto; border-radius: 8px;"
-        />
-        <figcaption style="margin-top: 8px; text-align: center; font-size: 14px; color: #FFFFFF;">
-        Ninna-ji (仁和寺)
-        </figcaption>
-    </figure>
-</div>
+ ![Ninna-ji (仁和寺)](https://lh3.googleusercontent.com/pw/AP1GczNDR1V8T_8pYr6jnwpnjOlgvFxN8PS_e-joAibrBKkZTsmA_nUtroICsiiEW-0aUpyoK6yUE-egQ3MpzVVPYT3w4p_ffe3SppT2LKacgFhbY1zAWVxHnjuYSYAK7FWyVbLXPIJNBShU85JlFsDsMxA8pw=w1124-h1498-s-no-gm?authuser=0)
 
 I also attended the hockey team's "welcome party." No clue why they hosted it so late into the season, it is more so of an end of season party (at least for me). The team went to an izakaya before dinner at an expensive Italian restaurant, which I found so bizarre. I never heard of pre-gaming a dinner. Dinner was good though and so cheap compared to what I would pay for in America. We had a 5-course meal for $34. 
 
- <div style="display: flex; justify-content: center; width: 100%; padding: 10px 0;">
-    <figure style="display: flex; flex-direction: column; align-items: center; margin: 0; max-width: 500px; width: 100%;">
-        <img 
-            src="https://lh3.googleusercontent.com/pw/AP1GczPz5hltjlFbuHBzqQSRV7sGlv6_QuMRYkBAX9oTPAhA_fSwH-TMHopQ9hzuUq4SExezcuCb5Ih8iEO-YSuh4jgt6jK8sO-GX59k6gdkl6rhi3HCL20gyfWZY1FX398h1dSPbCm-KPyNkSOM9JUf1mcS2w=w1124-h1498-s-no-gm?authuser=0"
-            alt="wall"
-            style="width: 100%; height: auto; border-radius: 8px;"
-        />
-        <figcaption style="margin-top: 8px; text-align: center; font-size: 14px; color: #FFFFFF;">
-        Clearly not a phone eats first guy, but I am a Seiko guy.
-        </figcaption>
-    </figure>
-</div>
+ ![Clearly not a phone eats first guy, but I am a Seiko guy.](https://lh3.googleusercontent.com/pw/AP1GczPz5hltjlFbuHBzqQSRV7sGlv6_QuMRYkBAX9oTPAhA_fSwH-TMHopQ9hzuUq4SExezcuCb5Ih8iEO-YSuh4jgt6jK8sO-GX59k6gdkl6rhi3HCL20gyfWZY1FX398h1dSPbCm-KPyNkSOM9JUf1mcS2w=w1124-h1498-s-no-gm?authuser=0)
 
 The sides alone would cost $34, unsure if they would cure cancer though. Hopefully someone gets that reference. Going to end the log here since it's 2 AM for me, I am going to Kanazawa tomorrow, and this is a lengthy log. I have not written this much since the UCSD reflection log. Despite the typhoon, I say I had a great week. 
 

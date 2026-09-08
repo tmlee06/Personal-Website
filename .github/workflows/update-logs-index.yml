@@ -1,0 +1,40 @@
+name: Update logs index
+
+# Keeps logs-index.json in sync whenever a log file is added/edited —
+# see scripts/build-logs-index.js for what it actually does (short
+# version: adds newly-frontmattered .md files to their folder's list,
+# never touches anything already there by hand).
+on:
+  push:
+    branches: [main]
+    paths:
+      - "logs/**"
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  update-index:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Regenerate logs-index.json
+        run: node scripts/build-logs-index.js
+
+      - name: Commit changes if any
+        run: |
+          if git diff --quiet -- logs-index.json; then
+            echo "No changes to logs-index.json"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add logs-index.json
+          git commit -m "Auto-update logs-index.json"
+          git push

@@ -26,37 +26,13 @@ I need to figure out dates and schedules because there's a lot of places I want 
 
 The constant rain this weekend messed up my Tokyo trip I had planned, but I was still able to go out and explore some new places on my own. I went to the train museum in Omiya, which was awesome. I got some weird looks from parents because the museum is catered more towards little kids, and I'm by myself having the time of my life. One con of the experience was not being able to ride the miniature trains because I did not enter the raffle. Here's a photo:
 
- <div style="display: flex; justify-content: center; width: 100%; padding: 10px 0;">
-    <figure style="display: flex; flex-direction: column; align-items: center; margin: 0; max-width: 500px; width: 100%;">
-        <img 
-            src="https://lh3.googleusercontent.com/pw/AP1GczNut4eGKIU3I3SQOq3xB2B3ZYmn_DJM77PEhX2kNcL_ifCSs_4jy4PQJVLmUlSuSPaXbbeyBfP0Zo4UncaU3_j39M6H77-R9F_kQJWVkYD-EgzdpQ96PZaKwDrTLE52DuuDz61DpmAgI_hL9gZeqc4Umg=w1140-h1520-s-no-gm?authuser=0"
-            alt="Train"
-            style="width: 100%; height: auto; border-radius: 8px;"
-        />
-    </figure>
-</div>
+ ![](https://lh3.googleusercontent.com/pw/AP1GczNut4eGKIU3I3SQOq3xB2B3ZYmn_DJM77PEhX2kNcL_ifCSs_4jy4PQJVLmUlSuSPaXbbeyBfP0Zo4UncaU3_j39M6H77-R9F_kQJWVkYD-EgzdpQ96PZaKwDrTLE52DuuDz61DpmAgI_hL9gZeqc4Umg=w1140-h1520-s-no-gm?authuser=0)
 
 I went to the Seiko Museum in Ginza, which was also insane. Seeing how the history and how they engineered those movements is insane. Thankfully there was not a gift store, and I am not in the tax bracket to buy a Grand Seiko in Ginza, otherwise I probably would have impulsively bought another watch. Here are some photos:
 
- <div style="display: flex; justify-content: center; width: 100%; padding: 10px 0;">
-    <figure style="display: flex; flex-direction: column; align-items: center; margin: 0; max-width: 500px; width: 100%;">
-        <img 
-            src="https://lh3.googleusercontent.com/pw/AP1GczOIZMKoQD7nrDKqlULLb7iTkJVa9oj2mvYCFWciFB9NTRXbp_YUnu6eTw5wCn0chcJBPZtyL9dBNR8N1IqgN_FP9SHla38G5JpVGjhmN557oPArGNODS-GOSO90Aui4urugBHENmLZQAsfUiTvsHJZCkw=w1140-h1520-s-no-gm?authuser=0"
-            alt="Seiko"
-            style="width: 100%; height: auto; border-radius: 8px;"
-        />
-    </figure>
-</div>
+ ![](https://lh3.googleusercontent.com/pw/AP1GczOIZMKoQD7nrDKqlULLb7iTkJVa9oj2mvYCFWciFB9NTRXbp_YUnu6eTw5wCn0chcJBPZtyL9dBNR8N1IqgN_FP9SHla38G5JpVGjhmN557oPArGNODS-GOSO90Aui4urugBHENmLZQAsfUiTvsHJZCkw=w1140-h1520-s-no-gm?authuser=0)
 
- <div style="display: flex; justify-content: center; width: 100%; padding: 10px 0;">
-    <figure style="display: flex; flex-direction: column; align-items: center; margin: 0; max-width: 500px; width: 100%;">
-        <img 
-            src="https://lh3.googleusercontent.com/pw/AP1GczMb6Y0r6MTGF-HiqoRMlwR7FLHG_2vDQ_PtASEWy_pNyrMKtonf9HZk4DevlwGwtFzxy_BTdcixCbXYCjpe57DqW47kKuQw0aS8lGYEMuys_KayPZ4h40nWeRqPBBRi4xayOprpGkJ46_GKdtfbkzRqsw=w1140-h1520-s-no-gm?authuser=0"
-            alt="Seiko"
-            style="width: 100%; height: auto; border-radius: 8px;"
-        />
-    </figure>
-</div>
+ ![](https://lh3.googleusercontent.com/pw/AP1GczMb6Y0r6MTGF-HiqoRMlwR7FLHG_2vDQ_PtASEWy_pNyrMKtonf9HZk4DevlwGwtFzxy_BTdcixCbXYCjpe57DqW47kKuQw0aS8lGYEMuys_KayPZ4h40nWeRqPBBRi4xayOprpGkJ46_GKdtfbkzRqsw=w1140-h1520-s-no-gm?authuser=0)
 
 
 Even though I did not do that much relative to what I usually do in my trips to Tokyo, I found it very relaxing and enjoyable. It was great getting to spend more time with my aunt and my grandparents because after all that was one of the main purposes as to why I chose to study abroad in Japan. They missed out on watching me grow up a lot, so I want to make sure I am in their lives more now. My grandpa loved his birthday/Father's Day gift, and I am really happy about that. This trip re-energized me, making me more productive, and ready to take on this last stretch of the semester. With that being said, I am going to end the log here. As always, stay safe and Godspeed!

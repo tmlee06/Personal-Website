@@ -8,10 +8,10 @@
       <link rel="shortcut icon" type="image/png" href="./Assets/logos/tlee.png">
       <link rel="apple-touch-icon" href="./Assets/logos/tlee.png">
       <link rel="stylesheet" href="styles.css?v=20260902-forcewidget">
-      <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=Shippori+Mincho:wght@400;600;700&display=swap" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Shippori+Mincho:wght@400;600;700&display=swap" rel="stylesheet">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
       <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
-      <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/marked@18.0.11/lib/marked.umd.js"></script>
    </head>
    <body>
       <script>
@@ -34,11 +34,12 @@
           } catch (e) {}
       })();
       </script>
+      <a href="#main-content" class="skip-link">Skip to content</a>
       <div id="entrance-overlay"></div>
       <!-- Sidebar Overlay (mobile only) -->
       <div class="sidebar-overlay" id="sidebar-overlay"></div>
       <!-- Hamburger Menu Button (mobile only) -->
-      <button class="hamburger-menu" id="hamburger-menu" aria-label="Toggle menu">
+      <button class="hamburger-menu" id="hamburger-menu" aria-label="Toggle menu" aria-expanded="false" aria-controls="sidebar">
       <span></span>
       <span></span>
       <span></span>
@@ -149,7 +150,7 @@
       </aside>
   <div class="page-layout">
          <!-- Main Content -->
-         <main class="main-content">
+         <main class="main-content" id="main-content">
             <!-- Home Section -->
             <section id="home" class="content-section" data-bg="#1F1D29" data-foreground="light" data-bg-light="#F7F1EA" data-foreground-light="dark" style="display: block !important; height: auto !important; min-height: 0 !important; max-height: none !important; padding: 3rem 0 4rem 0 !important; overflow: visible !important; position: relative;">
                <!-- MAIN TWO-COLUMN CONTAINER -->
@@ -167,11 +168,6 @@
                         <div id="bio-logs-list" class="bio-logs-grid"></div>
                      </div>
 
-                     <div class="bio-projects-container" style="width: 100%;">
-                        <div class="section-title-small" style="text-align: left; margin-top: 1.5rem; margin-bottom: 0.85rem;">PROJECTS</div>
-                        <div id="bio-projects-list" class="bio-logs-grid"></div>
-                     </div>
-                     
                      <!-- CONTAINER ROW FOR VIDEO, LETTERBOXD & MUSIC (ALIGN-ITEMS: FLEX-START FOR FLUSH HEADERS) -->
                      <div class="video-letterboxd-row" style="display: flex; flex-wrap: wrap; gap: 1.5rem; width: 100%; margin-top: 1.5rem; justify-content: flex-start; align-items: flex-start;">
 
@@ -180,7 +176,7 @@
                                  <div class="section-title-small" style="text-align: center; margin-bottom: 0.85rem; font-weight: bold; letter-spacing: 0.05em; color: #fff; font-size: 0.8rem;">VIDEO OF THE WEEK</div>
                                  <div style="width: 100%; border-radius: 16px; overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.15); line-height: 0; background: #000; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
                                     <iframe
-                                       src="https://www.youtube.com/embed/YT7Am4i2zHk?si=_W3wurvZVFtyRwKH" 
+                                       src="https://www.youtube.com/embed/uvLtjDo-9Ic?si=F2xCcoUU6EWXQzFM" 
                                        style="width: 100%; aspect-ratio: 16 / 9; border: none; display: block;"
                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                                        allowfullscreen>
@@ -287,7 +283,7 @@ style="width: 100% !important; min-height: 220px !important; height: 100% !impor
                      </h2>
                      <h3 class="profile-title" style="text-align: center; color: #cccccc; font-size: 13.5px; font-weight: 400; margin: 0; font-family: sans-serif; line-height: 1.4;">
                         <span style="color: #ffffff;">
-                        ECE @ <a href="https://ece.ucsd.edu/" target="_blank" style="color: #ffffff; text-decoration: none; font-weight: bold; transition: opacity 0.2s;" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">UCSD</a>
+                        ECE @ <a href="https://ece.ucsd.edu/" target="_blank" rel="noopener noreferrer" class="profile-title-link" style="color: #ffffff; text-decoration: none; font-weight: bold;">UCSD</a>
                         |
                         <strong>Aspiring Design Engineer</strong>                        
                      </span>                
@@ -381,7 +377,7 @@ style="width: 100% !important; min-height: 220px !important; height: 100% !impor
             </section>
 
             <!-- About Section -->
-            <section id="about" class="content-section" data-bg="#EFC69B" data-foreground="light" data-bg-light="#F5E4EE" data-foreground-light="dark" style="display: block !important; height: auto !important; min-height: 0 !important; max-height: none !important; padding: 2.5rem 0 !important; overflow: visible !important;">
+            <section id="about" class="content-section" data-bg="#7A355C" data-foreground="light" data-bg-light="#F5E4EE" data-foreground-light="dark" style="display: block !important; height: auto !important; min-height: 0 !important; max-height: none !important; padding: 2.5rem 0 !important; overflow: visible !important;">
                <div class="experience-container" style="width: 100%; max-width: 1520px; margin: 0 auto; padding: 0 clamp(36px, 4vw, 80px); box-sizing: border-box;">
                   <div class="experience-section-header" style="margin-bottom: 2rem;">
                      <h2 class="experience-title" style="border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 0.5rem;">ABOUT</h2>
@@ -399,12 +395,17 @@ style="width: 100% !important; min-height: 220px !important; height: 100% !impor
                                  UCSD humbled me in more ways than I could have imagined. The experience was rough, but I still found ways to
                                  live, learn, and enjoy the ride along the way.
                               </p>
-                               <div class="verse-container" style="margin: 3rem 0; padding-left: 1.5rem; border-left: 3px solid #ffffff;" data-i18n="about-verse">
-                                 <h3 style="font-size: 0.9rem; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.5rem; opacity: 0.7;">John 16:33</h3>
-                                 <h1 style="font-size: 1.8rem; margin: 0; line-height: 1.2;">"In the world you will have tribulation.</h1>
-                                 <h2 style="font-size: 1.5rem; margin: 0.5rem 0; font-weight: 300;">But take heart;</h2>
-                                 <h3 style="font-size: 1.2rem; margin: 0; font-style: italic;">I have overcome the world."</h3>
-                              </div>
+                               <!-- A quoted verse, not a heading — was three stray <h1>/<h2>/<h3>
+                                    tags used purely for their default type sizes, which broke the
+                                    page's real heading outline (a screen-reader "jump to heading"
+                                    pass would have hit "In the world you will have tribulation" as
+                                    a top-level h1). Same visual sizes, now on <blockquote>/<p>/<cite>. -->
+                               <blockquote class="verse-container" style="margin: 3rem 0; padding-left: 1.5rem; border-left: 3px solid #ffffff;" data-i18n="about-verse">
+                                 <cite style="display: block; font-size: 0.9rem; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.5rem; opacity: 0.7; font-style: normal;">John 16:33</cite>
+                                 <p style="font-size: 1.8rem; margin: 0; line-height: 1.2;">"In the world you will have tribulation.</p>
+                                 <p style="font-size: 1.5rem; margin: 0.5rem 0; font-weight: 300;">But take heart;</p>
+                                 <p style="font-size: 1.2rem; margin: 0; font-style: italic;">I have overcome the world."</p>
+                              </blockquote>
 
                               <p style="margin-bottom: 1.2rem;" data-i18n="about-p2">
                                  When I am not "studying", my life is driven by the 3 G's:
@@ -517,7 +518,7 @@ style="width: 100% !important; min-height: 220px !important; height: 100% !impor
                      </a>
                   </div>
             </section>
-            <section id="goals" class="content-section" data-bg="#EE964B" data-foreground="light" data-bg-light="#FDE7D7" data-foreground-light="dark" style="display: block !important; height: auto !important; min-height: 0 !important; max-height: none !important; padding: 2.5rem 0 !important; overflow: visible !important;">
+            <section id="goals" class="content-section" data-bg="#4F406C" data-foreground="light" data-bg-light="#FDE7D7" data-foreground-light="dark" style="display: block !important; height: auto !important; min-height: 0 !important; max-height: none !important; padding: 2.5rem 0 !important; overflow: visible !important;">
             <div class="experience-section-header" style="margin-top: 2rem; margin-bottom: 1.25rem;">
            <div id="goals" class="experience-item" style="margin-bottom: 3rem; width: 100%;">
             <h2 class="experience-title" style="border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 0.5rem; margin-bottom: 1.5rem;">GOALS</h2>
@@ -528,11 +529,17 @@ style="width: 100% !important; min-height: 220px !important; height: 100% !impor
             <div class="experience-header" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 2rem; width: 100%;">
                
                <div class="experience-header-left" style="flex: 1; min-width: 280px; max-width: 960px;">
-                     <h3 style="font-size: 1.5rem; font-weight: 800; margin: 0 0 1.25rem 0; color: rgba(255,255,255,0.95);">1. Be a decent human being.</h3>
-                     <h3 style="font-size: 1.5rem; font-weight: 800; margin: 0 0 1.25rem 0; color: rgba(255,255,255,0.95);">2. Get closer to God while staying grounded in the present.</h3>
-                     <h3 style="font-size: 1.5rem; font-weight: 800; margin: 0 0 1.25rem 0; color: rgba(255,255,255,0.95);">3. Do right by my people, and pour into others.</h3>
-                     <h3 style="font-size: 1.5rem; font-weight: 800; margin: 0 0 1.25rem 0; color: rgba(255,255,255,0.95);">4. Build technology that helps people overcome physical and mental limitations.</h3>
-                     <h3 style="font-size: 1.5rem; font-weight: 800; margin: 0 0 1.25rem 0; color: rgba(255,255,255,0.95);">5. Keep moving forward, even when the path is unclear.</h3>
+                     <!-- Was 5 sibling <h3> tags (a screen reader's heading list read
+                          "Be a decent human being" as its own top-level section, 5 times
+                          in a row) — these are list items, not headings. Same "1. Text"
+                          rendering, now from a real <ol> with native numbering. -->
+                     <ol class="goals-list">
+                        <li>Be a decent human being.</li>
+                        <li>Get closer to God while staying grounded in the present.</li>
+                        <li>Do right by my people, and pour into others.</li>
+                        <li>Build technology that helps people overcome physical and mental limitations.</li>
+                        <li>Keep moving forward, even when the path is unclear.</li>
+                     </ol>
                </div>
 
                <div class="experience-header-right" style="flex-shrink: 0; min-width: 200px; width: 200px;">
@@ -544,7 +551,7 @@ style="width: 100% !important; min-height: 220px !important; height: 100% !impor
             </div>
          </div>
             </section>
-            <section id="experience" class="content-section" data-bg="#EE964B" data-foreground="light" data-bg-light="#E8F3FB" data-foreground-light="dark" style="display: block !important; height: auto !important; min-height: 0 !important; max-height: none !important; padding: 2.5rem 0 !important; overflow: visible !important;">
+            <section id="experience" class="content-section" data-bg="#5B3B7A" data-foreground="light" data-bg-light="#E8F3FB" data-foreground-light="dark" style="display: block !important; height: auto !important; min-height: 0 !important; max-height: none !important; padding: 2.5rem 0 !important; overflow: visible !important;">
             <div class="experience-section-header" style="margin-top: 2rem; margin-bottom: 1.25rem;">
             <h2 class="experience-title" style="border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 0.5rem;">EXPERIENCE</h2>
             </div>
@@ -692,7 +699,7 @@ style="width: 100% !important; min-height: 220px !important; height: 100% !impor
             </div>
             </div>
             </section>
-            <section id="education" class="content-section" data-bg="#D282A6" data-foreground="light" data-bg-light="#ECE6FB" data-foreground-light="dark" style="display: block !important; height: auto !important; min-height: 0 !important; max-height: none !important; padding: 2.5rem 0 !important; overflow: visible !important;">
+            <section id="education" class="content-section" data-bg="#3B5D7A" data-foreground="light" data-bg-light="#ECE6FB" data-foreground-light="dark" style="display: block !important; height: auto !important; min-height: 0 !important; max-height: none !important; padding: 2.5rem 0 !important; overflow: visible !important;">
             <div class="experience-section-header" style="margin-top: 2rem; margin-bottom: 1.25rem;">
             <h2 class="experience-title" style="border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 0.5rem;">EDUCATION</h2>
             </div>
@@ -872,7 +879,7 @@ style="width: 100% !important; min-height: 220px !important; height: 100% !impor
             </div>
       </section>
       <!-- Team Projects Section -->
-      <section id="current-projects" class="content-section" data-bg="#637081" data-foreground="light" data-bg-light="#F3E8FB" data-foreground-light="dark" style="display: block !important; height: auto !important; min-height: 0 !important; max-height: none !important; padding: 2rem 0 1.5rem 0 !important; overflow: visible !important;">
+      <section id="current-projects" class="content-section" data-bg="#2E5A73" data-foreground="light" data-bg-light="#F3E8FB" data-foreground-light="dark" style="display: block !important; height: auto !important; min-height: 0 !important; max-height: none !important; padding: 2rem 0 1.5rem 0 !important; overflow: visible !important;">
       <div class="work-section" style="width: 100%; max-width: 1520px; margin: 0 auto; padding: 0 clamp(36px, 4vw, 80px); box-sizing: border-box;">
       <div class="section-title-small">TEAM PROJECTS</div>
       
@@ -917,21 +924,21 @@ style="width: 100% !important; min-height: 220px !important; height: 100% !impor
       </div>
       </section>
       <!-- Personal Projects Section -->
-      <section id="projects" class="content-section" data-bg="#637081" data-foreground="light" data-bg-light="#E7F2FA" data-foreground-light="dark" style="display: block !important; height: auto !important; min-height: 0 !important; max-height: none !important; padding: 1.75rem 0 2rem 0 !important; overflow: visible !important;">
+      <section id="projects" class="content-section" data-bg="#2E5A73" data-foreground="light" data-bg-light="#E7F2FA" data-foreground-light="dark" style="display: block !important; height: auto !important; min-height: 0 !important; max-height: none !important; padding: 1.75rem 0 2rem 0 !important; overflow: visible !important;">
       <div class="work-section" style="width: 100%; max-width: 1520px; margin: 0 auto; padding: 0 clamp(36px, 4vw, 80px); box-sizing: border-box;">
       <div class="section-title-small">PERSONAL PROJECTS</div>
       <div id="projects-grid" class="work-grid"></div>
       </div>
       </section>
       <!-- Logs Section -->
-      <section id="logs" class="content-section" data-bg="#637081" data-foreground="light" data-bg-light="#F7F1EA" data-foreground-light="dark" style="display: block !important; height: auto !important; min-height: 0 !important; max-height: none !important; padding: 1.75rem 0 2rem 0 !important; overflow: visible !important;">
+      <section id="logs" class="content-section" data-bg="#2E5A73" data-foreground="light" data-bg-light="#F7F1EA" data-foreground-light="dark" style="display: block !important; height: auto !important; min-height: 0 !important; max-height: none !important; padding: 1.75rem 0 2rem 0 !important; overflow: visible !important;">
       <div class="work-section" style="width: 100%; max-width: 1520px; margin: 0 auto; padding: 0 clamp(36px, 4vw, 80px); box-sizing: border-box;">
       <div class="section-title-small">LOGS</div>
       <p class="logs-subtitle">Thoughts, reflections, and other musings</p>
       <div id="logs-list" class="logs-wayfinder"></div>
       </div>
       </section>
-    <section id="contact" class="content-section contact-section" data-bg="#637081" data-foreground="light" data-bg-light="#ECE6FB" data-foreground-light="dark" style="padding: 4rem 0">
+    <section id="contact" class="content-section contact-section" data-bg="#2E5A73" data-foreground="light" data-bg-light="#ECE6FB" data-foreground-light="dark" style="padding: 4rem 0">
     <div class="contact-content" style="width: 100%; max-width: 800px; margin: 0 auto; padding: 0 2rem; text-align: center;">
         
         <h2 style="font-size: 0.9rem; letter-spacing: 0.2rem; color: rgba(255,255,255,0.5); margin-bottom: 1.5rem; text-transform: uppercase;">Get in Touch</h2>
@@ -942,13 +949,13 @@ style="width: 100% !important; min-height: 220px !important; height: 100% !impor
         </p>
 
         <div style="display: flex; justify-content: center; gap: 2rem;">
-            <a href="mailto:trl015@ucsd.edu" class="social-icon-link" style="color: #fff; transition: opacity 0.3s; opacity: 0.7;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'">
+            <a href="mailto:trl015@ucsd.edu" class="social-icon-link" aria-label="Email Tristan">
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
             </a>
-            <a href="https://github.com/tmlee06" target="_blank" class="social-icon-link" style="color: #fff; transition: opacity 0.3s; opacity: 0.7;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'">
+            <a href="https://github.com/tmlee06" target="_blank" rel="noopener noreferrer" class="social-icon-link" aria-label="Tristan's GitHub">
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
             </a>
-            <a href="https://www.linkedin.com/in/tlee06/" target="_blank" class="social-icon-link" style="color: #fff; transition: opacity 0.3s; opacity: 0.7;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.7'">
+            <a href="https://www.linkedin.com/in/tlee06/" target="_blank" rel="noopener noreferrer" class="social-icon-link" aria-label="Tristan's LinkedIn">
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
             </a>
         </div>

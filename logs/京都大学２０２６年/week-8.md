@@ -11,15 +11,7 @@ Late night hockey practices and games are brutal. It was a struggle to do it whe
 Piggybacking off of my Orwell mentions, my Japanese popular culture professor gave me an 8/10 on my paper, where I compared Animal Farm with the fall of the Tokugawa Shogunate riots because I forgot to include citations. I was disappointed with the score, but he did acknowledge my creativity. At least, the professor knows I got game and can pull stuff out of my bag. It is funny how 10th grade Tristan Lee in English 2A class would be fuming over this score, but now I just forget and move on. I have no clue and hope this mindset can stick with me when I get back to UCSD because every mistake or failed felt like an indictment on myself then. It is such a strange and bizarre feeling because I am sure plenty of my Japanese peers feel the same way in the courses I think are free and easy. I really wonder why do let numbers, metrics, and superficial things equate our worth. Everybody is guilty of it, but ashamed to admit it. Aside from my little spiel, I am loving my Japanese popular culture class. Most of my suite-mates are in it and the assignments are fun and interesting. I got one due tomorrow on the impact of baseball in Japan. This was one of the first time, I rushed to do a writing assignment, but I ultimately stopped 30 minutes in not due to writer's block, but because I found myself re-watching the 2023 World Baseball Classic Ohtani-Trout strikeout, then I eventually went down the rabbit hole of peak sports moments. You ever just click one highlight video from any sport then end up somehow re-watching MVP D-Rose highlights again? That has been my routine for a long time. I can never get tired of watching sports, talking, or thinking about sports. They taught me everything I need to know about life and brings people together. I should probably include that in my paper. 
 
 Moving along now, I am starting to do work for my lab. Right now, I or Claude and I are just doing simple exploratory data analysis (EDA) on eye pupil movements. My lab partner and I were the controlled group of an experiment where we are supposed to hold a conversation while wearing eye-tracking glasses. The hypothesis is you can diagnose someone has schizophrenia just based on the movement of their eyes, and where they are fixated on in a particular environment. Do not take my word for it, but that is how I describe the project in my own words. Wearing the glasses on was actually so cool. Here's a photo below: 
-<div style="display: flex; justify-content: center; width: 100%; padding: 10px 0;">
-    <figure style="display: flex; flex-direction: column; align-items: center; margin: 0; max-width: 500px; width: 100%;">
-        <img 
-            src="https://lh3.googleusercontent.com/pw/AP1GczNiUt-_45KSJKXIz3SZw4h2dIQzrCj27MkAwzarLS_JE3YoixSlTjkGu0Lwal933Nc61u861LYhwMSpPP6EecDYsSYukUo4i0_dxaCg0ql9phv4Di9SLmSoCPo_SS6S8x-3HQbQQEsWuOiroMSMVsf0Pg=w1124-h1498-s-no-gm?authuser=0"
-            alt="Pupil Tracking Glasses"
-            style="width: 100%; height: auto; border-radius: 8px;"
-        />
-    </figure>
-</div>
+![](https://lh3.googleusercontent.com/pw/AP1GczNiUt-_45KSJKXIz3SZw4h2dIQzrCj27MkAwzarLS_JE3YoixSlTjkGu0Lwal933Nc61u861LYhwMSpPP6EecDYsSYukUo4i0_dxaCg0ql9phv4Di9SLmSoCPo_SS6S8x-3HQbQQEsWuOiroMSMVsf0Pg=w1124-h1498-s-no-gm?authuser=0)
 
 I should have taken a better photo, but you get the point. Apparently the glasses cost $50K USD, which is insane, and I can not believe I was allowed to use it. I am not the most technical, smartest, or even careful guy, yet I somehow managed to get into a lab and participate in their research. Maybe it is just some hidden talent I have to get in places I am not supposed to be in or I am just very lucky. I think I will take the latter option. My lab professor a really nice and interesting person who does a lot for everyone regardless of the type of student. He is pretty much living the dream of being a tenured professor, living in Japan, getting to travel the world for conferences, and getting to run experiments for his research on his own time. However, the way he describes the procedures he uses when working animals, I find a little crazy. I do not think I am allowed to share that information, but that is nothing compared to my Fundamentals of AI professor's research.  
 
@@ -49,35 +41,11 @@ So going back to the study, I presented these questions to my professor:
  
  The swords and armor at Tokugawa Art Museum were sick:
 
- <div style="display: flex; justify-content: center; width: 100%; padding: 10px 0;">
-    <figure style="display: flex; flex-direction: column; align-items: center; margin: 0; max-width: 500px; width: 100%;">
-        <img 
-            src="https://lh3.googleusercontent.com/pw/AP1GczN_2HNu_a9r4mVeieg3sS3dLQZ_ueHDb8O-3uaQxmHq6HfgXVEzmQwZM4mmzO1KXrZsoMPRJIl8qo-P5cWbAY4mHWSeR4huc3VFsSRhdxzGh8vSduC5GzOXsfXphZL8D5Xf2c45-rubu_OmNasnCflJmg=w1124-h1498-s-no-gm?authuser=0"
-            alt="Shogun Armor"
-            style="width: 100%; height: auto; border-radius: 8px;"
-        />
-    </figure>
-</div>
+ ![](https://lh3.googleusercontent.com/pw/AP1GczN_2HNu_a9r4mVeieg3sS3dLQZ_ueHDb8O-3uaQxmHq6HfgXVEzmQwZM4mmzO1KXrZsoMPRJIl8qo-P5cWbAY4mHWSeR4huc3VFsSRhdxzGh8vSduC5GzOXsfXphZL8D5Xf2c45-rubu_OmNasnCflJmg=w1124-h1498-s-no-gm?authuser=0)
 
- <div style="display: flex; justify-content: center; width: 100%; padding: 10px 0;">
-    <figure style="display: flex; flex-direction: column; align-items: center; margin: 0; max-width: 500px; width: 100%;">
-        <img 
-            src="https://lh3.googleusercontent.com/pw/AP1GczMKtzWQdkJh3qZCbEuvsAbl2RBT3170d3DYQxvF9Lln_l3UUh8Kv77e5Rvo-K-zjIcytPCeaurbV5SZ1c4dVaobUgbCo5nE2Y4P4dcJ8cU78iZ2clr7B4RQ4zmK3QWYLwqs_AU9zYrwjNtjDpNb9gDCEQ=w1124-h1498-s-no-gm?authuser=0"
-            alt="Swords"
-            style="width: 100%; height: auto; border-radius: 8px;"
-        />
-    </figure>
-</div>
+ ![](https://lh3.googleusercontent.com/pw/AP1GczMKtzWQdkJh3qZCbEuvsAbl2RBT3170d3DYQxvF9Lln_l3UUh8Kv77e5Rvo-K-zjIcytPCeaurbV5SZ1c4dVaobUgbCo5nE2Y4P4dcJ8cU78iZ2clr7B4RQ4zmK3QWYLwqs_AU9zYrwjNtjDpNb9gDCEQ=w1124-h1498-s-no-gm?authuser=0)
 
- <div style="display: flex; justify-content: center; width: 100%; padding: 10px 0;">
-    <figure style="display: flex; flex-direction: column; align-items: center; margin: 0; max-width: 500px; width: 100%;">
-        <img 
-            src="https://lh3.googleusercontent.com/pw/AP1GczNH0ocw-zVlBIJugOFVxawqNvzvGJYoUweY4P9KoddyXFnE49Mpi-ANE4hORYjx6e1rxQwxBsd_nq1o7-xECDd4BmimQlZz6Dv7g2vEuU1xA9qI4yWB1q8TWtkB0px42xqYP8mQ8MS6Reyfm91n2Ic1PA=w1124-h1498-s-no-gm?authuser=0"
-            alt="Katana"
-            style="width: 100%; height: auto; border-radius: 8px;"
-        />
-    </figure>
-</div>
+ ![](https://lh3.googleusercontent.com/pw/AP1GczNH0ocw-zVlBIJugOFVxawqNvzvGJYoUweY4P9KoddyXFnE49Mpi-ANE4hORYjx6e1rxQwxBsd_nq1o7-xECDd4BmimQlZz6Dv7g2vEuU1xA9qI4yWB1q8TWtkB0px42xqYP8mQ8MS6Reyfm91n2Ic1PA=w1124-h1498-s-no-gm?authuser=0)
 
 If I ever get that generational wealth, I will be like Dana White, buying swords and samurai armor to decorate the office. People comment his office decor makes him look like a "manchild," but that is another one of those terms that rubs me the wrong way because as Theo Von said, "All we ever are are just kids getting older." I would include the clip and go on a further tangent, but it is late, 4 AM, and I am trying to watch Game 3 NBA Finals in the morning. Maybe I should ask my Neuroscience lab professor if he does any research on late night motivation, sleep deprivation, and unproductive days 😂. That's it for now. Stay safe and Godspeed!
 

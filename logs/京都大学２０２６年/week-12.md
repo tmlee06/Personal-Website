@@ -17,97 +17,20 @@ But is it really July? I refuse to believe it, but I must accept it like LeBron 
 Round of 32 has been absolute peak besides the Japan heartbreaker. If they smoked Sweden they would’ve avoided Brazil and probably move on to 16. The guy had two business days to make that goal 🤦‍♂️. Ronaldo still the GOAT, his penalty kick to send Portugal to 16 was beautiful. I am hoping he can pull through with the Cup and ride off into the sunset.
 
 Besides the bipolar weather, this week was pretty fun. My lab professor was out for a conference and playing ultimate frisbee in London, so my Monday was free. Being a researcher, PhD student, or even an exchange student at Kyoto University is such a dream. I took advantage of my free day by going to Kanazawa. My grandparents are from Kanazawa and I can see why they moved. Contrary to what my brothers thought that English speakers would be limited, there was a plethora of English speaking tourists. Kanazawa is nice, but gets super hot. I have never sweated so much in my life, Kanazawa was actually a sauna. Here are some photos:
- <div style="display: flex; justify-content: center; width: 100%; padding: 10px 0;">
-    <figure style="display: flex; flex-direction: column; align-items: center; margin: 0; max-width: 500px; width: 100%;">
-        <img 
-            src="https://lh3.googleusercontent.com/pw/AP1GczO0UmOEAXgsN8ckjPwM5mxXa5_IepiY60HOoWNfM1Lw4tMftqY767Z2HxmFvG3wz36g2vR78Mh5SFA3y4xqPu_5iMhJoQGawxQK0Cpdlxvo3RU9_9nyZ9pk2IK_UxylcwnOUlJS_8vsQpfATTHicRtv9w=w752-h1002-s-no-gm?authuser=0"
-            alt="wall"
-            style="width: 100%; height: auto; border-radius: 8px;"
-        />
-        <figcaption style="margin-top: 8px; text-align: center; font-size: 14px; color: #FFFFFF;">
-        Kanazawa Station (金沢駅)
-        </figcaption>
-    </figure>
-</div>
- <div style="display: flex; justify-content: center; width: 100%; padding: 10px 0;">
-    <figure style="display: flex; flex-direction: column; align-items: center; margin: 0; max-width: 500px; width: 100%;">
-        <img 
-            src="https://lh3.googleusercontent.com/pw/AP1GczODbygPltMaJVpFEGla5y7P-duoe-2xREEcMQQH8kQhPcaZzbJFs_8MyI4_o0JBbYqe59peZvp3payohuz9_M9g9sYxlCOXdhoeyYHtIkZmNLr9lb-KsTQsjmyxoG6hqgTIjcLf0h6muKhsr6QwTp7aoQ=w752-h1002-s-no-gm?authuser=0"
-            alt="wall"
-            style="width: 100%; height: auto; border-radius: 8px;"
-        />
-        <figcaption style="margin-top: 8px; text-align: center; font-size: 14px; color: #FFFFFF;">
-        Omicho Market (近江町市場)
-        </figcaption>
-    </figure>
-</div>
- <div style="display: flex; justify-content: center; width: 100%; padding: 10px 0;">
-    <figure style="display: flex; flex-direction: column; align-items: center; margin: 0; max-width: 500px; width: 100%;">
-        <img 
-            src="https://lh3.googleusercontent.com/pw/AP1GczPfwToVxYs26wlvI3YpXIxRgXVftlNBVem3QYW-yu7X99e4iOmcmHLodTJ8_zcbIetQaMRaWfkqOyFInvvErRW7XPb2AnfoGhb2sHbPoJ_bTF1HuQf-3feoCxcr5rTdIlxr4nvIv3jaLTVKPLiwXjUchg=w752-h1002-s-no-gm?authuser=0"
-            alt="wall"
-            style="width: 100%; height: auto; border-radius: 8px;"
-        />
-        <figcaption style="margin-top: 8px; text-align: center; font-size: 14px; color: #FFFFFF;">
-        Kenrokuen Garden (兼六園)
-        </figcaption>
-    </figure>
-</div>
- <div style="display: flex; justify-content: center; width: 100%; padding: 10px 0;">
-    <figure style="display: flex; flex-direction: column; align-items: center; margin: 0; max-width: 500px; width: 100%;">
-        <img 
-            src="https://lh3.googleusercontent.com/pw/AP1GczPfAKOBa1CynmZ2tBViypaH2gwbdBjSB90tIAUdUYQ0UoQ7btnj6MUpFpIsNERItAp7cWdQYYd3WTTmk42Fy4N1GRYdLMnpgKsdGOD9AL2U7WiRt78OAfpR4UsS7FpeDIBNQHihfs2t9zhDU9TPlx3WAg=w752-h1002-s-no-gm?authuser=0"
-            alt="wall"
-            style="width: 100%; height: auto; border-radius: 8px;"
-        />
-        <figcaption style="margin-top: 8px; text-align: center; font-size: 14px; color: #FFFFFF;">
-        Kaga Honda Museum (加賀本多博物館)
-        </figcaption>
-    </figure>
-</div>
+ ![Kanazawa Station (金沢駅)](https://lh3.googleusercontent.com/pw/AP1GczO0UmOEAXgsN8ckjPwM5mxXa5_IepiY60HOoWNfM1Lw4tMftqY767Z2HxmFvG3wz36g2vR78Mh5SFA3y4xqPu_5iMhJoQGawxQK0Cpdlxvo3RU9_9nyZ9pk2IK_UxylcwnOUlJS_8vsQpfATTHicRtv9w=w752-h1002-s-no-gm?authuser=0)
+ ![Omicho Market (近江町市場)](https://lh3.googleusercontent.com/pw/AP1GczODbygPltMaJVpFEGla5y7P-duoe-2xREEcMQQH8kQhPcaZzbJFs_8MyI4_o0JBbYqe59peZvp3payohuz9_M9g9sYxlCOXdhoeyYHtIkZmNLr9lb-KsTQsjmyxoG6hqgTIjcLf0h6muKhsr6QwTp7aoQ=w752-h1002-s-no-gm?authuser=0)
+ ![Kenrokuen Garden (兼六園)](https://lh3.googleusercontent.com/pw/AP1GczPfwToVxYs26wlvI3YpXIxRgXVftlNBVem3QYW-yu7X99e4iOmcmHLodTJ8_zcbIetQaMRaWfkqOyFInvvErRW7XPb2AnfoGhb2sHbPoJ_bTF1HuQf-3feoCxcr5rTdIlxr4nvIv3jaLTVKPLiwXjUchg=w752-h1002-s-no-gm?authuser=0)
+ ![Kaga Honda Museum (加賀本多博物館)](https://lh3.googleusercontent.com/pw/AP1GczPfAKOBa1CynmZ2tBViypaH2gwbdBjSB90tIAUdUYQ0UoQ7btnj6MUpFpIsNERItAp7cWdQYYd3WTTmk42Fy4N1GRYdLMnpgKsdGOD9AL2U7WiRt78OAfpR4UsS7FpeDIBNQHihfs2t9zhDU9TPlx3WAg=w752-h1002-s-no-gm?authuser=0)
 
- <div style="display: flex; justify-content: center; width: 100%; padding: 10px 0;">
-    <figure style="display: flex; flex-direction: column; align-items: center; margin: 0; max-width: 500px; width: 100%;">
-        <img 
-            src="https://lh3.googleusercontent.com/pw/AP1GczNVZqglkmhYwoLQCHkd8eiJjkDlDgkYOvWSLc8KeebtXZiEZnHSNX8EP6yWwo5-H6TznQRtz0wwmB9eIqCbR-fsd-PtHjSF_jk7vGs5yoPz_5CoV89S9e5rDsr-uUwvXpp-xu_fokkmhg6to_rCUfNvNg=w752-h1002-s-no-gm?authuser=0"
-            alt="wall"
-            style="width: 100%; height: auto; border-radius: 8px;"
-        />
-        <figcaption style="margin-top: 8px; text-align: center; font-size: 14px; color: #FFFFFF;">
-        Higashi Chaya District (東茶屋街)
-        </figcaption>
-    </figure>
-</div>
+ ![Higashi Chaya District (東茶屋街)](https://lh3.googleusercontent.com/pw/AP1GczNVZqglkmhYwoLQCHkd8eiJjkDlDgkYOvWSLc8KeebtXZiEZnHSNX8EP6yWwo5-H6TznQRtz0wwmB9eIqCbR-fsd-PtHjSF_jk7vGs5yoPz_5CoV89S9e5rDsr-uUwvXpp-xu_fokkmhg6to_rCUfNvNg=w752-h1002-s-no-gm?authuser=0)
 
 Sleep has not been getting any better or easier. I can unfortunately say I’ve seen the sun rise and set 4 days in a row. I cannot blame hockey practices as the sole reason because the round of 32 World Cup games have been late or super early too. Those games are so fun to watch with the Europeans, and it would be such a shame if I missed them. Although I spent less time in the Kyoto dorm than my San Diego one, I am way closer with these suite-mates. That’s not to knock my San Diego mates, they were all genuinely chill people, but I think it’s the fact that my Kyoto suite-mates were all thrown in a completely new environment that made us gel well. I am going to miss them, but I guess I have more reasons to visit Europe now. 
 
 Despite having to cancel my trip to Naha and Taiwan this weekend, it was not terrible. I got to try Nagoya’s famous unagi dish, and miso-curry-udon:
 
- <div style="display: flex; justify-content: center; width: 100%; padding: 10px 0;">
-    <figure style="display: flex; flex-direction: column; align-items: center; margin: 0; max-width: 500px; width: 100%;">
-        <img 
-            src="https://lh3.googleusercontent.com/pw/AP1GczOxAcIlXIzzjrIuesL78EqQkyACp7_5FwZ3go95arag7SuWfeDuinXsmpEiFPfa1IsKLOPjHhCX70X8c2-0AJM7AUBjLeulJdaYvk0i0t-qxgVZXPhfc5u1JPoQWpGz1DTEgpvdu-REuv-jUIzJ0kxW0Q=w752-h1002-s-no-gm?authuser=0"
-            alt="wall"
-            style="width: 100%; height: auto; border-radius: 8px;"
-        />
-        <figcaption style="margin-top: 8px; text-align: center; font-size: 14px; color: #FFFFFF;">
-        Unagi
-        </figcaption>
-    </figure>
-</div>
+ ![Unagi](https://lh3.googleusercontent.com/pw/AP1GczOxAcIlXIzzjrIuesL78EqQkyACp7_5FwZ3go95arag7SuWfeDuinXsmpEiFPfa1IsKLOPjHhCX70X8c2-0AJM7AUBjLeulJdaYvk0i0t-qxgVZXPhfc5u1JPoQWpGz1DTEgpvdu-REuv-jUIzJ0kxW0Q=w752-h1002-s-no-gm?authuser=0)
 
- <div style="display: flex; justify-content: center; width: 100%; padding: 10px 0;">
-    <figure style="display: flex; flex-direction: column; align-items: center; margin: 0; max-width: 500px; width: 100%;">
-        <img 
-            src="https://lh3.googleusercontent.com/pw/AP1GczOX_9yq7juTJ3L_o1ugVFg-XBv_LoECQBw46uUb3f7ITe7dzf69YPgONOUtm_intgX9O5ay-cI0N4dS5FmQXg22oVxpVcci9ctgBUmEFIxLEVvaEODBs1JwpBBRUXe4NFXd9qWKUK7reqiP37UFMYT6Vw=w752-h1002-s-no-gm?authuser=0"
-            alt="wall"
-            style="width: 100%; height: auto; border-radius: 8px;"
-        />
-        <figcaption style="margin-top: 8px; text-align: center; font-size: 14px; color: #FFFFFF;">
-        Miso-Curry-Udon
-        </figcaption>
-    </figure>
-</div>
+ ![Miso-Curry-Udon](https://lh3.googleusercontent.com/pw/AP1GczOX_9yq7juTJ3L_o1ugVFg-XBv_LoECQBw46uUb3f7ITe7dzf69YPgONOUtm_intgX9O5ay-cI0N4dS5FmQXg22oVxpVcci9ctgBUmEFIxLEVvaEODBs1JwpBBRUXe4NFXd9qWKUK7reqiP37UFMYT6Vw=w752-h1002-s-no-gm?authuser=0)
 
 
 The miso-curry-udon was a little less than $12. That would easily cost $25+ at Marugame Udon. Do not ever ask me if I want to go to Valley Fair again. I will never eat out in the States again unless it’s Little Ceasars or Costco 😂. Once I get home I know the depression is going to hit so hard, and Japan is going to be my whole personality. It’s incredibly difficult to adjust from cheap delicious food and goods, great public transit, walkable cities to overpriced gas, constant traffic, unsanitary cities, and denied insurance premiums. I paid for my health insurance and ice cream all for $30 at a convenience store 🤣. Luigi Mangione’s message is so good, but the way he “executed” it is intolerable. The goal in life is really to make an American salary and live in Japan 🤣. I know this sounds contradictory to what I said in the beginning, celebrating America, but America does have flaws like every country. One thing is for certain that although America is “not perfect, it’s not its mistakes.” Side note: Only One by Ye is a top 10 Ye song.

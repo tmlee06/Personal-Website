@@ -1,15 +1,4 @@
- <div style="display: flex; justify-content: center; width: 100%; padding: 10px 0;">
-    <figure style="display: flex; flex-direction: column; align-items: center; margin: 0; max-width: 500px; width: 100%;">
-        <img 
-            src="https://lh3.googleusercontent.com/pw/AP1GczPJ0Ziwc_9ZYI-QpwzppWPQ_4puDV94qNCiZ2xOBc2EnJkyvDdF1OexUBlQAegN8vGS6WdEETFcQIz4aRi9b_wsv2Si_L2q8SLtvI1iwHQeuUm2Qs7eUzeKX1n1otftjLnB1anBU8KajcbSfdgacQrZ9A=w1124-h1498-s-no-gm?authuser=0"
-            alt="wall"
-            style="width: 100%; height: auto; border-radius: 8px;"
-        />
-          <figcaption style="margin-top: 8px; text-align: center; font-size: 14px; color: #FFFFFF;">
-              Marvelous!
-        </figcaption>
-    </figure>
-</div>
+ ![Marvelous!](https://lh3.googleusercontent.com/pw/AP1GczPJ0Ziwc_9ZYI-QpwzppWPQ_4puDV94qNCiZ2xOBc2EnJkyvDdF1OexUBlQAegN8vGS6WdEETFcQIz4aRi9b_wsv2Si_L2q8SLtvI1iwHQeuUm2Qs7eUzeKX1n1otftjLnB1anBU8KajcbSfdgacQrZ9A=w1124-h1498-s-no-gm?authuser=0)
 
 The days leading up to this trip I was completely bedridden. After averaging 30,000 steps for 15 days, I guess my body needed to take a much-needed rest. It sucked because I hoped to do a lot more with the 5 days I had in Kyoto, but I had to listen to my body. Fortunately, I got to see the Mount Daimonji fire lighting, so I am very thankful for that.
 

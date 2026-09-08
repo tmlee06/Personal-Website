@@ -1,0 +1,21 @@
+{
+    // Live Server (ritwickdey.LiveServer) normally reloads the whole page on
+    // any file save. Editing logs/**/*.md is now handled in-page instead
+    // (script.js polls the open log's raw markdown and patches it in place —
+    // see startLiveMdWatch), so a full reload for those saves would just
+    // undo that and jump you back to the top. Everything else (script.js,
+    // styles.css, html) still reloads normally.
+    "liveServer.settings.ignoreFiles": [
+        ".vscode/**",
+        "logs/**/*.md"
+    ],
+
+    // The browser preview can only ever see what's on disk — it has no way
+    // to see keystrokes still sitting in an unsaved editor buffer. Autosave
+    // is what actually makes "see it as I type" possible: it puts your
+    // typing on disk ~½s after you pause, which startLiveMdWatch's poll
+    // then picks up. This applies to the whole workspace, not just logs —
+    // say if that's unwelcome for other files and I'll scope it down.
+    "files.autoSave": "afterDelay",
+    "files.autoSaveDelay": 500
+}

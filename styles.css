@@ -23,6 +23,59 @@
     box-sizing: border-box;
 }
 
+/* Sitewide keyboard-focus baseline. Mouse/touch users never see this
+   (:focus-visible only fires for keyboard/programmatic focus); keyboard
+   users now get a visible ring on every link, button and custom control,
+   including ones that had none before (nav icons, social links, resume
+   buttons, project cards, credential links). More specific component
+   rules further down (log tiles, the reader drawer, translate pills)
+   already used this exact color and win over this by specificity. */
+a:focus-visible,
+button:focus-visible,
+[tabindex]:focus-visible,
+summary:focus-visible {
+    outline: 2px solid var(--focus-ring, #EE964B);
+    outline-offset: 2px;
+    border-radius: 4px;
+}
+
+/* Skip link — invisible until a keyboard user tabs to it, first stop
+   before the sidebar so long nav lists don't have to be tabbed through
+   to reach the page content. */
+.skip-link {
+    position: absolute;
+    top: -100%;
+    left: 1rem;
+    z-index: 100000;
+    background: #1F1D29;
+    color: #fff;
+    padding: 0.75rem 1.25rem;
+    border-radius: var(--radius-sm);
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: var(--shadow-md);
+    transition: top 0.2s var(--ease-out);
+}
+
+.skip-link:focus-visible,
+.skip-link:focus {
+    top: 1rem;
+    outline: 2px solid var(--focus-ring, #EE964B);
+    outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
 /* Initial page load transition */
 @keyframes fadeInFromBlack {
     0% {
@@ -66,10 +119,45 @@
     --km-softviolet: #F3E8FB;
     --km-text: #26242E;
     --km-muted: #64606F;
-    --km-link: #0F72B5;
+    /* Was #0F72B5 — 4.13:1 against the palest section backgrounds, just
+       under the 4.5:1 body-text minimum. Darkened slightly (still reads
+       as the same blue) to clear AA everywhere: 4.78:1+. */
+    --km-link: #0C68A5;
     --km-border: rgba(38, 36, 46, 0.16);
     --km-card: rgba(255, 255, 255, 0.74);
     --km-card-strong: rgba(255, 255, 255, 0.92);
+
+    /* Spacing scale (4px base). New tokens only — existing rules keep
+       their literal values except where a component below is refined. */
+    --space-1: 0.25rem;
+    --space-2: 0.5rem;
+    --space-3: 0.75rem;
+    --space-4: 1rem;
+    --space-5: 1.5rem;
+    --space-6: 2rem;
+    --space-7: 3rem;
+    --space-8: 4rem;
+
+    /* Radius scale */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 20px;
+    --radius-pill: 9999px;
+
+    /* Elevation scale — dark-surface shadows (most of the site sits on
+       dark/mid-tone section backgrounds); reused as-is in light mode,
+       where the lower ambient contrast still reads correctly. */
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.16);
+    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.22);
+    --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.3);
+
+    /* Motion */
+    --ease-out: cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* Focus ring — matches the accent orange already used for this exact
+       purpose on log tiles, the reader drawer, and highlight cards, now
+       applied consistently everywhere else that was missing one. */
+    --focus-ring: #EE964B;
 }
 
 html {
@@ -496,7 +584,11 @@ body.theme-light .theme-toggle:hover {
 }
 
 .timestamp {
-    font-size: 0.85rem;
+    /* !important: the element also carries an inline font-family from
+       older markup (still present in index.html) that would otherwise
+       win over this class rule. */
+    font-family: 'IBM Plex Mono', 'IBM Plex Sans', monospace !important;
+    font-size: 0.82rem;
     color: #ffffff;
     font-weight: 400;
 }
@@ -547,8 +639,14 @@ body.theme-light .theme-toggle:hover {
 
 /* Hover-to-reveal only makes sense with a real pointer that can hover
    without committing to a click — gate it to mouse/trackpad devices. */
+/* :focus-within alongside :hover matters here specifically: visibility:
+   hidden (used to fully remove these from touch layout below) also drops
+   an element out of the default tab order, so without this a keyboard
+   user tabbing past the photo on a mouse-capable device would skip these
+   4 links entirely — hoverable but unreachable. */
 @media (hover: hover) and (pointer: fine) {
-    .profile-image-wrapper:hover .profile-social-links {
+    .profile-image-wrapper:hover .profile-social-links,
+    .profile-image-wrapper:focus-within .profile-social-links {
         opacity: 1;
         visibility: visible;
         pointer-events: all;
@@ -797,6 +895,15 @@ body.theme-light .location-map {
     color: rgba(255, 255, 255, 0.55) !important;
 }
 
+.profile-title-link {
+    transition: opacity 0.2s ease;
+}
+
+.profile-title-link:hover,
+.profile-title-link:focus-visible {
+    opacity: 0.8;
+}
+
 .map-caption {
     font-size: 0.7rem;
     font-weight: 600;
@@ -859,8 +966,8 @@ body.theme-light .location-map {
 }
 
 .work-card:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
 }
 
 .work-card:active {
@@ -908,11 +1015,12 @@ body.theme-light .location-map {
     transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.3s ease, border-color 0.3s ease;
 }
 
-.cert-card:hover {
+.cert-card:hover,
+.cert-card:focus-within {
     background: rgba(255, 255, 255, 0.08);
     border-color: rgba(255, 255, 255, 0.3);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.18);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
 }
 
 .cert-card:active {
@@ -946,7 +1054,8 @@ body.theme-light .location-map {
 }
 
 .cert-issuer {
-    font-size: 0.8rem;
+    font-family: 'IBM Plex Mono', 'IBM Plex Sans', monospace;
+    font-size: 0.78rem;
     color: rgba(255, 255, 255, 0.6);
     margin: 0;
 }
@@ -1007,6 +1116,15 @@ body.theme-light .location-map {
 .work-card-link {
     text-decoration: none !important;
     display: block !important;
+    border-radius: var(--radius-sm);
+}
+
+/* Keyboard focus lands on the wrapping <a>, not the inner .work-card, so
+   :hover's per-card styling needs a focus-visible counterpart on the
+   parent to reach the same elements. */
+.work-card-link:focus-visible .work-card {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
 }
 
 .work-image {
@@ -1087,10 +1205,12 @@ body.theme-light .location-map {
     height: auto !important;
 }
 
-.work-card-link:hover .current-project-card {
+.work-card-link:hover .current-project-card,
+.work-card-link:focus-visible .current-project-card {
     background: rgba(255, 255, 255, 0.08) !important;
     border-color: rgba(255, 255, 255, 0.3) !important;
     transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
 }
 
 .current-project-title {
@@ -1099,7 +1219,8 @@ body.theme-light .location-map {
     font-size: 1rem !important;
 }
 
-.work-card-link:hover .current-project-title {
+.work-card-link:hover .current-project-title,
+.work-card-link:focus-visible .current-project-title {
     color: #ffffff !important;
 }
 
@@ -1205,6 +1326,31 @@ body.theme-light .location-map {
     width: 100%;
 }
 
+/* Goals list — list-style-position: inside keeps the marker inline with
+   the text ("1. Be a decent human being.") instead of indenting the
+   block, matching how this used to be hand-typed into heading tags. */
+.goals-list {
+    list-style: decimal;
+    list-style-position: inside;
+    margin: 0;
+    padding: 0;
+}
+
+.goals-list li {
+    font-size: 1.5rem;
+    font-weight: 800;
+    margin: 0 0 1.25rem 0;
+    color: rgba(255, 255, 255, 0.95);
+}
+
+.goals-list li:last-child {
+    margin-bottom: 0;
+}
+
+/* Light-theme text color for this list is already handled by the
+   sitewide body.theme-light .content-section :is(..., li, ...) rule
+   further down, which covers every <li> inside a .content-section. */
+
 .experience-header {
     display: flex;
     justify-content: space-between;
@@ -1241,7 +1387,8 @@ body.theme-light .location-map {
     transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
-.experience-logo-link:hover {
+.experience-logo-link:hover,
+.experience-logo-link:focus-visible {
     transform: scale(1.05);
     opacity: 0.9;
 }
@@ -1281,7 +1428,8 @@ body.theme-light .location-map {
 }
 
 .experience-date {
-    font-size: 0.85rem;
+    font-family: 'IBM Plex Mono', 'IBM Plex Sans', monospace;
+    font-size: 0.8rem;
     color: #fffefe;
     white-space: normal;
     flex-shrink: 0;
@@ -1502,8 +1650,13 @@ body.theme-light .location-map {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    outline: none;
     font-family: 'IBM Plex Sans', sans-serif;
+}
+
+.season-header:focus-visible {
+    outline: 2px solid var(--focus-ring, #EE964B);
+    outline-offset: -2px;
+    border-radius: var(--radius-sm);
 }
 
 .folder-title {
@@ -1939,6 +2092,32 @@ body.theme-light .location-map {
     margin-bottom: 0;
 }
 
+/* Photos dropped in via Markdown (`![caption](url)`) — renders to the
+   same centered, captioned look as the site's older hand-written
+   <figure> blocks, without needing that HTML typed out each time. */
+.reader-body figure.log-photo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px auto;
+    max-width: 500px;
+    width: 100%;
+}
+
+.reader-body figure.log-photo img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.reader-body figure.log-photo figcaption {
+    margin-top: 8px;
+    text-align: center;
+    font-size: 14px;
+    color: #FFFFFF;
+}
+
 /* A nested list directly under a list item indents further under its
    parent instead of sitting almost flush with it. Plain (non-checklist)
    nested items read as a note/caption on the parent (e.g. "Born there"
@@ -2062,6 +2241,11 @@ body.theme-light .location-map {
     justify-content: center;
 }
 
+.social-icon-link:focus-visible {
+    opacity: 1;
+    transform: translateY(-2px);
+}
+
 .social-icon-link:hover {
     opacity: 1;
     transform: translateY(-2px);
@@ -2114,8 +2298,10 @@ body.theme-light .location-map {
     top: 1rem;
     left: 1rem;
     z-index: 10001;
-    width: 40px;
-    height: 40px;
+    /* 44px meets the WCAG 2.5.5 / iOS-HIG minimum touch-target size —
+       was 40px. */
+    width: 44px;
+    height: 44px;
     background: rgba(255, 255, 255, 0.95);
     border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 4px;
@@ -3178,8 +3364,11 @@ body.dark-foreground .current-project-logo * {
     .hamburger-menu {
         top: 0.75rem;
         left: 0.75rem;
-        width: 36px;
-        height: 36px;
+        /* Kept at the 44px touch-target minimum even at this breakpoint —
+           small screens are exactly where a tap target should never
+           shrink below it. */
+        width: 44px;
+        height: 44px;
     }
 
     .sidebar {

@@ -8,53 +8,164 @@
           {
             "title": "Fall 2025",
             "logs": [
-              { "filename": "Week 1 - 11/06/2025", "path": "logs/Fall-2025/week-1.md", "date": "2025-11-06" },
-              { "filename": "Week 2 - 11/17/2025", "path": "logs/Fall-2025/week-2.md", "date": "2025-11-17" },
-              { "filename": "Week 3 - 11/25/2025", "path": "logs/Fall-2025/week-3.md", "date": "2025-11-25" }
-            ]
+              {
+                "filename": "Week 1 - 11/06/2025",
+                "path": "logs/Fall-2025/week-1.md",
+                "date": "2025-11-06"
+              },
+              {
+                "filename": "Week 2 - 11/17/2025",
+                "path": "logs/Fall-2025/week-2.md",
+                "date": "2025-11-17"
+              },
+              {
+                "filename": "Week 3 - 11/25/2025",
+                "path": "logs/Fall-2025/week-3.md",
+                "date": "2025-11-25"
+              }
+            ],
+            "dir": "logs/Fall-2025"
           },
           {
             "title": "Winter 2026",
             "logs": [
-              { "filename": "Week 1 - 01/10/2026", "path": "logs/Winter-2026/week-1.md", "date": "2026-01-10" },
-              { "filename": "Week 2 - 01/18/2026", "path": "logs/Winter-2026/week-2.md", "date": "2026-01-18" },
-              { "filename": "Week 3 - 01/26/2026", "path": "logs/Winter-2026/week-3.md", "date": "2026-01-26" },
-              { "filename": "Week 4 - 02/02/2026", "path": "logs/Winter-2026/week-4.md", "date": "2026-02-02" },
-              { "filename": "Week 5 - 02/09/2026", "path": "logs/Winter-2026/week-5.md", "date": "2026-02-09" },
-              { "filename": "Week 6 - 02/16/2026", "path": "logs/Winter-2026/week-6.md", "date": "2026-02-16" },
-              { "filename": "Week 7 - 02/23/2026", "path": "logs/Winter-2026/week-7.md", "date": "2026-02-23" },
-              { "filename": "Week 8 - 03/02/2026", "path": "logs/Winter-2026/week-8.md", "date": "2026-03-02" },
-              { "filename": "Week 9 - 03/09/2026", "path": "logs/Winter-2026/week-9.md", "date": "2026-03-09" },
-              { "filename": "Week 10 - 03/16/2026", "path": "logs/Winter-2026/week-10.md", "date": "2026-03-16" }
-            ]
+              {
+                "filename": "Week 1 - 01/10/2026",
+                "path": "logs/Winter-2026/week-1.md",
+                "date": "2026-01-10"
+              },
+              {
+                "filename": "Week 2 - 01/18/2026",
+                "path": "logs/Winter-2026/week-2.md",
+                "date": "2026-01-18"
+              },
+              {
+                "filename": "Week 3 - 01/26/2026",
+                "path": "logs/Winter-2026/week-3.md",
+                "date": "2026-01-26"
+              },
+              {
+                "filename": "Week 4 - 02/02/2026",
+                "path": "logs/Winter-2026/week-4.md",
+                "date": "2026-02-02"
+              },
+              {
+                "filename": "Week 5 - 02/09/2026",
+                "path": "logs/Winter-2026/week-5.md",
+                "date": "2026-02-09"
+              },
+              {
+                "filename": "Week 6 - 02/16/2026",
+                "path": "logs/Winter-2026/week-6.md",
+                "date": "2026-02-16"
+              },
+              {
+                "filename": "Week 7 - 02/23/2026",
+                "path": "logs/Winter-2026/week-7.md",
+                "date": "2026-02-23"
+              },
+              {
+                "filename": "Week 8 - 03/02/2026",
+                "path": "logs/Winter-2026/week-8.md",
+                "date": "2026-03-02"
+              },
+              {
+                "filename": "Week 9 - 03/09/2026",
+                "path": "logs/Winter-2026/week-9.md",
+                "date": "2026-03-09"
+              },
+              {
+                "filename": "Week 10 - 03/16/2026",
+                "path": "logs/Winter-2026/week-10.md",
+                "date": "2026-03-16"
+              }
+            ],
+            "dir": "logs/Winter-2026"
           }
         ]
       }
     ]
   },
-    {
+  {
     "title": "京都大学",
     "logs": [
-      { "filename": "Week 1 - ２０２６年０４月２０日", "path": "logs/京都大学２０２６年/week-1.md", "date": "2026-04-20" },
-      { "filename": "Week 2 - ２０２６年０４月２6日", "path": "logs/京都大学２０２６年/week-2.md", "date": "2026-04-26" },
-      { "filename": "Week 3 - ２０２６年０５月０３日", "path": "logs/京都大学２０２６年/week-3.md", "date": "2026-05-03" },
-      { "filename": "Week 4 - ２０２６年０５月１０日", "path": "logs/京都大学２０２６年/week-4.md", "date": "2026-05-10" },
-      { "filename": "Week 5 - ２０２６年０５月１７日", "path": "logs/京都大学２０２６年/week-5.md", "date": "2026-05-17" },
-      { "filename": "Week 6-7 - ２０２６年０6月０3日", "path": "logs/京都大学２０２６年/week-6-7.md", "date": "2026-06-03" },
-      { "filename": "Week 8 - ２０２６年０6月０８日", "path": "logs/京都大学２０２６年/week-8.md", "date": "2026-06-08" },
-      { "filename": "Week 9 - ２０２６年０6月１５日", "path": "logs/京都大学２０２６年/week-9.md", "date": "2026-06-15" },
-      { "filename": "Week 10 - ２０２６年０6月２２日", "path": "logs/京都大学２０２６年/week-10.md", "date": "2026-06-22" },
-      { "filename": "Week 11 - ２０２６年０6月２９日", "path": "logs/京都大学２０２６年/week-11.md", "date": "2026-06-29"},
-      { "filename": "Week 12 - ２０２６年０７月０５日", "path": "logs/京都大学２０２６年/week-12.md", "date": "2026-07-05"},
-      { "filename": "Week 13 - ２０２６年０７月１２日", "path": "logs/京都大学２０２６年/week-13.md", "date": "2026-07-12"},
-      { "filename": "Week 14-15 - ２０２６年０７月１９日", "path": "logs/京都大学２０２６年/week-14-15.md", "date": "2026-07-19"}
-
-    ]
+      {
+        "filename": "Week 1 - ２０２６年０４月２０日",
+        "path": "logs/京都大学２０２６年/week-1.md",
+        "date": "2026-04-20"
+      },
+      {
+        "filename": "Week 2 - ２０２６年０４月２6日",
+        "path": "logs/京都大学２０２６年/week-2.md",
+        "date": "2026-04-26"
+      },
+      {
+        "filename": "Week 3 - ２０２６年０５月０３日",
+        "path": "logs/京都大学２０２６年/week-3.md",
+        "date": "2026-05-03"
+      },
+      {
+        "filename": "Week 4 - ２０２６年０５月１０日",
+        "path": "logs/京都大学２０２６年/week-4.md",
+        "date": "2026-05-10"
+      },
+      {
+        "filename": "Week 5 - ２０２６年０５月１７日",
+        "path": "logs/京都大学２０２６年/week-5.md",
+        "date": "2026-05-17"
+      },
+      {
+        "filename": "Week 6-7 - ２０２６年０6月０3日",
+        "path": "logs/京都大学２０２６年/week-6-7.md",
+        "date": "2026-06-03"
+      },
+      {
+        "filename": "Week 8 - ２０２６年０6月０８日",
+        "path": "logs/京都大学２０２６年/week-8.md",
+        "date": "2026-06-08"
+      },
+      {
+        "filename": "Week 9 - ２０２６年０6月１５日",
+        "path": "logs/京都大学２０２６年/week-9.md",
+        "date": "2026-06-15"
+      },
+      {
+        "filename": "Week 10 - ２０２６年０6月２２日",
+        "path": "logs/京都大学２０２６年/week-10.md",
+        "date": "2026-06-22"
+      },
+      {
+        "filename": "Week 11 - ２０２６年０6月２９日",
+        "path": "logs/京都大学２０２６年/week-11.md",
+        "date": "2026-06-29"
+      },
+      {
+        "filename": "Week 12 - ２０２６年０７月０５日",
+        "path": "logs/京都大学２０２６年/week-12.md",
+        "date": "2026-07-05"
+      },
+      {
+        "filename": "Week 13 - ２０２６年０７月１２日",
+        "path": "logs/京都大学２０２６年/week-13.md",
+        "date": "2026-07-12"
+      },
+      {
+        "filename": "Week 14-15 - ２０２６年０７月１９日",
+        "path": "logs/京都大学２０２６年/week-14-15.md",
+        "date": "2026-07-19"
+      }
+    ],
+    "dir": "logs/京都大学２０２６年"
   },
-{
+  {
     "title": "Travel",
     "logs": [
-      { "filename": "My Bucket List Adventures", "path": "logs/Travel/bucketlist.md", "pinned": true, "date": "2026-07-31" }
+      {
+        "filename": "My Bucket List Adventures",
+        "path": "logs/Travel/bucketlist.md",
+        "pinned": true,
+        "date": "2026-07-31"
+      }
     ],
     "folders": [
       {
@@ -63,8 +174,9 @@
           {
             "title": "United States of America (USA 🇺🇸)",
             "logs": [
-              {  }
-            ]
+              {}
+            ],
+            "dir": "logs/Travel/North America/USA"
           },
           {
             "title": "Canada (CAN 🇨🇦)",
@@ -72,119 +184,263 @@
               {
                 "title": "Toronto, Ontario",
                 "logs": [
-                  { "filename": "Toronto, Ontario", "path": "logs/Travel/North America/Canada/toronto.md", "date": "2025-09-05", "draft": true }
+                  {
+                    "filename": "Toronto, Ontario",
+                    "path": "logs/Travel/North America/Canada/toronto.md",
+                    "date": "2025-09-05",
+                    "draft": true
+                  }
                 ]
               }
             ],
             "logs": [
-              { "filename": "Calgary, Alberta", "path": "logs/Travel/North America/Canada/calgary.md", "date": "2019-04-29", "draft": true },
-              { "filename": "Vancouver, British Columbia", "path": "logs/Travel/North America/Canada/vancouver.md", "date": "2018-12-31","draft": true  }
-            ]
+              {
+                "filename": "Calgary, Alberta",
+                "path": "logs/Travel/North America/Canada/calgary.md",
+                "date": "2019-04-29",
+                "draft": true
+              },
+              {
+                "filename": "Vancouver, British Columbia",
+                "path": "logs/Travel/North America/Canada/vancouver.md",
+                "date": "2018-12-31",
+                "draft": true
+              }
+            ],
+            "dir": "logs/Travel/North America/Canada"
           }
         ]
       },
-{
-  "title": "Asia",
-  "folders": [
-    {
-      "title": "China (中國 🇨🇳)",
-      "folders": [
-        {
-          "title": "Beijing, Beijing Municipality (北京)",
-          "logs": [
-            { "filename": "Arrival - Day 1", "path": "logs/Travel/Asia/China/Beijing/beijing1.md", "date": "2026-07-29" },
-            { "filename": "Forbidden City & Temple of Heaven - Day 2", "path": "logs/Travel/Asia/China/Beijing/beijing2.md", "date": "2026-07-30" },
-            { "filename": "Mutianyu Great Wall - Day 3", "path": "logs/Travel/Asia/China/Beijing/beijing3.md", "date": "2026-07-31" },
-            { "filename": "Tian'anmen Square, Beihei Park, Lama Temple, & CBD Mall - Day 4", "path": "logs/Travel/Asia/China/Beijing/beijing4.md", "date": "2026-08-01" },
-            { "filename": "Church, Summer Palace & Marco Polo Bridge - Day 5", "path": "logs/Travel/Asia/China/Beijing/beijing5.md", "date": "2026-08-02"}
-          ]
-        },
-        {
-          "title": "Chengdu, Sichuan Province (四川省成都)",
-          "logs": [
-            { "filename": "Panda Research Center, New Century Global Center, & Anshun Bridge - Day 1", "path": "logs/Travel/Asia/China/Chengdu/chengdu1.md", "date": "2026-08-03"},
-            { "filename": "People's Park & IFS - Day 2", "path": "logs/Travel/Asia/China/Chengdu/chengdu2.md", "date": "2026-08-04", "draft": true }
-          ]
-        },
-        {
-          "title": "Chongqing, Chongqing Municipality (重庆)",
-          "logs": [
-            { "filename": "Arrival - Day 1", "path": "logs/Travel/Asia/China/Chongqing/chongqing1.md", "date": "2026-08-04", "draft": true },
-            { "filename": "Cyberpunk - Day 2", "path": "logs/Travel/Asia/China/Chongqing/chongqing2.md", "date": "2026-08-05", "draft": true },
-            { "filename": "Grand Theatre - Day 3", "path": "logs/Travel/Asia/China/Chongqing/chongqing3.md", "date": "2026-08-06", "draft": true }
-          ]
-        },
-        {
-           "title": "Shanghai, Shanghai Municipality (上海)",
-          "logs": [
-            { "filename": "Arrival - Day 1", "path": "logs/Travel/Asia/China/Shanghai/shanghai1.md", "date": "2026-08-07", "draft": true },
-            { "filename": "Day 2", "path": "logs/Travel/Asia/China/Shanghai/shanghai2.md", "date": "2026-08-09", "draft": true },
-            { "filename": "Day 3", "path": "logs/Travel/Asia/China/Shanghai/shanghai3.md", "date": "2026-08-10", "draft": true },
-            { "filename": "Day 4", "path": "logs/Travel/Asia/China/Shanghai/shanghai4.md", "date": "2026-08-11", "draft": true }
-          ]
-        }
-      ],
-         "logs": [
-              { "filename": "Hangzhou, ", "path": "logs/Travel/Asia/China/hangzhou.md", "date": "2026-08-08", "draft": true },
-              { "filename": "Shenzhen, Guangdong (深圳)", "path": "logs/Travel/Asia/China/shenzhen.md", "date": "2026-05-16" }
-            ]
+      {
+        "title": "Asia",
+        "folders": [
+          {
+            "title": "China (中國 🇨🇳)",
+            "folders": [
+              {
+                "title": "Beijing, Beijing Municipality (北京)",
+                "logs": [
+                  {
+                    "filename": "Arrival - Day 1",
+                    "path": "logs/Travel/Asia/China/Beijing/beijing1.md",
+                    "date": "2026-07-29"
+                  },
+                  {
+                    "filename": "Forbidden City & Temple of Heaven - Day 2",
+                    "path": "logs/Travel/Asia/China/Beijing/beijing2.md",
+                    "date": "2026-07-30"
+                  },
+                  {
+                    "filename": "Mutianyu Great Wall - Day 3",
+                    "path": "logs/Travel/Asia/China/Beijing/beijing3.md",
+                    "date": "2026-07-31"
+                  },
+                  {
+                    "filename": "Tian'anmen Square, Beihei Park, Lama Temple, & CBD Mall - Day 4",
+                    "path": "logs/Travel/Asia/China/Beijing/beijing4.md",
+                    "date": "2026-08-01"
+                  },
+                  {
+                    "filename": "Church, Summer Palace & Marco Polo Bridge - Day 5",
+                    "path": "logs/Travel/Asia/China/Beijing/beijing5.md",
+                    "date": "2026-08-02"
+                  }
+                ],
+                "dir": "logs/Travel/Asia/China/Beijing"
+              },
+              {
+                "title": "Chengdu, Sichuan Province (四川省成都)",
+                "logs": [
+                  {
+                    "filename": "Panda Research Center, New Century Global Center, Chunxi Road Pedestrian Street, & Anshun Bridge - Day 1",
+                    "path": "logs/Travel/Asia/China/Chengdu/chengdu1.md",
+                    "date": "2026-08-03"
+                  },
+                  {
+                    "filename": "Tianfu Square, People's Park, Jinli Pedestrian Street, & IFS Panda - Day 2",
+                    "path": "logs/Travel/Asia/China/Chengdu/chengdu2.md",
+                    "date": "2026-08-04",
+                    "time": "09:00"
+                  }
+                ],
+                "dir": "logs/Travel/Asia/China/Chengdu"
+              },
+              {
+                "title": "Chongqing, Chongqing Municipality (重庆)",
+                "logs": [
+                  {
+                    "filename": "Jiefangbei Square & Hongya Cave - Day 1",
+                    "path": "logs/Travel/Asia/China/Chongqing/chongqing1.md",
+                    "date": "2026-08-04",
+                    "time": "20:00",
+                    "draft": true
+                  },
+                  {
+                    "filename": "Kuixing Building, Shibati, Raffles City, & Deyi Plaza - Day 2",
+                    "path": "logs/Travel/Asia/China/Chongqing/chongqing2.md",
+                    "date": "2026-08-05",
+                    "draft": true
+                  },
+                  {
+                    "filename": "Grand Theatre - Day 3",
+                    "path": "logs/Travel/Asia/China/Chongqing/chongqing3.md",
+                    "date": "2026-08-06",
+                    "draft": true
+                  }
+                ],
+                "dir": "logs/Travel/Asia/China/Chongqing"
+              },
+              {
+                "title": "Shanghai, Shanghai Municipality (上海)",
+                "logs": [
+                  {
+                    "filename": "Arrival - Day 1",
+                    "path": "logs/Travel/Asia/China/Shanghai/shanghai1.md",
+                    "date": "2026-08-07",
+                    "draft": true
+                  },
+                  {
+                    "filename": "Day 2",
+                    "path": "logs/Travel/Asia/China/Shanghai/shanghai2.md",
+                    "date": "2026-08-09",
+                    "draft": true
+                  },
+                  {
+                    "filename": "Day 3",
+                    "path": "logs/Travel/Asia/China/Shanghai/shanghai3.md",
+                    "date": "2026-08-10",
+                    "draft": true
+                  },
+                  {
+                    "filename": "Day 4",
+                    "path": "logs/Travel/Asia/China/Shanghai/shanghai4.md",
+                    "date": "2026-08-11",
+                    "draft": true
+                  }
+                ],
+                "dir": "logs/Travel/Asia/China/Shanghai"
+              }
+            ],
+            "logs": [
+              {
+                "filename": "Hangzhou, ",
+                "path": "logs/Travel/Asia/China/hangzhou.md",
+                "date": "2026-08-08",
+                "draft": true
+              },
+              {
+                "filename": "Shenzhen, Guangdong (深圳)",
+                "path": "logs/Travel/Asia/China/shenzhen.md",
+                "date": "2026-05-16"
+              }
+            ],
+            "dir": "logs/Travel/Asia/China"
           },
-    {
-      "title": "Hong Kong (香港 🇭🇰)",
-      "logs": [
-        { 
-        }
-      ]
-    },
-    {
-      "title": "Japan (日本 🇯🇵)",
-      "logs": [
-        {  }
-      ]
-    },
-    {
-      "title": "Taiwan (台灣 🇹🇼)",
-      "logs": [
-        { }
-      ]
-    },
-    {
-      "title": "Singapore ( 🇸🇬)",
-      "logs": [
-        {"filename": "Airport, NUS, etc - Day 1", "path": "logs/Travel/Asia/Singapore/singapore1.md", "date": "2026-08-18", "draft": true }
-      ]
-    },
-    {
-      "title": "South Korea (한국 🇰🇷)",
-      "logs": [
-        { }
-      ]
-    }
-  ]
-}
-    ]
+          {
+            "title": "Hong Kong (香港 🇭🇰)",
+            "logs": [
+              {}
+            ],
+            "dir": "logs/Travel/Asia/Hong Kong"
+          },
+          {
+            "title": "Japan (日本 🇯🇵)",
+            "logs": [
+              {}
+            ],
+            "dir": "logs/Travel/Asia/Japan"
+          },
+          {
+            "title": "Taiwan (台灣 🇹🇼)",
+            "logs": [
+              {}
+            ],
+            "dir": "logs/Travel/Asia/Taiwan"
+          },
+          {
+            "title": "Singapore ( 🇸🇬)",
+            "logs": [
+              {
+                "filename": "Airport, NUS, etc - Day 1",
+                "path": "logs/Travel/Asia/Singapore/singapore1.md",
+                "date": "2026-08-18",
+                "draft": true
+              }
+            ],
+            "dir": "logs/Travel/Asia/Singapore"
+          },
+          {
+            "title": "South Korea (한국 🇰🇷)",
+            "logs": [
+              {}
+            ],
+            "dir": "logs/Travel/Asia/Korea"
+          }
+        ]
+      }
+    ],
+    "dir": "logs/Travel"
   },
-{
+  {
     "title": "Reads",
     "logs": [
-      { "filename": "2026 Reading List", "path": "logs/Reads/2026reads.md" }
-    ]
+      {
+        "filename": "2026 Reading List",
+        "path": "logs/Reads/2026reads.md"
+      }
+    ],
+    "dir": "logs/Reads"
   },
   {
     "title": "Reflections",
     "logs": [
-      { "filename": "UCSD 2025-26 (Junior Year 1)", "path": "logs/Reflections/junior1.md", "date": "2026-03-20" }
-    ]
+      {
+        "filename": "UCSD - 2025-26 (Junior Year 1)",
+        "path": "logs/Reflections/junior1.md",
+        "date": "2026-04-14"
+      },
+       {
+        "filename": "京都大学 - Spring 2026",
+        "path": "logs/Reflections/kyoto.md",
+        "date": "2026-09-08"
+       }
+    ],
+    "dir": "logs/Reflections"
   },
   {
     "title": "Thoughts & Papers",
     "logs": [
-      { "filename": "Repeated Resilience", "path": "logs/Essays/Repeated_Resilience.md", "date": "2024-07-16" },
-      { "filename": "The Rhetoric of Laziness", "path": "logs/Essays/laziness.md", "date": "2024-07-22" },
-      { "filename": "Privilege and Perseverance", "path": "logs/Essays/Privilege_and_Perseverance.md", "date": "2024-07-25" },
-      { "filename": "Unmasking Male Mental Health", "path": "logs/Essays/Unmasking_Male_Mental_Health.md", "date": "2024-07-31" },
-      { "filename": "The Parlay Problem", "path": "logs/Essays/The_Parlay_Problem.md", "date": "2024-07-29" },
-      { "filename": "Playing in the In-Between: Ice, Identity, and the Long Way Home", "path": "logs/Essays/Playing_in_the_In-Between:_Ice,_Identity,_and_the_Long_Way_Home.md", "date": "2026-07-21" }
-    ]
+      {
+        "filename": "Repeated Resilience",
+        "path": "logs/Essays/Repeated_Resilience.md",
+        "date": "2024-07-16"
+      },
+      {
+        "filename": "The Rhetoric of Laziness",
+        "path": "logs/Essays/laziness.md",
+        "date": "2024-07-22"
+      },
+      {
+        "filename": "Privilege and Perseverance",
+        "path": "logs/Essays/Privilege_and_Perseverance.md",
+        "date": "2024-07-25"
+      },
+      {
+        "filename": "Unmasking Male Mental Health",
+        "path": "logs/Essays/Unmasking_Male_Mental_Health.md",
+        "date": "2024-07-31"
+      },
+      {
+        "filename": "The Parlay Problem",
+        "path": "logs/Essays/The_Parlay_Problem.md",
+        "date": "2024-07-29"
+      },
+      {
+        "filename": "Playing in the In-Between: Ice, Identity, and the Long Way Home",
+        "path": "logs/Essays/Playing_in_the_In-Between:_Ice,_Identity,_and_the_Long_Way_Home.md",
+        "date": "2026-07-21"
+      }
+    ],
+    "dir": "logs/Essays"
   }
-  ]
+]

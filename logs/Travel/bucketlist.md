@@ -7,15 +7,7 @@ There's definitely more I checked off, but this is the list for now.
 ##  🏺 7 Modern Wonders of the World
 
 - [x] **~~Great Wall of China~~** — completed 07-31-2026
-  <div style="display: flex; justify-content: center; width: 100%; padding: 10px 0;">
-    <figure style="display: flex; flex-direction: column; align-items: center; margin: 0; max-width: 500px; width: 100%;">
-        <img 
-            src="https://lh3.googleusercontent.com/pw/AP1GczNS8X-zpCoW3VwRkqVt8gQptrzRtpHwrIOjq0VMvB9Q84ikdPtsIAcuMmRNrWCAl1uYwEK9GdpamnZp28t8G-fDK8EaFE8D7s2pMpEVQxoyZx_nHAczKbQDbQfnPyTD7dpPe556yNZYAi9xL46GetIgyg=w746-h994-s-no-gm?authuser=0"
-            alt="md"
-            style="width: 100%; height: auto; border-radius: 8px;"
-        />
-    </figure>
-</div>
+  ![](https://lh3.googleusercontent.com/pw/AP1GczNS8X-zpCoW3VwRkqVt8gQptrzRtpHwrIOjq0VMvB9Q84ikdPtsIAcuMmRNrWCAl1uYwEK9GdpamnZp28t8G-fDK8EaFE8D7s2pMpEVQxoyZx_nHAczKbQDbQfnPyTD7dpPe556yNZYAi9xL46GetIgyg=w746-h994-s-no-gm?authuser=0)
 - [ ] **Petra, Jordan** 
 - [ ] **Christ the Redeemer, Brazil**
 - [ ] **Machu Picchu, Peru**
@@ -123,15 +115,7 @@ There's definitely more I checked off, but this is the list for now.
 
 ## 🏮 Cultural Festivals & Experiences
 - [x] **~~Gion Matsuri~~** — *Kyoto, Japan (Completed: July 16, 2026)*
-  <div style="display: flex; justify-content: center; width: 100%; padding: 10px 0;">
-    <figure style="display: flex; flex-direction: column; align-items: center; margin: 0; max-width: 500px; width: 100%;">
-        <img 
-            src="https://lh3.googleusercontent.com/pw/AP1GczNH5EEkWHriM1HkaJsOTVnQH5_H8HBkP-Vzk0Fv8gFhewwnF2_a8pAAr6endUAe20JX2GMK78O4bzcmgQLHBvjGV79oFkLCEG7lH3a1iQUCaAoUBHN9sBBuKyuKLU0gP-6PBGOvOW65bypsaacjmZCJpg=w1128-h1504-s-no-gm?authuser=0"
-            alt="md"
-            style="width: 100%; height: auto; border-radius: 8px;"
-        />
-    </figure>
-</div>
+  ![](https://lh3.googleusercontent.com/pw/AP1GczNH5EEkWHriM1HkaJsOTVnQH5_H8HBkP-Vzk0Fv8gFhewwnF2_a8pAAr6endUAe20JX2GMK78O4bzcmgQLHBvjGV79oFkLCEG7lH3a1iQUCaAoUBHN9sBBuKyuKLU0gP-6PBGOvOW65bypsaacjmZCJpg=w1128-h1504-s-no-gm?authuser=0)
 - [ ] **Nebuta Matsuri** — *Massive illuminated lantern floats in Aomori, Japan*
 - [ ] **Yi Peng Lantern Festival** — *Release floating lanterns into the night sky in Chiang Mai, Thailand*
 - [ ] **Day of the Dead (Día de los Muertos)** — *Mexico City, Mexico*

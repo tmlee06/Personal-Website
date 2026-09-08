@@ -1,3 +1,27 @@
+// Lets a log entry drop in a photo with plain Markdown —
+// `![caption](url)` — instead of hand-typing the <figure>/<figcaption>
+// block every time. Renders to the same markup/classes the site's older,
+// hand-written figure blocks already use, so old and new entries look
+// identical; those old entries embed raw HTML directly and pass through
+// marked untouched, so this only affects genuine Markdown image syntax.
+if (typeof marked !== 'undefined') {
+    marked.use({
+        renderer: {
+            image({ href, title, text }) {
+                const src = escapeHtml(href || '');
+                const alt = escapeHtml(text || '');
+                const titleAttr = title ? ` title="${escapeHtml(title)}"` : '';
+                // Caption is run through marked's inline parser so captions can use
+                // Markdown emphasis (e.g. *italic*); the <img alt> stays plain text.
+                const caption = text ? `<figcaption>${marked.parseInline(text)}</figcaption>` : '';
+                return `<figure class="log-photo"><img src="${src}" alt="${alt}"${titleAttr} loading="lazy" />${caption}</figure>`;
+            }
+        }
+    });
+}
+// (escapeHtml is defined further down; function declarations are hoisted
+// so it's already available here.)
+
 // Simple reliable typing loop
 function delay(ms) { return new Promise(res => setTimeout(res, ms)); }
 
@@ -689,6 +713,18 @@ function renderLogs(container, items) {
 
 // --- BIO SECTION RENDERER ---
 
+// Same-day entries from different folders (e.g. a travel-day log written the
+// evening you arrived somewhere, same calendar date as the log for the place
+// you left that morning) otherwise tie on `date` alone and fall back to
+// logs-index.json's structural order, which has nothing to do with which
+// actually happened later in the day. An optional per-entry "time"
+// (HH:MM) breaks that tie without changing the plain-date text shown in
+// the UI; entries without one default to noon so they're unaffected.
+function logSortKey(log) {
+    const d = new Date(`${log.date}T${log.time || '12:00'}`);
+    return isNaN(d) ? 0 : d.getTime();
+}
+
 function renderBioLogs(container, sections) {
     let allLogs = [];
 
@@ -705,10 +741,15 @@ function renderBioLogs(container, sections) {
     };
 
     findLogs(sections);
-    allLogs.sort((a, b) => new Date(b.date) - new Date(a.date));
+    allLogs.sort((a, b) => logSortKey(b) - logSortKey(a));
     container.innerHTML = '';
     
-    allLogs.slice(0, 2).forEach(log => {
+    // Slice at 4, not 2: with only 2, a same-date tie between entries in
+    // different sections gets silently resolved by JSON order alone,
+    // dropping one of them (e.g. Chongqing Day 1 losing to Chengdu Day 2
+    // sharing 2026-08-04) even though it's genuinely one of the most recent.
+    // (Fills the space freed up by removing the home PROJECTS grid below.)
+    allLogs.slice(0, 4).forEach(log => {
         const card = document.createElement('div');
         card.className = 'bio-log-card'; 
         card.innerHTML = `
@@ -720,9 +761,9 @@ function renderBioLogs(container, sections) {
     });
 }
 
-// Wraps raw <iframe> embeds (YouTube, Vimeo, etc.) pasted into log markdown
-// in a responsive 16:9 container so they scale to the reader width instead
-// of rendering at a fixed pixel size (which looked broken/cramped on iPad).
+// Wraps raw <iframe> embeds (YouTube, Vimeo, Drive, etc.) pasted into log
+// markdown in a responsive 16:9 container so they scale to the reader width
+// instead of rendering at a fixed pixel size (which looked broken/cramped on iPad).
 function processVideoEmbeds(rootEl) {
     if (!rootEl) return;
 
@@ -733,7 +774,7 @@ function processVideoEmbeds(rootEl) {
 
         // Only touch video-style embeds, leave other iframes alone
         const src = iframe.getAttribute('src') || '';
-        const isVideo = /youtube\.com|youtu\.be|vimeo\.com|player\.twitch\.tv/i.test(src);
+        const isVideo = /youtube\.com|youtu\.be|vimeo\.com|player\.twitch\.tv|drive\.google\.com/i.test(src);
         if (!isVideo) return;
 
         const wrap = document.createElement('div');
@@ -1036,6 +1077,17 @@ function hydrateEmbeds(rootEl) {
   initReaderReveal(rootEl);
 }
 
+// Identifies a top-level .reader-body block (a <p>, heading, figure, etc.)
+// by content rather than by reference/index, so it can still be found after
+// the body's innerHTML gets replaced wholesale (reload-restore, live-md-
+// watch) — matched by image src where there is one, else by leading text.
+function readerBlockKey(el) {
+    const img = el.querySelector ? el.querySelector('img') : null;
+    if (img) return 'img:' + img.getAttribute('src');
+    const text = (el.textContent || '').trim().slice(0, 80);
+    return text ? 'text:' + text : null;
+}
+
 // --- LOG CONTENT SCROLL REVEAL ---
 // Fades/slides in each block of a log's rendered markdown (paragraphs,
 // headings, images, video embeds, lists, quotes) as you scroll through it.
@@ -1112,6 +1164,71 @@ function initLocationMap() {
 /**
  * Opens log in a persistent fullscreen view.
  */
+// --- LIVE MARKDOWN WATCH (local dev only) ---
+// While a log is open on localhost, poll its raw .md for changes and patch
+// just the rendered body in place — no page reload, no hash churn, no
+// scrollTop restore logic needed, because the reader (and your native
+// scroll position within it) is never torn down to begin with. Pair with
+// .vscode/settings.json's liveServer.settings.ignoreFiles so Live Server's
+// own full-page reload doesn't fire for these files and fight this.
+function isLocalDevHost() {
+    return ['localhost', '127.0.0.1', '::1', ''].includes(window.location.hostname);
+}
+
+let liveMdWatchTimer = null;
+function stopLiveMdWatch() {
+    clearInterval(liveMdWatchTimer);
+    liveMdWatchTimer = null;
+}
+
+function startLiveMdWatch(log, reader, initialText) {
+    stopLiveMdWatch();
+    if (!isLocalDevHost()) return;
+
+    let lastText = initialText;
+    liveMdWatchTimer = setInterval(async () => {
+        if (!document.body.contains(reader)) { stopLiveMdWatch(); return; }
+        try {
+            const res = await fetch(getNormalizedFetchUrl(log.path), { cache: 'no-store' });
+            if (!res.ok) return;
+            const text = await res.text();
+            if (text === lastText) return;
+            lastText = text;
+
+            const readerBody = reader.querySelector('.reader-body');
+            if (!readerBody) return;
+
+            // Snapshot which block was where *before* the swap, so we can
+            // tell which one actually changed once the new content is in.
+            const oldKeys = Array.from(readerBody.children).map(readerBlockKey);
+
+            readerBody.innerHTML = typeof marked !== 'undefined' ? marked.parse(text) : text;
+            hydrateEmbeds(reader);
+
+            // This is a content refresh, not a first read — skip the
+            // scroll-triggered pop-in animation (see initReaderReveal)
+            // instead of leaving already-passed blocks stuck invisible.
+            readerBody.querySelectorAll('.pop-in').forEach((el) => el.classList.add('pop-in-visible'));
+
+            // Scroll to wherever the edit actually landed — the first block
+            // whose identity differs from what was at that same position
+            // before, or (for a pure insertion at the end) the first block
+            // past where the old content ran out — instead of leaving the
+            // view sitting wherever it happened to already be.
+            const newBlocks = Array.from(readerBody.children);
+            let diffIndex = newBlocks.findIndex((el, i) => readerBlockKey(el) !== oldKeys[i]);
+            if (diffIndex === -1 && newBlocks.length !== oldKeys.length) {
+                diffIndex = Math.min(oldKeys.length, newBlocks.length - 1);
+            }
+            if (diffIndex >= 0 && newBlocks[diffIndex]) {
+                newBlocks[diffIndex].scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        } catch (e) {
+            // Transient fetch hiccup — just try again next tick.
+        }
+    }, 400);
+}
+
 async function openFullscreenLog(log, updateHash = true, scrollOnClose = false) {
     if (!log || !log.path) return;
 
@@ -1124,6 +1241,7 @@ async function openFullscreenLog(log, updateHash = true, scrollOnClose = false) 
         existingReader.remove();
         document.body.style.overflow = '';
     }
+    stopLiveMdWatch();
 
     const reader = document.createElement('div');
     reader.className = 'fullscreen-reader';
@@ -1220,6 +1338,113 @@ async function openFullscreenLog(log, updateHash = true, scrollOnClose = false) 
 
         hydrateEmbeds(reader);
         initQuickTranslate(reader);
+        startLiveMdWatch(log, reader, text);
+
+        // Remember reading position per log so a dev-server live-reload —
+        // which just re-runs the #log-<path> hash route above — drops you
+        // back where you were instead of back at the top. A raw pixel
+        // scrollTop doesn't survive two things that happen constantly while
+        // editing a log: images finishing their load (each one shifts
+        // everything below it down as it swaps from 0 height to real
+        // height) and the content itself changing (adding/removing a line
+        // above your spot moves it). So instead we anchor to *which block*
+        // you were reading — matched by image src, or by text if it isn't
+        // an image — and re-snap to it as images load in.
+        try {
+            const readerBody = reader.querySelector('.reader-body');
+            const scrollKey = `readerScroll:${log.path}`;
+            const blocks = readerBody ? Array.from(readerBody.children) : [];
+
+            const rawSaved = sessionStorage.getItem(scrollKey);
+            let saved = null;
+            if (rawSaved) { try { saved = JSON.parse(rawSaved); } catch (e) {} }
+
+            if (saved) {
+                // initReaderReveal (in hydrateEmbeds, just above) pop-in's
+                // each block only once its IntersectionObserver actually
+                // sees it get scrolled *through*. Jumping straight to a
+                // saved position instead of scrolling there means anything
+                // above that point never crosses the observer's threshold —
+                // it'd stay permanently opacity:0 until manually scrolled
+                // past again. This is a restore, not a first read, so skip
+                // the reveal-on-scroll entirely and mark everything as
+                // already seen.
+                readerBody?.querySelectorAll('.pop-in').forEach((el) => {
+                    el.classList.add('pop-in-visible');
+                });
+
+                // Re-snapping on every image load (below) is correct but ugly
+                // to watch happen live — each snap is a visible jump, and a
+                // long log can fire a dozen of them in a row. So stay hidden
+                // until the jumping stops, then reveal once with a fade —
+                // one clean cut instead of a flipbook.
+                const prefersReducedMotion = window.matchMedia?.(
+                    '(prefers-reduced-motion: reduce)'
+                )?.matches;
+                reader.style.opacity = '0';
+                reader.style.pointerEvents = 'none';
+
+                let revealed = false; // once true, stop reacting to further image loads —
+                                       // a late image on a slow connection shouldn't yank
+                                       // the scroll again after you've started reading.
+
+                const settle = () => {
+                    const target = blocks.find((el) => readerBlockKey(el) === saved.key);
+                    if (target) reader.scrollTop = target.offsetTop + (saved.offset || 0);
+                };
+
+                let settleTimer = null;
+                const scheduleReveal = () => {
+                    if (revealed) return;
+                    clearTimeout(settleTimer);
+                    settleTimer = setTimeout(() => {
+                        settle();
+                        revealed = true;
+                        reader.style.transition = prefersReducedMotion ? 'none' : 'opacity 150ms ease';
+                        reader.style.opacity = '1';
+                        reader.style.pointerEvents = '';
+                    }, 60); // quiet window: only reveal once images stop finishing
+                };
+
+                scheduleReveal();
+                readerBody?.querySelectorAll('img').forEach((img) => {
+                    if (img.complete) return;
+                    img.addEventListener('load', scheduleReveal);
+                    img.addEventListener('error', scheduleReveal);
+                });
+
+                // Safety net — never leave the article invisible if something
+                // above goes wrong (e.g. the anchor block no longer exists).
+                setTimeout(() => {
+                    revealed = true;
+                    reader.style.opacity = '1';
+                    reader.style.pointerEvents = '';
+                }, 2000);
+            }
+
+            let scrollSaveTimer = null;
+            reader.addEventListener('scroll', () => {
+                clearTimeout(scrollSaveTimer);
+                scrollSaveTimer = setTimeout(() => {
+                    const scrollTop = reader.scrollTop;
+                    let anchor = null;
+                    for (const el of blocks) {
+                        if (el.offsetTop <= scrollTop + 4) anchor = el;
+                        else break;
+                    }
+                    const key = anchor ? readerBlockKey(anchor) : null;
+                    if (!key) return;
+                    try {
+                        sessionStorage.setItem(scrollKey, JSON.stringify({
+                            key,
+                            offset: scrollTop - anchor.offsetTop,
+                        }));
+                    } catch (e) {}
+                }, 150);
+            }, { passive: true });
+        } catch (e) {
+            // sessionStorage unavailable (private mode, etc.) — no big deal.
+        }
 
         const scrollTopBtn = reader.querySelector('#scroll-top-btn');
         if (scrollTopBtn) {
@@ -1249,6 +1474,7 @@ async function openFullscreenLog(log, updateHash = true, scrollOnClose = false) 
 
                 reader.remove();
                 document.body.style.overflow = '';
+                stopLiveMdWatch();
                 history.pushState("", document.title, window.location.pathname + window.location.search);
 
                 if (scrollOnClose) {
@@ -1299,6 +1525,7 @@ window.addEventListener('load', () => {
             const isActive = sidebar.classList.contains('active');
             sidebar.classList.toggle('active');
             hamburgerMenu.classList.toggle('active');
+            hamburgerMenu.setAttribute('aria-expanded', String(!isActive));
             if (sidebarOverlay) sidebarOverlay.classList.toggle('active');
             document.body.style.overflow = isActive ? '' : 'hidden';
         };
