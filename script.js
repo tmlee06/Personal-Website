@@ -1106,14 +1106,17 @@ function teardownTts() {
 }
 
 // --- Pre-rendered narration (see scripts/build-tts-audio.js) ---
-// That script batch-generates a natural-sounding narration track per log
-// with Microsoft Edge's neural TTS voices and records each one's file + a
-// hash of the exact raw markdown it was built from in audio-manifest.json.
-// When a match exists for the log currently open, playback below uses that
-// real audio file. An edited log whose narration hasn't been regenerated
-// yet simply won't match its old hash, and the reader hides its read-aloud
-// controls entirely for that log — never stale audio for text that's since
-// changed.
+// That script batch-generates a natural-sounding narration track per log,
+// per language, with Microsoft Edge's neural TTS voices (non-English text
+// first machine-translated via Google's free endpoint) and records each
+// one's file + a hash of the exact raw *English* markdown it was built
+// from in audio-manifest.json — one hash per log covers every language,
+// since translation is deterministic from that same source. When a match
+// exists for the log currently open, in whichever language the page is
+// currently showing, playback below uses that real audio file. An edited
+// log whose narration hasn't been regenerated yet simply won't match its
+// old hash, and the reader hides its read-aloud controls entirely for
+// that log/language — never stale audio for text that's since changed.
 let ttsAudioManifestPromise = null;
 function getTtsAudioManifest() {
     if (!ttsAudioManifestPromise) {
@@ -1131,11 +1134,26 @@ async function ttsContentHash(str) {
     return Array.from(new Uint8Array(digest)).map((b) => b.toString(16).padStart(2, '0')).join('').slice(0, 16);
 }
 
+// googtrans's language code -> the manifest's narration-language key.
+// Matches CURATED_LANGS/NARRATION_LANGS (build-tts-audio.js) exactly —
+// only languages narration actually gets generated for. No active
+// translation just means English, the always-present default track.
+// Anything else a visitor picks via the full Translate dropdown (not the
+// quick pills) has no matching audio, so read-aloud stays hidden for it.
+const NARRATION_LANG_BY_GOOGTRANS = { ja: 'ja', 'zh-TW': 'zh-TW' };
+function narrationLangKey() {
+    const lang = getGoogTransLang();
+    if (!lang) return 'en';
+    return NARRATION_LANG_BY_GOOGTRANS[lang] || null;
+}
+
 async function resolvePrerenderedAudio(log, text) {
     if (!window.crypto || !window.crypto.subtle) return null; // needs https/localhost
+    const langKey = narrationLangKey();
+    if (!langKey) return null; // translated into a language this site doesn't narrate
     try {
         const manifest = await getTtsAudioManifest();
-        const entry = manifest[log.path];
+        const entry = manifest[log.path] && manifest[log.path][langKey];
         if (!entry) return null;
         const hash = await ttsContentHash(text);
         return hash === entry.hash ? getNormalizedFetchUrl(entry.file) : null;
@@ -1195,11 +1213,14 @@ function initReaderTTSFromAudio(state, toggleBtn, rateBtn, audioUrl) {
     state.stop = stop;
 }
 
-// No live-voice fallback: a log with no matching pre-rendered narration
-// (freshly edited and not yet regenerated, or the page is showing a
-// googtrans translation, so the English recording wouldn't match what's on
-// screen) simply gets no read-aloud controls, rather than dropping back to
-// a robotic browser voice.
+// No live-voice fallback: a log with no matching pre-rendered narration for
+// the language currently on screen (freshly edited and not yet
+// regenerated, or a language build-tts-audio.js doesn't narrate) simply
+// gets no read-aloud controls, rather than dropping back to a robotic
+// browser voice. Which language to look for is resolved inside
+// resolvePrerenderedAudio (see narrationLangKey) from the same googtrans
+// cookie the translate pills drive — a page showing 日本語 gets Japanese
+// narration if it exists, not silently English audio for translated text.
 async function initReaderTTS(reader, log, text) {
     const controls = reader.querySelector('#reader-tts-controls');
     const toggleBtn = reader.querySelector('#reader-tts-toggle');
@@ -1214,7 +1235,7 @@ async function initReaderTTS(reader, log, text) {
     ttsState = state;
     controls.style.display = 'none';
 
-    if (!log || !text || getGoogTransLang()) return;
+    if (!log || !text) return;
 
     const audioUrl = await resolvePrerenderedAudio(log, text);
     if (ttsState !== state) return; // superseded while we were awaiting
