@@ -162,6 +162,11 @@
       "hash": "ad4003a45ab33fc3",
       "file": "audio/Winter-2026/week-6.ja.mp3",
       "voice": "ja-JP-KeitaNeural"
+    },
+    "zh-TW": {
+      "hash": "ad4003a45ab33fc3",
+      "file": "audio/Winter-2026/week-6.zh-TW.mp3",
+      "voice": "zh-TW-YunJheNeural"
     }
   },
   "logs/Winter-2026/week-7.md": {
@@ -727,14 +732,19 @@
   },
   "logs/Reflections/kyoto.md": {
     "en": {
-      "hash": "28b5e9118350e121",
+      "hash": "8efd43819005bd32",
       "file": "audio/Reflections/kyoto.mp3",
       "voice": "en-US-AndrewNeural"
     },
     "ja": {
-      "hash": "28b5e9118350e121",
+      "hash": "8efd43819005bd32",
       "file": "audio/Reflections/kyoto.ja.mp3",
       "voice": "ja-JP-KeitaNeural"
+    },
+    "zh-TW": {
+      "hash": "28b5e9118350e121",
+      "file": "audio/Reflections/kyoto.zh-TW.mp3",
+      "voice": "zh-TW-YunJheNeural"
     }
   },
   "logs/Essays/Repeated_Resilience.md": {
@@ -870,6 +880,23 @@
     "zh-TW": {
       "hash": "1008be18f9e6cdfc",
       "file": "audio/Travel/Asia/China/hangzhou.zh-TW.mp3",
+      "voice": "zh-TW-YunJheNeural"
+    }
+  },
+  "logs/Travel/Asia/China/Shanghai/shanghai2.md": {
+    "en": {
+      "hash": "da5fd39248dead1c",
+      "file": "audio/Travel/Asia/China/Shanghai/shanghai2.mp3",
+      "voice": "en-US-AndrewNeural"
+    },
+    "ja": {
+      "hash": "da5fd39248dead1c",
+      "file": "audio/Travel/Asia/China/Shanghai/shanghai2.ja.mp3",
+      "voice": "ja-JP-KeitaNeural"
+    },
+    "zh-TW": {
+      "hash": "d2d7ae47fe80d63f",
+      "file": "audio/Travel/Asia/China/Shanghai/shanghai2.zh-TW.mp3",
       "voice": "zh-TW-YunJheNeural"
     }
   }
