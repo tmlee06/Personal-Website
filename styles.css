@@ -2215,6 +2215,60 @@ body.theme-light .location-map {
     position: static;
 }
 
+/* Read-aloud controls (see initReaderTTS in script.js) — a speed pill next
+   to a play/pause toggle, grouped so they move together at narrow widths. */
+.tts-controls {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.tts-rate-btn {
+    font: inherit;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: #fff;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 20px;
+    padding: 8px 12px;
+    min-height: 40px;
+    min-width: 40px;
+    cursor: pointer;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.tts-rate-btn:hover {
+    background: rgba(255, 255, 255, 0.14);
+    border-color: rgba(255, 255, 255, 0.35);
+}
+
+.tts-rate-btn:focus-visible {
+    outline: 2px solid #EE964B;
+    outline-offset: 2px;
+}
+
+body.theme-light .tts-rate-btn {
+    background: var(--km-card) !important;
+    border-color: var(--km-border) !important;
+    color: var(--km-text) !important;
+}
+
+body.theme-light .tts-rate-btn:hover {
+    background: var(--km-card-strong) !important;
+}
+
+/* Playing state — same accent orange used throughout the reader's other
+   active/hover states. */
+.reader-tts-toggle.is-speaking {
+    background: rgba(238, 150, 75, 0.18) !important;
+    border-color: #EE964B !important;
+    color: #EE964B !important;
+}
+
 /* Contact */
 .contact-content {
     width: 100%;
@@ -4452,6 +4506,13 @@ body.theme-light .translate-notice-close:hover { color: var(--km-text) !importan
         padding: 8px 11px;
         font-size: 0.65rem;
         min-height: 36px;
+    }
+
+    .tts-rate-btn {
+        padding: 8px 10px;
+        font-size: 0.65rem;
+        min-height: 36px;
+        min-width: 36px;
     }
 }
 

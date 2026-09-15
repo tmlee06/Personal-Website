@@ -1,0 +1,11 @@
+{
+  "name": "portfolio-tooling",
+  "private": true,
+  "description": "Local dev tooling for this static site. Not part of the deployed site itself — see scripts/.",
+  "scripts": {
+    "tts": "node scripts/build-tts-audio.js"
+  },
+  "dependencies": {
+    "msedge-tts": "^2.0.7"
+  }
+}

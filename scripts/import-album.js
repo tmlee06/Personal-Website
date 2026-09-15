@@ -13,16 +13,26 @@
 //   --date YYYY-MM-DD  only photos taken on this local date
 //   --long-edge N      target size for the longer image dimension (default 1600)
 //   --marker STRING    placeholder line to insert at (default "<!-- photos -->")
+//   --create           allow creating target.md if it doesn't exist yet
+//                       (otherwise a typo'd path fails loudly instead of
+//                       silently writing a stray new file — see below)
 //   --dry-run          print what would be written instead of writing the file
 //
 // Insert mid-file instead of appending at the end: put a line containing
 // just the marker (default <!-- photos -->) wherever you want the photos
 // to land *before* running this. If the target file contains that marker,
-// it's replaced with the image blocks; if not (or the file doesn't exist
-// yet), the blocks are appended to the end as before. An HTML comment is
-// used rather than a blank/whitespace-only line because editors routinely
-// auto-strip trailing whitespace on save, which would delete a blank
-// marker line before the script ever saw it.
+// it's replaced with the image blocks; otherwise the blocks are appended
+// to the end. An HTML comment is used rather than a blank/whitespace-only
+// line because editors routinely auto-strip trailing whitespace on save,
+// which would delete a blank marker line before the script ever saw it.
+//
+// target.md must already exist unless --create is passed. This is
+// deliberate: this repo often has two similarly-named logs nested under
+// different folders (e.g. logs/.../shanghai1.md vs .../Shanghai/
+// shanghai1.md), and a path typo used to silently create a brand-new file
+// at the wrong location with no error — the import "worked" but the
+// photos landed somewhere you'd never think to look. Failing fast on a
+// missing target catches that immediately.
 //
 // How it works: a photos.app.goo.gl link is an app-deep-link interstitial
 // that normally needs JS to resolve, but requesting it with a plain
@@ -114,7 +124,18 @@ function main() {
     const args = parseArgs(process.argv.slice(2));
     const [albumUrl, targetFile] = args._;
     if (!albumUrl || !targetFile) {
-        console.error('Usage: node scripts/import-album.js <album-url> <target.md> [--after HH:MM] [--before HH:MM] [--date YYYY-MM-DD] [--long-edge N] [--marker STRING] [--dry-run]');
+        console.error('Usage: node scripts/import-album.js <album-url> <target.md> [--after HH:MM] [--before HH:MM] [--date YYYY-MM-DD] [--long-edge N] [--marker STRING] [--create] [--dry-run]');
+        process.exit(1);
+    }
+    // Fail fast, before ever touching the network, on a target that doesn't
+    // exist — almost always a typo'd path (see the --create doc above),
+    // not an intent to create a new log file from scratch.
+    if (!fs.existsSync(targetFile) && !args.create) {
+        console.error(
+            `${targetFile} doesn't exist — double-check the path (this repo has multiple ` +
+            `similarly-named logs nested under different folders). Pass --create if you ` +
+            `really do want to create it fresh.`
+        );
         process.exit(1);
     }
     const longEdge = args['long-edge'] ? Number(args['long-edge']) : 1600;
