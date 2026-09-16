@@ -77,6 +77,12 @@ const MANIFEST_PATH = path.join(ROOT, 'audio-manifest.json');
 // invalidates cleanly instead of drifting out of sync with what the
 // current logic would actually produce for an unedited file. v2: images'
 // alt text is now read aloud as a caption instead of being discarded.
+//
+// !! MUST be mirrored in script.js's NARRATION_LOGIC_VERSION_SALT !!
+// Bumping only here once made every log's read-aloud button vanish
+// site-wide (not just the ones this was meant to invalidate) — the
+// browser was still hashing without the salt, so nothing could ever
+// match again until both sides agreed. Change both, in the same commit.
 const NARRATION_LOGIC_VERSION = '2';
 
 const DRY_RUN = process.argv.includes('--dry-run');

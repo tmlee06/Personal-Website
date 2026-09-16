@@ -1127,10 +1127,17 @@ function getTtsAudioManifest() {
     return ttsAudioManifestPromise;
 }
 
-// Same sha256-of-raw-markdown-file, first-16-hex-chars key the Node script
-// computes (crypto.createHash there, crypto.subtle here — same digest).
+// Same sha256(raw-markdown-file + '\n' + version), first-16-hex-chars key
+// the Node script computes (crypto.createHash there, crypto.subtle here —
+// same digest, same salt). NARRATION_LOGIC_VERSION_SALT MUST match
+// NARRATION_LOGIC_VERSION in scripts/build-tts-audio.js exactly, or every
+// hash comparison below fails and read-aloud silently disappears
+// site-wide — confirmed the hard way: bumping the version there without
+// updating this one made every log's narration unmatchable, not just the
+// ones the version bump was actually meant to invalidate.
+const NARRATION_LOGIC_VERSION_SALT = '2';
 async function ttsContentHash(str) {
-    const digest = await window.crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+    const digest = await window.crypto.subtle.digest('SHA-256', new TextEncoder().encode(str + '\n' + NARRATION_LOGIC_VERSION_SALT));
     return Array.from(new Uint8Array(digest)).map((b) => b.toString(16).padStart(2, '0')).join('').slice(0, 16);
 }
 
