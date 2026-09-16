@@ -1,7 +1,7 @@
 {
   "logs/Travel/Asia/China/shenzhen.md": {
     "en": {
-      "hash": "e8db29dc7936095c",
+      "hash": "eb13055d16a8668c",
       "file": "audio/Travel/Asia/China/shenzhen.mp3",
       "voice": "en-US-AndrewNeural"
     },
@@ -18,12 +18,12 @@
   },
   "logs/Fall-2025/week-1.md": {
     "en": {
-      "hash": "945bbd33a05cc40f",
+      "hash": "985a9379a0e5f1fa",
       "file": "audio/Fall-2025/week-1.mp3",
       "voice": "en-US-AndrewNeural"
     },
     "ja": {
-      "hash": "945bbd33a05cc40f",
+      "hash": "985a9379a0e5f1fa",
       "file": "audio/Fall-2025/week-1.ja.mp3",
       "voice": "ja-JP-KeitaNeural"
     },
@@ -31,16 +31,21 @@
       "hash": "945bbd33a05cc40f",
       "file": "audio/Fall-2025/week-1.zh-TW.mp3",
       "voice": "zh-TW-YunJheNeural"
+    },
+    "yue": {
+      "hash": "985a9379a0e5f1fa",
+      "file": "audio/Fall-2025/week-1.yue.mp3",
+      "voice": "zh-HK-WanLungNeural"
     }
   },
   "logs/Fall-2025/week-2.md": {
     "en": {
-      "hash": "7d3b1a641ac768b4",
+      "hash": "192a22dc3bedda83",
       "file": "audio/Fall-2025/week-2.mp3",
       "voice": "en-US-AndrewNeural"
     },
     "ja": {
-      "hash": "7d3b1a641ac768b4",
+      "hash": "192a22dc3bedda83",
       "file": "audio/Fall-2025/week-2.ja.mp3",
       "voice": "ja-JP-KeitaNeural"
     },
@@ -48,232 +53,302 @@
       "hash": "7d3b1a641ac768b4",
       "file": "audio/Fall-2025/week-2.zh-TW.mp3",
       "voice": "zh-TW-YunJheNeural"
+    },
+    "yue": {
+      "hash": "192a22dc3bedda83",
+      "file": "audio/Fall-2025/week-2.yue.mp3",
+      "voice": "zh-HK-WanLungNeural"
     }
   },
   "logs/Fall-2025/week-3.md": {
     "en": {
-      "hash": "3f31a222abf69d9b",
+      "hash": "7cd18c502e149be1",
       "file": "audio/Fall-2025/week-3.mp3",
       "voice": "en-US-AndrewNeural"
     },
     "ja": {
-      "hash": "3f31a222abf69d9b",
+      "hash": "7cd18c502e149be1",
       "file": "audio/Fall-2025/week-3.ja.mp3",
       "voice": "ja-JP-KeitaNeural"
     },
     "zh-TW": {
-      "hash": "3f31a222abf69d9b",
+      "hash": "7cd18c502e149be1",
       "file": "audio/Fall-2025/week-3.zh-TW.mp3",
       "voice": "zh-TW-YunJheNeural"
+    },
+    "yue": {
+      "hash": "7cd18c502e149be1",
+      "file": "audio/Fall-2025/week-3.yue.mp3",
+      "voice": "zh-HK-WanLungNeural"
     }
   },
   "logs/Winter-2026/week-1.md": {
     "en": {
-      "hash": "baf470db622afc60",
+      "hash": "3395d21088cb50b7",
       "file": "audio/Winter-2026/week-1.mp3",
       "voice": "en-US-AndrewNeural"
     },
     "ja": {
-      "hash": "baf470db622afc60",
+      "hash": "3395d21088cb50b7",
       "file": "audio/Winter-2026/week-1.ja.mp3",
       "voice": "ja-JP-KeitaNeural"
     },
     "zh-TW": {
-      "hash": "baf470db622afc60",
+      "hash": "3395d21088cb50b7",
       "file": "audio/Winter-2026/week-1.zh-TW.mp3",
       "voice": "zh-TW-YunJheNeural"
+    },
+    "yue": {
+      "hash": "3395d21088cb50b7",
+      "file": "audio/Winter-2026/week-1.yue.mp3",
+      "voice": "zh-HK-WanLungNeural"
     }
   },
   "logs/Winter-2026/week-2.md": {
     "en": {
-      "hash": "1d3590f7d55d00ee",
+      "hash": "b8ce6ab9f27b6893",
       "file": "audio/Winter-2026/week-2.mp3",
       "voice": "en-US-AndrewNeural"
     },
     "ja": {
-      "hash": "1d3590f7d55d00ee",
+      "hash": "b8ce6ab9f27b6893",
       "file": "audio/Winter-2026/week-2.ja.mp3",
       "voice": "ja-JP-KeitaNeural"
     },
     "zh-TW": {
-      "hash": "1d3590f7d55d00ee",
+      "hash": "b8ce6ab9f27b6893",
       "file": "audio/Winter-2026/week-2.zh-TW.mp3",
       "voice": "zh-TW-YunJheNeural"
+    },
+    "yue": {
+      "hash": "b8ce6ab9f27b6893",
+      "file": "audio/Winter-2026/week-2.yue.mp3",
+      "voice": "zh-HK-WanLungNeural"
     }
   },
   "logs/Winter-2026/week-3.md": {
     "en": {
-      "hash": "06bc3ffd636e7047",
+      "hash": "7d9a569033f1872e",
       "file": "audio/Winter-2026/week-3.mp3",
       "voice": "en-US-AndrewNeural"
     },
     "ja": {
-      "hash": "06bc3ffd636e7047",
+      "hash": "7d9a569033f1872e",
       "file": "audio/Winter-2026/week-3.ja.mp3",
       "voice": "ja-JP-KeitaNeural"
     },
     "zh-TW": {
-      "hash": "06bc3ffd636e7047",
+      "hash": "7d9a569033f1872e",
       "file": "audio/Winter-2026/week-3.zh-TW.mp3",
       "voice": "zh-TW-YunJheNeural"
+    },
+    "yue": {
+      "hash": "7d9a569033f1872e",
+      "file": "audio/Winter-2026/week-3.yue.mp3",
+      "voice": "zh-HK-WanLungNeural"
     }
   },
   "logs/Winter-2026/week-4.md": {
     "en": {
-      "hash": "b12793e658cb14ef",
+      "hash": "88079c26033ff3bc",
       "file": "audio/Winter-2026/week-4.mp3",
       "voice": "en-US-AndrewNeural"
     },
     "ja": {
-      "hash": "b12793e658cb14ef",
+      "hash": "88079c26033ff3bc",
       "file": "audio/Winter-2026/week-4.ja.mp3",
       "voice": "ja-JP-KeitaNeural"
     },
     "zh-TW": {
-      "hash": "b12793e658cb14ef",
+      "hash": "88079c26033ff3bc",
       "file": "audio/Winter-2026/week-4.zh-TW.mp3",
       "voice": "zh-TW-YunJheNeural"
+    },
+    "yue": {
+      "hash": "88079c26033ff3bc",
+      "file": "audio/Winter-2026/week-4.yue.mp3",
+      "voice": "zh-HK-WanLungNeural"
     }
   },
   "logs/Winter-2026/week-5.md": {
     "en": {
-      "hash": "a4a751791e496fff",
+      "hash": "24c564da1737882f",
       "file": "audio/Winter-2026/week-5.mp3",
       "voice": "en-US-AndrewNeural"
     },
     "ja": {
-      "hash": "a4a751791e496fff",
+      "hash": "24c564da1737882f",
       "file": "audio/Winter-2026/week-5.ja.mp3",
       "voice": "ja-JP-KeitaNeural"
     },
     "zh-TW": {
-      "hash": "a4a751791e496fff",
+      "hash": "24c564da1737882f",
       "file": "audio/Winter-2026/week-5.zh-TW.mp3",
       "voice": "zh-TW-YunJheNeural"
+    },
+    "yue": {
+      "hash": "24c564da1737882f",
+      "file": "audio/Winter-2026/week-5.yue.mp3",
+      "voice": "zh-HK-WanLungNeural"
     }
   },
   "logs/Winter-2026/week-6.md": {
     "en": {
-      "hash": "ad4003a45ab33fc3",
+      "hash": "c2d3431aee12ba35",
       "file": "audio/Winter-2026/week-6.mp3",
       "voice": "en-US-AndrewNeural"
     },
     "ja": {
-      "hash": "ad4003a45ab33fc3",
+      "hash": "c2d3431aee12ba35",
       "file": "audio/Winter-2026/week-6.ja.mp3",
       "voice": "ja-JP-KeitaNeural"
     },
     "zh-TW": {
-      "hash": "ad4003a45ab33fc3",
+      "hash": "c2d3431aee12ba35",
       "file": "audio/Winter-2026/week-6.zh-TW.mp3",
       "voice": "zh-TW-YunJheNeural"
+    },
+    "yue": {
+      "hash": "c2d3431aee12ba35",
+      "file": "audio/Winter-2026/week-6.yue.mp3",
+      "voice": "zh-HK-WanLungNeural"
     }
   },
   "logs/Winter-2026/week-7.md": {
     "en": {
-      "hash": "6513e076beb01ae1",
+      "hash": "316b615431c88f7a",
       "file": "audio/Winter-2026/week-7.mp3",
       "voice": "en-US-AndrewNeural"
     },
     "ja": {
-      "hash": "6513e076beb01ae1",
+      "hash": "316b615431c88f7a",
       "file": "audio/Winter-2026/week-7.ja.mp3",
       "voice": "ja-JP-KeitaNeural"
     },
     "zh-TW": {
-      "hash": "6513e076beb01ae1",
+      "hash": "316b615431c88f7a",
       "file": "audio/Winter-2026/week-7.zh-TW.mp3",
       "voice": "zh-TW-YunJheNeural"
+    },
+    "yue": {
+      "hash": "316b615431c88f7a",
+      "file": "audio/Winter-2026/week-7.yue.mp3",
+      "voice": "zh-HK-WanLungNeural"
     }
   },
   "logs/Winter-2026/week-8.md": {
     "en": {
-      "hash": "fa35f8a4fb01a083",
+      "hash": "93f8345a8a16c537",
       "file": "audio/Winter-2026/week-8.mp3",
       "voice": "en-US-AndrewNeural"
     },
     "ja": {
-      "hash": "fa35f8a4fb01a083",
+      "hash": "93f8345a8a16c537",
       "file": "audio/Winter-2026/week-8.ja.mp3",
       "voice": "ja-JP-KeitaNeural"
     },
     "zh-TW": {
-      "hash": "fa35f8a4fb01a083",
+      "hash": "93f8345a8a16c537",
       "file": "audio/Winter-2026/week-8.zh-TW.mp3",
       "voice": "zh-TW-YunJheNeural"
+    },
+    "yue": {
+      "hash": "93f8345a8a16c537",
+      "file": "audio/Winter-2026/week-8.yue.mp3",
+      "voice": "zh-HK-WanLungNeural"
     }
   },
   "logs/Winter-2026/week-9.md": {
     "en": {
-      "hash": "b5bf2429810ec245",
+      "hash": "ffa0892810853b36",
       "file": "audio/Winter-2026/week-9.mp3",
       "voice": "en-US-AndrewNeural"
     },
     "ja": {
-      "hash": "b5bf2429810ec245",
+      "hash": "ffa0892810853b36",
       "file": "audio/Winter-2026/week-9.ja.mp3",
       "voice": "ja-JP-KeitaNeural"
     },
     "zh-TW": {
-      "hash": "b5bf2429810ec245",
+      "hash": "ffa0892810853b36",
       "file": "audio/Winter-2026/week-9.zh-TW.mp3",
       "voice": "zh-TW-YunJheNeural"
+    },
+    "yue": {
+      "hash": "ffa0892810853b36",
+      "file": "audio/Winter-2026/week-9.yue.mp3",
+      "voice": "zh-HK-WanLungNeural"
     }
   },
   "logs/Winter-2026/week-10.md": {
     "en": {
-      "hash": "dff02cb10ada10c8",
+      "hash": "24a4529106771beb",
       "file": "audio/Winter-2026/week-10.mp3",
       "voice": "en-US-AndrewNeural"
     },
     "ja": {
-      "hash": "dff02cb10ada10c8",
+      "hash": "24a4529106771beb",
       "file": "audio/Winter-2026/week-10.ja.mp3",
       "voice": "ja-JP-KeitaNeural"
     },
     "zh-TW": {
-      "hash": "dff02cb10ada10c8",
+      "hash": "24a4529106771beb",
       "file": "audio/Winter-2026/week-10.zh-TW.mp3",
       "voice": "zh-TW-YunJheNeural"
+    },
+    "yue": {
+      "hash": "24a4529106771beb",
+      "file": "audio/Winter-2026/week-10.yue.mp3",
+      "voice": "zh-HK-WanLungNeural"
     }
   },
   "logs/京都大学２０２６年/week-1.md": {
     "en": {
-      "hash": "3dd8e8e5b65d7f06",
+      "hash": "3f598d63c571827b",
       "file": "audio/京都大学２０２６年/week-1.mp3",
       "voice": "en-US-AndrewNeural"
     },
     "ja": {
-      "hash": "3dd8e8e5b65d7f06",
+      "hash": "3f598d63c571827b",
       "file": "audio/京都大学２０２６年/week-1.ja.mp3",
       "voice": "ja-JP-KeitaNeural"
     },
     "zh-TW": {
-      "hash": "3dd8e8e5b65d7f06",
+      "hash": "3f598d63c571827b",
       "file": "audio/京都大学２０２６年/week-1.zh-TW.mp3",
       "voice": "zh-TW-YunJheNeural"
+    },
+    "yue": {
+      "hash": "3f598d63c571827b",
+      "file": "audio/京都大学２０２６年/week-1.yue.mp3",
+      "voice": "zh-HK-WanLungNeural"
     }
   },
   "logs/京都大学２０２６年/week-2.md": {
     "en": {
-      "hash": "79241672dcd6044d",
+      "hash": "d55034c8be86f01d",
       "file": "audio/京都大学２０２６年/week-2.mp3",
       "voice": "en-US-AndrewNeural"
     },
     "ja": {
-      "hash": "79241672dcd6044d",
+      "hash": "d55034c8be86f01d",
       "file": "audio/京都大学２０２６年/week-2.ja.mp3",
       "voice": "ja-JP-KeitaNeural"
     },
     "zh-TW": {
-      "hash": "79241672dcd6044d",
+      "hash": "d55034c8be86f01d",
       "file": "audio/京都大学２０２６年/week-2.zh-TW.mp3",
       "voice": "zh-TW-YunJheNeural"
+    },
+    "yue": {
+      "hash": "d55034c8be86f01d",
+      "file": "audio/京都大学２０２６年/week-2.yue.mp3",
+      "voice": "zh-HK-WanLungNeural"
     }
   },
   "logs/京都大学２０２６年/week-3.md": {
     "en": {
-      "hash": "994f9e5dd8cd8267",
+      "hash": "e8c9efb0c8d1c9cd",
       "file": "audio/京都大学２０２６年/week-3.mp3",
       "voice": "en-US-AndrewNeural"
     },
@@ -290,7 +365,7 @@
   },
   "logs/京都大学２０２６年/week-4.md": {
     "en": {
-      "hash": "e3992b86a2d2bbf8",
+      "hash": "9056aee50ba92917",
       "file": "audio/京都大学２０２６年/week-4.mp3",
       "voice": "en-US-AndrewNeural"
     },
@@ -307,7 +382,7 @@
   },
   "logs/京都大学２０２６年/week-5.md": {
     "en": {
-      "hash": "b57f8d919336c369",
+      "hash": "9b3964f4ca636f93",
       "file": "audio/京都大学２０２６年/week-5.mp3",
       "voice": "en-US-AndrewNeural"
     },
@@ -324,7 +399,7 @@
   },
   "logs/京都大学２０２６年/week-6-7.md": {
     "en": {
-      "hash": "8e9fe46d888eda05",
+      "hash": "219fa48f98440d2b",
       "file": "audio/京都大学２０２６年/week-6-7.mp3",
       "voice": "en-US-AndrewNeural"
     },
@@ -341,7 +416,7 @@
   },
   "logs/京都大学２０２６年/week-8.md": {
     "en": {
-      "hash": "68ad4665705185c0",
+      "hash": "cb5f4cd2e07b16d8",
       "file": "audio/京都大学２０２６年/week-8.mp3",
       "voice": "en-US-AndrewNeural"
     },
@@ -358,7 +433,7 @@
   },
   "logs/京都大学２０２６年/week-9.md": {
     "en": {
-      "hash": "ea3c5fa631851b79",
+      "hash": "c3ee4edc61e87903",
       "file": "audio/京都大学２０２６年/week-9.mp3",
       "voice": "en-US-AndrewNeural"
     },
@@ -375,7 +450,7 @@
   },
   "logs/京都大学２０２６年/week-10.md": {
     "en": {
-      "hash": "2395a910a3ee080c",
+      "hash": "9650fc6cfccb181d",
       "file": "audio/京都大学２０２６年/week-10.mp3",
       "voice": "en-US-AndrewNeural"
     },
@@ -392,7 +467,7 @@
   },
   "logs/京都大学２０２６年/week-11.md": {
     "en": {
-      "hash": "998187a7ba32fc27",
+      "hash": "64a455fd00022921",
       "file": "audio/京都大学２０２６年/week-11.mp3",
       "voice": "en-US-AndrewNeural"
     },
@@ -409,7 +484,7 @@
   },
   "logs/京都大学２０２６年/week-12.md": {
     "en": {
-      "hash": "7ebe0ccccfcbe0c9",
+      "hash": "214ddc8d25830fbb",
       "file": "audio/京都大学２０２６年/week-12.mp3",
       "voice": "en-US-AndrewNeural"
     },
@@ -426,7 +501,7 @@
   },
   "logs/京都大学２０２６年/week-13.md": {
     "en": {
-      "hash": "b485277249c3f6c5",
+      "hash": "628bd733b65f8948",
       "file": "audio/京都大学２０２６年/week-13.mp3",
       "voice": "en-US-AndrewNeural"
     },
@@ -443,7 +518,7 @@
   },
   "logs/京都大学２０２６年/week-14-15.md": {
     "en": {
-      "hash": "f347a0e25d925425",
+      "hash": "d4c8b3be71922fbd",
       "file": "audio/京都大学２０２６年/week-14-15.mp3",
       "voice": "en-US-AndrewNeural"
     },
@@ -460,7 +535,7 @@
   },
   "logs/Travel/North America/Canada/calgary.md": {
     "en": {
-      "hash": "aef42923edfa4476",
+      "hash": "3be767a34ebbd447",
       "file": "audio/Travel/North America/Canada/calgary.mp3",
       "voice": "en-US-AndrewNeural"
     },
@@ -477,7 +552,7 @@
   },
   "logs/Travel/North America/Canada/vancouver.md": {
     "en": {
-      "hash": "a58b4c024adb186c",
+      "hash": "a9ec60f1c1c1db3a",
       "file": "audio/Travel/North America/Canada/vancouver.mp3",
       "voice": "en-US-AndrewNeural"
     },
@@ -494,7 +569,7 @@
   },
   "logs/Travel/Asia/China/Beijing/beijing1.md": {
     "en": {
-      "hash": "790bcc1b408ab87b",
+      "hash": "62658043e14e69ad",
       "file": "audio/Travel/Asia/China/Beijing/beijing1.mp3",
       "voice": "en-US-AndrewNeural"
     },
@@ -511,7 +586,7 @@
   },
   "logs/Travel/Asia/China/Beijing/beijing2.md": {
     "en": {
-      "hash": "75b03b40d18fadb3",
+      "hash": "45d4fc01f6d6006d",
       "file": "audio/Travel/Asia/China/Beijing/beijing2.mp3",
       "voice": "en-US-AndrewNeural"
     },
@@ -528,7 +603,7 @@
   },
   "logs/Travel/Asia/China/Beijing/beijing3.md": {
     "en": {
-      "hash": "6704ad34d9ee359b",
+      "hash": "c126c0548eafeae7",
       "file": "audio/Travel/Asia/China/Beijing/beijing3.mp3",
       "voice": "en-US-AndrewNeural"
     },
@@ -545,7 +620,7 @@
   },
   "logs/Travel/Asia/China/Beijing/beijing4.md": {
     "en": {
-      "hash": "b409b22a1c9ea439",
+      "hash": "f60c0b2bb5040938",
       "file": "audio/Travel/Asia/China/Beijing/beijing4.mp3",
       "voice": "en-US-AndrewNeural"
     },
@@ -562,7 +637,7 @@
   },
   "logs/Travel/Asia/China/Beijing/beijing5.md": {
     "en": {
-      "hash": "a897bc42cfa23b19",
+      "hash": "44bec4b1400c4a5b",
       "file": "audio/Travel/Asia/China/Beijing/beijing5.mp3",
       "voice": "en-US-AndrewNeural"
     },
@@ -579,7 +654,7 @@
   },
   "logs/Travel/Asia/China/Chengdu/chengdu1.md": {
     "en": {
-      "hash": "be946336f55b6e57",
+      "hash": "e7d1c18a8163b901",
       "file": "audio/Travel/Asia/China/Chengdu/chengdu1.mp3",
       "voice": "en-US-AndrewNeural"
     },
@@ -596,7 +671,7 @@
   },
   "logs/Travel/Asia/China/Chengdu/chengdu2.md": {
     "en": {
-      "hash": "80e3a89ea5e7df46",
+      "hash": "91a6fe23c5fc7bf2",
       "file": "audio/Travel/Asia/China/Chengdu/chengdu2.mp3",
       "voice": "en-US-AndrewNeural"
     },
@@ -613,7 +688,7 @@
   },
   "logs/Travel/Asia/China/Chongqing/chongqing1.md": {
     "en": {
-      "hash": "219eb2c6dd355b4d",
+      "hash": "60e94840b62d9a73",
       "file": "audio/Travel/Asia/China/Chongqing/chongqing1.mp3",
       "voice": "en-US-AndrewNeural"
     },
@@ -630,7 +705,7 @@
   },
   "logs/Travel/Asia/China/Chongqing/chongqing2.md": {
     "en": {
-      "hash": "2ed7ab5aba8e7bf1",
+      "hash": "64996de14cccd0df",
       "file": "audio/Travel/Asia/China/Chongqing/chongqing2.mp3",
       "voice": "en-US-AndrewNeural"
     },
@@ -647,7 +722,7 @@
   },
   "logs/Travel/Asia/China/Chongqing/chongqing3.md": {
     "en": {
-      "hash": "c36ec6b1384df8bc",
+      "hash": "c25a9b7b4c0ba37f",
       "file": "audio/Travel/Asia/China/Chongqing/chongqing3.mp3",
       "voice": "en-US-AndrewNeural"
     },
@@ -664,7 +739,7 @@
   },
   "logs/Travel/Asia/China/Shanghai/shanghai1.md": {
     "en": {
-      "hash": "d5acaa0f74f66d0c",
+      "hash": "046b939ecfdc87bb",
       "file": "audio/Travel/Asia/China/Shanghai/shanghai1.mp3",
       "voice": "en-US-AndrewNeural"
     },
@@ -681,7 +756,7 @@
   },
   "logs/Travel/Asia/Singapore/singapore1.md": {
     "en": {
-      "hash": "87c747cb55b9be85",
+      "hash": "a9f3dbda8f98854e",
       "file": "audio/Travel/Asia/Singapore/singapore1.mp3",
       "voice": "en-US-AndrewNeural"
     },
@@ -698,7 +773,7 @@
   },
   "logs/Reads/2026reads.md": {
     "en": {
-      "hash": "cf05b9ba837a40f3",
+      "hash": "ce5e0734b793766d",
       "file": "audio/Reads/2026reads.mp3",
       "voice": "en-US-AndrewNeural"
     },
@@ -715,7 +790,7 @@
   },
   "logs/Reflections/junior1.md": {
     "en": {
-      "hash": "07d26fde4222a5b4",
+      "hash": "995292c518b3ba62",
       "file": "audio/Reflections/junior1.mp3",
       "voice": "en-US-AndrewNeural"
     },
@@ -732,7 +807,7 @@
   },
   "logs/Reflections/kyoto.md": {
     "en": {
-      "hash": "8efd43819005bd32",
+      "hash": "d3fc7e30b391e648",
       "file": "audio/Reflections/kyoto.mp3",
       "voice": "en-US-AndrewNeural"
     },
@@ -749,7 +824,7 @@
   },
   "logs/Essays/Repeated_Resilience.md": {
     "en": {
-      "hash": "30f4897a5eba5807",
+      "hash": "a562e77718cc9442",
       "file": "audio/Essays/Repeated_Resilience.mp3",
       "voice": "en-US-AndrewNeural"
     },
@@ -766,7 +841,7 @@
   },
   "logs/Essays/laziness.md": {
     "en": {
-      "hash": "2a78d703b5eb76fa",
+      "hash": "628754d5f753e64f",
       "file": "audio/Essays/laziness.mp3",
       "voice": "en-US-AndrewNeural"
     },
@@ -783,7 +858,7 @@
   },
   "logs/Essays/Privilege_and_Perseverance.md": {
     "en": {
-      "hash": "9134852d20d7ec81",
+      "hash": "2d34a5501519ed86",
       "file": "audio/Essays/Privilege_and_Perseverance.mp3",
       "voice": "en-US-AndrewNeural"
     },
@@ -800,7 +875,7 @@
   },
   "logs/Essays/Unmasking_Male_Mental_Health.md": {
     "en": {
-      "hash": "774ea4a4999631ae",
+      "hash": "ffa5c418357441d3",
       "file": "audio/Essays/Unmasking_Male_Mental_Health.mp3",
       "voice": "en-US-AndrewNeural"
     },
@@ -817,7 +892,7 @@
   },
   "logs/Essays/The_Parlay_Problem.md": {
     "en": {
-      "hash": "c7fa55843045011d",
+      "hash": "2df5a4ce07f99b83",
       "file": "audio/Essays/The_Parlay_Problem.mp3",
       "voice": "en-US-AndrewNeural"
     },
@@ -834,7 +909,7 @@
   },
   "logs/Essays/Playing_in_the_In-Between:_Ice,_Identity,_and_the_Long_Way_Home.md": {
     "en": {
-      "hash": "a648d78251da2591",
+      "hash": "9b00f96f559140fa",
       "file": "audio/Essays/Playing_in_the_In-Between:_Ice,_Identity,_and_the_Long_Way_Home.mp3",
       "voice": "en-US-AndrewNeural"
     },
@@ -851,7 +926,7 @@
   },
   "logs/Travel/bucketlist.md": {
     "en": {
-      "hash": "e8bbf5616431c57e",
+      "hash": "881200d274849b0a",
       "file": "audio/Travel/bucketlist.mp3",
       "voice": "en-US-AndrewNeural"
     },
@@ -868,7 +943,7 @@
   },
   "logs/Travel/Asia/China/hangzhou.md": {
     "en": {
-      "hash": "1008be18f9e6cdfc",
+      "hash": "cf87b2e647e6c682",
       "file": "audio/Travel/Asia/China/hangzhou.mp3",
       "voice": "en-US-AndrewNeural"
     },
@@ -885,7 +960,7 @@
   },
   "logs/Travel/Asia/China/Shanghai/shanghai2.md": {
     "en": {
-      "hash": "da5fd39248dead1c",
+      "hash": "fde59b3ae97c1304",
       "file": "audio/Travel/Asia/China/Shanghai/shanghai2.mp3",
       "voice": "en-US-AndrewNeural"
     },
@@ -898,6 +973,27 @@
       "hash": "d2d7ae47fe80d63f",
       "file": "audio/Travel/Asia/China/Shanghai/shanghai2.zh-TW.mp3",
       "voice": "zh-TW-YunJheNeural"
+    }
+  },
+  "logs/Travel/Asia/China/Shanghai/shanghai3.md": {
+    "en": {
+      "hash": "941dc7386ef81071",
+      "file": "audio/Travel/Asia/China/Shanghai/shanghai3.mp3",
+      "voice": "en-US-AndrewNeural"
+    }
+  },
+  "logs/Travel/Asia/China/Shanghai/shanghai4.md": {
+    "en": {
+      "hash": "43a285d16a6a7a86",
+      "file": "audio/Travel/Asia/China/Shanghai/shanghai4.mp3",
+      "voice": "en-US-AndrewNeural"
+    }
+  },
+  "logs/Travel/Asia/China/Shanghai/shanghai5.md": {
+    "en": {
+      "hash": "a7734e37a2872036",
+      "file": "audio/Travel/Asia/China/Shanghai/shanghai5.mp3",
+      "voice": "en-US-AndrewNeural"
     }
   }
 }

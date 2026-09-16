@@ -272,20 +272,16 @@
                     "filename": "Jiefangbei Square & Hongya Cave - Day 1",
                     "path": "logs/Travel/Asia/China/Chongqing/chongqing1.md",
                     "date": "2026-08-04",
-                    "time": "20:00",
-                    "draft": true
-                  },
+                    "time": "20:00"                  },
                   {
                     "filename": "Kuixing Building, Shibati, Raffles City, & Deyi Plaza - Day 2",
                     "path": "logs/Travel/Asia/China/Chongqing/chongqing2.md",
-                    "date": "2026-08-05",
-                    "draft": true
+                    "date": "2026-08-05"
                   },
                   {
-                    "filename": "Grand Theatre - Day 3",
+                    "filename": "Libizba Station, E'ling Park, Longmenhao Old Street, Nanshan Botanical Garden, & Chongqing Grand Theatre - Day 3",
                     "path": "logs/Travel/Asia/China/Chongqing/chongqing3.md",
-                    "date": "2026-08-06",
-                    "draft": true
+                    "date": "2026-08-06"
                   }
                 ],
                 "dir": "logs/Travel/Asia/China/Chongqing"
@@ -294,39 +290,39 @@
                 "title": "Shanghai, Shanghai Municipality (上海)",
                 "logs": [
                   {
-                    "filename": "Arrival - Day 1",
+                    "filename": "Arrival, Yuyuan Old Street, Taoist Temple, & The Bund  - Day 1",
                     "path": "logs/Travel/Asia/China/Shanghai/shanghai1.md",
-                    "date": "2026-08-07",
-                    "draft": true
+                    "date": "2026-08-07"
                   },
                   {
-                    "filename": "Day 2",
+                    "filename": "Qibao Old Street - Day 2",
                     "path": "logs/Travel/Asia/China/Shanghai/shanghai2.md",
-                    "date": "2026-08-09",
-                    "draft": true
+                    "date": "2026-08-08",
+                    "time": "18:00"
                   },
                   {
-                    "filename": "Day 3",
+                    "filename": "Shanghai Museum East - Day 3",
                     "path": "logs/Travel/Asia/China/Shanghai/shanghai3.md",
-                    "date": "2026-08-10",
-                    "draft": true
-                  },
+                    "date": "2026-08-09"                  },
                   {
-                    "filename": "Day 4",
+                    "filename": "Nanjing Road & People's Park - Day 4",
                     "path": "logs/Travel/Asia/China/Shanghai/shanghai4.md",
-                    "date": "2026-08-11",
-                    "draft": true
-                  }
+                    "date": "2026-08-10"                  },
+                   {
+                    "filename": "Yuyuan Garden, French Concession Area, Tian An 1000 Trees, & North Bund Green Land  - Day 5",
+                    "path": "logs/Travel/Asia/China/Shanghai/shanghai5.md",
+                    "date": "2026-08-11"                  }
+
                 ],
                 "dir": "logs/Travel/Asia/China/Shanghai"
               }
             ],
             "logs": [
               {
-                "filename": "Hangzhou, ",
+                "filename": "Hangzhou, Zhejiang Province (杭州)",
                 "path": "logs/Travel/Asia/China/hangzhou.md",
                 "date": "2026-08-08",
-                "draft": true
+                "time": "08:00"
               },
               {
                 "filename": "Shenzhen, Guangdong (深圳)",

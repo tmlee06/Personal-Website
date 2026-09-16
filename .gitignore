@@ -1,4 +1,5 @@
 node_modules/
 tts-samples/
+.tts-translation-cache/
 
 .DS_Store

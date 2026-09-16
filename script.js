@@ -1140,7 +1140,13 @@ async function ttsContentHash(str) {
 // translation just means English, the always-present default track.
 // Anything else a visitor picks via the full Translate dropdown (not the
 // quick pills) has no matching audio, so read-aloud stays hidden for it.
-const NARRATION_LANG_BY_GOOGTRANS = { ja: 'ja', 'zh-TW': 'zh-TW' };
+// 'yue' (Cantonese) is here defensively — build-tts-audio.js does generate
+// Cantonese narration, but whether a visitor can actually select Cantonese
+// via this site's embedded Google Translate widget is unconfirmed (its
+// language popup didn't enumerate cleanly under automated testing). If the
+// widget ever does hand back a 'yue' googtrans value, this makes sure the
+// matching narration gets found instead of silently falling through.
+const NARRATION_LANG_BY_GOOGTRANS = { ja: 'ja', 'zh-TW': 'zh-TW', yue: 'yue' };
 function narrationLangKey() {
     const lang = getGoogTransLang();
     if (!lang) return 'en';

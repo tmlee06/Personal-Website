@@ -120,7 +120,7 @@ Who will I be when I land in 10 hours? Probably just the same person that has to
 
 The wall art had another good quote, I thought I share:
 
-![*"The real game starts when you hit rock bottom, right? Do not be afraid."*](https://lh3.googleusercontent.com/pw/AP1GczON-X9iU_zH2hNuKQzON_yY49LDplA2UNnQDs0LoRONU6oC3sNP1syChRM4nxYj84x6uZgh54fhWTOciVLK3Yzr3H4yzPhnm3AKOnWLCrkmES7JZ_swLkTPIKhg1v6F7a-zthC2MJ6k9HJzTkLveonB8Q=w1128-h1504-s-no-gm?authuser=0)
+![*"The real game starts when you hit rock bottom, right? Don't be afraid."*](https://lh3.googleusercontent.com/pw/AP1GczON-X9iU_zH2hNuKQzON_yY49LDplA2UNnQDs0LoRONU6oC3sNP1syChRM4nxYj84x6uZgh54fhWTOciVLK3Yzr3H4yzPhnm3AKOnWLCrkmES7JZ_swLkTPIKhg1v6F7a-zthC2MJ6k9HJzTkLveonB8Q=w1128-h1504-s-no-gm?authuser=0)
 
 Isaiah 41:10
 "So do not fear, for I am with you; do not be dismayed, for I am your God. I will strengthen you and help you; I will uphold you with my righteous right hand"
@@ -128,18 +128,10 @@ Isaiah 41:10
 Whatever waits for me back home, whatever grade I earn for not locking in the way I should have, whatever happens, I am going to keep putting one foot in front of the other and do my best to live with no fear. That has to be enough, because it is all I have ever had.
 
 Before I end this reflection, I will leave you with Bourdain quote and video. 
-<h2>"Travel is not reward for working, it's education for living."</h2>
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; margin-bottom: 24px;">
-  <iframe
-    src= "https://www.youtube.com/embed/SVjOB3ZN1Ek?si=oc9ZxszLKq4AY0Jk" 
-    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
-    frameborder="0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    allowfullscreen>
-  </iframe>
-</div>
 
-Hopefully the video works!
+<h2>"Travel is not reward for working, it's education for living."</h2>
+
+<iframe width="371" height="659" src="https://www.youtube.com/embed/_6k8AExGhY8" title="𝑻𝒉𝒆 𝒘𝒐𝒓𝒍𝒅 𝒘𝒐𝒏’𝒕 𝒘𝒂𝒍𝒌 𝒕𝒐 𝒚𝒐𝒖. #anthonybourdain #travel #quote" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 I came to Kyoto and went abroad to learn how to live again, and it was worth every single penny.
 

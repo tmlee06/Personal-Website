@@ -1,8 +1,10 @@
  ![Marvelous!](https://lh3.googleusercontent.com/pw/AP1GczPJ0Ziwc_9ZYI-QpwzppWPQ_4puDV94qNCiZ2xOBc2EnJkyvDdF1OexUBlQAegN8vGS6WdEETFcQIz4aRi9b_wsv2Si_L2q8SLtvI1iwHQeuUm2Qs7eUzeKX1n1otftjLnB1anBU8KajcbSfdgacQrZ9A=w1124-h1498-s-no-gm?authuser=0)
 
 The days leading up to this trip I was completely bedridden. After averaging 30,000 steps for 15 days, I guess my body needed to take a much-needed rest. It sucked because I hoped to do a lot more with the 5 days I had in Kyoto, but I had to listen to my body. Fortunately, I got to see the Mount Daimonji fire lighting, so I am very thankful for that.
+![Marvelous!](https://lh3.googleusercontent.com/pw/AP1GczPJ0Ziwc_9ZYI-QpwzppWPQ_4puDV94qNCiZ2xOBc2EnJkyvDdF1OexUBlQAegN8vGS6WdEETFcQIz4aRi9b_wsv2Si_L2q8SLtvI1iwHQeuUm2Qs7eUzeKX1n1otftjLnB1anBU8KajcbSfdgacQrZ9A=w1124-h1498-s-no-gm?authuser=0)
 
-I think this was my first official solo travel trip. Technically this was not solo travel because I am visiting and crashing at my suite-mate's dorm at National University of Singapore (NUS).
+
+I think this was my first official solo travel trip. Technically this was not solo travel because I was visiting and crashing at my suite-mate's dorm at National University of Singapore (NUS).
 
 I arrived at 12:30 AM. The original flight I was going to book was for the next day, but then I would arrive the 19th, and would only have two days in Singapore before heading to Korea. Due to the duration of the flight, there are not many options for flights from KIX to SIN, which is brutal. It was my mistake in thinking Osaka and Singapore is a short distance. I guess my geography knowledge went out the window when I was planning this trip.
 

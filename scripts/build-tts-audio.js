@@ -34,7 +34,13 @@
 //   npm install
 //
 // Usage:
-//   node scripts/build-tts-audio.js            # generate/update audio
+//   node scripts/build-tts-audio.js                    # generate/update audio
+//   node scripts/build-tts-audio.js --only-lang en      # restrict to one
+//                                                        # narration language
+//                                                        # (e.g. when every
+//                                                        # translation source
+//                                                        # is tapped out but
+//                                                        # Edge TTS is fine)
 //   node scripts/build-tts-audio.js --dry-run  # print what *would* be
 //                                               # generated and the total
 //                                               # character count, without
@@ -66,6 +72,13 @@ const ROOT = path.resolve(__dirname, '..');
 const INDEX_PATH = path.join(ROOT, 'logs-index.json');
 const MANIFEST_PATH = path.join(ROOT, 'audio-manifest.json');
 
+// Bump on any change to how a log's markdown becomes spoken text
+// (markdownToPlainText, splitIntoChunks) so every cached entry
+// invalidates cleanly instead of drifting out of sync with what the
+// current logic would actually produce for an unedited file. v2: images'
+// alt text is now read aloud as a caption instead of being discarded.
+const NARRATION_LOGIC_VERSION = '2';
+
 const DRY_RUN = process.argv.includes('--dry-run');
 // Internal flags, not public options (not in the usage comment above) — the
 // top-level run spawns one of these per (file, language) rather than doing
@@ -77,17 +90,30 @@ function argAfter(flag) {
 }
 const WORKER_REL_PATH = argAfter('--worker');
 const WORKER_LANG = argAfter('--lang');
+// Restricts a top-level (non-worker) run to one narration language — e.g.
+// generating just 'en' when every translation source (DeepL/Google/
+// MyMemory) happens to be tapped out at once but Edge TTS itself is fine,
+// rather than every queued task failing at the translation step.
+const ONLY_LANG = argAfter('--only-lang');
 
 // Every language narration gets generated for. 'en' just reads the log's
 // own text; anything else first machine-translates that same plain text
 // (see translateLong) before handing it to Edge TTS in a voice for that
-// language. Matches CURATED_LANGS / the quick-translate pills in
-// script.js — no point narrating a language nobody can actually switch
-// the page to.
+// language. 'ja' and 'zh-TW' match CURATED_LANGS / the quick-translate
+// pills in script.js. 'yue' (Cantonese) is the exception — no mainstream
+// translator (DeepL, Google, MyMemory) offers a distinct written-Cantonese
+// target, so it reuses zh-TW's Traditional Chinese translation and just
+// reads it with a Cantonese voice instead of Mandarin, which is standard
+// practice for Cantonese TTS. It's also not confirmed reachable via the
+// site's actual Google Translate widget (its language-popup wouldn't
+// enumerate under automation to check) — narrationLangKey in script.js
+// maps for it defensively in case a visitor ever reaches it, but treat it
+// as "narration exists, live discoverability unconfirmed."
 const NARRATION_LANGS = [
     { key: 'en', translateTo: null, voice: process.env.EDGE_TTS_VOICE || 'en-US-AndrewNeural' },
     { key: 'ja', translateTo: 'ja', voice: process.env.EDGE_TTS_VOICE_JA || 'ja-JP-KeitaNeural' },
     { key: 'zh-TW', translateTo: 'zh-TW', voice: process.env.EDGE_TTS_VOICE_ZH_TW || 'zh-TW-YunJheNeural' },
+    { key: 'yue', translateTo: 'zh-TW', voice: process.env.EDGE_TTS_VOICE_YUE || 'zh-HK-WanLungNeural' },
 ];
 
 // Was 1500 — cut hard after a session of heavy testing left the endpoint
@@ -164,11 +190,21 @@ function stripFrontmatter(text) {
 // marked's job for on-page rendering) — just needs to strip syntax well
 // enough to read naturally aloud. Order matters: code/images go first so
 // nothing downstream mangles their contents.
+//
+// Images keep their alt text (when they have any) rather than vanishing
+// entirely — most of this site's photos carry a real caption there (e.g.
+// "*The Cyberpunk City*"), and those often carry as much of the story as
+// the surrounding prose. A trailing period gives the narrator a clean
+// pause before/after it instead of running it into whatever text is
+// adjacent; a captionless image (`![]()`, the common case) still
+// contributes nothing, same as before. Emphasis markers inside the
+// caption (the asterisks above) get stripped later in this same pass,
+// same as anywhere else in the prose.
 function markdownToPlainText(md) {
     let text = md;
     text = text.replace(/```[\s\S]*?```/g, ' ');           // fenced code blocks
     text = text.replace(/`([^`]+)`/g, '$1');                // inline code
-    text = text.replace(/!\[[^\]]*\]\([^)]*\)/g, ' ');      // images
+    text = text.replace(/!\[([^\]]*)\]\([^)]*\)/g, (m, alt) => (alt.trim() ? ` ${alt.trim()}. ` : ' ')); // images -> spoken caption
     text = text.replace(/\[([^\]]*)\]\([^)]*\)/g, '$1');    // links -> link text
     text = text.replace(/<[^>]+>/g, ' ');                   // raw HTML/embeds
     text = text.replace(/^\s*#{1,6}\s*/gm, '');             // heading markers
@@ -425,14 +461,35 @@ async function translatePiece(text, to) {
 // back into one block of target-language text ready for splitIntoChunks
 // to hand to Edge TTS.
 const TRANSLATE_CHUNK_BYTES = 4000;
-async function translateLong(text, to) {
+// Keyed by (content hash, target language) — not by narration key — so
+// 'zh-TW' and 'yue' share one cache entry: both translate English into
+// the same Traditional Chinese text, just read by different voices
+// (Mandarin vs. Cantonese pronunciation of the same written text, the
+// standard approach since no mainstream translator offers a distinct
+// Cantonese written target). Learned the hard way that skipping this
+// meant literally paying to translate the same text twice — real
+// quota burned on a free tier that isn't unlimited, found only after
+// DeepL's monthly 1M-character allowance came back fully spent mid-run.
+// Also means a retried synthesis (translation succeeded, TTS failed)
+// never re-pays for translation on its next attempt either.
+const TRANSLATION_CACHE_DIR = path.join(ROOT, '.tts-translation-cache');
+function translationCachePath(hash, to) {
+    return path.join(TRANSLATION_CACHE_DIR, `${hash}-${to}.txt`);
+}
+async function translateLong(hash, text, to) {
+    const cachePath = translationCachePath(hash, to);
+    if (fs.existsSync(cachePath)) return fs.readFileSync(cachePath, 'utf8');
+
     const pieces = splitIntoChunks(text, TRANSLATE_CHUNK_BYTES);
     const translated = [];
     for (const piece of pieces) {
         translated.push(await translatePiece(piece, to));
         await sleep(500);
     }
-    return translated.join('\n\n');
+    const result = translated.join('\n\n');
+    fs.mkdirSync(TRANSLATION_CACHE_DIR, { recursive: true });
+    fs.writeFileSync(cachePath, result);
+    return result;
 }
 
 // msedge-tts builds its request by dropping the input straight into an XML
@@ -526,7 +583,13 @@ function buildTask(relPath, manifest, langConf) {
     const raw = fs.readFileSync(abs, 'utf8');
     const body = stripFrontmatter(raw);
 
-    const hash = crypto.createHash('sha256').update(raw).digest('hex').slice(0, 16);
+    // Folding NARRATION_LOGIC_VERSION into the hash (not just the raw file
+    // content) means a change to how markdown becomes spoken text — like
+    // captions starting to get read — invalidates every cached entry
+    // exactly once, cleanly, rather than silently leaving old audio
+    // mismatched with what markdownToPlainText would now produce for the
+    // same unedited file. Bump it whenever that logic changes again.
+    const hash = crypto.createHash('sha256').update(raw + '\n' + NARRATION_LOGIC_VERSION).digest('hex').slice(0, 16);
     const baseOutRel = 'audio/' + relPath.replace(/^logs\//, '').replace(/\.md$/i, '');
     // English keeps its original bare filename (audio/x.mp3) — this repo
     // already has 51 of those committed, and there's no reason to rename/
@@ -563,7 +626,7 @@ function findTasks() {
 // to call from a short-lived --worker subprocess that has no memory of
 // what any sibling process just wrote.
 async function synthesizeAndWriteFile(f) {
-    const textToSpeak = f.langConf.translateTo ? await translateLong(f.plain, f.langConf.translateTo) : f.plain;
+    const textToSpeak = f.langConf.translateTo ? await translateLong(f.hash, f.plain, f.langConf.translateTo) : f.plain;
 
     const chunks = splitIntoChunks(textToSpeak, MAX_CHUNK_BYTES);
     const buffers = [];
@@ -635,7 +698,8 @@ async function main() {
         return;
     }
 
-    const toGenerate = findTasks();
+    let toGenerate = findTasks();
+    if (ONLY_LANG) toGenerate = toGenerate.filter((f) => f.lang === ONLY_LANG);
 
     if (!toGenerate.length) {
         console.log('Nothing to generate — every published log already has up-to-date narration in every language.');
