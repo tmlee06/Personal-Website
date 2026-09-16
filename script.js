@@ -15,7 +15,25 @@ if (typeof marked !== 'undefined') {
                 // Markdown emphasis (e.g. *italic*); the <img alt> stays plain text.
                 const caption = text ? `<figcaption>${marked.parseInline(text)}</figcaption>` : '';
                 return `<figure class="log-photo"><img src="${src}" alt="${alt}"${titleAttr} loading="lazy" />${caption}</figure>`;
-            }
+            },
+            // A markdown line that's just `![caption](url)` is, to marked, a
+            // paragraph containing one inline image token — so the default
+            // paragraph renderer would wrap the <figure> above (block
+            // content) inside a <p> (which only permits phrasing content).
+            // Browsers "fix" that invalid nesting on parse by implicitly
+            // closing the <p> right before the <figure>, then opening a
+            // *second*, empty <p> for the now-orphaned closing tag — so
+            // every single photo actually left two invisible, empty <p>
+            // siblings in .reader-body's real child list. Harmless to look
+            // at, but silently threw off anything indexing/diffing those
+            // children by position (live-md-watch's edit tracking, the read-
+            // aloud block list). Skip the <p> for this one case instead.
+            paragraph(token) {
+                if (token.tokens && token.tokens.length === 1 && token.tokens[0].type === 'image') {
+                    return this.parser.parseInline(token.tokens);
+                }
+                return false; // fall through to marked's default paragraph rendering
+            },
         }
     });
 }
@@ -1071,6 +1089,168 @@ function initQuickTranslate(root) {
     });
 }
 
+// --- READ ALOUD (pre-rendered narration) ---
+// Plays the real, human-recorded-sounding narration track that
+// scripts/build-tts-audio.js batch-generates per log via Edge's neural TTS
+// voices — no live in-browser voice synthesis (and its inevitable robotic
+// fallback) involved at all. Lives only in the fullscreen log reader (see
+// initReaderTTS, called from openFullscreenLog) since that's the one place
+// on the site with actual long-form prose.
+const TTS_RATE_STEPS = [1, 1.25, 1.5, 0.75];
+
+let ttsState = null; // non-null only while a reader has read-aloud wired up
+
+function teardownTts() {
+    if (ttsState && ttsState.stop) ttsState.stop();
+    ttsState = null;
+}
+
+// --- Pre-rendered narration (see scripts/build-tts-audio.js) ---
+// That script batch-generates a natural-sounding narration track per log,
+// per language, with Microsoft Edge's neural TTS voices (non-English text
+// first machine-translated via Google's free endpoint) and records each
+// one's file + a hash of the exact raw *English* markdown it was built
+// from in audio-manifest.json — one hash per log covers every language,
+// since translation is deterministic from that same source. When a match
+// exists for the log currently open, in whichever language the page is
+// currently showing, playback below uses that real audio file. An edited
+// log whose narration hasn't been regenerated yet simply won't match its
+// old hash, and the reader hides its read-aloud controls entirely for
+// that log/language — never stale audio for text that's since changed.
+let ttsAudioManifestPromise = null;
+function getTtsAudioManifest() {
+    if (!ttsAudioManifestPromise) {
+        ttsAudioManifestPromise = fetch(getNormalizedFetchUrl('audio-manifest.json'))
+            .then((res) => (res.ok ? res.json() : {}))
+            .catch(() => ({}));
+    }
+    return ttsAudioManifestPromise;
+}
+
+// Same sha256-of-raw-markdown-file, first-16-hex-chars key the Node script
+// computes (crypto.createHash there, crypto.subtle here — same digest).
+async function ttsContentHash(str) {
+    const digest = await window.crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+    return Array.from(new Uint8Array(digest)).map((b) => b.toString(16).padStart(2, '0')).join('').slice(0, 16);
+}
+
+// googtrans's language code -> the manifest's narration-language key.
+// Matches CURATED_LANGS/NARRATION_LANGS (build-tts-audio.js) exactly —
+// only languages narration actually gets generated for. No active
+// translation just means English, the always-present default track.
+// Anything else a visitor picks via the full Translate dropdown (not the
+// quick pills) has no matching audio, so read-aloud stays hidden for it.
+// 'yue' (Cantonese) is here defensively — build-tts-audio.js does generate
+// Cantonese narration, but whether a visitor can actually select Cantonese
+// via this site's embedded Google Translate widget is unconfirmed (its
+// language popup didn't enumerate cleanly under automated testing). If the
+// widget ever does hand back a 'yue' googtrans value, this makes sure the
+// matching narration gets found instead of silently falling through.
+const NARRATION_LANG_BY_GOOGTRANS = { ja: 'ja', 'zh-TW': 'zh-TW', yue: 'yue' };
+function narrationLangKey() {
+    const lang = getGoogTransLang();
+    if (!lang) return 'en';
+    return NARRATION_LANG_BY_GOOGTRANS[lang] || null;
+}
+
+async function resolvePrerenderedAudio(log, text) {
+    if (!window.crypto || !window.crypto.subtle) return null; // needs https/localhost
+    const langKey = narrationLangKey();
+    if (!langKey) return null; // translated into a language this site doesn't narrate
+    try {
+        const manifest = await getTtsAudioManifest();
+        const entry = manifest[log.path] && manifest[log.path][langKey];
+        if (!entry) return null;
+        const hash = await ttsContentHash(text);
+        return hash === entry.hash ? getNormalizedFetchUrl(entry.file) : null;
+    } catch (e) {
+        return null;
+    }
+}
+
+// Plain <audio> playback of the pre-rendered narration file — no per-block
+// chunking/highlighting needed (that only ever existed to dodge Chrome
+// speechSynthesis quirks a real audio file doesn't have), and the rate
+// button can just set playbackRate live instead of having to restart the
+// current block, since HTMLMediaElement doesn't share that limitation.
+function initReaderTTSFromAudio(state, toggleBtn, rateBtn, audioUrl) {
+    let rateIndex = 0;
+    state.playing = false;
+    state.rate = TTS_RATE_STEPS[rateIndex];
+
+    const audio = new Audio(audioUrl);
+    audio.preload = 'none';
+    audio.playbackRate = state.rate;
+
+    function setIcon(playing) {
+        toggleBtn.classList.toggle('is-speaking', playing);
+        const label = playing ? 'Pause reading' : 'Read this log aloud';
+        toggleBtn.setAttribute('aria-label', label);
+        toggleBtn.title = label;
+        toggleBtn.innerHTML = playing
+            ? '<i class="fas fa-pause" aria-hidden="true"></i>'
+            : '<i class="fas fa-volume-up" aria-hidden="true"></i>';
+    }
+
+    function stop() {
+        audio.pause();
+        audio.currentTime = 0;
+        state.playing = false;
+        setIcon(false);
+    }
+
+    audio.onplay = () => { state.playing = true; setIcon(true); };
+    audio.onpause = () => { state.playing = false; setIcon(false); };
+    audio.onended = () => { state.playing = false; setIcon(false); };
+    // A missing/failed audio file (moved, network hiccup) shouldn't leave
+    // the button stuck mid-"loading" forever.
+    audio.onerror = () => stop();
+
+    toggleBtn.onclick = () => (audio.paused ? audio.play() : audio.pause());
+
+    rateBtn.textContent = state.rate + '×';
+    rateBtn.onclick = () => {
+        rateIndex = (rateIndex + 1) % TTS_RATE_STEPS.length;
+        state.rate = TTS_RATE_STEPS[rateIndex];
+        rateBtn.textContent = state.rate + '×';
+        audio.playbackRate = state.rate;
+    };
+
+    state.stop = stop;
+}
+
+// No live-voice fallback: a log with no matching pre-rendered narration for
+// the language currently on screen (freshly edited and not yet
+// regenerated, or a language build-tts-audio.js doesn't narrate) simply
+// gets no read-aloud controls, rather than dropping back to a robotic
+// browser voice. Which language to look for is resolved inside
+// resolvePrerenderedAudio (see narrationLangKey) from the same googtrans
+// cookie the translate pills drive — a page showing 日本語 gets Japanese
+// narration if it exists, not silently English audio for translated text.
+async function initReaderTTS(reader, log, text) {
+    const controls = reader.querySelector('#reader-tts-controls');
+    const toggleBtn = reader.querySelector('#reader-tts-toggle');
+    const rateBtn = reader.querySelector('#reader-tts-rate');
+
+    if (!controls || !toggleBtn || !rateBtn) return;
+
+    // Claim ttsState immediately (before the manifest lookup's await) so a
+    // reader closed/replaced mid-lookup correctly aborts this setup instead
+    // of wiring up buttons that already got torn down.
+    const state = { reader };
+    ttsState = state;
+    controls.style.display = 'none';
+
+    if (!log || !text) return;
+
+    const audioUrl = await resolvePrerenderedAudio(log, text);
+    if (ttsState !== state) return; // superseded while we were awaiting
+    if (!audioUrl) return;
+
+    controls.style.display = '';
+    initReaderTTSFromAudio(state, toggleBtn, rateBtn, audioUrl);
+}
+
 function hydrateEmbeds(rootEl) {
   processInstagramEmbeds(rootEl);
   processVideoEmbeds(rootEl);
@@ -1080,11 +1260,24 @@ function hydrateEmbeds(rootEl) {
 // Identifies a top-level .reader-body block (a <p>, heading, figure, etc.)
 // by content rather than by reference/index, so it can still be found after
 // the body's innerHTML gets replaced wholesale (reload-restore, live-md-
-// watch) — matched by image src where there is one, else by leading text.
+// watch) — matched by image src where there is one, else by full text.
+//
+// Used to be truncated to the first 80 characters, which made live-md-
+// watch's "which block did I just edit" diff (below) miss any edit past
+// that point — a fix later in an existing paragraph, or appending a
+// sentence to the last one instead of starting a new block, is the common
+// case while actually writing a log, and the key came out identical before
+// and after, so the diff saw no change and never scrolled. Full text is
+// still cheap at blog-paragraph length and removes that blind spot.
+//
+// The image branch folds in the element's full text too (not just src) —
+// a figure's key used to be the img src alone, so editing *just* the
+// caption (the src unchanged) produced an identical key before and after
+// and the diff never noticed the caption had changed at all.
 function readerBlockKey(el) {
     const img = el.querySelector ? el.querySelector('img') : null;
-    if (img) return 'img:' + img.getAttribute('src');
-    const text = (el.textContent || '').trim().slice(0, 80);
+    const text = (el.textContent || '').trim();
+    if (img) return 'img:' + img.getAttribute('src') + '|' + text;
     return text ? 'text:' + text : null;
 }
 
@@ -1181,6 +1374,49 @@ function stopLiveMdWatch() {
     liveMdWatchTimer = null;
 }
 
+// scrollIntoView right after the DOM swap isn't the end of the story for a
+// log this image-heavy: any <img> above the target that hasn't finished
+// loading yet is still ~0 height at that moment, so once it actually loads
+// and snaps to full height, everything below it — including the block we
+// just centered on — gets pushed down. Scrolling immediately and then
+// correcting per image as each one resolves technically lands in the right
+// place, but it feels blocky — one smooth scroll followed by a string of
+// instant re-jumps. Instead, wait for layout to actually settle (every
+// such image loaded, errored, or a timeout gives up waiting) and only then
+// scroll — exactly once, smoothly, straight to the final position.
+function scrollToLiveEditTarget(readerBody, target) {
+    const pendingImgs = Array.from(readerBody.querySelectorAll('img')).filter((img) => {
+        if (img.complete) return false;
+        // Only images *above* the target can shift it — one loading below
+        // doesn't move anything we're centering on.
+        return !!(img.compareDocumentPosition(target) & Node.DOCUMENT_POSITION_FOLLOWING);
+    });
+
+    const settle = () => target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    if (!pendingImgs.length) { settle(); return; }
+
+    let remaining = pendingImgs.length;
+    let done = false;
+    const finish = () => {
+        if (done) return;
+        done = true;
+        settle();
+    };
+    pendingImgs.forEach((img) => {
+        const onSettled = () => { remaining -= 1; if (remaining <= 0) finish(); };
+        img.addEventListener('load', onSettled, { once: true });
+        img.addEventListener('error', onSettled, { once: true });
+    });
+    // Safety net — kept short deliberately: a *lazy* image well above the
+    // target may not even start fetching until scrolled near it, since the
+    // browser only prioritizes what's close to the current viewport. Wait
+    // too long here and that becomes a real deadlock (the scroll that would
+    // bring it near never happens because we're waiting on it first), which
+    // reads as the feature having just stopped working. 400ms is enough for
+    // anything already in flight to land; past that, scroll anyway.
+    setTimeout(finish, 400);
+}
+
 function startLiveMdWatch(log, reader, initialText) {
     stopLiveMdWatch();
     if (!isLocalDevHost()) return;
@@ -1202,8 +1438,10 @@ function startLiveMdWatch(log, reader, initialText) {
             // tell which one actually changed once the new content is in.
             const oldKeys = Array.from(readerBody.children).map(readerBlockKey);
 
+            teardownTts(); // about to replace the very DOM nodes it's reading/highlighting
             readerBody.innerHTML = typeof marked !== 'undefined' ? marked.parse(text) : text;
             hydrateEmbeds(reader);
+            initReaderTTS(reader, log, text);
 
             // This is a content refresh, not a first read — skip the
             // scroll-triggered pop-in animation (see initReaderReveal)
@@ -1221,7 +1459,7 @@ function startLiveMdWatch(log, reader, initialText) {
                 diffIndex = Math.min(oldKeys.length, newBlocks.length - 1);
             }
             if (diffIndex >= 0 && newBlocks[diffIndex]) {
-                newBlocks[diffIndex].scrollIntoView({ behavior: 'smooth', block: 'center' });
+                scrollToLiveEditTarget(readerBody, newBlocks[diffIndex]);
             }
         } catch (e) {
             // Transient fetch hiccup — just try again next tick.
@@ -1242,6 +1480,7 @@ async function openFullscreenLog(log, updateHash = true, scrollOnClose = false) 
         document.body.style.overflow = '';
     }
     stopLiveMdWatch();
+    teardownTts();
 
     const reader = document.createElement('div');
     reader.className = 'fullscreen-reader';
@@ -1291,6 +1530,17 @@ async function openFullscreenLog(log, updateHash = true, scrollOnClose = false) 
                             </div>
                         </div>
 
+                        <!-- Read-aloud, via the pre-rendered narration audio built by
+                             scripts/build-tts-audio.js — see initReaderTTS(). Hidden by
+                             default; only shown once a matching narration file is found
+                             for the log currently open. -->
+                        <div class="tts-controls" id="reader-tts-controls">
+                            <button type="button" id="reader-tts-rate" class="tts-rate-btn" title="Read-aloud speed" aria-label="Change read-aloud speed">1×</button>
+                            <button type="button" id="reader-tts-toggle" class="theme-toggle reader-tts-toggle" aria-label="Read this log aloud" title="Read this log aloud">
+                                <i class="fas fa-volume-up" aria-hidden="true"></i>
+                            </button>
+                        </div>
+
                         <button id="reader-theme-toggle" class="theme-toggle reader-theme-toggle" type="button" aria-label="Switch theme" title="Switch theme">
                             <svg class="theme-icon theme-icon-sun" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <circle cx="12" cy="12" r="4"/>
@@ -1338,6 +1588,7 @@ async function openFullscreenLog(log, updateHash = true, scrollOnClose = false) 
 
         hydrateEmbeds(reader);
         initQuickTranslate(reader);
+        initReaderTTS(reader, log, text);
         startLiveMdWatch(log, reader, text);
 
         // Remember reading position per log so a dev-server live-reload —
@@ -1475,6 +1726,7 @@ async function openFullscreenLog(log, updateHash = true, scrollOnClose = false) 
                 reader.remove();
                 document.body.style.overflow = '';
                 stopLiveMdWatch();
+                teardownTts();
                 history.pushState("", document.title, window.location.pathname + window.location.search);
 
                 if (scrollOnClose) {
@@ -1911,6 +2163,7 @@ window.addEventListener('hashchange', () => {
     if (!window.location.hash.includes('log-') && reader) {
         reader.remove();
         document.body.style.overflow = '';
+        teardownTts();
     }
 });
 

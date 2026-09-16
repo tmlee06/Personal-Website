@@ -183,7 +183,9 @@ Due to my detours, our navigation service redirected us to pass through a tenant
 <!-- 4:29 PM -->
 ![No words.](https://lh3.googleusercontent.com/pw/AP1GczN1UnFTU_0I6NpzMXRKVqpFO6LSyJ9hzaA8eAFP8yp5CFAxek6TFAexMlZO2oPpHk-enjPPg5O2GCXjAPSDEjwO4EaxloPnBcurX-W1orUW2O-40E8q=w1200-h1600-s-no-gm?authuser=0)
 
-Seeing people live in a building of this condition made me so incredibly grateful of my privilege. What I can not imagine of not seeing the sun is a reality for some. That's deep. I guess Anthony Bourdain was right with his quote: "Travel is not reward for working, it's education for living."
+Seeing people live in a building of this condition made me so incredibly grateful of my privilege. What I can not imagine of not seeing the sun is a reality for some. That's deep. I guess Anthony Bourdain was right with his quote: "Travel is not reward for working, it's education for living." By chance or God's grace, I was born in the USA, and extremely privileged. What I stress or complain about is something so little compared to their problems, and they would probably kill to have the opportunities I have.
+
+Aside from my spiel, here's some more photos:
 
 <!-- 4:29 PM -->
 ![Almost prison like!](https://lh3.googleusercontent.com/pw/AP1GczMnnLHARdMbxwnz3JuYLY2JWfk5889xPqVZvLYlsK-yAk-Fhv3ILlavKAEfAveBrMOY6L0NeMcSZ2aYQdRdBQKPk96z8NSBuktHCE8sJ1Bke9Z9gWzq=w1200-h1600-s-no-gm?authuser=0)
@@ -235,11 +237,12 @@ Look at this food court!
 <!-- 5:19 PM -->
 ![I like the lighting of this digital camera shot! Feels very Chinese 🤣](https://lh3.googleusercontent.com/pw/AP1GczMyIpn2PE5pw0R3i3bHWvBqkZjI3mqfoYclLzs3ZMSxOdrq8qxHKlh6q35dTMAQGOYW4Sl5N9ChPRnN8T3o4MsJD-CuhMVGqWfv2e5l1qmXaCo6EeINmQBYkn6OYLXjb5QdtubZ4YaQe24DvL4Bniq_jw=w1466-h1100-s-no-gm?authuser=0)
 
-Ignore the random Chinese kids please! I did not mean to take a photo of them.
-<!-- 5:25 PM -->
-![I love these LEGO displays!](https://lh3.googleusercontent.com/pw/AP1GczNkhCLKDniCDhnSdyUIxEA3x-1hoC-jnH8jafBpDNtsSsErubOpLrfbFY3VYdo_hQek0ykUhHT4DCBuxCNxe65XPu45ZejJJb4wHWLMhdD19EObNuO2=w1200-h1600-s-no-gm?authuser=0)
+Ignore the random Chinese kids please! I did not mean to take a photo of them. I was just trying to photograph the LEGO building of Raffles City.
 
-Pit stop for boba again! This time trying "HeyTea"!
+<!-- 5:25 PM -->
+![Love these LEGO displays!](https://lh3.googleusercontent.com/pw/AP1GczNkhCLKDniCDhnSdyUIxEA3x-1hoC-jnH8jafBpDNtsSsErubOpLrfbFY3VYdo_hQek0ykUhHT4DCBuxCNxe65XPu45ZejJJb4wHWLMhdD19EObNuO2=w1200-h1600-s-no-gm?authuser=0)
+
+We took another pit stop for boba! This time trying "HeyTea"!
 
 <!-- 5:37 PM -->
 ![Great, but expensive!](https://lh3.googleusercontent.com/pw/AP1GczOvyVgVGcX4dVkftJDT5s6q0MqneAsHAKEKoMb9JN49W49_mu8PM1Vb-VGczCqUeR97EpDzrQ2K-wbTmjae4ZVxLg9J2TTCVavGWW0UAOlfxwW7H4_O=w1200-h1600-s-no-gm?authuser=0)
@@ -268,250 +271,130 @@ No context, but I thought I would throw this photo in since I have it. This look
 <!-- 6:04 PM -->
 ![They could have at least made it cuter 🤷‍♂️](https://lh3.googleusercontent.com/pw/AP1GczPCR_yKF0l9aqfJOpGs8doZk3fIcOLH_1wsxoyrz1e0DPSjXM3XX6JazDThjUx6-3UE0ELrvlE0-y-GVUVFLslQCybIICOlUvNiIpFeRmnISZ8UcyEG=w1200-h1600-s-no-gm?authuser=0)
 
-We
+We got to the observatory around 6:30 PM to beat the sunset crowds, so we just pretty much camped out there until golden hour, so we were priority queue for the skywalk.
 
 <!-- 6:18 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczO2sNYAXh-8494Hr0H8etpSejxVRMQAHPg3BFmBcr7eemY9jwKQxvURxEotB6DjkQsYwjSpUwLGqJ8NjiLmiyIk2IpgvefrCp0CSKcoLACtBMmzloI7=w1200-h1600-s-no-gm?authuser=0)
+![I never understood why people are so scared of glass walks! 🤨](https://lh3.googleusercontent.com/pw/AP1GczO2sNYAXh-8494Hr0H8etpSejxVRMQAHPg3BFmBcr7eemY9jwKQxvURxEotB6DjkQsYwjSpUwLGqJ8NjiLmiyIk2IpgvefrCp0CSKcoLACtBMmzloI7=w1200-h1600-s-no-gm?authuser=0)
+
+Fear and phobias are weird, the same people who are scared of walking on fool-proof engineering, glass walk, will get on an airplane, and trust a pilot with their life without ever knowing them. That is probably a bad analogy, but that was what I was thinking when I was out on the deck. If I am able to trust a pilot to get me to my destination without ever seeing them, I should be able to trust God to get me where I need to go. That is just my personal opinion and I will leave it at that.
+
+Back to the photos!
 
 <!-- 6:19 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczPEeSygdG1aveBBWJW_8FZeEDZNxDx_D5sKq61T0wBhMKiThLKJDj3laX5SEaOa31jGfFrHcz-7OyYFXGOZHsvEYx6bgpZOxLwgLR-eVE-xDazYh6fP=w1600-h1200-s-no-gm?authuser=0)
-
-<!-- 6:19 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczMv5ig0tgMLXPAtiviX2d7aokweEAcROZOaTP9RkAZNk0WfmvqMSXfYxJzMWlWtY8uN5WVz1_ooyYwUBmXQI8WAPzvGwOw04vrSLIqSxdK0ei2Bc96g=w1600-h1200-s-no-gm?authuser=0)
-
-<!-- 6:19 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczNMJ0g28beQIyNZedhcEn_m8le2ET7iy0Nn-DCxgqtZRAIiIsL5nUAekgdaV3fthfBop9k3Sk8NbqDYCm9ErhNCz3JjulcjmPUWe5CVNw_ZzTNeU577=w1600-h1200-s-no-gm?authuser=0)
-
-<!-- 6:20 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczMT4M8uxJHXgVF0VJHCkt8IeQ-1M7NBNTsaNMXdVagkLqRRUGCiJ51ZsvPxBrteSiTA_GswxAn8nt2Qkhe7InLVcisD_NKOtPXSCjgeZiODQRnceTM2=w1200-h1600-s-no-gm?authuser=0)
+![Chongqing is like a clean New York City!](https://lh3.googleusercontent.com/pw/AP1GczMv5ig0tgMLXPAtiviX2d7aokweEAcROZOaTP9RkAZNk0WfmvqMSXfYxJzMWlWtY8uN5WVz1_ooyYwUBmXQI8WAPzvGwOw04vrSLIqSxdK0ei2Bc96g=w1600-h1200-s-no-gm?authuser=0)
 
 <!-- 6:21 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczMQSwrB-zuX30mHkGiBEsthLczh4BmQb7VyN2sO1T3g81d79BFgjm9Ws8Ba1waTw5CJjo3rqjFoBa91pw_iUNjKw3fVXPiqn3L33dK_3t5MPtedSx2e=w1200-h1600-s-no-gm?authuser=0)
+![Me & Panda selfie!](https://lh3.googleusercontent.com/pw/AP1GczMQSwrB-zuX30mHkGiBEsthLczh4BmQb7VyN2sO1T3g81d79BFgjm9Ws8Ba1waTw5CJjo3rqjFoBa91pw_iUNjKw3fVXPiqn3L33dK_3t5MPtedSx2e=w1200-h1600-s-no-gm?authuser=0)
+
+If my memory serves me well, in 2nd grade, I had a project where I created a  <a href="https://en.wikipedia.org/wiki/The_Flat_Stanley_Project" style="color: #fffefe; font-weight: bold; text-decoration: underline;">*Flat Stanley*</a> of myself and I mailed mine to Toronto or San Francisco I believe. I need to look for those memory books back at home to confirm the exact location, but that has to be one of my favorite projects I did in elementary school. I bring this up now because maybe I should do the same with my Panda clip, and these logs are the adventure book! 
 
 <!-- 6:21 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczNW3KMMhiPwp5xKYaMMoyi6nE3996ckklTDBFFP7A4qWcoIc9YYrNP3PuGJkxjNsD83dno2cd3UCvF7ZQey0ly9ZVaSOlyouPP-SY_FkhhTJVn5vLwC=w1200-h1600-s-no-gm?authuser=0)
+![Stylish!](https://lh3.googleusercontent.com/pw/AP1GczNW3KMMhiPwp5xKYaMMoyi6nE3996ckklTDBFFP7A4qWcoIc9YYrNP3PuGJkxjNsD83dno2cd3UCvF7ZQey0ly9ZVaSOlyouPP-SY_FkhhTJVn5vLwC=w1200-h1600-s-no-gm?authuser=0)
 
-<!-- 6:21 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczOpZEMkUDQnvlmZCpQSjmeu1n6BjY59UMnnBGq9Nfa9hhTKrnP3mgssuBase9OKQ0Mcgsd_nJyrLWWQf-86w-JKdD2oocD1iXCiW05PsbzxqhxwKHgw=w1200-h1600-s-no-gm?authuser=0)
-
-<!-- 6:21 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczM92c25f1LXd8n1rLu9Ighv7atsFdkcjJK4xIZac5bKHz3bTOmHmRuHXXoPvmFP7s4GEoSDFmPtbqs5EZq48bt2KZhAjVHWhPEBMfm-1rzM-vctMIwr=w1200-h1600-s-no-gm?authuser=0)
+In total, we waited at the observatory for about an hour and a half. Definitely needed since it was scorching hot and humid, we also needed the rest too.
 
 <!-- 7:24 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczMrrb0z5ugGR6rM4xwxdiDBxkofdBcX2AuuAK8Cpi5H2rvuU4RUbbDdzMnB4qHDHVm4llxvH-GivLbZKcmpIPTLz-zFyOg1txX0XEq_XDpEwcniTTPw=w1200-h1600-s-no-gm?authuser=0)
-
-<!-- 7:24 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczPnUy97r4-ru_poLMwqzPgCtC_AKnj3Va8L5ePuJVp-PqsuJ3sgl2jxgqF0ywQWtr0yDXiR9BFivuMUmD4ywNi1uMd0KcY_6YRUNxKv0E3p9DAQrmrh=w1200-h1600-s-no-gm?authuser=0)
-
-<!-- 7:24 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczPCJAQbF88GC3D9wtS2QUaIse7yy0sCgDO-VR6e5OOmRFMsPWIIEVTfSn6HIzDrKVqKa8b1Xa_CqiWnkn7ioooJllRw8MkCIhlolhK8AjNApONj4bRO=w1200-h1600-s-no-gm?authuser=0)
-
-<!-- 7:24 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczOAAGxlAw9vpFrOmnotRaGl_9EuZSoVYcLz0tCO_m9vJ52fja8IPywerpIoQCjThz8N4_2Rtj2kv3wUu5o0snP0g9SuMxyIc9ioSfcom-tELvn1Au_E=w1200-h1600-s-no-gm?authuser=0)
+![Golden hour in Chongqing!](https://lh3.googleusercontent.com/pw/AP1GczPnUy97r4-ru_poLMwqzPgCtC_AKnj3Va8L5ePuJVp-PqsuJ3sgl2jxgqF0ywQWtr0yDXiR9BFivuMUmD4ywNi1uMd0KcY_6YRUNxKv0E3p9DAQrmrh=w1200-h1600-s-no-gm?authuser=0)
 
 <!-- 7:25 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczMJh7PKumBDoNtB7bpI8JlAQJtt8Bw6bsm03eu0LTXS1Bo8Vxkck0xv8DEXt5rsRFsbRM8xB45DYu2j9eLtlNDAnp8L0_emYIeLNEIZOGvPRSPFPduK=w1200-h1600-s-no-gm?authuser=0)
-
-<!-- 7:25 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczOnXLbRa-ilDuIH8LXN4fjK4whtW0EVPtn5RBfWa7DPKCuifWOkg4pMtqKPUq9OHqWBKtso5NbxTJhU-t7BWtaf32bry-mwhiQ7D4JUqyXiqsa3pcgq=w1200-h1600-s-no-gm?authuser=0)
+![Crowds came in 😂](https://lh3.googleusercontent.com/pw/AP1GczPQpIpAtpntxyfeDdecUUKp9wsyQp8NVmf1C2Znv6T2LHL2eQGSFVdvJCO_-K3y-jDT6dqM_rr0h-5w4QJ-b5CSKieM8VximT_cy2BI3fUgGk4W4cX2UubnxWAbuG7LvWicLUYiRxXK2_BiQAd2bfNkSQ=w752-h564-s-no-gm?authuser=0)
 
 <!-- 7:30 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczMraiU7StR2zKMHhoEUxxzflSsDDGKSprGvrxQBmBcaB3bw7rbQ_ivzYNrGXHALEI59ABIf59JQmsMNyV6L_oY9u4bgmFvY7t52m0Dkd5LY9sfUz41B=w1200-h1600-s-no-gm?authuser=0)
+![Window shot!](https://lh3.googleusercontent.com/pw/AP1GczMc5jnvfiSMXFRtXOPMZbZrmRJ33itUI1VfxPWQTZVSsMQaD5iVeuP3YaxeKHhWrNGz4-pGn-6Xkcq63vuZyLgxmB4xCbd9k_Xo3UgS0p0lpqCLlVJU=w1200-h1600-s-no-gm?authuser=0)
 
-<!-- 7:30 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczMc5jnvfiSMXFRtXOPMZbZrmRJ33itUI1VfxPWQTZVSsMQaD5iVeuP3YaxeKHhWrNGz4-pGn-6Xkcq63vuZyLgxmB4xCbd9k_Xo3UgS0p0lpqCLlVJU=w1200-h1600-s-no-gm?authuser=0)
-
-<!-- 7:30 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczN-Vb1c6pUzfIrXXFjv-g1IylgZrPhiqTqET7__-PZs1_W92PjIVPGHKWwt7yMWRScHNnF32Z2C5uibflWzRco9ynakinGmz-vCqgTYAfgJRM5MkUlT=w1200-h1600-s-no-gm?authuser=0)
-
-<!-- 7:48 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczMefFoGh49Ysb8ZQDoV0KZpsM9sCPE1K9FdaXYSXNB-lLQHzdgpLA7kQYKrjhHo8erNWcrR7T47oAnMTRujBGmGRv9q5lROSs2bu_WT-RQa21FTp-XW=w1200-h1600-s-no-gm?authuser=0)
-
-<!-- 8:04 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczPwadK4pIOGwbicotDIKdJEmuLzcGQGi0Uwj9J9EYUwD6HqmwA5nTW-qDLYjBvyCi-gDJ_KA7UhnpHtY6xMCbtKG3TOPHIIhhxbCQFvNhy6b5DRqYVC=w1200-h1600-s-no-gm?authuser=0)
-
-<!-- 8:04 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczN3XiFjLfB5pgXsCizgHu-J7l7QvjMaFDfpSJDEatUL5A1OhSq9OZXFYdPCp-GNFEJeoEALQJKZv5Ww2kd1GA9uBBejHBkAxXzQdz4qOFB_Q5M53oOc=w1600-h1200-s-no-gm?authuser=0)
-
-<!-- 8:04 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczM735DsD4GaOzaQ4a7_Coeei6-XHDTYKRU6HSn9UuOSxtuI1KW2ggUVwnqg47f6EU9Bakec6tp9mAA0kI9cbCIj_7345jMW43uBT2Xg1eTZCMj9N6oN=w1600-h1200-s-no-gm?authuser=0)
-
-<!-- 8:07 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczOjg9PNOIMSPV7THqPfJQqMBsJuu4We4Feu4LYU9ujnjZAEuz3WQb8-btJVAiVileSSVFbj2fZjwrWSteUBB5MetPKXAFr2yBwIqFf4UkY3AKy4-tAw=w1200-h1600-s-no-gm?authuser=0)
-
-<!-- 8:07 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczPJMsN3vFcFlDZUXVWZhK1ycUVCXyE8IXMOR3Qwsyl_3Y_GSCrZEppy1VVRaWwE8qnsGICpD3xTPe0rub4ZJ7A0MTu6Mo3qEwWtvNmnNhNoojdfn7R3=w1200-h1600-s-no-gm?authuser=0)
-
-<!-- 8:07 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczMnYq6j0fTgXE_JgFSWFoZgrMVJjkTgDMCR-SqNxdOxgoSSDEvC9MF-0DoD6uOLpGekiYCJdi4-_f8nm1D-3-s7dMGOKvxxt_z4dxS28eTHLrah4bHN=w1600-h1200-s-no-gm?authuser=0)
+We got out on the skywalk at about 8 PM, right when the lights come on in Chongqing.
 
 <!-- 8:07 PM -->
 ![](https://lh3.googleusercontent.com/pw/AP1GczOlj3C9P9d0SIKyCJnNFQe4b8Tyb1Dj9G7-yBqUADRzDxFvoNiX8NvW79ghW3lFe5ZYGDu8V6yjppmdNP2BnqUgKsI4w1HgwofsvgWpcTVq-eSBTXbq=w1600-h1200-s-no-gm?authuser=0)
 
-<!-- 8:07 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczNFmfUo2sas0irbofmPjTyw0lKSFlufzXyZnwB2twhDks3gf9gV-qrgMuPbbCMg6-0QWaN7A97-5ha8Scxw6vLrMubk5Y7GebJ7nqyGIZTY_Y4gY8Rw=w1200-h1600-s-no-gm?authuser=0)
-
 <!-- 8:08 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczNpXflWng-Z7WkKeE50Ek1U9EAz5YYiJ3FNUtD39v1BNsopNFYqqR-ZbXz1GjFQ0OSCP25aHFNO-O8Kk4mMflik0klcwQv34B3ffiHzecD8jiQMTK22=w1200-h1600-s-no-gm?authuser=0)
+![*Blinding Lights*](https://lh3.googleusercontent.com/pw/AP1GczPt0TYJxSZSO0DEhJQ2Hhpmz5du4-8KqcreUQuRrszXnK3w5xi3vbrM7GVKd3Tc0qUTDCf86pJ25-CUVBZc1NnYKDfTNTUFPxn_KQARBkcXcufdOr1W=w1200-h1600-s-no-gm?authuser=0)
 
-<!-- 8:08 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczND1Kj5uUPDkIyRVZDHeFKX7Ncg8b2mONzSePnqE0VUvjLxdMMmj0Qxsz5pY0va2cG-kJ7H7Qe18iKWi_fgeULVOVhw5kWw2pwwH0SrQGW8r3ohWwc1=w1200-h1600-s-no-gm?authuser=0)
+We could only take our phones on the gangway, so apologizes if the quality is terrible. Also, our phones were trapped in a clear bag that was tethered to our harnesses.
 
-<!-- 8:08 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczMnbYGWdFbFSWW-9U3OQmpItsCWGVx6ZlvEcO3l1HlZ6O7SOkjlO-TZNpsIU6YRfDtKtVnLXDw12mTdvWMBRbWBIVymhjB76uChuvyLkJtbXexB8P-t=w1200-h1600-s-no-gm?authuser=0)
-
-<!-- 8:08 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczOptmi_twTdCVCgyAlk7gP0knSo6dl23kUtIWOEvAekBKH2aanJSWw9rnTkBe-a88LME0Ls-WQTFmFcZO_PCcH2g3CVrXmFpcXSXpsJ33FfZGE3dG32=w1200-h1600-s-no-gm?authuser=0)
-
-<!-- 8:08 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczOU7Bwx0Nt4PGRvN1ZOYwqvWzWTNGNw7-gpmg9RB6ItJGfYdtpKGeI058yBS-B5w2Z4A4DJULkUlotM8Brs22EOoLjtKPoqnz06oLbSwUzgx0pn83np=w1200-h1600-s-no-gm?authuser=0)
-
-<!-- 8:08 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczPt0TYJxSZSO0DEhJQ2Hhpmz5du4-8KqcreUQuRrszXnK3w5xi3vbrM7GVKd3Tc0qUTDCf86pJ25-CUVBZc1NnYKDfTNTUFPxn_KQARBkcXcufdOr1W=w1200-h1600-s-no-gm?authuser=0)
-
-<!-- 8:08 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczMFSSm4XsWBNe8J0-FHNrqe4T3jCSOZY6_AtCh0cZ5TC5jPK0-8IJqoB5ZlV9gMIqh9lbMoVuBL4uoP5J-M_0uoH1_Y7iVS6FIY7AAR4HzzySpx0P3I=w1200-h1600-s-no-gm?authuser=0)
-
-<!-- 8:08 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczPBiDC8Bb7nsLTpJX6wQOt-jZ3VyJCD4lj9s-pjGQsTofynXrWKCWyny9C9MfvKuo1EdfOlKT1q1GV87berZSavJ073vK5zoV6uIhhrUjHX4DWZm1RF=w1200-h1600-s-no-gm?authuser=0)
-
-<!-- 8:08 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczOgBsnERrg6Qxb8cw_6Per_IGvgooL6MNkNPe8fzJU89i-NerwvqF4ZTW34zGsXwDkyoC0PVMVGvB52sdit1xdsNcGoxjcbh3Q4xeVWHNCdAJUmn4pb=w1200-h1600-s-no-gm?authuser=0)
+My iPhone had an epilepsy with this city!
 
 <!-- 8:09 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczOvoKjpDIm-XvXpNFVX0Hjw2QxgvJCQLFTtC3EznYWAvsZcF2pP2q-U18fhJf0hfeTtpScLIjgdEWjyEK9I_LgTFDKj4lI1by5DYyVQaHNXWf01N3DF=w1600-h1200-s-no-gm?authuser=0)
-
-<!-- 8:09 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczNIDg14pfHi-hnbcpkmikcO69xwdQvXirQQ3Y21G1ge05s2HLYXv_ix4ZECEUUjcXpzNSnpnskbCB1plYsKeMhs9757AfTZ1gIhLXcJFS8wk4Jm56Sg=w1200-h1600-s-no-gm?authuser=0)
-
-<!-- 8:09 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczPCdvNiGIe2gPb9VQmYLp10cZoHrWLEhRG5lKx4YdWQcsOkaSTxSDQeWCw4egnxINTWDJvwNR9MmmWdEUvWIZsx0DfGDjvdIQeuIwSKghVXusxeeI-Y=w1600-h1200-s-no-gm?authuser=0)
-
-<!-- 8:09 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczMA_DwO02GaruGExpprQsGUEqHeh2QT6zw9PtffMr_5xQWmGhnaSftTPw9d62jLF4rv-qWNxxt1DcUxB4HWG-k2if-rKOfhB_8-bR3V0bt_cm7cv8Gd=w1600-h1200-s-no-gm?authuser=0)
-
-<!-- 8:09 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczP3ROnefqk9Rv99b6nslDlqrFVQ3z8RhYdJxzASrhhSX-mb6faVpClhEjyFxNbR7LCdVEZbHD7VIT0XXbft4JMbyDQsemu-Bz2SVLTFQGZPhwSw1MbG=w1600-h1200-s-no-gm?authuser=0)
-
-<!-- 8:09 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczNWlYtYrP5Hehy_RztLWweTVby0DWKiOPF24M5qaCiK428leuYG7H23pzIbJSfzY7LgrIk8szA0mFFN99fsgs-F8RzWiulroz5QO7kG0FkpgR7iPPEE=w1200-h1600-s-no-gm?authuser=0)
-
-<!-- 8:09 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczN4HKIv-7ZplEO8pij3BFhjZ80zv1RzrbOB7PfD5i4g_8-HBaPcsQPQvstzzzfi3gvUsTTATQJOI8qNQ-pU0VU-MZ0tpn-chu2eOrp1e5Kg3vbDtYWg=w1200-h1600-s-no-gm?authuser=0)
-
-<!-- 8:09 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczOmFRFKVWlKRxLX3V8PtDTxn-Ju8GpHASMztLzh1xr_rhVvDUUuIXBqMwMeonkLWtVf8KyutdmDoXvrUEcymYiyo99gdCjHKM-xD3-KijsjBKz5ZAPJ=w1200-h1600-s-no-gm?authuser=0)
-
-<!-- 8:09 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczPXJcIAe51s0L3su7ui9h0PwkmaPf0ejo-aoUZKAIhswzJ8u9chXVsExEXzn1KvhCL9ca_INUQ6SQrAO8eK3mOD-1qvNB3Uv_qw0Itu6pAPRRx8eZ8x=w1600-h1200-s-no-gm?authuser=0)
-
-<!-- 8:10 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczNWqthzZII3kIR-YgzBZeD8EPKcNAG0etUdBKGm8CgFhUy8oaBzWjnHyw-ZSzWYyFqirsy6lMOR6QvKVmWqIWp3CO4D4K2WntjVvMQdJ4-r4E3ceC8e=w1200-h1600-s-no-gm?authuser=0)
-
-<!-- 8:10 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczNshvr5NfGwBlJaOUtyltMZyoyIKfhPHjsXG4RNtPhH8S44r_u8xKgoVIRtYAGtmziAPrd31_SAOok7j3NZuk7wLkVP9yF42p0A7FZJ4IZoVIQ3Hxjh=w1200-h1600-s-no-gm?authuser=0)
-
-<!-- 8:10 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczMdAvemM49Ck5J02FenF3OtmNimPIeTBfH120GU1_7vFhKMAHSUyWA7hvFi1HqS_o7kRjB4bC9lKMdtxBO9-aczWmvak8gzKdmCGN47PI9d_NgzIjRM=w1200-h1600-s-no-gm?authuser=0)
+![Those two buildings are like driving during sunset in California.](https://lh3.googleusercontent.com/pw/AP1GczPXJcIAe51s0L3su7ui9h0PwkmaPf0ejo-aoUZKAIhswzJ8u9chXVsExEXzn1KvhCL9ca_INUQ6SQrAO8eK3mOD-1qvNB3Uv_qw0Itu6pAPRRx8eZ8x=w1600-h1200-s-no-gm?authuser=0)
 
 <!-- 8:14 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczPGlVCQSL4P7bmhXOOiOpkTRdRT4kvqu-JBaVTZLxC427Shm-Hn7DhWZSW60UqQKR4iOcqMhw61RyAjI3-OQ-JdevfP-5jbnGPiyAQCFRavNiRYPWZ7=w1600-h1200-s-no-gm?authuser=0)
+![So dark on the other side!](https://lh3.googleusercontent.com/pw/AP1GczPguElt3hKtP40eW02zLoQSaiFFTaUutZ_F6ui_0Nth0ZcWFl9ZTASxUFQcS8JELYbLrO5cNV_e0iviUhydbn1-y0VDBLqHMVBFfeUkMVANyhszlTgg=w1600-h1200-s-no-gm?authuser=0)
 
-<!-- 8:14 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczMlomm1P9bqsA8UHmZYIZHcdWiiWSXycVMaj5kpEtMSr8BtqeZ9-c8VglBxlZomyjavxniIRK1LLATcunM8b4FyI3sZjMF0GFxnoCGQ0fbp_xZ9OU5s=w1600-h1200-s-no-gm?authuser=0)
-
-<!-- 8:14 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczNfq28yz-otsAJCctI-QhbzltD6c1DfN8PybeAoK1lWk4_ccEiWhCyV03DOGOQa3c-tVkkGQJD2JOUWpkf6wAXjs7Bz9ewYPyeXjNTJJBV70qPvgobI=w1600-h1200-s-no-gm?authuser=0)
-
-<!-- 8:14 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczPguElt3hKtP40eW02zLoQSaiFFTaUutZ_F6ui_0Nth0ZcWFl9ZTASxUFQcS8JELYbLrO5cNV_e0iviUhydbn1-y0VDBLqHMVBFfeUkMVANyhszlTgg=w1600-h1200-s-no-gm?authuser=0)
-
-<!-- 8:15 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczMpMV2DkeQrTLNC9FVpBt3FIx7O7-nySBS4qSbMxMBvOO9bMoamHg-zPThEscr2N_28wTARAW1eklTPZjHduXN6J-s1SbFuCEDzxL7NX5nUuMDL8cV3=w1600-h1200-s-no-gm?authuser=0)
-
-<!-- 8:15 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczOwW2NbHmb-Od64xgQwQp2JUmwMQxK3WTUjbG8ZLgJjx0dWmCKDqsk2f3qKkod-kNNUdZnJYALwxrrRaZHSo5G6--mKCRVGkjawyNIRl2F9j6U6bpWh=w1200-h1600-s-no-gm?authuser=0)
-
-<!-- 8:16 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczPbGxn8qQUYjkG8MYpWrkk7uwA_uLFuyircJF7xD3zsJ7BeFAkfR3q-QmWf6dJufKmgCYHjQgFh-4qLziuXpnJBXUplEKdnli0BpJbkRobrBpfE_VBM=w1200-h1600-s-no-gm?authuser=0)
-
-<!-- 8:16 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczNWnD6UItfhvjYOh_7DJL9lPZxxYlMpkdkfRojXP5rBnUNTEJjpoDuEfov-NgRZDxY6UzkX3I63EwFfLz30Z_A2H1BhV5hZu2HMUikOvyS3eqiMfOg5=w1200-h1600-s-no-gm?authuser=0)
-
-<!-- 8:16 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczPYbi_ek731stUbGOXVP78tmfA5XN41Uluxw54fDSCdh2AiHzM-dVKyKuLxW5P_Xv2_i2CF5GwwrEZq8TL5R9d2rcYYrgLM26jV6NC7JqYJHc42f8To=w1600-h1200-s-no-gm?authuser=0)
-
-<!-- 8:16 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczM5c57wgQGspv9V-nwqPOsmOwA4nIlmWgRS-yh1PSvKV6hA2M_Rwe74P_B0T1zqAJdoUAAcVrFz7lYnGPNEZfHiKjfjxXhqmJPpVqGbDtlV-dmiBfDT=w1600-h1200-s-no-gm?authuser=0)
-
+I wonder how much the rent is in these buildings! Can not be as high as San Jose!
 <!-- 8:17 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczNvo2fo0GQqms2SxRckXMUMNOHyv-phrCWsBcqVjkG2SWfIyz9oRTlSp7tbPjMsmzuNfaLlN6s6qJ4Gnt8oP92yS23TEAzzHiLcp4WfB5f6RUkhhH87=w1600-h1200-s-no-gm?authuser=0)
+![Privacy is nonexistent here I guess 😂](https://lh3.googleusercontent.com/pw/AP1GczNjQ8QX_XWJgJEGsUJ3vTWnVDbomQeY5An17vO6QUFelCb6anjiKRoZ327PIB7jnrBdUP_fOy-eTVJlxf_Sh3QQ8otPGMX-vy-YPJNjGBOW9aiC6cao=w1600-h1200-s-no-gm?authuser=0)
+<!-- 8:16 PM -->
+![iPhone camera finally adjusted to the buildings!](https://lh3.googleusercontent.com/pw/AP1GczNWnD6UItfhvjYOh_7DJL9lPZxxYlMpkdkfRojXP5rBnUNTEJjpoDuEfov-NgRZDxY6UzkX3I63EwFfLz30Z_A2H1BhV5hZu2HMUikOvyS3eqiMfOg5=w1200-h1600-s-no-gm?authuser=0)
 
-<!-- 8:17 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczNjQ8QX_XWJgJEGsUJ3vTWnVDbomQeY5An17vO6QUFelCb6anjiKRoZ327PIB7jnrBdUP_fOy-eTVJlxf_Sh3QQ8otPGMX-vy-YPJNjGBOW9aiC6cao=w1600-h1200-s-no-gm?authuser=0)
-
-<!-- 8:18 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczOA5U3-Ylbqfkl43iGKYCWBhkLTwKtihVe4WxPFjw756tZ796cS_jKfAHp7fqX-0fwK4HUMydPpBMufzXdyKe1lvmpdEV2oSxIZGptFau3XiWVzGBej=w1600-h1200-s-no-gm?authuser=0)
-
-<!-- 8:18 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczOE3LRZ3eRI6UsnWSyCGrvThYb0OmoIKKEuooa9mMPj-HJmx-DkREN0ahLoumbsm0iFIWqO613Pkjir4nHEmYBjL8sQ3b-9cuDpKPvcrPzCktYMG8Le=w1600-h1200-s-no-gm?authuser=0)
-
-<!-- 8:19 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczNLGr8uL9RqE_0aKULShmtd-sqIKNr8nh_cqek8W3Q13jRzBEZTLWsTU_BylYNTFtBjsbFrqxnmuC-IItuT6VHRPVEMnM_-cSTyvprnSyjBhzwTDO12=w1600-h1200-s-no-gm?authuser=0)
-
-<!-- 8:19 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczN6aJpyhiFFxAAsVeZgtP3tn1p9Mdd5-iTZSPcNE6tfVuL40TZeVdcKfOq5rT04FEW8b-JStC7B6vysLGSYj4caEXCEhNvCwqtEz431CUVZUfPaMBqu=w1600-h1200-s-no-gm?authuser=0)
-
-<!-- 8:19 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczNI_GGOXSnbwghdGFDk0G9bCOmUslEkz6xqiV3-rUc2rgJsaTEC4VZUgmNx8u-G3Zycvt2_WfX1m82UAcIMWGjs7A4-_eujH71UG5BiHK87s7TWOC_C=w1200-h1600-s-no-gm?authuser=0)
-
-<!-- 8:20 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczOZz3BjiBX70Xrtpmhi-Suxd7ZUbkTuFOfsLOR7y67zI-vF__qg1AvnQaBSrMMgVLHSgitOiQTImdJYcTJcNpcJc5gFNMTS0vLDN72hVSZT4Vrd2Np-=w1200-h1600-s-no-gm?authuser=0)
+Chongqing definitely has the most impressive skyline I have ever seen. 
 
 <!-- 8:21 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczMGQQ0XyuefONnomDd14Ejk6Kk1NRqOepYK7a_vY8T4-o33xhntYQJvhsHSn54rfFw4S80qw5bSA7laFaGdEMRpG4QA-2If4JW9dq0eRNo_gvj2rCIX=w1600-h1200-s-no-gm?authuser=0)
+![Scenic gym!](https://lh3.googleusercontent.com/pw/AP1GczMGQQ0XyuefONnomDd14Ejk6Kk1NRqOepYK7a_vY8T4-o33xhntYQJvhsHSn54rfFw4S80qw5bSA7laFaGdEMRpG4QA-2If4JW9dq0eRNo_gvj2rCIX=w1600-h1200-s-no-gm?authuser=0)
 
-<!-- 8:22 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczOwwMHDYmDT_xxADnXePk2MPkHIdv3h1R01_7TVcwId5FfkQKHXNzqmumhonARmakJwk6L6vR7Euxqv1yg2DHYga_z1ukDA67JDg1HLW8v2wOKtuECF=w1200-h1600-s-no-gm?authuser=0)
-
-<!-- 8:22 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczNC8ADv88PJtueDO-es2VHt_w73W7nX3eDxHFtNd-CHLPoh8r9UHEgljYMgoZBKZz5QnzotCHUNIjg6cCN19jPi1iZL7xl6X9olG8tN4ob15ObM_kdP=w1200-h1600-s-no-gm?authuser=0)
+Not sure how I would feel working-out and seeing people just walk across a rooftop. They definitely could have moved the gym up more.
 
 <!-- 8:23 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczODJdywrtYVcizhLpRfWD_szGi71Rr56EBev0cGUNRMX0ltsTX1PagBFVWXGIs6jPmcb0FHr6v3qKc5CtnZpk1eT8ZI_aONKayxkg5oZSAm_Ip2uTJj=w1200-h1600-s-no-gm?authuser=0)
-
-<!-- 8:23 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczMWnZhzHxNOUMtEyY_38iieRXlcleD8wl16UkJkDLpalhjNXRnaytj4BA7_dyMsFGz85vvvLKaOKgbizj2U69BC8guL6iom4KPM9N6C0324-GWUB0hh=w1200-h1600-s-no-gm?authuser=0)
-
-<!-- 8:23 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczOJ0BdJWY7DioEGodVLZm_sWiL5_Q01vrFMmqlJH9oDRPzRpvAFoOctMBXG8Lryte-yznCSKj1VsB9UwobSNLTIO8zOtqXvqFEUNRu71aCPrB8vEU1p=w1200-h1600-s-no-gm?authuser=0)
-
-<!-- 8:23 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczMIojkf-05Yr40q_SYWDWKqf1Yv5XDGfIHUxLCSH1WebE0ulETQjb8IXPRbxspb7ApsQ5Fq_JQrjttTbQT_QB93X2juxGuCs2AScIMp6sL55GgZZOtc=w1200-h1600-s-no-gm?authuser=0)
-
-<!-- 8:23 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczMPYOV1cIjV1t8sRsNejbuOGp1e6MCJi85P9WH9nv70AoWXp95S4NaKOz_IypVH2cLcTZaGHOEaHt__BB2ipqFpdJ9U-_odculz24Sl4SpZs7hjkADX=w1200-h1600-s-no-gm?authuser=0)
+![Maybe I am Tom Cruise!](https://lh3.googleusercontent.com/pw/AP1GczMWnZhzHxNOUMtEyY_38iieRXlcleD8wl16UkJkDLpalhjNXRnaytj4BA7_dyMsFGz85vvvLKaOKgbizj2U69BC8guL6iom4KPM9N6C0324-GWUB0hh=w1200-h1600-s-no-gm?authuser=0)
 
 <!-- 8:24 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczNJXuWPrCRTgWVDkiHXtT1mgW1G32bXhpkLu78BJhOUB1gczZrKQo9QsAFG7kPAjYHm4GcI79QM_L2YwXnmqNB2SIKz8I_tEOcC3taR9SLHVdT66RTM=w1200-h1600-s-no-gm?authuser=0)
+![Money Shot!](https://lh3.googleusercontent.com/pw/AP1GczNlylOzJ_F0WBoBcd1a1mKCx3RmtvKskq51uTkitGRsQYXVH2PGrS2peQBgaEfFq3ADPFLLw6Cwsnisesljsoo_Fbz4eaoA7c3ukV8tBwQnO-cFZKId=w1200-h1600-s-no-gm?authuser=0)
 
 <!-- 8:24 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczNlylOzJ_F0WBoBcd1a1mKCx3RmtvKskq51uTkitGRsQYXVH2PGrS2peQBgaEfFq3ADPFLLw6Cwsnisesljsoo_Fbz4eaoA7c3ukV8tBwQnO-cFZKId=w1200-h1600-s-no-gm?authuser=0)
+![Big cheese!](https://lh3.googleusercontent.com/pw/AP1GczOtBcLaJr69z3g-ci9lSWGRQoA9-BjYLzsBI4zOAmV853iwo4QmPiVqMA7JPlniKSolB0Z9tThbgs4Qi_uRk1w-s2XDHeQBG1UCO3mMQVMTpA26jwca=w1200-h1600-s-no-gm?authuser=0)
+
+No clue what I was smiling about, I have to go back to trying to solve circuits in a month 😂.
 
 <!-- 8:24 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczPahjfTjw9SrVoXZttVw3mJuQElgeqpnoWY3XqwVVaYoW7GH0YRRx-QvwXZeODQfbC8BZ1jfZr526GyoBPjeSMUx-GoLJlAEGjNQe9F8xK27YwIa45t=w1200-h1600-s-no-gm?authuser=0)
+![Taking it all in!](https://lh3.googleusercontent.com/pw/AP1GczM6jwz2ZGA2JMfm9DfzBSuggyJMftpKMWs_wEA4EYlA8dc6bQvaooPiBItpNDNcxeIaME6kzLUV0ijIsYuZxEZVyi-jYTcU2EDgMT7SWOgAZ-vsz1kWuNJBsnbLJbEhsqkJuiJ31umfd20i2sZI3KW3Dw=w748-h998-s-no-gm?authuser=0)
 
-<!-- 8:24 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczNUV-Rs4GSOGdfxsUlLwOX1TWY7Ci14EiOtWAOSzNdK3n-kVDVkrwkMUyJJV68oPqO49qXdnSZJuLkzkwZzi9fIxAAH2Z32hHXMZuxbGxzqjutHMGa7=w1200-h1600-s-no-gm?authuser=0)
+This is my Spider-Man moment:
+![Just got to get away from it all (circuits) 😔](https://i.redd.it/if07rcj8mq2c1.jpg)
 
-<!-- 8:24 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczOhNoiP-FJkMpa1Csz8qf5-PUqiELAGgaWS4-zJLwU35KqDGkmg24w8wo65rI0K2hkcWjAZPMTA6jgCcaB4UIBsfwaF-Rndjw44vZthCBMSTX9J66qX=w1200-h1600-s-no-gm?authuser=0)
+![Ready to fall!](https://lh3.googleusercontent.com/pw/AP1GczNluai8mQ40zb1qj4rmKR5vgZT2FITZkgZm4ZMJ6ne2scmdH4Y5dLnApdYv5SvxuLCAqnci6HryCEPj9wbBfFNxvpqqrGrRc_bhJOHNvWikYOiNBuEr8K_XTmypnKT-ldifweHj5a1Bgl5X17ZGaKVuTg=w748-h998-s-no-gm?authuser=0)
 
-<!-- 8:24 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczOGPu86X0TQWiG7NRplHMp5qW9ZlmNVKtO-MYB3NBXBTV2LJZOnRtxepp7JvkbUaBIrPc_lesaREIZ6ZqO95PRzimxjnShuw-B4lQ6QEFgOWL_r6V9G=w1200-h1600-s-no-gm?authuser=0)
+I wonder what would happen if I just dropped-down. The harness would catch me, but I do not think the workers would like it very much. They were already pretty ticked off by my antics. 
 
-<!-- 8:24 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczOtBcLaJr69z3g-ci9lSWGRQoA9-BjYLzsBI4zOAmV853iwo4QmPiVqMA7JPlniKSolB0Z9tThbgs4Qi_uRk1w-s2XDHeQBG1UCO3mMQVMTpA26jwca=w1200-h1600-s-no-gm?authuser=0)
+![Even the heart is Cyberpunk!](https://lh3.googleusercontent.com/pw/AP1GczO8y5q9cTDte0mqcsPMcB7A2OALqUggB2ARr71CYdr3j51ywZKoyHgBssXsIJMhUOBawi5RQbzw7L7hJ2b2A7C2JwL4xhptQ1AsYXqdfyCgg33j7y6V8sGIUXZz1t9VLZWSvazaeDbMTOWH7clhbvx7kw=w748-h998-s-no-gm?authuser=0)
 
-<!-- 8:24 PM -->
-![](https://lh3.googleusercontent.com/pw/AP1GczM-7TMPFMdeytl3k9fqgELTYOZu1VjHr-jrLE0MzYmk4WGFppES30MmOh5IiNVdPJuh5pGZDQColoCGGkb57Q1NQVt-JDuBU7xINa-U2NWAOtam7jnJ=w1200-h1600-s-no-gm?authuser=0)
+![Another blinding selfie for the one time!](https://lh3.googleusercontent.com/pw/AP1GczN4g453yXJ5lxsMvEeZUaBi6P3xdS8p8HGwP2Cxj1Sn9AtaO8ccMoQmwgLm6QdNi1m5_2AfZRDfPbmxu-XqnQFvY07XAqERSLq-ULoG6WSIDAd8_u_v7JjMwgDKvo5o8iUU26IH_ivL4N5gxhgWy5KsSQ=w748-h998-s-no-gm?authuser=0)
+
+![Ran into a solo travel, apparently he was a security guard for Taylor Swift!](https://lh3.googleusercontent.com/pw/AP1GczNQ3zeWns4cnZoENsh9JowbwYziGxNtxSNHZurLRDEeR5UPX17v9nAWMoxi04atMLOPbiV19vUwFO3xrjE-sYHVsIkv61kkf1HKtzfg6SDPmS9Wk5XruZer9SnckpNIhdmZjBA_DXW-R5NvT2qKDLfXTg=w748-h998-s-no-gm?authuser=0)
+
+![I liked the view on the other side better.](https://lh3.googleusercontent.com/pw/AP1GczO-vlKDDqLBQnBP_TI5_RdxUl1r31kwsAk-vJWkrArYu78TTDbAiY-zaFpfbgGoxddJsrHRgiClgGlOPvSAPF1LS7UeRWuG0Pog0oE70AJf9s6QgWQO-Zwx2XmS_v2T0HSNecbkb3rrl27e3zt_ZdWVWQ=w748-h998-s-no-gm?authuser=0)
+
+![I told these people to smile for the camera, they did not listen 😂](https://lh3.googleusercontent.com/pw/AP1GczOSbwq8hn1c-4UKWygfxs0GQxjRqWRRYXfiTz-hsPLcs8Ta2tqHDIF756vTyCBFBW-fQ8irnSrIBKz1pikqIH4_qr8Fs4VSbrtU4nrdh_RAexsa6qgDZ1uSluiBveqC-FdbZv8d6CD58zvT0FdFq1XGcw=w748-h998-s-no-gm?authuser=0)
+
+There was a camera on the actual skywalk, but you have to pay for those photos, which I think is a scam. They already make enough money from the skywalk.
+
+After Raffles City, we decided to go to Deyi Plaza for the lights and dinner. Another boneheaded decision we made was to walk to Deyi Plaza (I wanted to see *All of the Lights*). 
+
+![Deyi Plaza from the outside.](https://lh3.googleusercontent.com/pw/AP1GczPvFZ8XRXrPvUJRHeoS-OTV51gU3vM9FC8uOaUm2DFW2NdHdWsvoxOtvIWVgwDmXFhanDPfr6__tEIRQeC_Cxt8jdndRAcZo4sFE47ZTZkdd84M80BHKCXbWU-uaBUUHwnCpHWh_YVX-wkLU24lEeyb2g=w748-h998-s-no-gm?authuser=0)
+
+![Deyi Plaza from the inside.](https://lh3.googleusercontent.com/pw/AP1GczMsbSJKXJMqv3Y6EzZS8enNajWoZBJsl9WBkFARUpflTzzby8YJZJ2-B0ky7TLG_2S83ZbcO1za4_zsWeM2DKWIcfi_4Jk3sh40WlUZ18kFdgTBrx9Qdbi4M-gs0tRDqR3ufyG861JYFcna6V3iV1MpUw=w748-h998-s-no-gm?authuser=0)
+
+I thought it would be more neon and illuminating as seen on social media. It was still pretty cool, but the lights were not as bright as advertised.
+
+We made another stupid decision and decided to get hotpot again!
+
+![This was dangerously spicy!](https://lh3.googleusercontent.com/pw/AP1GczPcb281Bkan5A7j7FQ6eGe8jr2dthyy8Mxsjt6tInlFuOq87mvgkl_UjB7QhWKEx04pbrLuP_D0zg1Ga2mrXdeUu4_fCED9LDZBXVEfOGn9uznjdnkCf4JPCBPhWVRL4ghvew-Ds6T9J_9Fxy73SeR8Ag=w748-h998-s-no-gm?authuser=0)
+
+Hotpot is over-rated in my opinion. Good thing it's cheap in China, otherwise I would be in huge debt. Hotpot is more of an experience than cuisine, maybe we were not doing it right. Either way you cannot really do hotpot with two people. I still prefer Korean Barbecue over hotpot.
+
+Moving along, my lips and whole body were numb again. I left the restaurant huffing and puffing, when the spice gets to your lips, it's brutal. One of the waiters was laughing at me on the way out, so I decided to grab a photo with the waiter.
+
+![*Got a sweet Asian chick, she go Chongqing*](https://lh3.googleusercontent.com/pw/AP1GczOgi0WjFP_8hoYSe42L1ztlWvd5diB321WdoXQpa1Es4ejFlMwAyhV7HkyO3SjOVLEjhg23XR7svYV1-R_JK2fbD0MB-380GQ0j2pdS5l-lALaA6hjJ9a783ycbz5dgKfHf8Lx5ZR49wcgzBwJxXwjaSg=w748-h998-s-no-gm?authuser=0)
+
+I am pretty sure that's how that *The Weekend* lyric goes. 
+
+My lips were so inflamed, I had to get a street dessert.
+![Best dessert I had in China!](https://lh3.googleusercontent.com/pw/AP1GczMWcdWAQmkcofoy6gqOZEsbzFEndUepnFF0m8a4dBImVZz0N7dJDWA0dt1CFPQPMlh5oToo6ZIP-Zk7bjSEbzDiN2Pd2mq8saTr_oeVbpK_CKYSDZigogTiRgdu48pxX1pbdSzUkCjYQ_4jHc8EXduoYw=w748-h998-s-no-gm?authuser=0)
+
+The timing could not be more perfect to get that street dessert because the lights turn off at 11 PM, and had we not gone to that vendor, we would not be able to get these shots:
+![Insane](https://lh3.googleusercontent.com/pw/AP1GczM98yU3iJfTaC01q45pGRDnLBO0J1gFs8SgFAsWVPHMFQr2L1Zv4Jiu1lEJ0sDPxzpzxcp0-Df2hhu10URc0RegWhAZKRTmkvv_qX750QbGy5F7Tg--kRWwWa3A8dn-QfjKLrt5eB4UG9011LnyiwRWCQ=w748-h998-s-no-gm?authuser=0)
+
+This was on my digital camera.
+
+This is on my iPhone:
+![Not as insane](https://lh3.googleusercontent.com/pw/AP1GczOmrITnOLp-0tpp7AS6DnJGFhpyuOc4xPs_JoxFqJ8EhBJAg1XA5YTwT2mieA7nTqCJoc90zOy5cxXu5180ICcbM2J3rlFx_UwNXJqcliyg8kW8aM6wKlu4DfxrzjyiR-4mjoPz4sJ7kQRIyYlJ2Y1nzA=w748-h998-s-no-gm?authuser=0)
+
+I wonder how Spider-Man got there, but pretty cool touch. That pretty much wraps Day 2 or whole Day 1 in Chongqing!
